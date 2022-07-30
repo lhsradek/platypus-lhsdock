@@ -1,11 +1,11 @@
 <pre>
- <code id="htmlViewer" style="color:rgb(68, 68, 68); font-weight:400;background-color:rgb(240, 240, 240);background:rgb(240, 240, 240);display:block;padding: .5em;"><span style="color:rgb(136, 136, 136); font-weight:400;">#!/usr/bin/perl -w</span>
+ <code id="htmlViewer" style="color:rgb(170, 170, 170); font-weight:400;background-color:rgb(0, 0, 0);background:rgb(0, 0, 0);display:block;padding: .5em;"><span style="color:rgb(85, 255, 255); font-weight:400;">#!/usr/bin/perl -w</span>
 
-<span style="color:rgb(68, 68, 68); font-weight:700;">use</span> strict; <span style="color:rgb(136, 136, 136); font-weight:400;"># With &#x27;perl -w&#x27; and &#x27;use strict;&#x27; you must declare and initiate variables, list the modules etc ...</span>
-<span style="color:rgb(68, 68, 68); font-weight:700;">use</span> File::Path <span style="color:rgb(136, 0, 0); font-weight:400;">qw(make_path)</span>;
-<span style="color:rgb(68, 68, 68); font-weight:700;">use</span> Crypt::OpenSSL::X509;
+<span style="color:rgb(255, 255, 85); font-weight:400;">use</span> strict; <span style="color:rgb(85, 255, 255); font-weight:400;"># With &#x27;perl -w&#x27; and &#x27;use strict;&#x27; you must declare and initiate variables, list the modules etc ...</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;">use</span> File::Path <span style="color:rgb(255, 85, 255); font-weight:400;">qw(make_path)</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">use</span> Crypt::OpenSSL::X509;
  
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head1 DESCRIPTION
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head1 DESCRIPTION
 /**
  *
  * $path
@@ -25,24 +25,24 @@
  */
 =cut</span>
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head1 main
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head1 main
 start
 =cut</span>
 
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $print = <span style="color:rgb(136, 0, 0); font-weight:400;">1</span>; <span style="color:rgb(136, 136, 136); font-weight:400;"># or $print = 0;</span>
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $makeSystem = <span style="color:rgb(136, 0, 0); font-weight:400;">1</span>; <span style="color:rgb(136, 136, 136); font-weight:400;"># or $makeSystem = 0;</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $print = <span style="color:rgb(255, 85, 255); font-weight:400;">1</span>; <span style="color:rgb(85, 255, 255); font-weight:400;"># or $print = 0;</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $makeSystem = <span style="color:rgb(255, 85, 255); font-weight:400;">1</span>; <span style="color:rgb(85, 255, 255); font-weight:400;"># or $makeSystem = 0;</span>
 
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $ssl = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;/usr/bin/openssl&quot;</span>;
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $path = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;/root/bin&quot;</span>;
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $demoCA = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$path/demoCA&quot;</span>;
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $cert = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/cacert.pem&quot;</span>;
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $demo = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$path/openssl&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $ssl = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;/usr/bin/openssl&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $path = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;/root/bin&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $demoCA = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$path/demoCA&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $cert = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/cacert.pem&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $demo = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$path/openssl&quot;</span>;
 
-<span style="color:rgb(136, 136, 136); font-weight:400;"># virtuals&#x27;s names in array</span>
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> @virts = <span style="color:rgb(68, 68, 68); font-weight:700;">qw</span>/lhs.intranet.local alma.intranet.local lhs.alma.local alma.alma.local alma2.intranet.local alma2.alma.local alma8.intranet.local alma8.alma.local docker.intranet.local docker.traefik.local docker5.intranet.local docker5.traefik.local mamka.intranet.local www.alma.local www.traefik.local/;
+<span style="color:rgb(85, 255, 255); font-weight:400;"># virtuals&#x27;s names in array</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> @virts = <span style="color:rgb(255, 255, 85); font-weight:400;">qw</span>/lhs.intranet.local alma.intranet.local lhs.alma.local alma.alma.local alma2.intranet.local alma2.alma.local alma8.intranet.local alma8.alma.local docker.intranet.local docker.traefik.local docker5.intranet.local docker5.traefik.local mamka.intranet.local www.alma.local www.traefik.local/;
 
 &amp;makefiles;
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head1 create
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head1 create
 /**
  *
 .+.......+....+.....[SHORTENED]--
@@ -62,16 +62,16 @@ Common Name (eg, your name or your server&#x27;s hostname) []:certification auth
 Email Address []:radek.kadner@gmail.com
 [root@cfea919b2da5 bin]#
  *
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:700;">if</span> (-e $cert) { <span style="color:rgb(136, 136, 136); font-weight:400;"># if exists</span>
-        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;== Certification authority ==\n&quot;</span>;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $x509 = Crypt::OpenSSL::X509-&gt;new_from_file($cert);
-        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;subject: &quot;</span>.$x509-&gt;subject().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;issuer: &quot;</span>.$x509-&gt;issuer().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;notBefore: &quot;</span>.$x509-&gt;notBefore().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;notAfter: &quot;</span>.$x509-&gt;notAfter().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head1 main other x509 params
+<span style="color:rgb(255, 255, 85); font-weight:400;">if</span> (-e $cert) { <span style="color:rgb(85, 255, 255); font-weight:400;"># if exists</span>
+        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;== Certification authority ==\n&quot;</span>;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $x509 = Crypt::OpenSSL::X509-&gt;new_from_file($cert);
+        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;subject: &quot;</span>.$x509-&gt;subject().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;issuer: &quot;</span>.$x509-&gt;issuer().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;notBefore: &quot;</span>.$x509-&gt;notBefore().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;notAfter: &quot;</span>.$x509-&gt;notAfter().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head1 main other x509 params
         print &quot;pubkey: &quot;.$x509-&gt;pubkey().&quot;\n&quot;;
         print &quot;hash: &quot;.$x509-&gt;hash().&quot;\n&quot;;
         print &quot;email: &quot;.$x509-&gt;email().&quot;\n&quot;;
@@ -89,139 +89,139 @@ Email Address []:radek.kadner@gmail.com
               print $oid, &quot; &quot;, $ext-&gt;object()-&gt;name(), &quot;: &quot;, $ext-&gt;value(), &quot;\n&quot;;
         }
 =cut</span>
-} <span style="color:rgb(68, 68, 68); font-weight:700;">else</span> {
-        <span style="color:rgb(68, 68, 68); font-weight:700;">system</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$ssl req -new -x509 -nodes -out /root/bin/demoCA/cacert.pem -keyout /root/bin/demoCA/private/cakey.pem -days 366&quot;</span>;
+} <span style="color:rgb(255, 255, 85); font-weight:400;">else</span> {
+        <span style="color:rgb(255, 255, 85); font-weight:400;">system</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$ssl req -new -x509 -nodes -out /root/bin/demoCA/cacert.pem -keyout /root/bin/demoCA/private/cakey.pem -days 366&quot;</span>;
 }
-<span style="color:rgb(68, 68, 68); font-weight:700;">unless</span> (-e $cert) { <span style="color:rgb(136, 136, 136); font-weight:400;"># if not exists</span>
-        <span style="color:rgb(68, 68, 68); font-weight:700;">die</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;Cert not exists!&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;">unless</span> (-e $cert) { <span style="color:rgb(85, 255, 255); font-weight:400;"># if not exists</span>
+        <span style="color:rgb(255, 255, 85); font-weight:400;">die</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;Cert not exists!&quot;</span>;
 }
 
-<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> @buff = (); <span style="color:rgb(136, 136, 136); font-weight:400;"># buffer</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> @buff = (); <span style="color:rgb(85, 255, 255); font-weight:400;"># buffer</span>
 &amp;make;
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head1 main
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head1 main
 stop
 =cut</span>
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head2 data
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head2 data
 /**
  *
  * @param $host String
  * @param $virt String
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">data</span> </span>{
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> ($virt) = @_;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> ($o, $ou) = $virt =~ <span style="color:rgb(188, 96, 96); font-weight:400;">m/^(\w+)\.(.*)$/</span>;
-        &amp;regpush(<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$ssl req -new -nodes -out $demo/$virt-reg.pem -keyout $demo/$virt-key.pem -subj \&quot;/C=CZ/ST=Czech Republic/L=Klasterec nad Ohri/O=$o/OU=$ou/CN=$virt/emailAddress=radek.kadner\@gmail.com\&quot;&quot;</span>);
-        &amp;regpush(<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$ssl ca -in $demo/$virt-reg.pem -out $demo/$virt.pem&quot;</span>);
-        <span style="color:rgb(136, 136, 136); font-weight:400;"># &amp;regpush(&quot;scp $demo/$virt.pem $demo/$virt-key.pem lhs\@docker:&quot;);</span>
-        &amp;regpush(<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;# scp $demo/$virt.pem $demo/$virt-key.pem lhs\@docker:&quot;</span>);
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">data</span> </span>{
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> ($virt) = @_;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> ($o, $ou) = $virt =~ <span style="color:rgb(255, 85, 255); font-weight:400;">m/^(\w+)\.(.*)$/</span>;
+        &amp;regpush(<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$ssl req -new -nodes -out $demo/$virt-reg.pem -keyout $demo/$virt-key.pem -subj \&quot;/C=CZ/ST=Czech Republic/L=Klasterec nad Ohri/O=$o/OU=$ou/CN=$virt/emailAddress=radek.kadner\@gmail.com\&quot;&quot;</span>);
+        &amp;regpush(<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$ssl ca -in $demo/$virt-reg.pem -out $demo/$virt.pem&quot;</span>);
+        <span style="color:rgb(85, 255, 255); font-weight:400;"># &amp;regpush(&quot;scp $demo/$virt.pem $demo/$virt-key.pem lhs\@docker:&quot;);</span>
+        &amp;regpush(<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;# scp $demo/$virt.pem $demo/$virt-key.pem lhs\@docker:&quot;</span>);
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head2 make
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head2 make
 /**
  *
  * For all virtuals
  *
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">make</span> </span>{
-        <span style="color:rgb(68, 68, 68); font-weight:700;">foreach</span> <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $virt (@virts) {
-                <span style="color:rgb(68, 68, 68); font-weight:700;">chomp</span>($virt);
-                <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> ($o, $ou) = $virt =~ <span style="color:rgb(188, 96, 96); font-weight:400;">m/^(\w+)\.(.*)$/</span>;
-                <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> (-e <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demo/$virt-key.pem&quot;</span> &amp;&amp; -e <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demo/$virt.pem&quot;</span>) { <span style="color:rgb(136, 136, 136); font-weight:400;"># if exists</span>
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;== virtual:&#x27;$virt&#x27;, o:&#x27;$o&#x27;, ou:&#x27;$ou&#x27;, cn:&#x27;$virt&#x27;, cert:true ==\n&quot;</span>;
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $x509 = Crypt::OpenSSL::X509-&gt;new_from_file(<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demo/$virt.pem&quot;</span>);
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;subject: &quot;</span>.$x509-&gt;subject().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;notBefore: &quot;</span>.$x509-&gt;notBefore().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;notAfter: &quot;</span>.$x509-&gt;notAfter().<span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
-                        <span style="color:rgb(136, 136, 136); font-weight:400;"># print &quot;openssl ca -config /etc/ssl/openssl.cnf -revoke /root/bin/demoCA/newcerts/01.pem&quot;;</span>
-                } <span style="color:rgb(68, 68, 68); font-weight:700;">else</span> {
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> ($print) {
-                                <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;== virtual:&#x27;$virt&#x27;, o:&#x27;$o&#x27;, ou:&#x27;$ou&#x27;, cn:&#x27;$virt&#x27;, cert:false ==\n&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">make</span> </span>{
+        <span style="color:rgb(255, 255, 85); font-weight:400;">foreach</span> <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $virt (@virts) {
+                <span style="color:rgb(255, 255, 85); font-weight:400;">chomp</span>($virt);
+                <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> ($o, $ou) = $virt =~ <span style="color:rgb(255, 85, 255); font-weight:400;">m/^(\w+)\.(.*)$/</span>;
+                <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> (-e <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demo/$virt-key.pem&quot;</span> &amp;&amp; -e <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demo/$virt.pem&quot;</span>) { <span style="color:rgb(85, 255, 255); font-weight:400;"># if exists</span>
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;== virtual:&#x27;$virt&#x27;, o:&#x27;$o&#x27;, ou:&#x27;$ou&#x27;, cn:&#x27;$virt&#x27;, cert:true ==\n&quot;</span>;
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $x509 = Crypt::OpenSSL::X509-&gt;new_from_file(<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demo/$virt.pem&quot;</span>);
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;subject: &quot;</span>.$x509-&gt;subject().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;notBefore: &quot;</span>.$x509-&gt;notBefore().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;notAfter: &quot;</span>.$x509-&gt;notAfter().<span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
+                        <span style="color:rgb(85, 255, 255); font-weight:400;"># print &quot;openssl ca -config /etc/ssl/openssl.cnf -revoke /root/bin/demoCA/newcerts/01.pem&quot;;</span>
+                } <span style="color:rgb(255, 255, 85); font-weight:400;">else</span> {
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> ($print) {
+                                <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;== virtual:&#x27;$virt&#x27;, o:&#x27;$o&#x27;, ou:&#x27;$ou&#x27;, cn:&#x27;$virt&#x27;, cert:false ==\n&quot;</span>;
                         }
-                        &amp;data($virt); <span style="color:rgb(136, 136, 136); font-weight:400;"># call sub data</span>
+                        &amp;data($virt); <span style="color:rgb(85, 255, 255); font-weight:400;"># call sub data</span>
                 }
-                <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> ($print) {
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;\n&quot;</span>;
+                <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> ($print) {
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;\n&quot;</span>;
                 }
         }
         &amp;syst();
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head2 regpush
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head2 regpush
 /**
  *
  * Regular expresion and push to buff
  *
  * @param $line String
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">regpush</span>  </span>{
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> ($line) = @_;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> ($print) {
-                <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$line\n&quot;</span>;
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">regpush</span>  </span>{
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> ($line) = @_;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> ($print) {
+                <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$line\n&quot;</span>;
         }
-        <span style="color:rgb(68, 68, 68); font-weight:700;">unless</span> ($line =~ <span style="color:rgb(188, 96, 96); font-weight:400;">/^#/</span>) { <span style="color:rgb(136, 136, 136); font-weight:400;"># don&#x27;t starts with char &#x27;#&#x27;</span>
-                <span style="color:rgb(68, 68, 68); font-weight:700;">push</span>(@buff, $line);
+        <span style="color:rgb(255, 255, 85); font-weight:400;">unless</span> ($line =~ <span style="color:rgb(255, 85, 255); font-weight:400;">/^#/</span>) { <span style="color:rgb(85, 255, 255); font-weight:400;"># don&#x27;t starts with char &#x27;#&#x27;</span>
+                <span style="color:rgb(255, 255, 85); font-weight:400;">push</span>(@buff, $line);
         }
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head2 syst
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head2 syst
 /**
  *
  * To system calls
  *
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">syst</span> </span>{
-        <span style="color:rgb(68, 68, 68); font-weight:700;">foreach</span> <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $key (@buff) {
-                <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;system(\&quot;$key\&quot;)\n&quot;</span>;
-                <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> ($makeSystem == <span style="color:rgb(136, 0, 0); font-weight:400;">1</span>) {
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">system</span>($key);
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">syst</span> </span>{
+        <span style="color:rgb(255, 255, 85); font-weight:400;">foreach</span> <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $key (@buff) {
+                <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;system(\&quot;$key\&quot;)\n&quot;</span>;
+                <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> ($makeSystem == <span style="color:rgb(255, 85, 255); font-weight:400;">1</span>) {
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">system</span>($key);
                 }
         }
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;">=head2 makefiles
+<span style="color:rgb(85, 255, 255); font-weight:400;">=head2 makefiles
 /**
  *
  * Create dirs and make files
  *
-/*
+ */
 =cut</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">makefiles</span> </span>{
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">makefiles</span> </span>{
         &amp;createdirs;
         &amp;createfiles;
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;"># Create dirs</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">createdirs</span> </span>{
-        <span style="color:rgb(136, 136, 136); font-weight:400;"># if ($print) { print &quot;dirs:\n&quot;; }</span>
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> @dirs = ($path, $demo, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA&quot;</span>, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/crl&quot;</span>, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/newcerts&quot;</span>, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/private&quot;</span>);
-        <span style="color:rgb(68, 68, 68); font-weight:700;">for</span> <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $dir (@dirs) {
-                <span style="color:rgb(136, 136, 136); font-weight:400;"># if ($print) { print &quot;$dir\n&quot;; }</span>
-                <span style="color:rgb(68, 68, 68); font-weight:700;">unless</span> (-d $dir) { <span style="color:rgb(136, 136, 136); font-weight:400;"># if not exists</span>
-                        make_path $dir <span style="color:rgb(68, 68, 68); font-weight:700;">or</span> <span style="color:rgb(68, 68, 68); font-weight:700;">die</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;Failed to create path: $dir&quot;</span>;
+<span style="color:rgb(85, 255, 255); font-weight:400;"># Create dirs</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">createdirs</span> </span>{
+        <span style="color:rgb(85, 255, 255); font-weight:400;"># if ($print) { print &quot;dirs:\n&quot;; }</span>
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> @dirs = ($path, $demo, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA&quot;</span>, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/crl&quot;</span>, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/newcerts&quot;</span>, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/private&quot;</span>);
+        <span style="color:rgb(255, 255, 85); font-weight:400;">for</span> <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $dir (@dirs) {
+                <span style="color:rgb(85, 255, 255); font-weight:400;"># if ($print) { print &quot;$dir\n&quot;; }</span>
+                <span style="color:rgb(255, 255, 85); font-weight:400;">unless</span> (-d $dir) { <span style="color:rgb(85, 255, 255); font-weight:400;"># if not exists</span>
+                        make_path $dir <span style="color:rgb(255, 255, 85); font-weight:400;">or</span> <span style="color:rgb(255, 255, 85); font-weight:400;">die</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;Failed to create path: $dir&quot;</span>;
                 }
         }
 
 }
 
-<span style="color:rgb(136, 136, 136); font-weight:400;"># Create files</span>
-<span style="color:rgb(68, 68, 68); font-weight:400;"><span style="color:rgb(68, 68, 68); font-weight:700;">sub</span> <span style="color:rgb(136, 0, 0); font-weight:700;">createfiles</span> </span>{
-        <span style="color:rgb(136, 136, 136); font-weight:400;"># if ($print) { print &quot;files:\n&quot;; }</span>
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $serial = <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/serial&quot;</span>;
-        <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> @files = ($serial, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;$demoCA/index.txt&quot;</span>);
-        <span style="color:rgb(68, 68, 68); font-weight:700;">for</span> <span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $file (@files) {
-                <span style="color:rgb(136, 136, 136); font-weight:400;"># if ($print) { print &quot;$file\n&quot;; }</span>
-                <span style="color:rgb(68, 68, 68); font-weight:700;">unless</span> (-e $file) { <span style="color:rgb(136, 136, 136); font-weight:400;"># if not exists</span>
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">open</span>(<span style="color:rgb(68, 68, 68); font-weight:700;">my</span> $fh, <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;&gt;&quot;</span>, $file) <span style="color:rgb(68, 68, 68); font-weight:700;">or</span> <span style="color:rgb(68, 68, 68); font-weight:700;">die</span> <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;Failed to create file: $file&quot;</span>;
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">if</span> ($file eq $serial) {
-                                <span style="color:rgb(68, 68, 68); font-weight:700;">print</span> $fh <span style="color:rgb(136, 0, 0); font-weight:400;">&quot;01\n&quot;</span>;
+<span style="color:rgb(85, 255, 255); font-weight:400;"># Create files</span>
+<span style="color:rgb(255, 255, 85); font-weight:400;"><span style="color:rgb(255, 255, 85); font-weight:400;">sub</span> <span style="color:rgb(170, 170, 170); font-weight:400;">createfiles</span> </span>{
+        <span style="color:rgb(85, 255, 255); font-weight:400;"># if ($print) { print &quot;files:\n&quot;; }</span>
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $serial = <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/serial&quot;</span>;
+        <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> @files = ($serial, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;$demoCA/index.txt&quot;</span>);
+        <span style="color:rgb(255, 255, 85); font-weight:400;">for</span> <span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $file (@files) {
+                <span style="color:rgb(85, 255, 255); font-weight:400;"># if ($print) { print &quot;$file\n&quot;; }</span>
+                <span style="color:rgb(255, 255, 85); font-weight:400;">unless</span> (-e $file) { <span style="color:rgb(85, 255, 255); font-weight:400;"># if not exists</span>
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">open</span>(<span style="color:rgb(255, 255, 85); font-weight:400;">my</span> $fh, <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;&gt;&quot;</span>, $file) <span style="color:rgb(255, 255, 85); font-weight:400;">or</span> <span style="color:rgb(255, 255, 85); font-weight:400;">die</span> <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;Failed to create file: $file&quot;</span>;
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">if</span> ($file eq $serial) {
+                                <span style="color:rgb(255, 255, 85); font-weight:400;">print</span> $fh <span style="color:rgb(255, 85, 255); font-weight:400;">&quot;01\n&quot;</span>;
                         }
-                        <span style="color:rgb(68, 68, 68); font-weight:700;">close</span> $fh;
+                        <span style="color:rgb(255, 255, 85); font-weight:400;">close</span> $fh;
                 }
         }
 }

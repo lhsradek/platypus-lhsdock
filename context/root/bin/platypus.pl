@@ -61,7 +61,7 @@ Common Name (eg, your name or your server's hostname) []:certification authority
 Email Address []:radek.kadner@gmail.com
 [root@cfea919b2da5 bin]#
  *
-/*
+ */
 =cut
 if (-e $cert) { # if exists
         print "== Certification authority ==\n";
@@ -107,7 +107,7 @@ stop
  *
  * @param $host String
  * @param $virt String
-/*
+ */
 =cut
 sub data {
         my ($virt) = @_;
@@ -123,7 +123,7 @@ sub data {
  *
  * For all virtuals
  *
-/*
+ */
 =cut
 sub make {
         foreach my $virt (@virts) {
@@ -155,7 +155,7 @@ sub make {
  * Regular expresion and push to buff
  *
  * @param $line String
-/*
+ */
 =cut
 sub regpush  {
         my ($line) = @_;
@@ -172,7 +172,7 @@ sub regpush  {
  *
  * To system calls
  *
-/*
+ */
 =cut
 sub syst {
         foreach my $key (@buff) {
@@ -188,7 +188,7 @@ sub syst {
  *
  * Create dirs and make files
  *
-/*
+ */
 =cut
 sub makefiles {
         &createdirs;
