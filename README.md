@@ -18,7 +18,11 @@
 | --------- | -----------
 | local     | lhsdock
 
-Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html/projekt1/lhsdock
+Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html/projekt1/lhsdock for
+
+https://github.com/elliason/platypus-template-static-nginx
+
+
 
 To run use:
 
