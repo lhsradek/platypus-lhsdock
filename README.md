@@ -24,57 +24,7 @@ VOLUME:
 DRIVER    VOLUME NAME
 local     lhsdock
 
-Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html
-
- ├── index.html
- ├── page2.html
- └── projekt1
-    ├── index.html
-    ├── lhsdock     <------ here is local_lhsdock
-    │   ├── Dockerfile.txt
-    │   └── READme.txt
-    ├── nginx-logo.png
-    └── style.css
-
-
-platypus-lhsdock:/root/bin/
-
- ├── READme.txt
- ├── demoCA
- │   ├── cacert.pem
- │   ├── crl
- │   ├── index.txt
- │   ├── index.txt.attr
- │   ├── index.txt.attr.old
- │   ├── index.txt.old
- │   ├── newcerts
- │   │   ├── 01.pem
- │   │   ├── 02.pem
- │   │   ├── 03.pem
- │ ..
- │   │   ├── 0D.pem
- │   │   ├── 0E.pem
- │   │   └── 0F.pem
- │   ├── private
- │   │   └── cakey.pem
- │   ├── serial
- │   └── serial.old
- ├── lhsdock     <------ here is local_lhsdock
- │   ├── Dockerfile.txt
- │   └── READme.txt
- ├── lhsvol
- │   └── certs
- ├── openssl
- │   ├── docker.intranet.local-key.pem
- │   ├── docker.intranet.local.pem
- │   ├── docker.traefik.local-key.pem
- │   ├── docker.traefik.local.pem
- │ ..
- │   ├── www.alma.local-key.pem
- │   ├── www.alma.local.pem
- │   ├── www.traefik.local-key.pem
- │   └── www.traefik.local.pem
- └── platypus.pl
+Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html/projekt1/lhsdock
 
 To run use:
 
