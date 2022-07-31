@@ -2,12 +2,11 @@
 
 use strict; # With 'perl -w' and 'use strict;' you must declare and initiate variables, list the modules etc ...
 use File::Path qw(make_path);
+use File::Copy;
 use Crypt::OpenSSL::X509;
  
 =head1 DESCRIPTION
 /**
- *
- * $path
  *
  * ├── demoCA
  * │   ├── cacert.pem
@@ -17,6 +16,7 @@ use Crypt::OpenSSL::X509;
  * │   ├── private
  * │   │   └── cakey.pem
  * │   └── serial
+ * ├── lhsvol
  * ├── openssl
  * └── openssl.pl
  *
@@ -33,6 +33,7 @@ my $makeSystem = 1; # or $makeSystem = 0;
 
 my $ssl = "/usr/bin/openssl";
 my $path = "/root/bin";
+my $target = "$path/lhsvol";
 my $demoCA = "$path/demoCA";
 my $cert = "$demoCA/cacert.pem";
 my $demo = "$path/openssl";
@@ -147,6 +148,15 @@ sub make {
                 }
         }
         &syst();
+        if (-e $cert) {
+		copy($cert, "$target/cacert.pem");
+	}
+        foreach my $virt (@virts) {
+                if (-e "$demo/$virt-key.pem" && -e "$demo/$virt.pem") { # if exists
+			copy("$demo/$virt.pem", "$target/$virt.pem");
+			copy("$demo/$virt-key.pem", "$target/$virt-key.pem");
+		}
+	}
 }
 
 =head2 regpush
