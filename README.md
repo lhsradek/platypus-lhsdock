@@ -26,4 +26,4 @@ https://github.com/elliason/platypus-template-static-nginx
 
 To run use:
 
-/# perl /root/bin/platypus.pl
+/ # perl /root/bin/platypus.pl
