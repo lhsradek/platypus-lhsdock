@@ -2,9 +2,10 @@
 
 echo == lhsdock start ==
 
-cp /root/platypus-lhsdock/dockerfiles/Dockerfile /var/lib/docker/volumes/lhsdock/_data/Dockerfile.txt
-cp /root/platypus-lhsdock/context/root/bin/READme.txt /var/lib/docker/volumes/lhsdock/_data/
-docker start platypus-lhsdock
-bin/ls.bash | grep lhsdock
+IMAGE=lhsdock
+cp /root/platypus-$IMAGE/dockerfiles/Dockerfile /var/lib/docker/volumes/$IMAGE/_data/Dockerfile.txt
+cp /root/platypus-$IMAGE/context/root/bin/READme.txt /var/lib/docker/volumes/$IMAGE/_data/
+docker start platypus-$IMAGE
+bin/ls.bash | grep $IMAGE
 echo Run terminal with:
-echo /root/platypus-lhsdock/bin/exec.bash
+echo /root/platypus-$IMAGE/bin/exec.bash

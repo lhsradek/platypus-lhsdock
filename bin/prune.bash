@@ -2,5 +2,6 @@
 
 echo == docker prune ==
 
-docker container prune ; docker image prune ; docker volume prune
-# docker image rm lhsdock:v3
+docker container prune -f
+docker image prune -f
+docker volume prune -f
