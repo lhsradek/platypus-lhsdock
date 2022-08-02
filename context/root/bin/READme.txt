@@ -43,7 +43,6 @@ NETWORK:
 NAME                         DRIVER    SCOPE
 bridge                       bridge    local
 host                         host      local
-lhsdock-local-dev-network    bridge    local
 none                         null      local
 platypus-local-dev-network   bridge    local
 
@@ -55,6 +54,7 @@ traefik      v2.6      102MB
 
 IMAGE          COMMAND                  NAMES
 nginx          "/docker-entrypoint.…"   static-nginx-01-webserver
+nginx          "/docker-entrypoint.…"   php-nginx-02-webserver
 traefik:v2.6   "/entrypoint.sh trae…"   platypus-box_traefik_1
 lhsdock:v3     "sh"                     platypus-lhsdock
 

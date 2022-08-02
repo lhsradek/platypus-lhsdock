@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+   default:
+       external: true
+       name: ${DOCKER_NETWORK}
+
+volumes:
+   lhsdock:
+       external: true
+       name: ${DOCKER_VOLUME}
+
+services:
+    lhsdock:
+        # build:
+        #      context: ./context
+        #      dockerfile: Dockerfile 
+        # image: alpine
+        image: lhsdock:v3
+        container_name: "${APP_ID}"
+        volumes:
+            - ./context/etc/ssl/openssl.cnf:/etc/ssl/openssl.cnf
+            - ./context/root/bin:/root/bin
+            - ./lhsvol:/root/bin/lhsvol
+            - lhsdock:/root/bin/lhsdock
+        labels:
+            - "traefik.enable=false"
+            # - "traefik.docker.network=${DOCKER_NETWORK}"

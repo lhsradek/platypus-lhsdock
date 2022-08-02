@@ -2,20 +2,38 @@
 
 echo == lhsdock create ==
 
-IMAGE=lhsdock
-docker volume create $IMAGE --driver local
-cp /root/platypus-$IMAGE/dockerfiles/Dockerfile /var/lib/docker/volumes/$IMAGE/_data/Dockerfile.txt
-cp /root/platypus-$IMAGE/context/root/bin/READme.txt /var/lib/docker/volumes/$IMAGE/_data/
-FILE=$IMAGE:v3
-if [ ! -f $FILE ]; then
-   echo "File $FILE does not exist."
-   docker build --compress --no-cache -t $FILE -f dockerfiles/Dockerfile context
-   docker save -o $FILE $IMAGE
+docker volume create lhsdock --driver local
+docker container ls -a | grep platypus-lhsdock
+cp -u readme.md ~/lhsdock/readme.txt
+cp -u context/root/bin/READme.txt ~/lhsdock/
+cp -u context/html/* ~/lhsdock/
+cp -u dockerfiles/Dockerfile ~/lhsdock/Dockerfile.txt
+ISIMG=1
+if [ -f lhsdock:v3.img ]; then
+  docker load -i lhsdock:v3.img
+  echo "An image is loaded from lhsdock:v3.img"
+else
+  ISIMG=0   
+  echo "File lhsdock:v3.img not exists."
+  docker build --compress --no-cache -t lhsdock:v3 -f dockerfiles/Dockerfile context
+  docker save -o lhsdock:v3.img lhsdock
 fi
-docker load -i $FILE
-docker run -it --name platypus-$IMAGE --volume /root/platypus-$IMAGE/lhsvol:/root/bin/lhsvol $FILE sh
-docker start platypus-$IMAGE
-# docker exec -it platypus-$IMAGE sh
-bin/ls.bash | grep $IMAGE
+echo "is img:$ISIMG"
+docker images lhsdock:v3
+docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/lhsdock:ro lhsdock:v3 sh
+# docker run -it --name platypus-lhsdock --volume lhsdock:/root/bin/lhsdock --network platypus-local-dev-network lhsdock:v3 sh
+docker container ls -a | grep platypus-lhsdock
+if [ $ISIMG -eq 0 ]; then
+  docker container prune -f
+  docker image rm lhsdock:v3
+  echo "run bin/create.bash"
+  exit
+else
+  docker start platypus-lhsdock
+  # docker container prune -f
+fi
+bin/ls.bash | grep lhsdock
 echo Run terminal with:
-echo /root/platypus-$IMAGE/bin/exec.bash
+echo "bin/exec.bash"
+# docker exec -it platypus-lhsdock bash
+# docker stop platypus-lhsdock

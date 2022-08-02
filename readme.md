@@ -3,11 +3,23 @@
 
 #### Setup
 
-1) run docker ```bin/create.bash```
+1) The first create docker ```./bin/create.bash```
+2) The second exec docker ```./bin/start.bash```
+3) docker ```./bin/stop.bash```
+   or 
+   docker ```./bin/restart.bash```
 
-2) To run use:
+4) docker ```./bin/ls.bash```
+5) docker ```./bin/prune.bash```
+
+6) To run use:
 
 ```/ # perl /root/bin/platypus.pl```
+
+``` # ls ~/bin/```
+
+```READme.txt   add.sh       lhsvol       platypus.pl```
+
 
 #### platypus images:
 
@@ -22,6 +34,7 @@
 | IMAGE        | COMMAND   | NAMES
 | ------------ | --------- | ------
 | nginx        | /docker-entrypoint.… | static-nginx-01-webserver
+| nginx        | /docker-entrypoint.… | php-nginx-02-webserver
 | traefik:v2.6 | /entrypoint.sh trae… | platypus-box_traefik_1
 | lhsdock:v3   | sh                   | platypus-lhsdock
 
