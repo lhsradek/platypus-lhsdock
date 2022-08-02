@@ -4,11 +4,14 @@ echo == lhsdock create ==
 
 docker volume create lhsdock --driver local
 docker container ls -a | grep platypus-lhsdock
-mkdir -p ./lhsdock
+mkdir -p ./context/lhsvol
+mkdir -p ./context/lhsvol/certs
+mkdir -p ./lhsvol
+mkdir -p ./lhsvol/certs
 cp -u readme.md ~/lhsdock/readme.txt
-cp -u context/root/bin/READme.txt ~/lhsdock/
-cp -u context/html/* ~/lhsdock/
-cp -u dockerfiles/Dockerfile ~/lhsdock/Dockerfile.txt
+cp -u ./context/root/bin/READme.txt ~/lhsdock/
+cp -u ./context/html/* ~/lhsdock/
+cp -u ./dockerfiles/Dockerfile ~/lhsdock/Dockerfile.txt
 ISIMG=1
 if [ -f lhsdock:v3.img ]; then
   docker load -i lhsdock:v3.img
@@ -16,7 +19,7 @@ if [ -f lhsdock:v3.img ]; then
 else
   ISIMG=0   
   echo "File lhsdock:v3.img not exists."
-  docker build --compress --no-cache -t lhsdock:v3 -f dockerfiles/Dockerfile context
+  docker build --compress --no-cache -t lhsdock:v3 -f ./dockerfiles/Dockerfile context
   docker save -o lhsdock:v3.img lhsdock
 fi
 echo "is img:$ISIMG"

@@ -2,7 +2,10 @@
 
 echo == lhsdock start ==
 
-mkdir -p ./lhsdock
+mkdir -p ./context/lhsvol
+mkdir -p ./context/lhsvol/certs
+mkdir -p ./lhsvol
+mkdir -p ./lhsvol/certs
 cp -u readme.md ~/lhsdock/readme.txt
 cp -u context/root/bin/READme.txt ~/lhsdock/
 cp -u context/html/* ~/lhsdock/
