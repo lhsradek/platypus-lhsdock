@@ -1,7 +1,7 @@
 
 ### platypus-lhsdock
 
-## Setup
+#### Setup
 
 1) run docker ```bin/create.bash```
 
@@ -9,7 +9,7 @@
 
 ```/ # perl /root/bin/platypus.pl```
 
-## platypus images:
+#### platypus images:
 
 
 | REPOSITORY  |  TAG      | SIZE 
@@ -32,5 +32,3 @@
 Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html/projekt1/lhsdock for
 
 https://github.com/elliason/platypus-template-static-nginx
-
-
