@@ -3,22 +3,27 @@
 
 #### Setup
 
-1) The first create docker ```./bin/create.bash```
-2) The second exec docker ```./bin/start.bash```
+1) The first create docker ```./bin/create.bash``` to make image
+
+2) Start docker ```./bin/create.bash``` to load image
+
 3) docker ```./bin/stop.bash```
    or 
    docker ```./bin/restart.bash```
 
-4) docker ```./bin/ls.bash```
-5) docker ```./bin/prune.bash```
+4) exec docker ```./bin/start.bash```
 
-6) To run use:
+5) docker ```./bin/ls.bash```
+
+6) docker ```./bin/prune.bash```
+
+7) To run use:
 
 ```/ # perl /root/bin/platypus.pl```
 
-``` # ls ~/bin/```
+``` # ls /root/bin```
 
-```READme.txt   add.sh       lhsvol       platypus.pl```
+```READme.txt   add.sh       lhsdock      lhsvol       platypus.pl```
 
 
 #### platypus images:
