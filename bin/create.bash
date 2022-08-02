@@ -4,6 +4,7 @@ echo == lhsdock create ==
 
 docker volume create lhsdock --driver local
 docker container ls -a | grep platypus-lhsdock
+mkdir -p ./lhsdock
 cp -u readme.md ~/lhsdock/readme.txt
 cp -u context/root/bin/READme.txt ~/lhsdock/
 cp -u context/html/* ~/lhsdock/

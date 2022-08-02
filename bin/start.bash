@@ -2,6 +2,7 @@
 
 echo == lhsdock start ==
 
+mkdir -p ./lhsdock
 cp -u readme.md ~/lhsdock/readme.txt
 cp -u context/root/bin/READme.txt ~/lhsdock/
 cp -u context/html/* ~/lhsdock/
