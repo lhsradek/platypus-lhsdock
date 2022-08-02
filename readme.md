@@ -3,9 +3,11 @@
 
 #### Setup
 
-1) The first create docker ```./bin/create.bash``` to make image
+1) The first create docker ```./bin/create.bash```
+to make image
 
-2) Start docker ```./bin/create.bash``` to load image
+2) Create docker ```./bin/create.bash```
+to load image
 
 3) docker ```./bin/stop.bash```
    or 
