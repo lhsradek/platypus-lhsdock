@@ -17,22 +17,26 @@ chmod a+r ~/lhsdock/content/projekt1/lhsdock/lhsdock:v3.img
 chmod a-w ~/lhsdock/content
 ISIMG=1
 if [ -f lhsdock:v3.img ]; then
-  docker load -i lhsdock:v3.img
+  # docker load -i lhsdock:v3.img
+  # docker push lhsradek/lhsdock:v3
+  docker pull lhsradek/lhsdock:v3
   echo "An image is loaded from lhsdock:v3.img"
 else
   ISIMG=0   
   echo "File lhsdock:v3.img not exists."
-  docker build --compress --no-cache -t lhsdock:v3 -f ./dockerfiles/Dockerfile context
-  docker save -o lhsdock:v3.img lhsdock
+  docker build --compress --no-cache -t lhsradek/lhsdock:v3 -f ./dockerfiles/Dockerfile context
+  # docker tag lhsradek/lhsdock:v3
+  docker push lhsradek/lhsdock:v3
+  docker save -o lhsdock:v3.img lhsradek/lhsdock
 fi
 echo "is img:$ISIMG"
-docker images lhsdock:v3
-docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/lhsdock:rw lhsdock:v3 sh
+docker images lhsradek/lhsdock:v3
+docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/lhsdock:rw lhsradek/lhsdock:v3 sh
 # docker run -it --name platypus-lhsdock --volume lhsdock:/root/bin/lhsdock --network platypus-local-dev-network lhsdock:v3 sh
 docker container ls -a | grep platypus-lhsdock
 if [ $ISIMG -eq 0 ]; then
   docker container prune -f
-  docker image rm lhsdock:v3
+  # docker image rm lhsradek/lhsdock:v3
   echo "run bin/create.bash"
   exit
 else
