@@ -33,7 +33,7 @@ my $makeSystem = 1; # or $makeSystem = 0;
 
 my $ssl = "/usr/bin/openssl";
 my $path = "/root/bin";
-my $target = "$path/lhsvol";
+my $target = "$path/lhsvol/certs";
 my $demoCA = "$path/demoCA";
 my $cert = "$demoCA/cacert.pem";
 my $demo = "$path/openssl";
