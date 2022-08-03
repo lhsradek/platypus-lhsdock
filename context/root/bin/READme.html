@@ -1,0 +1,114 @@
+<code>
+<br>
+== Platypus-lhsdock ==<br>
+<br>
+<a href="https://www.projekt1.local/lhsdock/">platypus-lhsdock</a><br>
+<a href="https://www.projekt1.local/lhsdock/readme.txt">readme.txt</a><br>
+<a href="https://www.projekt1.local/lhsdock/Dockerfile.txt">Dockerfile.txt</a><br>
+<a href="https://www.projekt1.local/lhsdock/lhsdock:v3.img">lhsdock.img</a><br>
+<br>
+LISTEN 0.0.0.0:8443        0.0.0.0:*     users:("docker-proxy")br>
+LISTEN 0.0.0.0:443         0.0.0.0:*     users:("nginx") <br>
+LISTEN 0.0.0.0:8080        0.0.0.0:*     users:("docker-proxy")br>
+LISTEN 0.0.0.0:80          0.0.0.0:*     users:("nginx")<br>
+<br>
+<br>
+== DOCKER ==<br>
+<br>
+NETWORK:<br>
+NAME                         DRIVER    SCOPE<br>
+bridge                       bridge    local<br>
+host                         host      local<br>
+none                         null      local<br>
+platypus-local-dev-network   bridge    local<br>
+<br>
+REPOSITORY   TAG       SIZE<br>
+lhsdock      v3        43.8MB<br>
+nginx        latest    142MB<br>
+alpine       latest    5.52MB<br>
+traefik      v2.6      102MB<br>
+<br>
+IMAGE          COMMAND                  NAMES<br>
+nginx          "/docker-entrypoint.…"   static-nginx-01-webserver<br>
+nginx          "/docker-entrypoint.…"   php-nginx-02-webserver<br>
+traefik:v2.6   "/entrypoint.sh trae…"   platypus-box_traefik_1<br>
+lhsdock:v3     "sh"                     platypus-lhsdock<br>
+<br>
+VOLUME:<br>
+DRIVER    VOLUME NAME<br>
+local     lhsdock<br>
+<br>
+Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html<br>
+<br>
+ ├── index.html<br>
+ ├── page2.html<br>
+ └── projekt1<br>
+    ├── index.html<br>
+    ├── lhsdock     <------ here is local_lhsdock<br>
+    │   ├── Dockerfile.txt<br>
+    │   └── READme.txt<br>
+    ├── nginx-logo.png<br>
+    └── style.css<br>
+<br>
+<br>
+platypus-lhsdock:/root/bin/<br>
+<br>
+ ├── READme.txt<br>
+ ├── demoCA<br>
+ │   ├── cacert.pem<br>
+ │   ├── crl<br>
+ │   ├── index.txt<br>
+ │   ├── index.txt.attr<br>
+ │   ├── index.txt.attr.old<br>
+ │   ├── index.txt.old<br>
+ │   ├── newcerts<br>
+ │   │   ├── 01.pem<br>
+ │   │   ├── 02.pem<br>
+ │   │   ├── 03.pem<br>
+ │ ..<br>
+ │   │   ├── 0D.pem<br>
+ │   │   ├── 0E.pem<br>
+ │   │   └── 0F.pem<br>
+ │   ├── private<br>
+ │   │   └── cakey.pem<br>
+ │   ├── serial<br>
+ │   └── serial.old<br>
+ ├── lhsdock     <------ here is local_lhsdock<br>
+ │   ├── Dockerfile.txt<br>
+ │   └── READme.txt<br>
+ ├── lhsvol<br>
+ │   └── certs<br>
+ ├── openssl<br>
+ │   ├── docker.intranet.local-key.pem<br>
+ │   ├── docker.intranet.local.pem<br>
+ │   ├── docker.traefik.local-key.pem<br>
+ │   ├── docker.traefik.local.pem<br>
+ │ ..<br>
+ │   ├── www.alma.local-key.pem<br>
+ │   ├── www.alma.local.pem<br>
+ │   ├── www.traefik.local-key.pem<br>
+ │   └── www.traefik.local.pem<br>
+ └── platypus.pl<br>
+<br>
+To run use:<br>
+<br>
+/ # perl /root/bin/platypus.pl;<br>
+<br>
+== Certification authority ==<br>
+subject: C=CZ, ST=Czech Republic, L=Klasterec nad Ohri, O=lhs, OU=intranet.local, CN=Certification authority, emailAddress=radek.kadner@gmail.com<br>
+issuer: C=CZ, ST=Czech Republic, L=Klasterec nad Ohri, O=lhs, OU=intranet.local, CN=Certification authority, emailAddress=radek.kadner@gmail.com<br>
+notBefore: Jul 30 17:41:44 2022 GMT<br>
+notAfter: Jul 31 17:41:44 2023 GMT<br>
+== virtual:'lhs.intranet.local', o:'lhs', ou:'intranet.local', cn:'lhs.intranet.local', cert:true ==<br>
+subject: C=CZ, ST=Czech Republic, L=Klasterec nad Ohri, O=lhs, OU=intranet.local, CN=lhs.intranet.local, emailAddress=radek.kadner@gmail.com<br>
+notBefore: Jul 30 17:41:44 2022 GMT<br>
+notAfter: Jul 30 17:41:44 2023 GMT<br>
+<br>
+.......<br>
+<br>
+== virtual:'www.traefik.local', o:'www', ou:'traefik.local', cn:'www.traefik.local', cert:true ==<br>
+subject: C=CZ, ST=Czech Republic, L=Klasterec nad Ohri, O=www, OU=traefik.local, CN=www.traefik.local, emailAddress=radek.kadner@gmail.com<br>
+notBefore: Jul 30 17:42:08 2022 GMT<br>
+notAfter: Jul 30 17:42:08 2023 GMT<br>
+<br>
+</code>
