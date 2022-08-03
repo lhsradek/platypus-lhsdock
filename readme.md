@@ -34,19 +34,19 @@ https://github.com/lhsradek/platypus-template-php-nginx
 #### platypus images:
 
 
-| REPOSITORY  |  TAG      | SIZE 
-| ----------- | --------- | ----
-| lhsdock     | v3        | 43.8MB
-| nginx       | latest    | 142MB
-| alpine      | latest    | 5.52MB
-| traefik     | v2.6      | 102MB
+| REPOSITORY       |  TAG      | SIZE 
+| ---------------- | --------- | ----
+| lhsradek/lhsdock | v3        | 43.8MB
+| nginx            | latest    | 142MB
+| alpine           | latest    | 5.52MB
+| traefik          | v2.6      | 102MB
 
-| IMAGE        | COMMAND   | NAMES
-| ------------ | --------- | ------
-| nginx        | /docker-entrypoint.… | static-nginx-01-webserver
-| nginx        | /docker-entrypoint.… | php-nginx-02-webserver
-| traefik:v2.6 | /entrypoint.sh trae… | platypus-box_traefik_1
-| lhsdock:v3   | sh                   | platypus-lhsdock
+| IMAGE               | COMMAND   | NAMES
+| ------------------- | --------- | ------
+| nginx               | /docker-entrypoint.… | static-nginx-01-webserver
+| nginx               | /docker-entrypoint.… | php-nginx-02-webserver
+| traefik:v2.6        | /entrypoint.sh trae… | platypus-box_traefik_1
+| lhsradek/lhsdock:v3 | sh                   | platypus-lhsdock
 
 | DRIVER    | VOLUME NAME
 | --------- | -----------
