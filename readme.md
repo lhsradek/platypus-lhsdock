@@ -1,5 +1,10 @@
-
 ### platypus-lhsdock
+
+https://github.com/elliason/platypus-box
+
+https://github.com/elliason/platypus-template-static-nginx
+
+https://github.com/lhsradek/platypus-template-php-nginx
 
 #### Setup
 
@@ -49,8 +54,4 @@
 
 Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html/projekt1/lhsdock for
 
-https://github.com/elliason/platypus-box
-
 https://github.com/elliason/platypus-template-static-nginx
-
-https://github.com/lhsradek/platypus-template-php-nginx
