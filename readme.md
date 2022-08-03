@@ -42,8 +42,8 @@ https://github.com/lhsradek/platypus-template-php-nginx
 | alpine           | latest    | 5.52MB
 | traefik          | v2.6      | 102MB
 
-| IMAGE               | COMMAND   | NAMES
-| ------------------- | --------- | ------
+| IMAGE               | COMMAND              | NAMES
+| ------------------- | -------------------- | ------
 | nginx               | /docker-entrypoint.… | static-nginx-01-webserver
 | nginx               | /docker-entrypoint.… | php-nginx-02-webserver
 | traefik:v2.6        | /entrypoint.sh trae… | platypus-box_traefik_1
