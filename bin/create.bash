@@ -18,6 +18,7 @@ chmod a-w ~/lhsdock/content
 ISIMG=1
 if [ -f lhsdock:v3.img ]; then
   # docker load -i lhsdock:v3.img
+  # docker push lhsradek/lhsdock:v3
   docker pull lhsradek/lhsdock:v3
   echo "An image is loaded from lhsdock:v3.img"
 else
