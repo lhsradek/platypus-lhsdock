@@ -47,6 +47,7 @@ then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-docker-compose ${ARGS} up -d
-# docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
-# docker-compose ${ARGS} build && docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
+docker-compose ${ARGS} pull
+docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/lhsdock:rw lhsradek/lhsdock:v3 sh
+# docker load -i lhsdock:v3.img && docker-compose ${ARGS} push && docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
+# docker-compose ${ARGS} build && docker-compose ${ARGS} push && docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
