@@ -13,16 +13,16 @@ volumes:
 services:
     lhsdock:
         # build:
-        #      context: ./context
-        #      dockerfile: Dockerfile 
-        # image: alpine
-        image: lhsdock:v3
+        #       context: ./context
+        #       dockerfile: Dockerfile 
+        image: lhsradek/lhsdock:v3
         container_name: "${APP_ID}"
         volumes:
+            # - /var/run/docker.sock:/var/run/docker.sock
             - ./context/etc/ssl/openssl.cnf:/etc/ssl/openssl.cnf
             - ./context/root/bin:/root/bin
             - ./lhsvol:/root/bin/lhsvol
             - lhsdock:/root/bin/lhsdock
         labels:
             - "traefik.enable=false"
-            # - "traefik.docker.network=${DOCKER_NETWORK}"
+            - "traefik.docker.network=${DOCKER_NETWORK}"
