@@ -50,5 +50,5 @@ fi
 
 ########### # docker save -o lhsdock:v3.img lhsradek/lhsdock # docker load -i lhsdock:v3.img
 
-docker-compose ${ARGS} build --no-cache && docker-compose ${ARGS} push && docker image rm lhsradek/lhsdock:v3 && docker container prune -f
+# docker-compose ${ARGS} build --no-cache && docker-compose ${ARGS} push && docker image rm lhsradek/lhsdock:v3 && docker container prune -f
 docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
