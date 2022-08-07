@@ -47,8 +47,23 @@ then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-
-########### # docker save -o lhsdock:v3.img lhsradek/lhsdock # docker load -i lhsdock:v3.img
-
-# docker-compose ${ARGS} build --no-cache && docker-compose ${ARGS} push && docker image rm lhsradek/lhsdock:v3 && docker container prune -f
-docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
+IMG="lhsradek/lhsdock:v3"
+IMGFILE="lhsdock-v3.img"
+if !(docker-compose ${ARGS} pull) # !
+then
+  if !(docker image inspect "${IMG}" >/dev/null 2>&1)
+  then
+    if [[ ! -f "$rootPath/${IMGFILE}" ]]
+    then
+      docker-compose ${ARGS} build --no-cache
+      docker save -o ${IMGFILE} ${IMG}
+      docker image rm ${IMG}
+      docker container prune -f
+    fi
+    docker load -i ${IMGFILE}
+    echo "An image file:'${IMGFILE}' is loaded.."
+    docker push ${IMG} # !
+  fi
+  docker-compose ${ARGS} pull # !
+fi
+docker-compose ${ARGS} up -d
