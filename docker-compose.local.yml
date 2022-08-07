@@ -1,0 +1,36 @@
+version: '3.9'
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK}
+
+volumes:
+  mysql:
+    external: true
+    name: mysql-01
+  postgres:
+    external: true
+    name: postgres-01
+  redis:
+    external: true
+    name: redis-01
+
+services:
+  lhsdock:
+    build:
+      context: ./context
+      dockerfile: Dockerfile 
+    image: lhsradek/lhsdock:v3
+    container_name: "${APP_ID}"
+    volumes:
+      - type: bind
+        source: ./context/etc/ssl/openssl.cnf
+        target: /etc/ssl/openssl.cnf
+        read_only: false
+      - ./context/root/bin:/root/bin
+      - mysql:/root/bin/volume/mysql-01:ro
+      - postgres:/root/bin/volume/postgres-01:ro
+      - redis:/root/bin/volume/redis-01:ro
+    labels:
+      - "traefik.enable=false"
