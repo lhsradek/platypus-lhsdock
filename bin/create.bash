@@ -4,17 +4,17 @@ echo == lhsdock create ==
 
 docker volume create lhsdock --driver local
 docker container ls -a | grep platypus-lhsdock
-mkdir -p ~/lhsdock/certs
-mkdir -p ~/lhsdock/content
-mkdir -p ~/lhsdock/content/projekt1
-mkdir -p ~/lhsdock/content/projekt1/lhsdock
-cp -ur context/html/* ~/lhsdock/content
-cp -u readme.md ~/lhsdock/content/projekt1/lhsdock/readme.txt
-cp -u context/root/bin/READme.html ~/lhsdock/content/projekt1/lhsdock
-cp -u dockerfiles/Dockerfile ~/lhsdock/content/projekt1/lhsdock/Dockerfile.txt
-cp -u lhsdock:v3.img ~/lhsdock/content/projekt1/lhsdock/
-chmod a+r ~/lhsdock/content/projekt1/lhsdock/lhsdock:v3.img
-chmod a-w ~/lhsdock/content
+mkdir -p ~/volume/lhsdock/certs
+mkdir -p ~/volume/lhsdock/content
+mkdir -p ~/volume/lhsdock/content/projekt1
+mkdir -p ~/volume/lhsdock/content/projekt1/lhsdock
+cp -ur context/html/* ~/volume/lhsdock/content
+cp -u readme.md ~/volume/lhsdock/content/projekt1/lhsdock/readme.txt
+cp -u context/root/bin/READme.html ~/volume/lhsdock/content/projekt1/lhsdock
+cp -u dockerfiles/Dockerfile ~/volume/lhsdock/content/projekt1/lhsdock/Dockerfile.txt
+cp -u lhsdock:v3.img ~/volume/lhsdock/content/projekt1/lhsdock/
+chmod a+r ~/volume/lhsdock/content/projekt1/lhsdock/lhsdock:v3.img
+chmod a-w ~/volume/lhsdock/content
 ISIMG=1
 if [ -f lhsdock:v3.img ]; then
   # docker load -i lhsdock:v3.img
@@ -31,7 +31,7 @@ else
 fi
 echo "is img:$ISIMG"
 docker images lhsradek/lhsdock:v3
-docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/lhsdock:rw lhsradek/lhsdock:v3 sh
+docker run -it --name platypus-lhsdock -v lhsdock:/root/bin/volume/lhsdock:rw -v mysql-01:/root/bin/volume/mysql-01:ro -v postgres-01:/root/bin/volume/postgres-01:ro -v redis-01:/root/bin/volume/redis-01:ro lhsradek/lhsdock:v3 sh
 # docker run -it --name platypus-lhsdock --volume lhsdock:/root/bin/lhsdock --network platypus-local-dev-network lhsdock:v3 sh
 docker container ls -a | grep platypus-lhsdock
 if [ $ISIMG -eq 0 ]; then
