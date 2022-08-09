@@ -36,5 +36,3 @@ services:
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
       - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
-    labels:
-      - "traefik.enable=false"
