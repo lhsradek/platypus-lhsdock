@@ -18,6 +18,9 @@ volumes:
   phpmyadmin:
     external: true
     name: phpmyadmin-01
+  wordpress:
+    external: true
+    name: wordpress-01
 
 services:
   lhsdock:
@@ -36,3 +39,4 @@ services:
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
       - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
+      - wordpress:/root/bin/volume/wordpress-01:ro
