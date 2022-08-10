@@ -9,15 +9,15 @@ volumes:
   mysql:
     external: true
     name: mysql-01
+  phpmyadmin:
+    external: true
+    name: phpmyadmin-01
   postgres:
     external: true
     name: postgres-01
   redis:
     external: true
     name: redis-01
-  phpmyadmin:
-    external: true
-    name: phpmyadmin-01
   wordpress:
     external: true
     name: wordpress-01
@@ -36,7 +36,7 @@ services:
         read_only: false
       - ./context/root/bin:/root/bin
       - mysql:/root/bin/volume/mysql-01:ro
+      - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
-      - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
       - wordpress:/root/bin/volume/wordpress-01:ro
