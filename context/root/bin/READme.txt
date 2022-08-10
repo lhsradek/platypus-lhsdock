@@ -1,43 +1,7 @@
 
 == Platypus-lhsdock ==
 
-LISTEN 0.0.0.0:8443        0.0.0.0:*     users:("docker-proxy")                                       
-LISTEN 0.0.0.0:443         0.0.0.0:*     users:("nginx") 
-LISTEN 0.0.0.0:8080        0.0.0.0:*     users:("docker-proxy")                                       
-LISTEN 0.0.0.0:80          0.0.0.0:*     users:("nginx") 
-
-
 == DOCKER ==
-
-Client:
- Context:    default
- Plugins:
-  app: Docker App (Docker Inc., v0.9.1-beta3)
-  buildx: Docker Buildx (Docker Inc., v0.8.2-docker)
-  compose: Docker Compose (Docker Inc., v2.6.0)
-  scan: Docker Scan (Docker Inc., v0.17.0)
-
-Server:
- Containers: 4
-  Running: 4
-  Paused: 0
-  Stopped: 0
- Images: 12
- Logging Driver: json-file
- Cgroup Version: 2
- Plugins:
-  Volume: local
-  Network: bridge host ipvlan macvlan null overlay
-  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
- Init Binary: docker-init
- OSType: linux
- CPUs: 2
- Name: docker
- Registry: https://index.docker.io/v1/
- Experimental: false
- Insecure Registries:
-  127.0.0.0/8
-
 
 NETWORK:
 NAME                         DRIVER    SCOPE
@@ -51,6 +15,16 @@ lhsdock      v3        43.8MB
 nginx        latest    142MB
 alpine       latest    5.52MB
 traefik      v2.6      102MB
+REPOSITORY         TAG            SIZE
+redis              7.0.4-alpine   28.5MB
+postgres           13.7-alpine    213MB
+nginx              alpine         23.5MB
+lhsradek/lhsdock   v3             43.8MB
+phpmyadmin         fpm-alpine     128MB
+tomcat             9.0            475MB
+mariadb            latest         383MB
+wordpress          fpm-alpine     299MB
+traefik            v2.6           102MB
 
 IMAGE          COMMAND                  NAMES
 nginx          "/docker-entrypoint.…"   static-nginx-01-webserver
@@ -58,9 +32,42 @@ nginx          "/docker-entrypoint.…"   php-nginx-02-webserver
 traefik:v2.6   "/entrypoint.sh trae…"   platypus-box_traefik_1
 lhsdock:v3     "sh"                     platypus-lhsdock
 
+REPOSITORY         TAG            SIZE
+lhsradek/lhsdock   v3             43.8MB
+mariadb            latest         383MB
+nginx              alpine         23.5MB
+postgres           13.7-alpine    213MB
+phpmyadmin         fpm-alpine     128MB
+redis              7.0.4-alpine   28.5MB
+tomcat             9.0            475MB
+traefik            v2.6           102MB
+wordpress          fpm-alpine     299MB
+
+IMAGE                COMMAND                  PORTS                                        NAMES
+nginx:alpine         "/docker-entrypoint.…"   80/tcp                                       wordpress-01-webserver
+wordpress:fpm-alpine "docker-entrypoint.s…"   9000/tcp                                     wordpress-01-php
+e46bcc697531         "/docker-entrypoint.…"   80/tcp                                       phpmyadmin-01-webserver
+phpmyadmin:fpm-alpine"/docker-entrypoint.…"   9000/tcp                                     phpmyadmin-01-php
+lhsradek/lhsdock:v3  "/bin/sh -c 'exec /r…"                                                platypus-lhsdock
+tomcat:9.0           "catalina.sh run"        8080/tcp                                     tomcat-01-webserver
+mariadb              "docker-entrypoint.s…"   0.0.0.0:3306->3306/tcp                       mysql-01-db
+redis:7.0.4-alpine   "docker-entrypoint.s…"   0.0.0.0:6379->6379/tcp                       redis-01-db
+postgres:13.7-alpine "docker-entrypoint.s…"   0.0.0.0:5432->5432/tcp                       postgres-01-db
+traefik:v2.6         "/entrypoint.sh trae…"   0.0.0.0:8080->8080/tcp0.0.0.0:8443->8443/tcp platypus-box_traefik_1
+
 VOLUME:
 DRIVER    VOLUME NAME
-local     lhsdock
+local     mysql-01
+local     phpmyadmin-01
+local     postgres-01
+local     redis-01
+local     wordpress-01
+
+LISTEN 0.0.0.0:8443        0.0.0.0:*     users:("docker-proxy")                                       
+LISTEN 0.0.0.0:443         0.0.0.0:*     users:("nginx") 
+LISTEN 0.0.0.0:8080        0.0.0.0:*     users:("docker-proxy")                                       
+LISTEN 0.0.0.0:80          0.0.0.0:*     users:("nginx") 
+
 
 Volume local_lhsdock is for static-nginx-01-webserver:/var/www/html
 
@@ -99,8 +106,7 @@ platypus-lhsdock:/root/bin/
  │   └── serial.old
  ├── lhsdock     <------ here is local_lhsdock
  │   ├── Dockerfile.txt
- │   └── READme.txt
- ├── lhsvol
+ │   ├── READme.txt
  │   └── certs
  ├── openssl
  │   ├── docker.intranet.local-key.pem
