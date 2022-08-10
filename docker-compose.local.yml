@@ -29,6 +29,7 @@ services:
       dockerfile: Dockerfile 
     image: nginx:alpine
     container_name: "${APP_ID}-webserver"
+    restart: always
     # ports:
     #  - 9090:80
     volumes:
