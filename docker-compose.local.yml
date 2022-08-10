@@ -29,6 +29,8 @@ services:
       dockerfile: Dockerfile 
     image: lhsradek/lhsdock:v3
     container_name: "${APP_ID}"
+#    ports:
+#      - 8022:22
     volumes:
       - type: bind
         source: ./context/etc/ssl/openssl.cnf
