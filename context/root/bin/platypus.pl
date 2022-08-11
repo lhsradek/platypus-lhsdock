@@ -33,7 +33,8 @@ my $makeSystem = 1; # or $makeSystem = 0;
 
 my $ssl = "/usr/bin/openssl";
 my $path = "/root/bin";
-my $target = "$path/lhsdock/certs";
+my $lhsdock = "$path/lhsdock";
+my $target = "$lhsdock/certs";
 my $demoCA = "$path/demoCA";
 my $cert = "$demoCA/cacert.pem";
 my $demo = "$path/openssl";
@@ -208,7 +209,7 @@ sub makefiles {
 # Create dirs
 sub createdirs {
         # if ($print) { print "dirs:\n"; }
-        my @dirs = ($path, $demo, "$demoCA", "$demoCA/crl", "$demoCA/newcerts", "$demoCA/private");
+        my @dirs = ($path, $demo, "$demoCA", "$demoCA/crl", "$demoCA/newcerts", "$demoCA/private", $lhsdock, $target);
         for my $dir (@dirs) {
                 # if ($print) { print "$dir\n"; }
                 unless (-d $dir) { # if not exists
