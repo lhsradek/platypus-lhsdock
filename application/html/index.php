@@ -77,7 +77,6 @@
             <li><a href="https://<?php print($parent)?>.traefik.local"><?php print($parent)?>.traefik.local</a></li>
             <ul>
 	      <li><a href="https://<?php print($host)?>.nginx.local/phpinfo/"><?php print($host)?>.nginx.local/phpinfo/</a></li>
-              <li><a href="https://www.nginx.local">www.nginx.local</a></li>
 	      <li><a href="https://<?php print($parent)?>.nginx.local"><?php print($parent)?>.nginx.local</a></li>
               <li><a href="https://<?php print($parent)?>.phpmyadmin.local"><?php print($parent)?>.phpmyadmin.local</a></li>
               <li><a href="https://<?php print($parent)?>.wordpress.local"><?php print($parent)?>.wordpress.local</a></li>
