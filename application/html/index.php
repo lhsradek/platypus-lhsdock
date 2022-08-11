@@ -79,6 +79,7 @@
 	      <li><a href="https://<?php print($parent)?>.nginx.local"><?php print($parent)?>.nginx.local</a></li>
               <li><a href="https://<?php print($parent)?>.phpmyadmin.local"><?php print($parent)?>.phpmyadmin.local</a></li>
               <li><a href="https://<?php print($parent)?>.wordpress.local"><?php print($parent)?>.wordpress.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local"><?php print($parent)?>.tomcat.local</a></li>
             </ul>
           </ul>
         </p>
