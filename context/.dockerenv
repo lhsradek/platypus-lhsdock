@@ -1,5 +1,0 @@
-APP_ID=lhsdock-01
-APP_HOST=lhs.nginx.local
-DOCKER_NETWORK=platypus-local-dev-network
-NGINX_HOST=lhs.nginx.local
-NGINX_PORT=80

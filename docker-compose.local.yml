@@ -23,10 +23,24 @@ volumes:
     name: wordpress-01
 
 services:
-  nginx:
+  # Alpine Linux
+  lhsdock:
     build:
       context: ./context
       dockerfile: Dockerfile 
+    image: lhsradek/lhsdock:v3
+    container_name: "${APP_ID}"
+    restart: always
+    volumes:
+      - ./context/root/bin:/root/bin
+      - mysql:/root/bin/volume/mysql-01:ro
+      - postgres:/root/bin/volume/postgres-01:ro
+      - redis:/root/bin/volume/redis-01:ro
+      - wordpress:/root/bin/volume/wordpress-01:ro
+      - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
+
+  nginx:
+    # Alpine Linux
     image: nginx:alpine
     container_name: "${APP_ID}-webserver"
     restart: always
@@ -36,11 +50,6 @@ services:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
       - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - mysql:/root/bin/volume/mysql-01:ro
-      - postgres:/root/bin/volume/postgres-01:ro
-      - redis:/root/bin/volume/redis-01:ro
-      - wordpress:/root/bin/volume/wordpress-01:ro
-      - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
     environment:
       - NGINX_HOST=lhs.docker.local
       - NGINX_PORT=80
@@ -50,7 +59,6 @@ services:
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
-
     links:
       - php
 
@@ -62,4 +70,3 @@ services:
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
-      - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro

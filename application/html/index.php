@@ -27,6 +27,17 @@
   $index = new IndexController();
   $serverName = $_SERVER['SERVER_NAME'];
   $host = explode(".", $serverName)[0];
+  switch ($host) {
+    case "lhs01":
+        $parent = "docker";
+        break;
+    case "lhs02":
+        $parent = "docker5";
+        break;
+    case "lhs03":
+        $parent = "www";
+        break;
+  }
   $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
   $env = "";
   if ($printEnv) {
@@ -63,13 +74,13 @@
         <h2>Links</h2>
         <p>
           <ul>
-            <li><a href="https://docker.traefik.local">docker.traefik.local</a></li>
+            <li><a href="https://<?php print($parent)?>.traefik.local"><?php print($parent)?>.traefik.local</a></li>
             <ul>
 	      <li><a href="https://<?php print($host)?>.nginx.local/phpinfo/"><?php print($host)?>.nginx.local/phpinfo/</a></li>
               <li><a href="https://www.nginx.local">www.nginx.local</a></li>
-	      <li><a href="https://docker.nginx.local">docker.nginx.local</a></li>
-              <li><a href="https://docker.phpmyadmin.local">docker.phpmyadmin.local</a></li>
-              <li><a href="https://docker.wordpress.local">docker.wordpress.local</a></li>
+	      <li><a href="https://<?php print($parent)?>.nginx.local"><?php print($parent)?>.nginx.local</a></li>
+              <li><a href="https://<?php print($parent)?>.phpmyadmin.local"><?php print($parent)?>.phpmyadmin.local</a></li>
+              <li><a href="https://<?php print($parent)?>.wordpress.local"><?php print($parent)?>.wordpress.local</a></li>
             </ul>
           </ul>
         </p>
@@ -109,7 +120,7 @@
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><a href="https://docker.tomcat.local">docker.tomcat.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local"><?php print($parent)?>.tomcat.local</a></li>
           </ul>
         </p>
         <p><img src="tomcat.png"/></p>
