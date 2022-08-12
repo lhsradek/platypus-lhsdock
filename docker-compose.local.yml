@@ -51,8 +51,8 @@ services:
       - ./application/html:/var/www/html:ro
       - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
-      - NGINX_HOST=lhs.docker.local
-      - NGINX_PORT=80
+      - NGINX_HOST=${APP_HOST}
+      # - NGINX_PORT=80
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
