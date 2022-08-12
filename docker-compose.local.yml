@@ -46,6 +46,8 @@ services:
     container_name: "${APP_ID}-webserver"
     hostname: "${APP_HOST}"
     restart: always
+    environment:
+      - PMA_HOST=${PMA_HOST}
     # ports:
     #  - 9090:80
     volumes:
@@ -67,6 +69,8 @@ services:
     container_name: "${APP_ID}-php"
     hostname: "${APP_HOST}"
     restart: always
+    environment:
+      - PMA_HOST=${PMA_HOST}
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro

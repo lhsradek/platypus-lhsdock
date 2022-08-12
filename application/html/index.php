@@ -16,32 +16,39 @@
       return $ret;
     }
 
-    public function getEnv() {
+    public function getServerEnv() {
       $ret = getEnv();
       ksort($ret);
+      return $ret;
+    }
+
+    public function getServerName() {
+      $ret = $_SERVER['SERVER_NAME'];
+      return $ret;
+    }
+
+    public function getServerParent() {
+      switch ($this->getServerName()) {
+        case "lhsdock.docker.nginx.local":
+          $ret = "docker";
+          break;
+        case "lhsdock.docker5.nginx.local":
+          $ret = "docker5";
+          break;
+	default:
+	  $ret = "www";
+      }
       return $ret;
     }
 
   }
 
   $index = new IndexController();
-  $serverName = $_SERVER['SERVER_NAME'];
-  $host = explode(".", $serverName)[0];
-  switch ($host) {
-    case "lhs01":
-        $parent = "docker";
-        break;
-    case "lhs02":
-        $parent = "docker5";
-        break;
-    case "lhs03":
-        $parent = "www";
-        break;
-  }
+  $parent = $index->getServerParent();
   $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
   $env = "";
   if ($printEnv) {
-    foreach($index->getEnv() as $key => $val) {
+    foreach($index->getServerEnv() as $key => $val) {
       $env .= @sprintf("<strong>%s</strong>:'%s'\n", $key, $val);
     }
   }
@@ -50,14 +57,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs_CZ.UTF-8" lang="cs_CZ.UTF-8">
 <head>
-  <title><?php print($serverName)?></title>
+  <title><?php print($index->getServerName())?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="style.css" type="text/css">
   <link rel="shortcut icon" href="/favicon.png" th:type="image/png"/>
 </head>
 
 <body>
-  <h1><strong><?php print($serverName)?></strong></h1>
+  <h1><strong><?php print($index->getServerName())?></strong></h1>
   <div class="content">
 <?php if ($printEnv) { ?>
     <div class="content-middle">
