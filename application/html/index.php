@@ -29,10 +29,12 @@
 
     public function getServerParent() {
       switch ($this->getServerName()) {
-        case "lhsdock.docker.nginx.local":
+#        case "lhsdock.docker.nginx.local":
+        case "docker.nginx.local":
           $ret = "docker";
           break;
-        case "lhsdock.docker5.nginx.local":
+#        case "lhsdock.docker5.nginx.local":
+        case "docker5.nginx.local":
           $ret = "docker5";
           break;
 	default:
@@ -87,6 +89,7 @@
               <li><a href="https://<?php print($parent)?>.phpmyadmin.local"><?php print($parent)?>.phpmyadmin.local</a></li>
               <li><a href="https://<?php print($parent)?>.tomcat.local"><?php print($parent)?>.tomcat.local</a></li>
               <li><a href="https://<?php print($parent)?>.wordpress.local"><?php print($parent)?>.wordpress.local</a></li>
+              <li><a href="https://pma.<?php print($parent)?>.wordpress.local">pma.<?php print($parent)?>.wordpress.local</a></li>
             </ul>
           </ul>
         </p>

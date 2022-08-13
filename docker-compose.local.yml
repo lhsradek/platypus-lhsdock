@@ -8,19 +8,28 @@ networks:
 volumes:
   mysql:
     external: true
-    name: mysql-01
-  phpmyadmin:
+    name: wordpress-db-99
+  phpmyadmin01:
     external: true
     name: phpmyadmin-01
+  phpmyadmin99:
+    external: true
+    name: phpmyadmin-99
   postgres:
     external: true
     name: postgres-01
   redis:
     external: true
     name: redis-01
-  wordpress:
+  wordpress01:
     external: true
     name: wordpress-01
+  wordpress99:
+    external: true
+    name: wordpress-99
+  wordpresspma:
+    external: true
+    name: wordpress-pma-99
 
 services:
   # Alpine Linux
@@ -37,17 +46,19 @@ services:
       - mysql:/root/bin/volume/mysql-01:ro
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
-      - wordpress:/root/bin/volume/wordpress-01:ro
-      - phpmyadmin:/root/bin/volume/phpmyadmin-01:ro
+      - wordpress01:/root/bin/volume/wordpress-01:ro
+      - wordpress99:/root/bin/volume/wordpress-99:ro
+      - wordpresspma:/root/bin/volume/wordpress-pma-01:ro
+      - phpmyadmin01:/root/bin/volume/phpmyadmin-01:ro
+      - phpmyadmin99:/root/bin/volume/phpmyadmin-99:ro
 
   nginx:
     # Alpine Linux
     image: nginx:alpine
+#    image: nginx:alpine-perl
     container_name: "${APP_ID}-webserver"
     hostname: "${APP_HOST}"
     restart: always
-    environment:
-      - PMA_HOST=${PMA_HOST}
     # ports:
     #  - 9090:80
     volumes:
@@ -69,8 +80,6 @@ services:
     container_name: "${APP_ID}-php"
     hostname: "${APP_HOST}"
     restart: always
-    environment:
-      - PMA_HOST=${PMA_HOST}
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
