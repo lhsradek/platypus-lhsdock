@@ -9,21 +9,12 @@ volumes:
   mysql:
     external: true
     name: wordpress-db-99
-  phpmyadmin01:
-    external: true
-    name: phpmyadmin-01
-  phpmyadmin99:
-    external: true
-    name: phpmyadmin-99
   postgres:
     external: true
     name: postgres-01
   redis:
     external: true
     name: redis-01
-  wordpress01:
-    external: true
-    name: wordpress-01
   wordpress99:
     external: true
     name: wordpress-99
@@ -42,8 +33,7 @@ services:
     hostname: "${APP_HOST}"
     restart: always
     # ports:
-    #  - 80:80
-    #  - 443:443
+    #  - 4443:443
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
@@ -59,18 +49,16 @@ services:
       - mysql:/root/bin/volume/mysql-01:ro
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
-      - wordpress01:/root/bin/volume/wordpress-01:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
       - wordpresspma:/root/bin/volume/wordpress-pma-01:ro
-      - phpmyadmin01:/root/bin/volume/phpmyadmin-01:ro
-      - phpmyadmin99:/root/bin/volume/phpmyadmin-99:ro
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
-      # - "traefik.http.services.${APP_ID}.loadbalancer.server.port=443"
+      - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.port=443"
     links:
       - php
 
