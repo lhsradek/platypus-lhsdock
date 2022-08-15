@@ -107,6 +107,7 @@
               <li><a href="https://hub.docker.com/_/postgres" target="_blank">hub.docker.com - Official build of Postgres</a></li>
               <li><a href="https://hub.docker.com/_/redis" target="_blank">hub.docker.com - Official build of Redis</a></li>
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Official build of Tomcat</a></li>
+              <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Official build of Ubuntu</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Official build of Wordpress</a></li>
               <li><a href="https://docs.docker.com" target="_blank">docs.docker.com</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
