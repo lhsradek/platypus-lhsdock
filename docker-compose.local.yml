@@ -33,7 +33,7 @@ volumes:
 
 services:
   # Alpine Linux
-  lhsdock:
+  nginx:
     build:
       context: ./context
       dockerfile: Dockerfile 
@@ -41,6 +41,9 @@ services:
     container_name: "${APP_ID}"
     hostname: "${APP_HOST}"
     restart: always
+    # ports:
+    #  - 80:80
+    #  - 443:443
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
@@ -67,6 +70,7 @@ services:
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
+      # - "traefik.http.services.${APP_ID}.loadbalancer.server.port=443"
     links:
       - php
 
