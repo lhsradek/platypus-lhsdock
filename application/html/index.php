@@ -29,11 +29,9 @@
 
     public function getServerParent() {
       switch ($this->getServerName()) {
-#        case "lhsdock.docker.nginx.local":
         case "docker.nginx.local":
           $ret = "docker";
           break;
-#        case "lhsdock.docker5.nginx.local":
         case "docker5.nginx.local":
           $ret = "docker5";
           break;
@@ -66,7 +64,7 @@
 </head>
 
 <body>
-  <h1><strong><?php print($index->getServerName())?></strong></h1>
+  <h1><strong><?php print($index->getServerName())?></strong><!--  <img src="poweredby.png"/>--></h1>
   <div class="content">
 <?php if ($printEnv) { ?>
     <div class="content-middle">
@@ -112,8 +110,9 @@
               <li><a href="https://docs.docker.com" target="_blank">docs.docker.com</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
-          </ul>
+	  </ul>
         </p>
+        <p><img src="docker.png"/></p>
 
       </div>
 
