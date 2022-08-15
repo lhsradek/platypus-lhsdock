@@ -83,13 +83,15 @@
         <h2>Links</h2>
         <p>
           <ul>
-            <li><a href="https://<?php print($parent)?>.traefik.local"><?php print($parent)?>.traefik.local</a></li>
+            <li><a href="https://<?php print($parent)?>.traefik.local" target="_blank"><?php print($parent)?>.traefik.local</a></li>
             <ul>
 	      <li><a href="https://<?php print($parent)?>.nginx.local"><?php print($parent)?>.nginx.local</a></li>
-              <li><a href="https://<?php print($parent)?>.wordpress.local"><?php print($parent)?>.wordpress.local</a></li>
-              <li><a href="https://pma.<?php print($parent)?>.wordpress.local">pma.<?php print($parent)?>.wordpress.local</a></li>
-              <li><a href="https://<?php print($parent)?>.phpmyadmin.local"><?php print($parent)?>.phpmyadmin.local</a></li>
-              <!-- <li><a href="https://<?php print($parent)?>.tomcat.local"><?php print($parent)?>.tomcat.local</a></li> -->
+              <li><a href="https://<?php print($parent)?>.wordpress.local" target="_blank"><?php print($parent)?>.wordpress.local</a></li>
+              <li><a href="https://pma.<?php print($parent)?>.wordpress.local" target="_blank">pma.<?php print($parent)?>.wordpress.local</a></li>
+              <li><a href="https://<?php print($parent)?>.postgres.local" target="_blank"><?php print($parent)?>.postgres.local</a></li>
+              <li><a href="https://<?php print($parent)?>.phpmyadmin.local" target="_blank"><?php print($parent)?>.phpmyadmin.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local/tombola" target="_blank"><?php print($parent)?>.tomcat.local - tombola</a></li>
             </ul>
           </ul>
         </p>
@@ -97,18 +99,18 @@
         <h2>Documentation</h2>
         <p>
           <ul>
-              <li><a href="https://hub.docker.com/_/alpine">hub.docker.com - Official build of Alpine Linux</a></li>
-              <li><a href="https://hub.docker.com/_/mariadb">hub.docker.com - Official build of MariaDB</a></li>
-              <li><a href="https://hub.docker.com/_/nginx">hub.docker.com - Official build of Nginx</a></li>
-              <li><a href="https://hub.docker.com/_/php">hub.docker.com - Official build of PHP</a></li>
-              <li><a href="https://hub.docker.com/_/phpmyadmin">hub.docker.com - Official build of phpMyAdmin</a></li>
-              <li><a href="https://hub.docker.com/_/postgres">hub.docker.com - Official build of Postgres</a></li>
-              <li><a href="https://hub.docker.com/_/redis">hub.docker.com - Official build of Redis</a></li>
-              <li><a href="https://hub.docker.com/_/tomcat">hub.docker.com - Official build of Tomcat</a></li>
-              <li><a href="https://hub.docker.com/_/wordpress">hub.docker.com - Official build of Wordpress</a></li>
-              <li><a href="https://docs.docker.com">docs.docker.com</a></li>
-              <li><a href="https://nginx.org/en/docs/">nginx.org - Documentation</a></li>
-              <li><a href="https://wiki.alpinelinux.org">alpinelinux.org - Wiki</a></li>
+              <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Official build of Alpine Linux</a></li>
+              <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - Official build of MariaDB</a></li>
+              <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Official build of Nginx</a></li>
+              <li><a href="https://hub.docker.com/_/php" target="_blank">hub.docker.com - Official build of PHP</a></li>
+              <li><a href="https://hub.docker.com/_/phpmyadmin" target="_blank">hub.docker.com - Official build of phpMyAdmin</a></li>
+              <li><a href="https://hub.docker.com/_/postgres" target="_blank">hub.docker.com - Official build of Postgres</a></li>
+              <li><a href="https://hub.docker.com/_/redis" target="_blank">hub.docker.com - Official build of Redis</a></li>
+              <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Official build of Tomcat</a></li>
+              <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Official build of Wordpress</a></li>
+              <li><a href="https://docs.docker.com" target="_blank">docs.docker.com</a></li>
+              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
+              <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
           </ul>
         </p>
 
@@ -120,7 +122,7 @@
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-              <li><a href="https://nginx.com">nginx.com</a></li>
+              <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         <p>
         <p><img src="nginx-logo.png"/></p>
@@ -129,7 +131,7 @@
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><a href="https://<?php print($parent)?>.tomcat.local"><?php print($parent)?>.tomcat.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
           </ul>
         </p>
         <p><img src="tomcat.png"/></p>
