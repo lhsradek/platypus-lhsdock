@@ -9,7 +9,7 @@
     public function isSocket(String $serverName, int $port) {
       $ret = false;
       $fp = fsockopen($serverName, $port, $errno, $errstr, 0.1);
-      if($fp) {
+      if ($fp) {
         fclose($fp);
         $ret = true;
       }
