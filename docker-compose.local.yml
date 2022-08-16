@@ -6,9 +6,6 @@ networks:
     name: ${DOCKER_NETWORK}
 
 volumes:
-  mysql:
-    external: true
-    name: wordpress-db-99
   postgres:
     external: true
     name: postgres-01
@@ -18,6 +15,9 @@ volumes:
   wordpress99:
     external: true
     name: wordpress-99
+  wordpressdb99:
+    external: true
+    name: wordpress-db-99
   wordpresspma99:
     external: true
     name: wordpress-pma-99
@@ -49,10 +49,10 @@ services:
         source: ./extras/nginx/pki/${CERTNAME}-key.pem
         target: /etc/ssl/private/cacert-key.pem
         read_only: true
-      - mysql:/root/bin/volume/mysql-01:ro
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
+      - wordpressdb99:/root/bin/volume/wordpresssb-09:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-01:ro
     labels:
       - "traefik.enable=true"
