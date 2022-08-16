@@ -1,6 +1,6 @@
 ### platypus-lhsdock
 
-https://github.com/elliason/platypus-box
+https://github.com/lhsradek/platypus-lhsdock
 
 #### Setup
 
