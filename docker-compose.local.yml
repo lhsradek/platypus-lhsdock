@@ -37,14 +37,17 @@ services:
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
-      - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
       - type: bind
-        source: ./extras/nginx/pki/docker.traefik.local.pem
-        target: /etc/ssl/private/docker.traefik.local.pem
+        source: ./extras/nginx/conf.d/default.conf
+        target: /etc/nginx/conf.d/default.conf
         read_only: true
       - type: bind
-        source: ./extras/nginx/pki/docker.traefik.local-key.pem
-        target: /etc/ssl/private/docker.traefik.local-key.pem
+        source: ./extras/nginx/pki/${CERTNAME}.pem
+        target: /etc/ssl/private/cacert.pem
+        read_only: true
+      - type: bind
+        source: ./extras/nginx/pki/${CERTNAME}-key.pem
+        target: /etc/ssl/private/cacert-key.pem
         read_only: true
       - mysql:/root/bin/volume/mysql-01:ro
       - postgres:/root/bin/volume/postgres-01:ro

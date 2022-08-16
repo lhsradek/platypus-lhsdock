@@ -40,7 +40,52 @@ my $cert = "$demoCA/cacert.pem";
 my $demo = "$path/openssl";
 
 # virtuals's names in array
-my @virts = qw/lhs.intranet.local alma.intranet.local lhs.alma.local alma.alma.local alma2.intranet.local alma2.alma.local alma8.intranet.local alma8.alma.local docker.intranet.local docker.traefik.local docker5.intranet.local docker5.traefik.local mamka.intranet.local www.alma.local www.traefik.local/;
+my @virts = qw/lhs.intranet.local
+alma.intranet.local
+lhs.alma.local
+alma.alma.local
+alma2.intranet.local
+alma2.alma.local
+alma8.intranet.local
+alma8.alma.local
+mamka.intranet.local
+www.alma.local
+docker.intranet.local
+docker.traefik.local
+docker.phpmyadmin.local
+docker.mysql.local
+docker.nginx.local
+docker.nginx.local
+docker.tomcat.local
+docker.postgres.local
+docker.redis.local
+docker.wordpress.local
+pma.docker.wordpress.local
+docker5.intranet.local
+docker5.traefik.local
+docker5.phpmyadmin.local
+docker5.mysql.local
+docker5.nginx.local
+docker5.nginx.local
+docker5.tomcat.local
+docker5.postgres.local
+docker5.redis.local
+docker5.wordpress.local
+pma.docker5.wordpress.local
+docker5.intranet.local
+docker5.traefik.local
+www.intranet.local
+www.traefik.local
+www.phpmyadmin.local
+www.mysql.local
+www.nginx.local
+www.nginx.local
+www.tomcat.local
+www.postgres.local
+www.redis.local
+www.wordpress.local
+pma.www.wordpress.local
+/;
 
 &makefiles;
 =head1 create
