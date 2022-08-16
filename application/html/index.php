@@ -87,14 +87,30 @@
 	      <li><a href="https://<?php print($parent)?>.nginx.local/downloads/readme.txt"><?php print($parent)?>.nginx.local - readme</a></li>
               <li><a href="https://<?php print($parent)?>.wordpress.local" target="_blank"><?php print($parent)?>.wordpress.local</a></li>
               <li><a href="https://pma.<?php print($parent)?>.wordpress.local" target="_blank">pma.<?php print($parent)?>.wordpress.local</a></li>
-              <li><a href="https://<?php print($parent)?>.postgres.local" target="_blank"><?php print($parent)?>.postgres.local</a></li>
-              <li><a href="https://<?php print($parent)?>.phpmyadmin.local" target="_blank"><?php print($parent)?>.phpmyadmin.local</a></li>
-              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
-              <li><a href="https://<?php print($parent)?>.tomcat.local/tombola" target="_blank"><?php print($parent)?>.tomcat.local - tombola</a></li>
             </ul>
           </ul>
         </p>
 
+        <h2>Apache Tomcat</h2>
+        <h5>Webs servlet/JSP container</h5>
+        <p>
+          <ul>
+              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
+              <li><a href="https://<?php print($parent)?>.tomcat.local/tombola" target="_blank"><?php print($parent)?>.tomcat.local - tombola</a></li>
+          </ul>
+        </p>
+        <p><img src="tomcat.png"/></p>
+        <h2>nginx</h2>
+        <h5>HTTP and reverse proxy server</h5>
+        <p>
+          <ul>
+              <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
+          </ul>
+        <p>
+        <p><img src="nginx-logo.png"/></p>
+      </div>
+
+      <div class="content-column-right">
         <h2>Documentation</h2>
         <p>
           <ul>
@@ -115,30 +131,8 @@
 	  </ul>
         </p>
         <p><img src="docker.png"/></p>
-
       </div>
 
-      <div class="content-column-right">
-
-        <h2>nginx</h2>
-        <h5>HTTP and reverse proxy server</h5>
-        <p>
-          <ul>
-              <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
-          </ul>
-        <p>
-        <p><img src="nginx-logo.png"/></p>
-
-        <h2>Apache Tomcat</h2>
-        <h5>Webs servlet/JSP container</h5>
-        <p>
-          <ul>
-              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
-          </ul>
-        </p>
-        <p><img src="tomcat.png"/></p>
-
-      </div>
     </div>
   </div>
 </body>

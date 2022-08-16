@@ -47,7 +47,7 @@ HOSTNAME='lhsdock-php.nginx.local'
 | State       | Local Address:Port | Peer Address:Port | Process 
 | ----------- | ------------------ | ----------------- | -------------------------------
 | LISTEN      |   127.0.0.11:45811 | 0.0.0.0:*         |                         
-| LISTEN      |            *:9000  | *:*               |  users:(("php-fpm",pid=1,fd=7))
+| LISTEN      |            *:9000  | \*:\*               |  users:(("php-fpm",pid=1,fd=7))
 
 
 | TCP Connections (Source Host:Port)                 |      Packets    |    Bytes  |  Flag   |  Iface        
