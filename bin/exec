@@ -4,3 +4,5 @@ echo == lhsdock exec ==
 
 # docker exec -it lhsdock sh
 docker exec -it lhsdock bash
+
+# docker exec -it lhsdock-php sh

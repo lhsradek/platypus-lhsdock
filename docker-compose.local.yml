@@ -4,6 +4,9 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
+  intnet:
+    external: false
+    name: ${INT_NETWORK}
 
 volumes:
   postgres:
@@ -58,6 +61,9 @@ services:
       - wordpress99:/root/bin/volume/wordpress-99:ro
       - wordpressdb99:/root/bin/volume/wordpresssb-09:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-01:ro
+    networks:
+      - default
+      - intnet
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -73,8 +79,12 @@ services:
     # Alpine Linux
     image: php:fpm-alpine
     container_name: "${APP_ID}-php"
-    hostname: "${APP_HOST}"
+    hostname: "lhsdock-php.${INT_NETWORK}"
     restart: always
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
+    networks:
+      - intnet
+    labels:
+      - "traefik.enable=false"
