@@ -9,9 +9,12 @@ volumes:
   postgres:
     external: true
     name: postgres-01
-  redis:
+  redis01:
     external: true
     name: redis-01
+  redis02:
+    external: true
+    name: redis-02
   wordpress99:
     external: true
     name: wordpress-99
@@ -50,7 +53,8 @@ services:
         target: /etc/ssl/private/cacert-key.pem
         read_only: true
       - postgres:/root/bin/volume/postgres-01:ro
-      - redis:/root/bin/volume/redis-01:ro
+      - redis01:/root/bin/volume/redis-01:ro
+      - redis02:/root/bin/volume/redis-02:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
       - wordpressdb99:/root/bin/volume/wordpresssb-09:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-01:ro
@@ -60,8 +64,8 @@ services:
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
-      - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.scheme=https"
-      - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.port=443"
+      # - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.scheme=https"
+      # - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.port=443"
     links:
       - php
 
