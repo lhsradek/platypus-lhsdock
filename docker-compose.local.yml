@@ -18,7 +18,7 @@ volumes:
   wordpress99:
     external: true
     name: wordpress-99
-  wordpresspma:
+  wordpresspma99:
     external: true
     name: wordpress-pma-99
 
@@ -53,7 +53,7 @@ services:
       - postgres:/root/bin/volume/postgres-01:ro
       - redis:/root/bin/volume/redis-01:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
-      - wordpresspma:/root/bin/volume/wordpress-pma-01:ro
+      - wordpresspma99:/root/bin/volume/wordpress-pma-01:ro
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
