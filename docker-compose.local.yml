@@ -4,12 +4,9 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
-  intnet:
-    external: false
-    name: ${INT_NETWORK}
 
 volumes:
-  postgres:
+  postgres01:
     external: true
     name: postgres-01
   redis01:
@@ -43,14 +40,13 @@ services:
       - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./extras/nginx/pki/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
       - ./extras/nginx/pki/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
-      - postgres:/root/bin/volume/postgres-01:ro
+      - postgres01:/root/bin/volume/postgres-01:ro
       - redis01:/root/bin/volume/redis-01:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
       - wordpressdb99:/root/bin/volume/wordpresssb-09:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-09:ro
     networks:
       - default
-      - intnet
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -64,10 +60,8 @@ services:
     # Alpine Linux
     image: php:fpm-alpine
     container_name: "${APP_ID}-php"
-    hostname: "lhsdock-php.${INT_NETWORK}"
+    hostname: "${APP_HOST}-php"
     restart: always
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
-    networks:
-      - intnet
