@@ -38,16 +38,16 @@ https://github.com/lhsradek/platypus-lhsdock
 
 HOSTNAME=docker.nginx.local
 
-| State       | Local Address:Port | Peer Address:Port | Process 
-| ----------- | ------------------ | ----------------- | ----------------------------
-| LISTEN      |      0.0.0.0:80    | 0.0.0.0:*         | users:(("nginx",pid=1,fd=8))       
-| LISTEN      |   127.0.0.11:36947 | 0.0.0.0:*                                              
+| State       | Local Address:Port | Process 
+| ----------- | ------------------ | ----------------------------
+| LISTEN      |      0.0.0.0:80    | users:(("nginx",pid=1,fd=8))       
+| LISTEN      |   127.0.0.11:36947 |                                    
 
 HOSTNAME='lhsdock-php.nginx.local'
-| State       | Local Address:Port | Peer Address:Port | Process 
-| ----------- | ------------------ | ----------------- | -------------------------------
-| LISTEN      |   127.0.0.11:45811 | 0.0.0.0:*         |                         
-| LISTEN      |            *:9000  | \*:\*               |  users:(("php-fpm",pid=1,fd=7))
+| State       | Local Address:Port | Process 
+| ----------- | ------------------ | -------------------------------
+| LISTEN      |   127.0.0.11:45811 |                         
+| LISTEN      |            *:9000  | users:(("php-fpm",pid=1,fd=7))
 
 
 | TCP Connections (Source Host:Port)                 |      Packets    |    Bytes  |  Flag   |  Iface        
