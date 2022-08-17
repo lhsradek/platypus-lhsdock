@@ -84,7 +84,6 @@
             <li><a href="https://<?php print($parent)?>.traefik.local" target="_blank"><?php print($parent)?>.traefik.local</a></li>
             <ul>
 	      <li><a href="https://<?php print($parent)?>.nginx.local"><?php print($parent)?>.nginx.local</a></li>
-	      <li><a href="https://<?php print($parent)?>.nginx.local/downloads/readme.txt"><?php print($parent)?>.nginx.local - readme</a></li>
               <li><a href="https://<?php print($parent)?>.wordpress.local" target="_blank"><?php print($parent)?>.wordpress.local</a></li>
               <li><a href="https://pma.<?php print($parent)?>.wordpress.local" target="_blank">pma.<?php print($parent)?>.wordpress.local</a></li>
             </ul>
@@ -96,7 +95,6 @@
         <p>
           <ul>
               <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
-              <li><a href="https://<?php print($parent)?>.tomcat.local/tombola" target="_blank"><?php print($parent)?>.tomcat.local - tombola</a></li>
           </ul>
         </p>
         <p><img src="tomcat.png"/></p>
