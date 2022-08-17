@@ -15,9 +15,6 @@ volumes:
   redis01:
     external: true
     name: redis-01
-  redis02:
-    external: true
-    name: redis-02
   wordpress99:
     external: true
     name: wordpress-99
@@ -30,7 +27,7 @@ volumes:
 
 services:
   # Alpine Linux
-  nginx:
+  weblhs:
     build:
       context: ./context
       dockerfile: Dockerfile 
@@ -43,24 +40,14 @@ services:
     volumes:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
-      - type: bind
-        source: ./extras/nginx/conf.d/default.conf
-        target: /etc/nginx/conf.d/default.conf
-        read_only: true
-      - type: bind
-        source: ./extras/nginx/pki/${CERTNAME}.pem
-        target: /etc/ssl/private/cacert.pem
-        read_only: true
-      - type: bind
-        source: ./extras/nginx/pki/${CERTNAME}-key.pem
-        target: /etc/ssl/private/cacert-key.pem
-        read_only: true
+      - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./extras/nginx/pki/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
+      - ./extras/nginx/pki/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
       - postgres:/root/bin/volume/postgres-01:ro
       - redis01:/root/bin/volume/redis-01:ro
-      - redis02:/root/bin/volume/redis-02:ro
       - wordpress99:/root/bin/volume/wordpress-99:ro
       - wordpressdb99:/root/bin/volume/wordpresssb-09:ro
-      - wordpresspma99:/root/bin/volume/wordpress-pma-01:ro
+      - wordpresspma99:/root/bin/volume/wordpress-pma-09:ro
     networks:
       - default
       - intnet
@@ -70,12 +57,10 @@ services:
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
-      # - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.scheme=https"
-      # - "traefik.http.services.nginx-${APP_ID}.loadbalancer.server.port=443"
-    links:
-      - php
+      # - "traefik.http.services.${APP_ID}.loadbalancer.server.scheme=https"
+      # - "traefik.http.services.${APP_ID}.loadbalancer.server.port=443"
 
-  php:
+  weblhs-php:
     # Alpine Linux
     image: php:fpm-alpine
     container_name: "${APP_ID}-php"
@@ -86,5 +71,3 @@ services:
       - ./application/html:/var/www/html:ro
     networks:
       - intnet
-    labels:
-      - "traefik.enable=false"
