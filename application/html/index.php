@@ -64,7 +64,7 @@
 </head>
 
 <body>
-  <h1><strong><?php print($index->getServerName())?></strong><!--  <img src="poweredby.png"/>--></h1>
+  <h1><strong><?php print($index->getServerName())?></strong> <a href="https://github.com/lhsradek/platypus-lhsdock" target="_blank"><img src="github.png"/></a></h1>
   <div class="content">
 <?php if ($printEnv) { ?>
     <div class="content-middle">
