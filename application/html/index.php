@@ -88,15 +88,6 @@
           </ul>
         </p>
 
-        <h2>Apache Tomcat</h2>
-        <h5>Webs servlet/JSP container</h5>
-        <p>
-          <ul>
-              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
-              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
-          </ul>
-        </p>
-        <p><img src="tomcat.png"/></p>
         <h2>nginx</h2>
         <h5>HTTP and reverse proxy server</h5>
         <p>
@@ -106,6 +97,17 @@
           </ul>
         <p>
         <p><img src="nginx-logo.png"/></p>
+
+        <h2>Apache Tomcat</h2>
+        <h5>Webs servlet/JSP container</h5>
+        <p>
+          <ul>
+              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+          </ul>
+        </p>
+        <p><img src="tomcat.png"/></p>
+
       </div>
 
       <div class="content-column-right">
