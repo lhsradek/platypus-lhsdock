@@ -93,6 +93,7 @@
         <p>
           <ul>
               <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
         <p><img src="tomcat.png"/></p>
@@ -100,7 +101,8 @@
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-              <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
+            <li><a href="https://<?php print($parent)?>.nginx.local/downloads/" target="_blank"><?php print($parent)?>.nginx.local - downloads</a></li>
+            <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         <p>
         <p><img src="nginx-logo.png"/></p>
