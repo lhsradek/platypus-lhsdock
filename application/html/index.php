@@ -96,7 +96,6 @@
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         <p>
-        <p><img src="nginx-logo.png"/></p>
 
         <h2>Apache Tomcat</h2>
         <h5>Webs servlet/JSP container</h5>
