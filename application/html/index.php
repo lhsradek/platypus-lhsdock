@@ -64,7 +64,7 @@
 </head>
 
 <body>
-  <h1><strong><?php print($index->getServerName())?></strong> <a href="https://github.com/lhsradek/platypus-lhsdock" target="_blank"><img src="github.png"/></a></h1>
+  <h1><strong><?php print($index->getServerName())?></strong> <a href="https://github.com/lhsradek/platypus-lhsdock" target="_blank"><img src="github.png"/></a> <a href="https://hub.docker.com/repository/docker/lhsradek/lhsdock" target="_blank"><img src="docker.png"/></a></h1>
   <div class="content">
 <?php if ($printEnv) { ?>
     <div class="content-middle">
@@ -126,7 +126,7 @@
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
 	  </ul>
         </p>
-        <p><img src="docker.png"/></p>
+        <p><img src="docker-logo.png"/></p>
       </div>
 
     </div>
