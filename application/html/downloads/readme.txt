@@ -22,7 +22,6 @@ https://github.com/lhsradek/platypus-lhsdock
 | ---------------- | ---------- | ---------------- |-------------
 | lhsradek/lhsdock | v3         | 25 .. 63.4MB ;-) | nginx:alpine
 | php              | fpm-alpine | 73.4MB           |
-| nginx            | alpine     | 23.5MB           |
 
 | IMAGES              | PORTS           | NAMES
 | ------------------- | --------------- | -----------
