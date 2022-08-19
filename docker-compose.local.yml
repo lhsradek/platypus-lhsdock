@@ -41,8 +41,8 @@ services:
       - ./context/root/bin:/root/bin
       - ./application/html:/var/www/html:ro
       - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./extras/nginx/pki/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
-      - ./extras/nginx/pki/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
+      # - ./extras/nginx/pki/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
+      # - ./extras/nginx/pki/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
       # - postgres01:/root/bin/volume/postgres-01:ro
       # - redis01:/root/bin/volume/redis-01:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
