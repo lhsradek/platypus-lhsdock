@@ -1,57 +1,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <?php
-  $printEnv = false;
+$printEnv = false;
 #  $printEnv = true;
 
-  class IndexController {
+class IndexController {
 
-    public function isSocket(String $serverName, int $port) {
-      $ret = false;
-      $fp = fsockopen($serverName, $port, $errno, $errstr, 0.1);
-      if ($fp) {
-        fclose($fp);
-        $ret = true;
-      }
-      return $ret;
-    }
+	public function isSocket(String $serverName, int $port) {
+		$ret = false;
+		$fp = fsockopen($serverName, $port, $errno, $errstr, 0.1);
+		if ($fp) {
+			fclose($fp);
+			$ret = true;
+		}
+		return $ret;
+	}
 
-    public function getServerEnv() {
-      $ret = getEnv();
-      ksort($ret);
-      return $ret;
-    }
+	public function getServerEnv() {
+		$ret = getEnv();
+		ksort($ret);
+		return $ret;
+	}
 
-    public function getServerName() {
-      $ret = $_SERVER['SERVER_NAME'];
-      return $ret;
-    }
+	public function getServerName() {
+		$ret = $_SERVER['SERVER_NAME'];
+		return $ret;
+	}
 
-    public function getServerParent() {
-      switch ($this->getServerName()) {
-        case "docker.nginx.local":
-          $ret = "docker";
-          break;
-        case "docker5.nginx.local":
-          $ret = "docker5";
-          break;
-	default:
-	  $ret = "www";
-      }
-      return $ret;
-    }
+	public function getServerPort() {
+		$ret = $_SERVER['HTTP_X_FORWARDED_PORT'];
+		return $ret;
+	}
 
-  }
+	public function getPort() {
+		$serverPort = $this->getServerPort();
+		if ($serverPort == 443) {
+			$ret = "";
+		} else {
+			$ret = ":" . $serverPort;
+		}
+		return $ret;
+	}
 
-  $index = new IndexController();
-  $parent = $index->getServerParent();
-  $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-  $env = "";
-  if ($printEnv) {
-    foreach($index->getServerEnv() as $key => $val) {
-      $env .= @sprintf("<strong>%s</strong>:'%s'\n", $key, $val);
-    }
-  }
+	public function getParent() {
+		switch ($this->getServerName()) {
+		case "docker.nginx.local":
+			$ret = "docker";
+			break;
+		case "docker5.nginx.local":
+			$ret = "docker5";
+			break;
+		default:
+			$ret = "www";
+		}
+		return $ret;
+	}
+}
+
+$index = new IndexController();
+$parent = $index->getParent();
+$port = $index->getPort();
+
+$serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
+$env = "";
+if ($printEnv) {
+	foreach($index->getServerEnv() as $key => $val) {
+    		$env .= @sprintf("<strong>%s</strong>:'%s'\n", $key, $val);
+	}
+}
 
 ?>
 
@@ -81,12 +97,11 @@
         <h2>Links</h2>
         <p>
           <ul>
-            <li><a href="https://<?php print($parent)?>.traefik.local" target="_blank"><?php print($parent)?>.traefik.local</a></li>
-            <li><a href="https://<?php print($parent)?>.wordpress.local" target="_blank"><?php print($parent)?>.wordpress.local</a></li>
-            <!-- <li><a href="https://<?php print($parent)?>.wordpress.local/phpinfo.php" target="_blank"><?php print($parent)?>.wordpress.local - phpinfo</a></li> -->
-            <li><a href="https://pma.<?php print($parent)?>.wordpress.local" target="_blank">pma.<?php print($parent)?>.wordpress.local</a></li>
-            <!-- <li><a href="https://pma.<?php print($parent)?>.wordpress.local/phpinfo.php" target="_blank">pma.<?php print($parent)?>.wordpress.local - phpinfo</a></li> -->
-            <!-- <li><a href="https://<?php print($parent)?>.phpmyadmin.local" target="_blank"><?php print($parent)?>.phpmyadmin.local</a></li> -->
+            <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
+            <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li>
+            <!-- <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li> -->
+            <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li>
+            <!-- <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">pma.".$parent.".wordpress.local - phpinfo")?></a></li> -->
             <!-- <li><a href="https://wp.dantoaphoto.local" target="_blank">wp.dantoaphoto.local</a></li>
             <li><a href="https://phpmyadmin.dantoaphoto.local" target="_blank">phpmyadmin.dantoaphoto.local</a></li> -->
           </ul>
@@ -96,8 +111,9 @@
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-            <li><a href="https://<?php print($parent)?>.nginx.local/phpinfo.php" target="_blank"><?php print($parent)?>.nginx.local - phpinfo</a></li>
-            <li><a href="https://<?php print($parent)?>.nginx.local/downloads/" target="_blank"><?php print($parent)?>.nginx.local - downloads</a></li>
+            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."\" target=\"_blank\">".$parent.".nginx.local")?></a></li>
+            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".nginx.local - phpinfo")?></a></li>
+            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         <p>
@@ -106,7 +122,7 @@
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><a href="https://<?php print($parent)?>.tomcat.local" target="_blank"><?php print($parent)?>.tomcat.local</a></li>
+              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
