@@ -1,7 +1,7 @@
 .env
 lhsdock-v3.img
-extras/nginx/pki/
+certs/
 context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
-certs/
+logs/

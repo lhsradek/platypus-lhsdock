@@ -83,15 +83,20 @@
           <ul>
             <li><a href="https://<?php print($parent)?>.traefik.local" target="_blank"><?php print($parent)?>.traefik.local</a></li>
             <li><a href="https://<?php print($parent)?>.wordpress.local" target="_blank"><?php print($parent)?>.wordpress.local</a></li>
+            <!-- <li><a href="https://<?php print($parent)?>.wordpress.local/phpinfo.php" target="_blank"><?php print($parent)?>.wordpress.local - phpinfo</a></li> -->
             <li><a href="https://pma.<?php print($parent)?>.wordpress.local" target="_blank">pma.<?php print($parent)?>.wordpress.local</a></li>
+            <!-- <li><a href="https://pma.<?php print($parent)?>.wordpress.local/phpinfo.php" target="_blank">pma.<?php print($parent)?>.wordpress.local - phpinfo</a></li> -->
             <!-- <li><a href="https://<?php print($parent)?>.phpmyadmin.local" target="_blank"><?php print($parent)?>.phpmyadmin.local</a></li> -->
+            <!-- <li><a href="https://wp.dantoaphoto.local" target="_blank">wp.dantoaphoto.local</a></li>
+            <li><a href="https://phpmyadmin.dantoaphoto.local" target="_blank">phpmyadmin.dantoaphoto.local</a></li> -->
           </ul>
         </p>
 
-        <h2>nginx</h2>
+        <h2>Nginx</h2>
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
+            <li><a href="https://<?php print($parent)?>.nginx.local/phpinfo.php" target="_blank"><?php print($parent)?>.nginx.local - phpinfo</a></li>
             <li><a href="https://<?php print($parent)?>.nginx.local/downloads/" target="_blank"><?php print($parent)?>.nginx.local - downloads</a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
@@ -106,7 +111,6 @@
           </ul>
         </p>
         <p><img src="tomcat.png"/></p>
-
       </div>
 
       <div class="content-column-right">
