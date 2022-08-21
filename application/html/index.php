@@ -111,7 +111,6 @@ if ($printEnv) {
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."\" target=\"_blank\">".$parent.".nginx.local")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".nginx.local - phpinfo")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
