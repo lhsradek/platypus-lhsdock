@@ -102,7 +102,7 @@ if ($printEnv) {
           <ul>
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li>
-            <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li>
+            <!-- <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li> -->
             <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li>
             <!-- <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">pma.".$parent.".wordpress.local - phpinfo")?></a></li> -->
             <!-- <li><a href="https://wp.dantoaphoto.local" target="_blank">wp.dantoaphoto.local</a></li>
