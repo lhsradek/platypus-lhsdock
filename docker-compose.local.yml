@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile 
     image: lhsradek/lhsdock:v3
     container_name: "${APP_ID}"
-    hostname: "${APP_HOST}"
+    hostname: "${APP_HOST}.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     # ports:
     # - 4443:443
@@ -56,7 +56,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.${APP_ID}-weblhs-public.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.${APP_ID}-weblhs-public.rule=Host(`${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.${APP_ID}-weblhs-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-weblhs-public.tls=true"
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
@@ -66,7 +66,7 @@ services:
     # Alpine Linux
     image: php:fpm-alpine
     container_name: "${APP_ID}-php"
-    hostname: "${APP_ID}"
+    hostname: "${APP_ID}.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
       - ./application/html:/var/www/html:ro
