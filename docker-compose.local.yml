@@ -37,8 +37,6 @@ services:
     # - 80:80
     # - 443:443
     volumes:
-      # - ./context/root/bin:/root/bin:rw
-      - /root/bin/alpine:/root/bin/alpine:ro
       - ./application/html:/var/www/html:ro
       - ./extras/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./logs:/var/log/nginx
@@ -68,6 +66,7 @@ services:
     hostname: "weblhs-php.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
+      # - /root/bin/alpine:/root/bin/alpine:ro
       - ./application/html:/var/www/html:ro
       # - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
       # - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
