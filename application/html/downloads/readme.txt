@@ -17,7 +17,7 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 ```READme.txt   add.sh       lhsdock      lhsvol       platypus.pl```
 
 5) exec lhsdock ```bin/restart```
-================= STOP =================
+```================= STOP =================
 Stopping lhsdock-php ... done
 Stopping lhsdock     ... done
 Removing lhsdock-php ... done
@@ -29,7 +29,7 @@ Pulling weblhs     ... done
 Pulling weblhs-php ... done
 Creating network "nginx.local" with the default driver
 Creating lhsdock     ... done
-Creating lhsdock-php ... done
+Creating lhsdock-php ... done```
 
 6) exec lhsdock ```bin/stop```
 
