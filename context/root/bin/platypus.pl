@@ -55,7 +55,6 @@ docker.traefik.local
 docker.phpmyadmin.local
 docker.mysql.local
 docker.nginx.local
-docker.nginx.local
 docker.tomcat.local
 docker.postgres.local
 docker.redis.local
@@ -65,7 +64,6 @@ docker5.intranet.local
 docker5.traefik.local
 docker5.phpmyadmin.local
 docker5.mysql.local
-docker5.nginx.local
 docker5.nginx.local
 docker5.tomcat.local
 docker5.postgres.local
@@ -78,7 +76,6 @@ www.intranet.local
 www.traefik.local
 www.phpmyadmin.local
 www.mysql.local
-www.nginx.local
 www.nginx.local
 www.tomcat.local
 www.postgres.local

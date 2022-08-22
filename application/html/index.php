@@ -28,13 +28,16 @@ class IndexController {
 	}
 
 	public function getServerPort() {
-		$ret = $_SERVER['HTTP_X_FORWARDED_PORT'];
+		$ret = 80;
+		if (@$_SERVER['HTTP_X_FORWARDED_PORT']) {
+			$ret = $_SERVER['HTTP_X_FORWARDED_PORT'];
+		}
 		return $ret;
 	}
 
 	public function getPort() {
 		$serverPort = $this->getServerPort();
-		if ($serverPort == 443) {
+		if ($serverPort == 80 || $serverPort == 443) {
 			$ret = "";
 		} else {
 			$ret = ":" . $serverPort;
@@ -99,7 +102,7 @@ if ($printEnv) {
           <ul>
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li>
-            <!-- <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li> -->
+            <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li>
             <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li>
             <!-- <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">pma.".$parent.".wordpress.local - phpinfo")?></a></li> -->
             <!-- <li><a href="https://wp.dantoaphoto.local" target="_blank">wp.dantoaphoto.local</a></li>
@@ -111,7 +114,7 @@ if ($printEnv) {
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".nginx.local - phpinfo")?></a></li>
+            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\">".$parent.".nginx.local - phpinfo")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
