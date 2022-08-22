@@ -41,7 +41,7 @@ Creating lhsdock-php ... done
 
 | OPTIONAL | REPOSITORY         |  TAG       | SIZE             | FROM
 | -------- | ------------------ | ---------- | ---------------- | -------------
-|          | nginx:alpine       | latest     | 23               |              
+|          | nginx:alpine       | latest     | 23.5MB           |              
 | *        | lhsradek/lhsdock   | v3         | 25 .. 63.4MB ;-) | nginx:alpine 
 |          | php                | fpm-alpine | 73.4MB           |
 
