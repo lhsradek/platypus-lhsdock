@@ -1,6 +1,6 @@
 ### platypus-lhsdock
 
-https://github.com/lhsradek/platypus-lhsdock
+https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 #### Setup
 
@@ -54,10 +54,5 @@ HOSTNAME='lhsdock-php.nginx.local'
 |┌platypus-box_traefik_1.platypus-local-dev-n:36236  |    =        8   |     2025  |  --A-   |  eth1
 |└docker.nginx.local:80                              |    =       24   |    29881  |  CLOSE  |  eth1
 |┌docker.nginx.local:59090                           |    =        5   |     1660  |  CLOSE  |  eth0
-|└lhsdock-php.nginx.local:9000                       |    =        5   |     4508  |  CLOSE  |  eth0
-
-| TCP Connections (Source Host:Port)                 |      Packets    |    Bytes  |  Flag   |  Iface        
-| -------------------------------------------------- | --------------- | --------- | ------- | ------
-|┌lhsdock.nginx.local:59090                          |    =        5   |     1660  |  CLOSE  |  eth0
 |└lhsdock-php.nginx.local:9000                       |    =        5   |     4508  |  CLOSE  |  eth0
 
