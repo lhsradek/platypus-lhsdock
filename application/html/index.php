@@ -83,7 +83,7 @@ if ($printEnv) {
 </head>
 
 <body>
-  <h1><strong><?php print($index->getServerName())?></strong> <a href="https://github.com/lhsradek/platypus-lhsdock" target="_blank"><img src="github.png"/></a> <a href="https://hub.docker.com/repository/docker/lhsradek/lhsdock" target="_blank"><img src="docker.png"/></a> <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="facebook.png"/></a> <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="in.png"/></a> <a href="mailto:radek.kadner@gmail.com"><img src="mail.png"/></a></h1>
+  <h1><strong><?php print($index->getServerName())?></strong> <a href="https://github.com/lhsradek/platypus-lhsdock" target="_blank"><img src="github.png"/></a> <a href="https://hub.docker.com/repository/docker/lhsradek/lhsdock" target="_blank"><img src="docker.png"/></a> <a href="https://github.com/lhsradek/platypus-wordpress-mysql" target="_blank"><img src="github-wordpress.png"/></a> <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="facebook.png"/></a> <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="in.png"/></a> <a href="mailto:radek.kadner@gmail.com"><img src="mail.png"/></a></h1>
   <div class="content">
 <?php if ($printEnv) { ?>
     <div class="content-middle">
