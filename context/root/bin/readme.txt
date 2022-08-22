@@ -57,7 +57,7 @@ Creating lhsdock-php ... done
 | nginx.local                | bridge | local
 
 
-HOSTNAME=www.nginx.local
+HOSTNAME='www.nginx.local'
 
 | State       | Local Address:Port | Process 
 | ----------- | ------------------ | ----------------------------
