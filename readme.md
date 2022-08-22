@@ -18,7 +18,8 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 5) exec lhsdock ```bin/restart```
 
-```================= STOP =================
+```
+================= STOP =================
 Stopping lhsdock-php ... done
 Stopping lhsdock     ... done
 Removing lhsdock-php ... done
