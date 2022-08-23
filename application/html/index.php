@@ -133,7 +133,7 @@ if ($printEnv) {
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/tombola\" target=\"_blank\">".$parent.".tomcat.local - tombola")?></a></li>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/tombola-javadoc\" target=\"_blank\">".$parent.".tomcat.local - tombola-javadoc")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/info.jsp\" target=\"_blank\">".$parent.".tomcat.local - info")?></a></li>
+              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/info.jsp\" target=\"_blank\">".$parent.".tomcat.local - jspinfo")?></a></li>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/manager\" target=\"_blank\">".$parent.".tomcat.local - manager")?></a></li>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/docs\" target=\"_blank\">".$parent.".tomcat.local - documentation")?></a></li>
 <!--              <li><?php print("<a href=\"https://adminer.".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local - adminer")?></a></li> -->
