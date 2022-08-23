@@ -125,6 +125,9 @@ if ($printEnv) {
         <p>
           <ul>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li>
+              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/manager\" target=\"_blank\">".$parent.".tomcat.local - manager")?></a></li>
+<!--              <li><?php print("<a href=\"https://adminer.".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local - adminer")?></a></li> -->
+              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/tombola\" target=\"_blank\">".$parent.".tomcat.local - tombola")?></a></li>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
