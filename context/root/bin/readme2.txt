@@ -1,22 +1,13 @@
-### platypus-lhsdock
+### lhsdock-fpm
 
-https://hub.docker.com/repository/docker/lhsradek/lhsdock
+https://hub.docker.com/repository/docker/lhsradek/fpm
 
 #### Setup
 
 1) create .env file ```cp .env.dist .env```
 2) run lhsdock ```bin/start```
 3) exec lhsdock ```bin/exec```
-
-4) If used lhsradek/lhsdock * to run use:
-
-```/ # perl /root/bin/platypus.pl```
-
-``` # ls /root/bin```
-
-```READme.txt   add.sh       lhsdock      lhsvol       platypus.pl```
-
-5) exec lhsdock ```bin/restart```
+4) exec lhsdock ```bin/restart```
 
 ```
 ================= STOP =================
@@ -35,15 +26,16 @@ Creating lhsdock-php ... done
 ```
 
 
-6) exec lhsdock ```bin/stop```
+5) exec lhsdock ```bin/stop```
 
 ## Setup
 
 | OPTIONAL | REPOSITORY         |  TAG       | SIZE             | FROM
-| -------- | ------------------ | ---------- | ---------------- | -------------
+| -------- | ------------------ | ---------- | ---------------- | ---------------
 |          | nginx:alpine       | latest     | 23.5MB           |              
 | *        | lhsradek/lhsdock   | v3         | 25 .. 63.5MB ;-) | nginx:alpine 
 |          | php                | fpm-alpine | 73.4MB           |
+| *        | lhsradek/fpm       | v1         | 73.4MB           | pgp:fpm-alpine
 
 | IMAGES              | PORTS           | NAMES       | HOSTNAMES
 | ------------------- | --------------- | ----------- | ----------------------

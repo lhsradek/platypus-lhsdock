@@ -1,5 +1,6 @@
 .env
 lhsdock-v3.img
+lhsdock-fpm-v1.img
 certs/
 context/root/bin/demoCA/
 context/root/bin/lhsdock/

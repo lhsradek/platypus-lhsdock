@@ -63,7 +63,6 @@ class IndexController {
 $index = new IndexController();
 $parent = $index->getParent();
 $port = $index->getPort();
-
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 $env = "";
 if ($printEnv) {
@@ -111,10 +110,10 @@ if ($printEnv) {
             <!-- <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li> -->
             <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li>
             <!-- <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">pma.".$parent.".wordpress.local - phpinfo")?></a></li> -->
-            <!-- <li><?php print("<a href=\"https://wp.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">wp.".$parent.".dantoaphoto.local")?></a></li>
-            <li><?php print("<a href=\"https://phpmyadmin.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">phpmyadmin.".$parent.".dantoaphoto.local")?></a></li> -->
+            <li><?php print("<a href=\"https://wp.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">wp.".$parent.".dantoaphoto.local")?></a></li>
+            <li><?php print("<a href=\"https://phpmyadmin.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">phpmyadmin.".$parent.".dantoaphoto.local")?></a></li>
           </ul>
-        </p>
+	  </p>
 
         <h2>Nginx</h2>
         <h5>HTTP and reverse proxy server</h5>
@@ -130,17 +129,11 @@ if ($printEnv) {
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/tombola\" target=\"_blank\">".$parent.".tomcat.local - tombola")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/tombola-javadoc\" target=\"_blank\">".$parent.".tomcat.local - tombola-javadoc")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/info.jsp\" target=\"_blank\">".$parent.".tomcat.local - jspinfo")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/manager\" target=\"_blank\">".$parent.".tomcat.local - manager")?></a></li>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."/docs\" target=\"_blank\">".$parent.".tomcat.local - documentation")?></a></li>
-<!--              <li><?php print("<a href=\"https://adminer.".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local - adminer")?></a></li> -->
+              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\">".$parent.".tomcat.local")?></a></li>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
-        <p><img src="tomcat.png" width="63" height="40"/></p>
+	<p><img src="tomcat.png" width="63" height="40"/></p>
       </div>
 
       <div class="content-column-right">

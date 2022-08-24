@@ -1,0 +1,10 @@
+FROM php:fpm-alpine
+LABEL org.opencontainers.image.authors="radek.kadner@gmail.com"
+LABEL description="fpm"
+RUN mkdir /root/bin /root/bin/alpine
+ADD --chown=44 /root/bin/readme2.txt /root/bin/readme.txt
+ADD --chown=55 /root/bin/alpine/add.sh /root/bin/alpine
+ADD --chown=55 /root/bin/alpine/timezone.sh /root/bin/alpine
+EXPOSE 9000
+RUN apk add --update bash openssl
+RUN docker-php-ext-install mysqli pdo pdo_mysql
