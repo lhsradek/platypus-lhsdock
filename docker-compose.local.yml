@@ -66,11 +66,8 @@ services:
 
   weblhs-php:
     # Alpine Linux
-    build:
-      context: ./context
-      dockerfile: Dockerfile2
-    image: lhsradek/fpm:v1
     # image: php:fpm-alpine
+    image: lhsradek/fpm:v1
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}

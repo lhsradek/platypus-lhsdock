@@ -49,8 +49,6 @@ fi
 
 IMG="lhsradek/lhsdock:v3"
 IMGFILE="lhsdock-v3.img"
-IMG2="lhsradek/fpm:v1"
-IMGFILE2="lhsdock-fpm-v1.img"
 if !(docker-compose ${ARGS} pull) # !
 then
   if !(docker image inspect "${IMG}" >/dev/null 2>&1)
@@ -59,21 +57,14 @@ then
     then
       docker-compose ${ARGS} build --no-cache
       docker save -o ${IMGFILE} ${IMG}
-      docker save -o ${IMGFILE2} ${IMG2}
       docker image rm ${IMG}
-      docker image rm ${IMG2}
       docker container prune -f
     fi
     if (docker load -i ${IMGFILE})
     then	   
       echo "An image file:'${IMGFILE}' is loaded.."
     fi
-    if (docker load -i ${IMGFILE2})
-    then	   
-      echo "An image file:'${IMGFILE2}' is loaded.."
-    fi
     docker push ${IMG} # !
-    docker push ${IMG2} # !
   fi
   docker-compose ${ARGS} pull # !
 fi
