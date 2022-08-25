@@ -21,6 +21,9 @@ volumes:
   wordpressredis99:
     external: true
     name: wordpress-redis-99
+  tomboladb:
+    external: true
+    name: tombola-db
 
 services:
   # Alpine Linux
@@ -47,6 +50,7 @@ services:
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-99:ro
       - wordpressredis99:/root/bin/volume/wordpress-redis-99:ro
+      - tomboladb:/root/bin/volume/tombola-db:ro
     networks:
       - intnet
       - default
