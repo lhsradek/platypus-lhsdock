@@ -9,4 +9,3 @@ ADD --chown=55 /root/bin/alpine/add.sh /root/bin/alpine
 ADD --chown=55 /root/bin/alpine/timezone.sh /root/bin/alpine
 EXPOSE 80 443
 RUN apk add --no-cache bash openssl perl-crypt-openssl-x509
-RUN chown -R www-data:www-data /var/www/html

@@ -55,7 +55,7 @@ then
   then
     if [[ ! -f "$rootPath/${IMGFILE}" ]]
     then
-      docker-compose ${ARGS} build --no-cache
+      docker compose ${ARGS} build --no-cache --compress
       docker save -o ${IMGFILE} ${IMG}
       docker image rm ${IMG}
       docker container prune -f
