@@ -8,13 +8,29 @@ class IndexController {
 
 	public function isSocket(String $serverName, int $port) {
 		$ret = false;
-		$fp = fsockopen($serverName, $port, $errno, $errstr, 0.1);
+		$fp = fsockopen($serverName, $port, $errno, $errstr, 1);
 		if ($fp) {
 			fclose($fp);
 			$ret = true;
 		}
 		return $ret;
 	}
+
+	public function isUrl(String $url) {
+		$ret = true;
+		stream_context_set_default( [
+    			'ssl' => [
+        			'verify_peer' => false,
+        			'verify_peer_name' => false,
+    			],
+		]);
+		$file_headers = get_headers($url);
+		if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+    			$ret = false;
+		}
+		return $ret;
+	}
+
 
 	public function getServerEnv() {
 		$ret = getEnv();
@@ -64,6 +80,9 @@ $index = new IndexController();
 $parent = $index->getParent();
 $port = $index->getPort();
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
+$isWp = $index->isUrl("https://".$parent.".wordpress.local");
+$isWpa = $index->isUrl("https://wpa.".$parent.".wordpress.local");
+$isPma = $index->isUrl("https://pma.".$parent.".wordpress.local");
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
@@ -106,13 +125,9 @@ if ($printEnv) {
         <p>
           <ul>
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
-            <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li>
-            <!-- <li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".wordpress.local - phpinfo")?></a></li> -->
-            <li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li>
-            <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li>
-            <!-- <li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."/phpinfo.php\" target=\"_blank\">pma.".$parent.".wordpress.local - phpinfo")?></a></li> -->
-            <!-- <li><?php print("<a href=\"https://wp.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">wp.".$parent.".dantoaphoto.local")?></a></li>
-            <li><?php print("<a href=\"https://phpmyadmin.".$parent.".dantoaphoto.local".$port."\" target=\"_blank\">phpmyadmin.".$parent.".dantoaphoto.local")?></a></li> -->
+            <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
+	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
+            <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
           </ul>
 	  </p>
 
