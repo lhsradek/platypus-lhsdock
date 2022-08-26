@@ -74,5 +74,6 @@ services:
     volumes:
       # - /root/bin/alpine:/root/bin/alpine:ro
       - ./application/html:/var/www/html:ro
+      - ./context/root/bin/alpine/add.sh:/root/bin/alpine/add2.sh:rw
     networks:
       - intnet
