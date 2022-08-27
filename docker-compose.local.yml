@@ -66,8 +66,8 @@ services:
 
   weblhs-php:
     # Alpine Linux
-    # image: php:fpm-alpine
-    image: lhsradek/fpm:v1
+    image: php:fpm-alpine
+    # image: lhsradek/fpm:v1
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
