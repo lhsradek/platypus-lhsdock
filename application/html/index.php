@@ -80,9 +80,9 @@ $index = new IndexController();
 $parent = $index->getParent();
 $port = $index->getPort();
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-$isWp = $index->isUrl("https://".$parent.".wordpress.local");
-$isWpa = $index->isUrl("https://wpa.".$parent.".wordpress.local");
-$isPma = $index->isUrl("https://pma.".$parent.".wordpress.local");
+$isWp = @$index->isUrl("https://".$parent.".wordpress.local");
+$isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
+$isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
