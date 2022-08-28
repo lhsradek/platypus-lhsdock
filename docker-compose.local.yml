@@ -24,12 +24,13 @@ services:
     # - 443:443
     volumes:
       # - /root/bin/alpine:/root/bin/alpine:ro
-      - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
-      - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
-      # for http
-      # - ./extras/nginx/default-http.conf:/etc/nginx/conf.d/default.conf:ro
-      # for https
-      - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
+      # if http
+      - ./extras/nginx/default-http.conf:/etc/nginx/conf.d/default.conf:ro
+      # else if https
+      # - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
+      # - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
+      # - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
+      # fi
       - ./application/html:/var/www/html:ro
       - ./logs:/var/log/nginx
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
@@ -46,9 +47,9 @@ services:
       - "traefik.http.routers.weblhs-public.rule=Host(`${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.weblhs-public.entrypoints=https"
       - "traefik.http.routers.weblhs-public.tls=true"
-      # for https:
-      - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
-      - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=443"
+      # if https
+      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=443"
 
   weblhs-php:
     # Alpine Linux
