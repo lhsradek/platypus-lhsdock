@@ -1,5 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2022 Radek Kádner
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+--!>
 <?php
 $printEnv = false;
 #  $printEnv = true;
@@ -83,6 +106,8 @@ $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
+$isEs01 = @$index->isUrl("https://es01.".$parent.".wordpress.local");
+$isKibana = @$index->isUrl("http://kibana.".$parent.".wordpress.local:5601");
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
@@ -128,6 +153,8 @@ if ($printEnv) {
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
             <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
+            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."\" target=\"_blank\">es01.".$parent.".wordpress.local")?></a></li><?php } ?>
+            <?php if($isKibana) { ?><li><?php print("<a href=\"http://kibana.".$parent.".wordpress.local:5601\" target=\"_blank\">kibana.".$parent.".wordpress.local")?></a></li><?php } ?>
           </ul>
 	  </p>
 
@@ -146,7 +173,6 @@ if ($printEnv) {
         <p>
           <ul>
               <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\">".$parent.".tomcat.local")?></a></li>
-              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
 	<p><img src="tomcat.png" width="63" height="40"/></p>
@@ -156,10 +182,20 @@ if ($printEnv) {
         <h2>Documentation</h2>
         <p>
           <ul>
+              <li><a href="https://docs.docker.com/compose/" target="_blank">docker.com</a></li>
+              <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org</a></li>
+              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org</a></li>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+	  </ul>
+        </p>
+        <h2>Docker Hub</h2>
+        <p>
+          <ul>
               <li><a href="https://hub.docker.com/_/adminer" target="_blank">hub.docker.com - Adminer</a></li>
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Alpine Linux</a></li>
               <li><a href="https://hub.docker.com/_/elasticsearch" target="_blank">hub.docker.com - Elasticsearch</a></li>
               <li><a href="https://hub.docker.com/_/kibana" target="_blank">hub.docker.com - Kibana</a></li>
+              <li><a href="https://hub.docker.com/_/logstash" target="_blank">hub.docker.com - Logstash</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - MariaDB</a></li>
               <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Nginx</a></li>
               <li><a href="https://hub.docker.com/_/node" target="_blank">hub.docker.com - Node</a></li>
@@ -170,9 +206,6 @@ if ($printEnv) {
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Tomcat</a></li>
               <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Ubuntu</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Wordpress</a></li>
-              <li><a href="https://docs.docker.com/compose/" target="_blank">docs.docker.com - compose</a></li>
-              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
-              <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
 	  </ul>
         </p>
         <p><img src="docker-logo.png" width="53" height="40"/></p>
