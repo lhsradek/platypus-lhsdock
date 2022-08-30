@@ -153,7 +153,8 @@ if ($printEnv) {
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
             <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
-            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."\" target=\"_blank\">es01.".$parent.".wordpress.local")?></a></li><?php } ?>
+	    <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."\" target=\"_blank\">es01.".$parent.".wordpress.local")?></a></li>
+            <li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."/_security/user/\" target=\"_blank\">es01.".$parent.".wordpress.local - user")?></a></li><?php } ?>
             <?php if($isKibana) { ?><li><?php print("<a href=\"http://kibana.".$parent.".wordpress.local:5601\" target=\"_blank\">kibana.".$parent.".wordpress.local")?></a></li><?php } ?>
           </ul>
 	  </p>
