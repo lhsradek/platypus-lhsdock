@@ -106,8 +106,8 @@ $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
-$isEs01 = @$index->isUrl("https://es01.".$parent.".wordpress.local");
-$isKibana = @$index->isUrl("http://kibana.".$parent.".wordpress.local:5601");
+$isEs01 = @$index->isUrl("https://es01.".$parent.".nginx.local");
+$isKibana = @$index->isUrl("https://kibana.".$parent.".nginx.local");
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
@@ -153,10 +153,9 @@ if ($printEnv) {
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
             <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
-	    <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."\" target=\"_blank\">es01.".$parent.".wordpress.local")?></a></li>
-            <li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."/_security/user/\" target=\"_blank\">es01.".$parent.".wordpress.local - user")?></a></li>
-            <li><?php print("<a href=\"https://es01.".$parent.".wordpress.local".$port."/_search\" target=\"_blank\">es01.".$parent.".wordpress.local - search")?></a></li><?php } ?>
-            <?php if($isKibana) { ?><li><?php print("<a href=\"http://kibana.".$parent.".wordpress.local:5601\" target=\"_blank\">kibana.".$parent.".wordpress.local")?></a></li><?php } ?>
+	    <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local".$port."\" target=\"_blank\">es01.".$parent.".nginx.local")?></a></li>
+            <li><?php print("<a href=\"https://es01.".$parent.".nginx.local".$port."/_security/user/\" target=\"_blank\">es01.".$parent.".nginx.local - user")?></a></li><?php } ?>
+            <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
           </ul>
 	  </p>
 

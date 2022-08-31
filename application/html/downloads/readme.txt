@@ -1,4 +1,4 @@
-### platypus-lhsdock
+### platypus-lhsdock with Elasticsearch and Kibana
 
 https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
@@ -78,4 +78,12 @@ HOSTNAME='weblhs-php.nginx.local'
 |└www.nginx.local:80                                 |    =       24   |    29881  |  CLOSE  |  eth1
 |┌www.nginx.local:59090                              |    =        5   |     1660  |  CLOSE  |  eth0
 |└weblhs-php.nginx.local:9000                        |    =        5   |     4508  |  CLOSE  |  eth0
+
+-----
+
+https://www.facebook.com/radek.kadner/
+
+https://www.linkedin.com/in/radekkadner/
+
+mailto:radek.kadner@gmail.com
 

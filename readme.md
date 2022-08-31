@@ -1,4 +1,4 @@
-### platypus-lhsdock
+### platypus-lhsdock with Elasticsearch and Kibana
 
 https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
