@@ -103,18 +103,6 @@ services:
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "  - name: kibana\n"\
-          "    dns:\n"\
-          "      - kibana\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "  - name: enterprisesearch\n"\
-          "    dns:\n"\
-          "      - enterprisesearch\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
           > config/certs/instances.yml;
           bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
           unzip config/certs/certs.zip -d config/certs;
@@ -291,22 +279,24 @@ services:
       timeout: 10s
       retries: 120
 
-  log:
-   # Ubuntu - logstash 
-   image: logstash:${LOGSTASH_VERSION}
-   container_name: "${APP_ID}-log"
-   hostname: "log"
-   restart: ${DOCKER_RESTART_POLICY}
-   networks:
-     # for traefik:
-     - default
-     # local network:
-     - intnet
-   environment:
-     - OSS=${OSS}
-     - xpack.monitoring.elasticsearch.hosts=kibana
-   volumes:
-     - certs:/usr/share/logstash/config/certs
+#  log:
+#   # Ubuntu - logstash 
+#   image: logstash:${LOGSTASH_VERSION}
+#   container_name: "${APP_ID}-log"
+#   hostname: "log"
+#   restart: ${DOCKER_RESTART_POLICY}
+#   ports:
+#     - 5044:5044
+#   networks:
+#     # for traefik:
+#     - default
+#     # local network:
+#     - intnet
+#   environment:
+#     - OSS=${OSS}
+#     - xpack.monitoring.elasticsearch.hosts=kibana
+#   volumes:
+#     - certs:/usr/share/logstash/config/certs
 
 volumes:
   certs:
