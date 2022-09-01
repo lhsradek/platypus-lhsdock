@@ -100,6 +100,7 @@ services:
           "  - name: es01\n"\
           "    dns:\n"\
           "      - es01\n"\
+          "      - elasticsearch\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -130,7 +131,7 @@ services:
     hostname: "es01"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs
+      - certs:/usr/share/elasticsearch/config/certs:ro
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
@@ -193,8 +194,8 @@ services:
     hostname: "kibana"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      - certs:/usr/share/kibana/config/certs
-      - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - certs:/usr/share/kibana/config/certs:ro
+      - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       - kibanadata:/usr/share/kibana/data
     # ports:
     #  - ${KIBANA_PORT}:5601
@@ -225,14 +226,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.kibana-public.rule=Host(`kibana`, `kibana.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.kibana-public.rule=Host(`kibana.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.kibana-public.entrypoints=https"
       - "traefik.http.routers.kibana-public.tls=true"
-      # - "traefik.tcp.routers.kibana-tcp.tls.passthrough=true"
-      # - "traefik.tcp.routers.kibana-tcp.service=tcp-service"
-      # - "traefik.tcp.routers.kibana-tcp.tls.certresolver=le"
-      # - "traefik.tcp.routers.kibana-tcp.tls.options=myTLSOptions@file"
-      # - "traefik.tcp.routers.kibana-tcp.rule=HostSNI(`kibana`, `es01.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.tcp.routers.kibana-tcp.tls.passthrough=true"
+      - "traefik.tcp.routers.kibana-tcp.service=tcp-service"
+      - "traefik.tcp.routers.kibana-tcp.tls.certresolver=le"
+      - "traefik.tcp.routers.kibana-tcp.tls.options=myTLSOptions@file"
+      - "traefik.tcp.routers.kibana-tcp.rule=HostSNI(`kibana`, `kibana.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.services.kibana-platypus-${APP_ID}.loadbalancer.server.port=5601"
     mem_limit: ${MEM_LIMIT}
     healthcheck:
@@ -251,8 +252,8 @@ services:
     container_name: "${APP_ID}-eps"
     hostname: "enterprisesearch"
     volumes:
-      - certs:/usr/share/enterprise-search/config/certs
-      - enterprisesearchdata:/usr/share/enterprise-search/config
+      - certs:/usr/share/enterprise-search/config/certs:ro
+      - enterprisesearchdata:/usr/share/enterprise-search/config:ro
     # ports:
     #  - ${ENTERPRISE_SEARCH_PORT}:3002
     networks:
@@ -267,7 +268,7 @@ services:
       - elasticsearch.password=${ELASTIC_PASSWORD}
       - elasticsearch.ssl.enabled=true
       - elasticsearch.ssl.certificate_authority=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - kibana.external_url=https://kibana:5601
+      - kibana.external_url=http://kibana:5601
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
@@ -279,24 +280,22 @@ services:
       timeout: 10s
       retries: 120
 
-#  log:
-#   # Ubuntu - logstash 
-#   image: logstash:${LOGSTASH_VERSION}
-#   container_name: "${APP_ID}-log"
-#   hostname: "log"
-#   restart: ${DOCKER_RESTART_POLICY}
-#   ports:
-#     - 5044:5044
-#   networks:
-#     # for traefik:
-#     - default
-#     # local network:
-#     - intnet
-#   environment:
-#     - OSS=${OSS}
-#     - xpack.monitoring.elasticsearch.hosts=kibana
-#   volumes:
-#     - certs:/usr/share/logstash/config/certs
+  log:
+   # Ubuntu - logstash 
+   image: logstash:${STACK_VERSION}
+   container_name: "${APP_ID}-log"
+   hostname: "log"
+   restart: ${DOCKER_RESTART_POLICY}
+   ports:
+     - 5044:5044
+   networks:
+     # for traefik:
+     - default
+     # local network:
+     - intnet
+   volumes:
+     - ./extras/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+     - certs:/usr/share/logstash/config/certs:ro
 
 volumes:
   certs:
