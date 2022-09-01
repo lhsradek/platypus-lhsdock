@@ -108,6 +108,7 @@ $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
 $isEs01 = @$index->isUrl("https://es01.".$parent.".nginx.local");
 $isKibana = @$index->isUrl("https://kibana.".$parent.".nginx.local");
+$isTomcat = @$index->isUrl("https://".$parent.".tomcat.local/manager/");
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
@@ -166,17 +167,18 @@ if ($printEnv) {
             <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
-        <p>
+        </p>
 
+        <p>
         <h2>Apache Tomcat</h2>
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\">".$parent.".tomcat.local")?></a></li>
+              <?php if ($isTomcat) { ?><li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\">".$parent.".tomcat.local")?></a></li><?php } ?>
           </ul>
         </p>
 	<p><img src="tomcat.png" width="63" height="40"/></p>
-      </div>
+	</div>
 
       <div class="content-column-right">
         <h2>Documentation</h2>
