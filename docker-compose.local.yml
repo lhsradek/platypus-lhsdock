@@ -251,6 +251,7 @@ services:
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     container_name: "${APP_ID}-eps"
     hostname: "enterprisesearch"
+    restart: ${DOCKER_RESTART_POLICY}
     volumes:
       - certs:/usr/share/enterprise-search/config/certs
       - enterprisesearchdata:/usr/share/enterprise-search/config
@@ -281,21 +282,21 @@ services:
       retries: 120
 
   log:
-   # Ubuntu - logstash 
-   image: logstash:${STACK_VERSION}
-   container_name: "${APP_ID}-log"
-   hostname: "log"
-   restart: ${DOCKER_RESTART_POLICY}
-   ports:
-     - 5044:5044
-   networks:
-     # for traefik:
-     - default
-     # local network:
-     - intnet
-   volumes:
-     - ./extras/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
-     - certs:/usr/share/logstash/config/certs:ro
+    # Ubuntu - logstash 
+    image: logstash:${STACK_VERSION}
+    container_name: "${APP_ID}-log"
+    hostname: "log"
+    restart: ${DOCKER_RESTART_POLICY}
+    ports:
+      - 5044:5044
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    volumes:
+      - ./extras/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
+      - certs:/usr/share/logstash/config/certs:ro
 
 volumes:
   certs:
