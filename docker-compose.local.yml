@@ -252,8 +252,8 @@ services:
     container_name: "${APP_ID}-eps"
     hostname: "enterprisesearch"
     volumes:
-      - certs:/usr/share/enterprise-search/config/certs:ro
-      - enterprisesearchdata:/usr/share/enterprise-search/config:ro
+      - certs:/usr/share/enterprise-search/config/certs
+      - enterprisesearchdata:/usr/share/enterprise-search/config
     # ports:
     #  - ${ENTERPRISE_SEARCH_PORT}:3002
     networks:
