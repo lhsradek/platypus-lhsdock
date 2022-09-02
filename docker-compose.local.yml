@@ -163,14 +163,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.es01-public.rule=Host(`elasticsearch`, `es01`, `es01.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.es01-public.rule=Host(`es01.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.es01-public.entrypoints=https"
       - "traefik.http.routers.es01-public.tls=true"
       - "traefik.tcp.routers.es01-tcp.tls.passthrough=true"
       - "traefik.tcp.routers.es01-tcp.service=tcp-service"
       - "traefik.tcp.routers.es01-tcp.tls.certresolver=le"
       - "traefik.tcp.routers.es01-tcp.tls.options=myTLSOptions@file"
-      - "traefik.tcp.routers.es01-tcp.rule=HostSNI(`elasticsearch`, `es01`, `es01.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.tcp.routers.es01-tcp.rule=HostSNI(`es01`, `es01.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.scheme=https"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.port=9200"
     mem_limit: ${MEM_LIMIT}
@@ -295,8 +295,8 @@ services:
       # local network:
       - intnet
     volumes:
-      - ./extras/logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf:ro
-      - certs:/usr/share/logstash/config/certs:ro
+      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - logstashdata:/usr/share/logstash/data
 
 volumes:
   certs:
@@ -311,6 +311,10 @@ volumes:
   enterprisesearchdata:
     external: false
     name: "${APP_ID}-eps"
+  logstashdata:
+    external: false
+    name: "${APP_ID}-log"
+# You can remove this. It's for prune volume deletion protection
   wordpressdb99:
     external: true
     name: wordpress-db-99
