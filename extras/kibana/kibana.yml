@@ -7,4 +7,5 @@ xpack.reporting.kibanaServer.hostname: kibana
 server.host: "0.0.0.0"
 server.shutdownTimeout: "5s"
 elasticsearch.hosts: [ "https://es01:9200" ]
+enterpriseSearch.host: 'https://eps.docker.nginx.local:3002'
 monitoring.ui.container.elasticsearch.enabled: true

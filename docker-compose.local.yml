@@ -11,11 +11,11 @@ networks:
 services:
   # Alpine Linux
   weblhs:
-    build:
-      context: ./context
-      dockerfile: Dockerfile 
-    image: lhsradek/lhsdock:v3
-    # image: nginx:alpine
+    # build:
+    #   context: ./context
+    #   dockerfile: Dockerfile 
+    # image: lhsradek/lhsdock:v3
+    image: nginx:alpine
     container_name: "${APP_ID}"
     hostname: "${APP_HOST}.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
@@ -23,21 +23,24 @@ services:
     # - 80:80
     # - 443:443
     volumes:
-      # - /root/bin/alpine:/root/bin/alpine:ro
       # if http
       - ./extras/nginx/default-http.conf:/etc/nginx/conf.d/default.conf:ro
       # else if https
       # - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
       # - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
-      # - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
+      # - ./certs/${CERTNAME}.key:/etc/ssl/private/cacert-key.pem:ro
       # fi
       - ./application/html:/var/www/html:ro
       - ./logs:/var/log/nginx
+      - esdata01:/root/bin/volume/es01:ro
+      - kibanadata:/root/bin/volume/kibana:ro
+      - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro
       - wordpresspma99:/root/bin/volume/wordpress-pma-99:ro
       - wordpressredis99:/root/bin/volume/wordpress-redis-99:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
+      # - certs:/root/bin/volume/certs:ro
     networks:
       - intnet
       - default
@@ -48,8 +51,8 @@ services:
       - "traefik.http.routers.weblhs-public.entrypoints=https"
       - "traefik.http.routers.weblhs-public.tls=true"
       # if https
-      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
       # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=443"
+      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
 
   weblhs-php:
     # Alpine Linux
@@ -59,70 +62,9 @@ services:
     hostname: "weblhs-php.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      # - /root/bin/alpine:/root/bin/alpine:ro
       - ./application/html:/var/www/html:ro
-      # - ./context/root/bin/alpine/add.sh:/root/bin/alpine/add2.sh:rw
     networks:
       - intnet
-
-  setup:
-    # Ubuntu - elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-    container_name: "${APP_ID}-setup"
-    hostname: "setup"
-    restart: "no"
-    volumes:
-      - certs:/usr/share/elasticsearch/config/certs
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    user: "0"
-    command: >
-      bash -c '
-        if [ x${ELASTIC_PASSWORD} == x ]; then
-          echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
-          exit 1;
-        elif [ x${KIBANA_PASSWORD} == x ]; then
-          echo "Set the KIBANA_PASSWORD environment variable in the .env file";
-          exit 1;
-        fi;
-        if [ ! -f certs/ca.zip ]; then
-          echo "Creating CA";
-          bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
-          unzip config/certs/ca.zip -d config/certs;
-        fi;
-        if [ ! -f certs/certs.zip ]; then
-          echo "Creating certs";
-          echo -ne \
-          "instances:\n"\
-          "  - name: es01\n"\
-          "    dns:\n"\
-          "      - es01\n"\
-          "      - elasticsearch\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          > config/certs/instances.yml;
-          bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
-          unzip config/certs/certs.zip -d config/certs;
-        fi;
-        echo "Setting file permissions"
-        chown -R root:root config/certs;
-        find . -type d -exec chmod 750 \{\} \;;
-        find . -type f -exec chmod 640 \{\} \;;
-        echo "Waiting for Elasticsearch availability";
-        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
-        echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
-        echo "All done!";
-      '
-      healthcheck:
-        test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
-        interval: 1s
-        timeout: 5s
-        retries: 120
 
   es01:
     # Ubuntu - elasticsearch
@@ -131,7 +73,7 @@ services:
     hostname: "es01"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      - certs:/usr/share/elasticsearch/config/certs:ro
+      - ./certs:/usr/share/elasticsearch/config/certs:ro
       - esdata01:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
@@ -166,13 +108,11 @@ services:
       - "traefik.http.routers.es01-public.rule=Host(`es01.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.es01-public.entrypoints=https"
       - "traefik.http.routers.es01-public.tls=true"
-      - "traefik.tcp.routers.es01-tcp.tls.passthrough=true"
-      - "traefik.tcp.routers.es01-tcp.service=tcp-service"
-      - "traefik.tcp.routers.es01-tcp.tls.certresolver=le"
-      - "traefik.tcp.routers.es01-tcp.tls.options=myTLSOptions@file"
-      - "traefik.tcp.routers.es01-tcp.rule=HostSNI(`es01`, `es01.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.es01-public.middlewares=es01-platypus-${APP_ID}@docker"
+      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.port=9200"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.port=9200"
+      - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     mem_limit: ${MEM_LIMIT}
     ulimits:
       memlock:
@@ -194,11 +134,11 @@ services:
     hostname: "kibana"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      - certs:/usr/share/kibana/config/certs:ro
+      - ./certs:/usr/share/kibana/config/certs:ro
       - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       - kibanadata:/usr/share/kibana/data
-    # ports:
-    #  - ${KIBANA_PORT}:5601
+    ports:
+      - ${KIBANA_PORT}:5601
     networks:
       # for traefik:
       - default
@@ -210,7 +150,7 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-      - ENTERPRISESEARCH_HOST=http://enterprisesearch:${ENTERPRISE_SEARCH_PORT}
+      - ENTERPRISESEARCH_HOST=http://eps:${ENTERPRISE_SEARCH_PORT}
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/kibana/kibana.key
@@ -229,12 +169,8 @@ services:
       - "traefik.http.routers.kibana-public.rule=Host(`kibana.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.kibana-public.entrypoints=https"
       - "traefik.http.routers.kibana-public.tls=true"
-      - "traefik.tcp.routers.kibana-tcp.tls.passthrough=true"
-      - "traefik.tcp.routers.kibana-tcp.service=tcp-service"
-      - "traefik.tcp.routers.kibana-tcp.tls.certresolver=le"
-      - "traefik.tcp.routers.kibana-tcp.tls.options=myTLSOptions@file"
-      - "traefik.tcp.routers.kibana-tcp.rule=HostSNI(`kibana`, `kibana.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.services.kibana-platypus-${APP_ID}.loadbalancer.server.port=5601"
+      # Internal Server Error:
+      # - "traefik.http.services.kibana-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
@@ -250,18 +186,20 @@ services:
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     container_name: "${APP_ID}-eps"
-    hostname: "enterprisesearch"
+    hostname: "eps"
     restart: ${DOCKER_RESTART_POLICY}
     volumes:
-      - certs:/usr/share/enterprise-search/config/certs
+      - ./certs:/usr/share/enterprise-search/config/certs:ro
       - enterprisesearchdata:/usr/share/enterprise-search/config
-    # ports:
-    #  - ${ENTERPRISE_SEARCH_PORT}:3002
+    ports:
+      - ${ENTERPRISE_SEARCH_PORT}:3002
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     environment:
-      - SERVERNAME=enterprisesearch
+      - SERVERNAME=eps
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
       - allow_es_settings_modification=true
       - elasticsearch.host=https://es01:9200
@@ -269,7 +207,15 @@ services:
       - elasticsearch.password=${ELASTIC_PASSWORD}
       - elasticsearch.ssl.enabled=true
       - elasticsearch.ssl.certificate_authority=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - kibana.external_url=http://kibana:5601
+      - kibana.external_url=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.enterprisesearch-public.rule=Host(`eps.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.enterprisesearch-public.entrypoints=https"
+      - "traefik.http.routers.enterprisesearch-public.tls=true"
+      - "traefik.http.routers.enterprisesearch-public.middlewares=es01-platypus-${APP_ID}@docker"
+      # - "traefik.http.services.enterprisesearch-platypus-${APP_ID}.loadbalancer.server.port=3002"
     mem_limit: ${MEM_LIMIT}
     healthcheck:
       test:
@@ -287,26 +233,24 @@ services:
     container_name: "${APP_ID}-log"
     hostname: "log"
     restart: ${DOCKER_RESTART_POLICY}
+    volumes:
+      - ./certs:/usr/share/logstash/config/certs:ro
+      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - logstashdata:/usr/share/logstash/data
     ports:
       - 5044:5044
     networks:
       # for traefik:
-      - default
+      # - default
       # local network:
       - intnet
-    volumes:
-      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - logstashdata:/usr/share/logstash/data
 
 volumes:
-  certs:
-    external: false
-    name: "${APP_ID}-certs"
   esdata01:
-    external: false
+    external: true
     name: "${APP_ID}-es01"
   kibanadata:
-    external: false
+    external: true
     name: "${APP_ID}-kibana"
   enterprisesearchdata:
     external: false
@@ -314,7 +258,15 @@ volumes:
   logstashdata:
     external: false
     name: "${APP_ID}-log"
-# You can remove this. It's for prune volume deletion protection
+#  certs:
+#    external: true
+#    name: "${APP_ID}-certs"
+#    
+# You can remove this. It's for prune volume deletion protection ;-)
+#
+  wordpressbedrockdb:
+    external: true
+    name: wordpress-bedrock-db
   wordpressdb99:
     external: true
     name: wordpress-db-99
@@ -330,3 +282,126 @@ volumes:
   tomboladb:
     external: true
     name: tombola-db
+
+#  setup: # setup makes certs
+#    # Ubuntu - elasticsearch
+#    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+#    container_name: "${APP_ID}-setup"
+#    hostname: "setup"
+#    restart: ${DOCKER_RESTART_POLICY}
+#    volumes:
+#      - certs:/usr/share/elasticsearch/config/certs
+#    networks:
+#      # local network:
+#      - intnet
+#    user: "0"
+#    command: >
+#      bash -c '
+#        if [ x${ELASTIC_PASSWORD} == x ]; then
+#          echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
+#          exit 1;
+#        elif [ x${KIBANA_PASSWORD} == x ]; then
+#          echo "Set the KIBANA_PASSWORD environment variable in the .env file";
+#          exit 1;
+#        fi;
+#        if [ ! -f certs/ca.zip ]; then
+#          echo "Creating CA";
+#          bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
+#          unzip config/certs/ca.zip -d config/certs;
+#        fi;
+#        if [ ! -f certs/certs.zip ]; then
+#          echo "Creating certs";
+#          echo -ne \
+#          "instances:\n"\
+#          "  - name: es01\n"\
+#          "    dns:\n"\
+#          "      - es01\n"\
+#          "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
+#          "      - localhost\n"\
+#          "    ip:\n"\
+#          "      - 127.0.0.1\n"\
+#          "      - 192.168.122.20\n"\
+#          "  - name: kibana\n"\
+#          "    dns:\n"\
+#          "      - kibana\n"\
+#          "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
+#          "      - localhost\n"\
+#          "    ip:\n"\
+#          "      - 127.0.0.1\n"\
+#          "      - 192.168.122.20\n"\
+#          "  - name: eps\n"\
+#          "    dns:\n"\
+#          "      - eps\n"\
+#          "      - eps.${APP_HOST}.${INT_NETWORK}\n"\
+#          "      - localhost\n"\
+#          "    ip:\n"\
+#          "      - 127.0.0.1\n"\
+#          "  - name: log\n"\
+#          "    dns:\n"\
+#          "      - log\n"\
+#          "      - log.${APP_HOST}.${INT_NETWORK}\n"\
+#          "      - log.${APP_HOST}.intranet.local\n"\
+#          "      - localhost\n"\
+#          "    ip:\n"\
+#          "      - 127.0.0.1\n"\
+#          "      - 192.168.122.20\n"\
+#          "  - name: ${APP_HOST}\n"\
+#          "    dns:\n"\
+#          "      - ${APP_HOST}\n"\
+#          "      - ${APP_HOST}.${INT_NETWORK}\n"\
+#          "      - ${APP_HOST}.traefik.local\n"\
+#          "      - ${APP_HOST}.wordpress.local\n"\
+#          "      - ${APP_HOST}.tombola.local\n"\
+#          "      - ${APP_HOST}.intranet.local\n"\
+#          "      - localhost\n"\
+#          "    ip:\n"\
+#          "      - 127.0.0.1\n"\
+#          "      - 192.168.122.20\n"\
+#          > config/certs/instances.yml;
+#          bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+#          unzip config/certs/certs.zip -d config/certs;
+#        fi;
+#        echo "Setting file permissions"
+#        chown -R root:root config/certs;
+#        find . -type d -exec chmod 750 \{\} \;;
+#        find . -type f -exec chmod 640 \{\} \;;
+#        echo "Waiting for Elasticsearch availability";
+#        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+#        echo "Setting kibana_system password";
+#        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+#        echo "All done!";
+#      '
+#      healthcheck:
+#        test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
+#        interval: 1s
+#        timeout: 5s
+#        retries: 120
+#
+# ├── ca
+# │   ├── ca.crt
+# │   ├── ca.key
+# │   └── ca.pem
+# ├── ca.zip
+# ├── certs.zip
+# ├── www
+# │   ├── www.crt
+# │   ├── www.key
+# │   └── www.pem
+# ├── eps
+# │   ├── eps.crt
+# │   ├── eps.key
+# │   └── eps.pem
+# ├── es01
+# │   ├── es01.crt
+# │   ├── es01.key
+# │   └── es01.pem
+# ├── instances.yml
+# ├── kibana
+# │   ├── kibana.crt
+# │   ├── kibana.key
+# │   └── kibana.pem
+# ├── log
+# │   ├── log.crt
+# │   ├── log.key
+# │   └── log.pem
+# 
