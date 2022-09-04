@@ -5,4 +5,5 @@ context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
 extras/kibana/kibana.yml
+extras/logstash/logstash.yml
 logs/
