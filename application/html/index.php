@@ -103,11 +103,11 @@ $index = new IndexController();
 $parent = $index->getParent();
 $port = $index->getPort();
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
+$isEs01 = @$index->isUrl("https://es01.".$parent.".nginx.local:9200");
+$isKibana = @$index->isUrl("https://kibana.".$parent.".nginx.local");
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
-$isEs01 = @$index->isUrl("https://es01.".$parent.".nginx.local");
-$isKibana = @$index->isUrl("https://kibana.".$parent.".nginx.local");
 $isTomcat = @$index->isUrl("https://".$parent.".tomcat.local/manager/");
 $env = "";
 if ($printEnv) {
@@ -151,10 +151,10 @@ if ($printEnv) {
         <p>
           <ul>
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
+            <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
             <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
-            <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
 	    <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local")?></a></li><?php } ?>
           </ul>
 	  </p>
