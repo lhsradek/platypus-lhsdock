@@ -240,16 +240,6 @@ services:
       - default
       # local network:
       - intnet
-    mem_limit: ${MEM_LIMIT}
-    healthcheck:
-      test:
-        [
-            "CMD-SHELL",
-            "curl -s -I http://localhost:5044 | grep -q 'HTTP/1.1 302 Found'",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 120
 
   setup: # setup makes certs and change password
     # Ubuntu - elasticsearch
