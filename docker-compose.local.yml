@@ -352,7 +352,10 @@ services:
         interval: 1s
         timeout: 5s
         retries: 120
-
+#
+# Tree for certs, *.pem (for traefik) create by:
+# ```find . -name *.crt -exec bash -c 'openssl x509 -in {} -out ${1%.crt}.pem' - {} \;;```
+#
 #
 # ├── ca
 # │   ├── ca.crt
