@@ -129,6 +129,7 @@ services:
       retries: 120
 
   kibana:
+    # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     container_name: "${APP_ID}-kibana"
     hostname: "kibana"
