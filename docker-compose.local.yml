@@ -359,15 +359,15 @@ services:
 # │   ├── ca.crt
 # │   ├── ca.key
 # │   └── ca.pem
-# ├── www
+# ├── www (docker host)
 # │   ├── www.crt
 # │   ├── www.key
 # │   └── www.pem
-# ├── eps
+# ├── eps (enterprisesearch)
 # │   ├── eps.crt
 # │   ├── eps.key
 # │   └── eps.pem
-# ├── es01
+# ├── es01 (elasticsearch)
 # │   ├── es01.crt
 # │   ├── es01.key
 # │   └── es01.pem
@@ -375,7 +375,7 @@ services:
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
-# ├─── log
+# ├─── log (logstash)
 # │   ├── log.crt
 # │   ├── log.key
 # │   └── log.pem
