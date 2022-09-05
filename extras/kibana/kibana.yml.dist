@@ -4,6 +4,9 @@
 
 # Default Kibana configuration for docker target
 xpack.reporting.kibanaServer.hostname: "kibana"
+xpack.encryptedSavedObjects.encryptionKey: <CENSORED>
+xpack.reporting.encryptionKey: <CENSORED>
+xpack.security.encryptionKey: <CENSORED>
 server.host: "0.0.0.0"
 server.shutdownTimeout: "5s"
 elasticsearch.hosts: [ "https://es01:9200" ]
