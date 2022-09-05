@@ -68,6 +68,9 @@ services:
 
   es01:
     # Ubuntu - elasticsearch
+    depends_on:
+      setup:
+        condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     container_name: "${APP_ID}-es01"
     hostname: "es01"
@@ -76,7 +79,7 @@ services:
       - ./certs:/usr/share/elasticsearch/config/certs:ro
       - esdata01:/usr/share/elasticsearch/data
     ports:
-      - ${ES_PORT}:${ES_PORT}
+      - ${ES_PORT}:9200
     networks:
       # for traefik:
       - default
@@ -110,8 +113,8 @@ services:
       - "traefik.http.routers.es01-public.tls=true"
       - "traefik.http.routers.es01-public.middlewares=es01-platypus-${APP_ID}@docker"
       - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.port=${ES_PORT}"
-      - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.port=${ES_PORT}"
+      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.port=9200"
+      - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.port=9200"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     mem_limit: ${MEM_LIMIT}
     ulimits:
@@ -122,7 +125,7 @@ services:
       test:
         [
             "CMD-SHELL",
-            "curl -s --cacert config/certs/ca/ca.crt https://localhost:${ES_PORT} | grep -q 'missing authentication credentials'",
+            "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 10s
       timeout: 10s
@@ -130,6 +133,9 @@ services:
 
   kibana:
     # Ubuntu - kibana 
+    depends_on:
+      es01:
+        condition: service_healthy
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     container_name: "${APP_ID}-kibana"
     hostname: "kibana"
@@ -139,7 +145,7 @@ services:
       - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       - kibanadata:/usr/share/kibana/data
     ports:
-      - ${KIBANA_PORT}:${KIBANA_PORT}
+      - ${KIBANA_PORT}:5601
     networks:
       # for traefik:
       - default
@@ -150,7 +156,7 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
-      - ENTERPRISESEARCH_HOST=http://eps:${ENTERPRISE_SEARCH_PORT}
+      - ENTERPRISESEARCH_HOST=http://eps:3002
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/kibana/kibana.key
@@ -182,6 +188,9 @@ services:
 
   eps:
     # Ubuntu - enterprisesearch
+    depends_on:
+      kibana:
+        condition: service_healthy
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     container_name: "${APP_ID}-eps"
     hostname: "eps"
@@ -190,7 +199,7 @@ services:
       - ./certs:/usr/share/enterprise-search/config/certs:ro
       - enterprisesearchdata:/usr/share/enterprise-search/config
     ports:
-      - ${ENTERPRISE_SEARCH_PORT}:${ENTERPRISE_SEARCH_PORT}
+      - ${ENTERPRISE_SEARCH_PORT}:3002
     networks:
       # for traefik:
       - default
@@ -200,7 +209,7 @@ services:
       - SERVERNAME=eps
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
       - allow_es_settings_modification=true
-      - elasticsearch.host=https://es01:${ES_PORT}
+      - elasticsearch.host=https://es01:9200
       - elasticsearch.username=elastic
       - elasticsearch.password=${ELASTIC_PASSWORD}
       - elasticsearch.ssl.enabled=true
@@ -218,7 +227,7 @@ services:
       test:
         [
             "CMD-SHELL",
-            "curl -s -I http://localhost:${ENTERPRISE_SEARCH_PORT} | grep -q 'HTTP/1.1 302 Found'",
+            "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s
@@ -226,6 +235,9 @@ services:
 
   log:
     # Ubuntu - logstash 
+    depends_on:
+      es01:
+        condition: service_healthy
     image: logstash:${STACK_VERSION}
     container_name: "${APP_ID}-log"
     hostname: "log"
@@ -343,16 +355,16 @@ services:
         find . -type f -name log.crt -exec chmod 644 \{\} \;; # for logstash
         find . -type f -name log.key -exec chmod 644 \{\} \;; # for logstash
         echo "Waiting for Elasticsearch availability";
-        until curl -s --cacert config/certs/ca/ca.crt https://es01:${ES_PORT} | grep -q "missing authentication credentials"; do sleep 30; done;
+        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
         echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:${ES_PORT}/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
         echo "All done!";
       '
-      healthcheck:
-        test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
-        interval: 1s
-        timeout: 5s
-        retries: 120
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
+      interval: 1s
+      timeout: 5s
+      retries: 120
 #
 # Tree for certs, *.pem (for traefik) create by:
 # find . -name *.crt -exec bash -c 'openssl x509 -in {} -out ${1%.crt}.pem' - {} \;;
