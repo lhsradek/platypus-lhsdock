@@ -378,11 +378,10 @@ services:
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
-# ├── log
-# │   ├── log.crt
-# │   ├── log.key
-# │   └── log.pem
-# 
+# └─── log
+#     ├── log.crt
+#     ├── log.key
+#     └── log.pem
 
 volumes:
   esdata01:
