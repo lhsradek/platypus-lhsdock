@@ -359,8 +359,6 @@ services:
 # │   ├── ca.crt
 # │   ├── ca.key
 # │   └── ca.pem
-# ├── ca.zip
-# ├── certs.zip
 # ├── www
 # │   ├── www.crt
 # │   ├── www.key
@@ -373,15 +371,17 @@ services:
 # │   ├── es01.crt
 # │   ├── es01.key
 # │   └── es01.pem
-# ├── instances.yml
 # ├── kibana
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
-# └─── log
-#     ├── log.crt
-#     ├── log.key
-#     └── log.pem
+# ├─── log
+# │   ├── log.crt
+# │   ├── log.key
+# │   └── log.pem
+# ├── ca.zip
+# ├── certs.zip
+# └── instances.yml
 
 volumes:
   esdata01:
