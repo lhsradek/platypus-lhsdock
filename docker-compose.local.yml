@@ -375,7 +375,7 @@ services:
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
-# ├─── log (logstash)
+# ├── log (logstash)
 # │   ├── log.crt
 # │   ├── log.key
 # │   └── log.pem
