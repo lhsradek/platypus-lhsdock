@@ -505,13 +505,7 @@ services:
   eps:
     # Ubuntu - enterprisesearch
     depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
-      es03:
+      kibana:
         condition: service_healthy
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     container_name: "${APP_ID}-eps"
@@ -565,6 +559,9 @@ services:
         condition: service_healthy
     depends_on:
       es03:
+        condition: service_healthy
+    depends_on:
+      kibana:
         condition: service_healthy
     image: logstash:${STACK_VERSION}
     container_name: "${APP_ID}-log"
