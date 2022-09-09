@@ -1,0 +1,13 @@
+allow_es_settings_modification: true
+audit_log_directory: /var/log/enterprise-search
+elasticsearch.host: https://es01:9200
+elasticsearch.password: changeme
+elasticsearch.ssl.certificate_authority: /usr/share/enterprise-search/config/certs/ca/ca.crt
+elasticsearch.ssl.enabled: true
+elasticsearch.username: elastic
+ent_search.listen_host: 0.0.0.0
+filebeat_log_directory: /var/log/enterprise-search
+kibana.external_url: http://kibana:5601
+log_directory: /var/log/enterprise-search
+metricbeat_log_directory: /var/log/enterprise-search
+secret_management.encryption_keys: [secret]
