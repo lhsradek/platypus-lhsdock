@@ -44,6 +44,9 @@ services:
       - enterprisesearchdata:/root/bin/volume/eps:ro
       - fleetdata:/root/bin/volume/fleet:ro
       - apmdata:/root/bin/volume/apm:ro
+      - filedata:/root/bin/volume/file:ro
+      - packetdata:/root/bin/volume/packet:ro
+      - heartdata:/root/bin/volume/heart:ro
       - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro
@@ -540,6 +543,63 @@ services:
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - logstashdata:/usr/share/logstash/data
 
+  filebeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-file"
+    hostname: "file"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - ./certs:/usr/share/filebeat/config/certs:ro
+      # - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - filedata:/usr/share/filebeat/data
+
+  packetbeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
+    image: docker.elastic.co/beats/packetbeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-packet"
+    hostname: "packet"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - ./certs:/usr/share/packetbeat/config/certs:ro
+      # - ./extras/packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
+      - packetdata:/usr/share/packetbeat/data
+
+  heartbeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
+    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-heart"
+    hostname: "heart"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - ./certs:/usr/share/heartbeat/config/certs:ro
+      # - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+      - heartdata:/usr/share/heartbeat/data
+
   elastic-agent:
     # Ubuntu - fleet
     depends_on:
@@ -566,7 +626,7 @@ services:
       - fleetdata:/usr/share/elastic-agent/data
     environment:
       - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
-      - FLEET_SERVER_SERVICE_TOKEN=${FLEET_ENROLLMENT_TOKEN}
+      # - FLEET_SERVER_SERVICE_TOKEN=${FLEET_ENROLLMENT_TOKEN}
       - FLEET_ENROLL=1
       - FLEET_URL=http://elastic-agent
       - FLEET_SERVER_ENABLE=true
@@ -595,7 +655,7 @@ services:
       - ./certs:/usr/share/apm-server/config/certs:ro
       - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/config/apm-server.yml:ro
       - apmdata:/usr/share/apm-server/data
-  
+ 
 volumes:
   esdata01:
     external: true
@@ -618,6 +678,15 @@ volumes:
   apmdata:
     external: true
     name: "${APP_ID}-apm"
+  filedata:
+    external: true
+    name: "${APP_ID}-file"
+  packetdata:
+    external: true
+    name: "${APP_ID}-packet"
+  heartdata:
+    external: true
+    name: "${APP_ID}-heart"
 #    
 # You can remove this. It's for my prune volume deletion protection ;-)
 #
