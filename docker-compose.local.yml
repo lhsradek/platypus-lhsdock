@@ -562,25 +562,6 @@ services:
       # - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - filedata:/usr/share/filebeat/data
 
-  packetbeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    image: docker.elastic.co/beats/packetbeat:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-packet"
-    hostname: "packet"
-    networks:
-      # local network:
-      - intnet
-    volumes:
-      - ./certs:/usr/share/packetbeat/config/certs:ro
-      # - ./extras/packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
-      - packetdata:/usr/share/packetbeat/data
-
   heartbeat:
     depends_on:
       es01:
@@ -600,8 +581,27 @@ services:
       # - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
       - heartdata:/usr/share/heartbeat/data
 
+#   packetbeat:
+#     depends_on:
+#       es01:
+#         condition: service_healthy
+#     depends_on:
+#       es02:
+#         condition: service_healthy
+#     image: docker.elastic.co/beats/packetbeat:${STACK_VERSION}
+#     restart: ${DOCKER_RESTART_POLICY}
+#     container_name: "${APP_ID}-packet"
+#     hostname: "packet"
+#     networks:
+#       # local network:
+#       - intnet
+#     volumes:
+#       - ./certs:/usr/share/packetbeat/config/certs:ro
+#       # - ./extras/packetbeat/packetbeat.yml:/usr/share/packetbeat/packetbeat.yml:ro
+#       - packetdata:/usr/share/packetbeat/data
+
   elastic-agent:
-    # Ubuntu - fleet
+     # Ubuntu - fleet
     depends_on:
       es01:
         condition: service_healthy

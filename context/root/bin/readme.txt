@@ -106,7 +106,7 @@ Creating lhsdock-eps    ... done
 | apm-server           | 8200/tcp                      | lhsdock-apm    |
 | logstash             | 5044/tcp                      | lhsdock-log    | log.www.nginx.local
 | heartbeat            |                               | lhsdock-heart  |
-| acketbeat            |                               | lhsdock-packet |
+| packetbeat           |                               | lhsdock-packet |
 | filebeat             |                               | lhsdock-file   |
 
 
