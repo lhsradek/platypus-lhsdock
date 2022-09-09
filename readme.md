@@ -20,18 +20,56 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 ```
 ================= STOP =================
-Stopping lhsdock-php ... done
-Stopping lhsdock     ... done
-Removing lhsdock-php ... done
-Removing lhsdock     ... done
+Stopping lhsdock-eps    ... done
+Stopping lhsdock-kibana ... done
+Stopping elastic-agent  ... done
+Stopping lhsdock-apm    ... done
+Stopping lhsdock-log    ... done
+Stopping lhsdock-es02   ... done
+Stopping lhsdock-es01   ... done
+Stopping lhsdock-php    ... done
+Stopping lhsdock        ... done
+Removing lhsdock-eps    ... done
+Removing lhsdock-kibana ... done
+Removing elastic-agent  ... done
+Removing lhsdock-apm    ... done
+Removing lhsdock-log    ... done
+Removing lhsdock-es02   ... done
+Removing lhsdock-es01   ... done
+Removing lhsdock-setup  ... done
+Removing lhsdock-php    ... done
+Removing lhsdock        ... done
+Network platypus-local is external, skipping
 Removing network nginx.local
-Network platypus-dev.local is external, skipping
 ================= START =================
-Pulling weblhs     ... done
-Pulling weblhs-php ... done
+Pulling weblhs        ... done
+Pulling weblhs-php    ... done
+Pulling setup         ... done
+Pulling es01          ... done
+Pulling es02          ... done
+Pulling kibana        ... done
+Pulling eps           ... done
+Pulling log           ... done
+Pulling filebeat      ... done
+Pulling packetbeat    ... done
+Pulling heartbeat     ... done
+Pulling elastic-agent ... done
+Pulling apm-server    ... done
 Creating network "nginx.local" with the default driver
-Creating lhsdock     ... done
-Creating lhsdock-php ... done
+Creating lhsdock       ... done
+Creating lhsdock-php   ... done
+Creating lhsdock-setup ... done
+Creating lhsdock-es01  ... done
+Creating lhsdock-es02  ... done
+Creating elastic-agent  ... done
+Creating lhsdock-file   ... done
+Creating lhsdock-packet ... done
+Creating lhsdock-log    ... done
+Creating lhsdock-kibana ... done
+Creating lhsdock-apm    ... done
+Creating lhsdock-heart  ... done
+Creating lhsdock-eps    ... done
+
 ```
 
 
