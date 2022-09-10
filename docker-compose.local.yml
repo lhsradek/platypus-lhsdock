@@ -626,7 +626,7 @@ services:
       - fleetdata:/usr/share/elastic-agent/data
     environment:
       - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
-      # - FLEET_SERVER_SERVICE_TOKEN=${FLEET_ENROLLMENT_TOKEN}
+      # - FLEET_SERVER_SERVICE_TOKEN=${..}
       - FLEET_ENROLL=1
       - FLEET_URL=http://elastic-agent
       - FLEET_SERVER_ENABLE=true

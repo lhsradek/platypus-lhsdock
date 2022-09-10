@@ -21,24 +21,30 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 ```
 ================= STOP =================
 Stopping lhsdock-eps    ... done
-Stopping lhsdock-kibana ... done
 Stopping elastic-agent  ... done
+Stopping lhsdock-metric ... done
 Stopping lhsdock-apm    ... done
+Stopping lhsdock-file   ... done
+Stopping lhsdock-heart  ... done
+Stopping lhsdock-kibana ... done
 Stopping lhsdock-log    ... done
 Stopping lhsdock-es02   ... done
 Stopping lhsdock-es01   ... done
-Stopping lhsdock-php    ... done
 Stopping lhsdock        ... done
+Stopping lhsdock-php    ... done
 Removing lhsdock-eps    ... done
-Removing lhsdock-kibana ... done
 Removing elastic-agent  ... done
+Removing lhsdock-metric ... done
 Removing lhsdock-apm    ... done
+Removing lhsdock-file   ... done
+Removing lhsdock-heart  ... done
+Removing lhsdock-kibana ... done
 Removing lhsdock-log    ... done
 Removing lhsdock-es02   ... done
 Removing lhsdock-es01   ... done
-Removing lhsdock-setup  ... done
-Removing lhsdock-php    ... done
 Removing lhsdock        ... done
+Removing lhsdock-php    ... done
+Removing lhsdock-setup  ... done
 Network platypus-local is external, skipping
 Removing network nginx.local
 ================= START =================
@@ -51,22 +57,22 @@ Pulling kibana        ... done
 Pulling eps           ... done
 Pulling log           ... done
 Pulling filebeat      ... done
-Pulling packetbeat    ... done
 Pulling heartbeat     ... done
+Pulling metricbeat    ... done
 Pulling elastic-agent ... done
 Pulling apm-server    ... done
 Creating network "nginx.local" with the default driver
-Creating lhsdock       ... done
 Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
+Creating lhsdock       ... done
 Creating lhsdock-es01  ... done
 Creating lhsdock-es02  ... done
-Creating elastic-agent  ... done
-Creating lhsdock-file   ... done
-Creating lhsdock-packet ... done
 Creating lhsdock-log    ... done
-Creating lhsdock-kibana ... done
 Creating lhsdock-apm    ... done
+Creating lhsdock-kibana ... done
+Creating lhsdock-metric ... done
+Creating lhsdock-file   ... done
+Creating elastic-agent  ... done
 Creating lhsdock-heart  ... done
 Creating lhsdock-eps    ... done
 
@@ -77,20 +83,20 @@ Creating lhsdock-eps    ... done
 
 ## Setup
 
-| OPTIONAL | REPOSITORY                                            |  TAG       | SIZE             | FROM
-| -------- | ----------------------------------------------------- | ---------- | ---------------- | -------------
-|          | nginx:alpine                                          | latest     | 23.5MB           |              
-| *        | lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine 
-|          | php                                                   | fpm-alpine | 73.4MB           | ubuntu
-|          | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB           | ubuntu
-|          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB            | ubuntu
-|          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB           | ubuntu
-|          | logstash                                              | 8.4.1      | 735MB            | ubuntu
-|          | docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB           | ubuntu
-|          | docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB            | ubuntu
-|          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB           | ubuntu
-|          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB            | ubuntu
-|          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB            | ubuntu
+| OPTIONAL | REPOSITORY                                            |  TAG       | SIZE            
+| -------- | ----------------------------------------------------- | ---------- | ----------------
+|          | nginx:alpine                                          | latest     | 23.5MB          
+| *        | lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-)
+|          | php                                                   | fpm-alpine | 73.4MB          
+|          | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB          
+|          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB           
+|          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB          
+|          | logstash                                              | 8.4.1      | 735MB           
+|          | docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB          
+|          | docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB           
+|          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB          
+|          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB           
+|          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB           
 
 
 | IMAGES               | PORTS                         | NAMES          | HOSTNAMES
@@ -109,6 +115,9 @@ Creating lhsdock-eps    ... done
 | metricbeat           |                               | lhsdock-metric |
 | filebeat             |                               | lhsdock-file   |
 
+
+
+#### Sample for php
 
 | NETWORK                    | DRIVER | SCOPE
 | -------------------------- | ------ | -----
