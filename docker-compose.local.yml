@@ -597,6 +597,7 @@ services:
       - intnet
     volumes:
       - ./certs:/usr/share/metricbeat/config/certs:ro
+      - ./extras/apm-server/hosts:/etc/hosts:ro
       # - ./extras/heartbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - metricdata:/usr/share/metricbeat/data
 
@@ -630,11 +631,10 @@ services:
       - FLEET_ENROLL=1
       - FLEET_URL=http://elastic-agent
       - FLEET_SERVER_ENABLE=true
-      # - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01:9200
+      # - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/config/certs/ca/ca.crt
-      - KIBANA_FLEET_HOST=http://kibana:5601
-      # - KIBANA_FLEET_HOST=https://kibana.${APP_HOST}.${INT_NETWORK}
+      - KIBANA_FLEET_HOST=http://kibana.${APP_HOST}.${INT_NETWORK}:5601
 
   apm-server:
     depends_on:
@@ -654,6 +654,7 @@ services:
     volumes:
       - ./certs:/usr/share/apm-server/config/certs:ro
       - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/config/apm-server.yml:ro
+      - ./extras/apm-server/hosts:/etc/hosts:ro
       - apmdata:/usr/share/apm-server/data
  
 volumes:

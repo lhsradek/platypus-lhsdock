@@ -1,0 +1,3 @@
+127.0.0.1       localhost
+192.168.100.248 elasticsearch es01 elasticsearch.docker.nginx.local es01.docker.nginx.local
+192.168.122.20  kibana kibana.docker.nginx.local docker.nginx.local
