@@ -105,7 +105,7 @@ Creating lhsdock-eps    ... done
 | php:fpm-alpine       | 9000/tcp                      | lhsdock-php    | weblhs-php.nginx.local
 | elasticsearch        |                               | lhsdock-setup  | setup
 | elasticsearch        | 9200/tcp, 9300/tcp            | lhsdock-es01   | es01.www.nginx.local
-| elasticsearch        | 9300->9201/tcp, 9201->9200/tcp| lhsdock-es02   | es02.www.nginx.local
+| elasticsearch        | 9300->9301/tcp, 9201->9200/tcp| lhsdock-es02   | es02.www.nginx.local
 | kibana               | 5601/tcp                      | lhsdock-kibana | kibana.www.nginx.local
 | enterprise-search    | 3002/tcp                      | lhsdock-eps    | 
 | elastic-agent        | 8200/tcp                      | elastic-agent  |
