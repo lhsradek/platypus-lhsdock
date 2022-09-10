@@ -95,16 +95,16 @@ apm-server:
   #---------------------------- APM Server - Secure Communication with Agents ----------------------------
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
-  #ssl:
-    #enabled: false
+  ssl:
+    enabled: false
 
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
-    #certificate: ''
+    certificate: '/usr/share/apm-server/config/certs/log/log.crt'
 
     # Path to file containing server certificate key.
     # Needs to be configured when ssl is enabled.
-    #key: ''
+    key: '/usr/share/apm-server/config/certs/log/log.key'
 
     # Optional configuration options for ssl communication.
 
@@ -221,7 +221,7 @@ apm-server:
     #path: ""
 
     # Enable custom SSL settings. Set to false to ignore custom SSL settings for secure communication.
-    #ssl.enabled: true
+    ssl.enabled: true
 
     # Optional SSL configuration options. SSL is off by default, change the `protocol` option if you want to enable `https`.
     #
@@ -247,7 +247,7 @@ apm-server:
     #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
     # List of root certificates for HTTPS server verifications.
-    #ssl.certificate_authorities: ["/etc/certs/elastic/ca/ca.crt"]
+    ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
 
     # Certificate for SSL client authentication.
     #ssl.certificate: "/etc/certs/elastic/log/log.crt"
@@ -398,7 +398,7 @@ output.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/etc/certs/elastic/ca/ca.crt"]
+  ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/root/platypus-box/traefik/certs/elastic/log/log.crt"
@@ -969,7 +969,7 @@ monitoring.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/etc/certs/elastic/ca/ca.crt"]
+  ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
   # Certificate for SSL client authentication.
   #ssl.certificate: "/etc/certs/elastic/log/log.crt"
   # Client Certificate Key
