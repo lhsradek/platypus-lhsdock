@@ -89,7 +89,7 @@ Creating lhsdock-eps    ... done
 |          | docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB           | ubuntu
 |          | docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB            | ubuntu
 |          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB           | ubuntu
-|          | docker.elastic.co/beats/packetbeat                    | 8.4.1      | 591MB            | ubuntu
+|          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB            | ubuntu
 |          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB            | ubuntu
 
 
@@ -106,7 +106,7 @@ Creating lhsdock-eps    ... done
 | apm-server           | 8200/tcp                      | lhsdock-apm    |
 | logstash             | 5044/tcp                      | lhsdock-log    | log.www.nginx.local
 | heartbeat            |                               | lhsdock-heart  |
-| packetbeat           |                               | lhsdock-packet |
+| metricbeat           |                               | lhsdock-metric |
 | filebeat             |                               | lhsdock-file   |
 
 
