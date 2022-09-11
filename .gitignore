@@ -4,7 +4,4 @@ certs/
 context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
-extras/kibana/kibana.yml
-extras/logstash/logstash.yml
-extras/enterprise-search/enterprise-search.yml
 logs/

@@ -44,15 +44,17 @@ fleet:
 #   # Default is false
 #   exponential: false
 
-id: dc4ade90-3004-11ed-bce4-6936c53dfe93
-revision: 5
+id: 108e8d80-3200-11ed-99b0-a7b088e95c1c
+revision: 7
 outputs:
   default:
     type: elasticsearch
     hosts:
-      - 'https://localhost:9200'
-    username: '{ES_USERNAME}'
-    password: '{ES_PASSWORD}'
+      - 'https://es01:9200'
+      # - 'https://es02:9200'
+    username: 'elastic'
+    password: 'changeme'
+    ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/certs/ca.crt"]
 output_permissions:
   default:
     _elastic_agent_monitoring:
@@ -63,7 +65,37 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
+            - metrics-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
             - logs-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
           privileges:
             - auto_configure
             - create_doc
@@ -78,37 +110,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.elastic_agent-default
+            - logs-elastic_agent.filebeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -118,7 +120,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent-default
+            - logs-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
           privileges:
             - auto_configure
             - create_doc
@@ -128,17 +135,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.filebeat-default
+            - metrics-elastic_agent.heartbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.osquerybeat-default
+            - logs-elastic_agent.metricbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -148,12 +150,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.auditbeat-default
+            - logs-elastic_agent.osquerybeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.osquerybeat-default
+            - metrics-elastic_agent.osquerybeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -163,14 +165,14 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.metricbeat-default
+            - metrics-elastic_agent.packetbeat-default
           privileges:
             - auto_configure
             - create_doc
     _elastic_agent_checks:
       cluster:
         - monitor
-    60c77a4b-f690-4089-85fe-e00e60aebd23:
+    d359f952-c130-444b-a7f4-38cbabd36fbc:
       indices:
         - names:
             - logs-system.auth-default
@@ -252,30 +254,10 @@ output_permissions:
           privileges:
             - auto_configure
             - create_doc
-        - names:
-            - logs-system.application-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-system.security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-system.system-default
-          privileges:
-            - auto_configure
-            - create_doc
-    b6c1febe-a6ca-46fb-824e-a7e2123b43ab:
+    d4bc6317-c234-4841-a0bb-608f14b33793:
       indices:
         - names:
-            - logs-apm.error-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-apm.profiling-default
+            - logs-apm.app-default
           privileges:
             - auto_configure
             - create_doc
@@ -285,12 +267,22 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - traces-apm-default
+            - logs-apm.error-default
           privileges:
             - auto_configure
             - create_doc
         - names:
             - metrics-apm.internal-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.profiling-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - traces-apm.rum-default
           privileges:
             - auto_configure
             - create_doc
@@ -303,12 +295,14 @@ output_permissions:
             - monitor
             - read
         - names:
-            - logs-apm.app-default
+            - traces-apm-default
           privileges:
             - auto_configure
             - create_doc
+    7c0a4f68-53e5-431b-b2cc-8a6f81591c4b:
+      indices:
         - names:
-            - traces-apm.rum-default
+            - logs-fim.event-default
           privileges:
             - auto_configure
             - create_doc
@@ -322,9 +316,9 @@ agent:
     logs: true
     metrics: true
 inputs:
-  - id: logfile-system-60c77a4b-f690-4089-85fe-e00e60aebd23
+  - id: logfile-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 2
+    revision: 1
     type: logfile
     use_output: default
     meta:
@@ -334,41 +328,41 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: logfile-system.auth-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: logfile-system.auth-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.auth
           type: logs
-        exclude_files:
-          - .gz$
         ignore_older: 72h
         paths:
           - /var/log/auth.log*
           - /var/log/secure*
+        exclude_files:
+          - .gz$
         multiline:
           pattern: ^\s
           match: after
-        processors:
-          - add_locale: null
         tags:
           - hashicorp-vault-log
-      - id: logfile-system.syslog-60c77a4b-f690-4089-85fe-e00e60aebd23
+        processors:
+          - add_locale: null
+      - id: logfile-system.syslog-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.syslog
           type: logs
-        exclude_files:
-          - .gz$
-        ignore_older: 72h
         paths:
           - /var/log/messages*
           - /var/log/syslog*
+        exclude_files:
+          - .gz$
         multiline:
           pattern: ^\s
           match: after
         processors:
           - add_locale: null
-  - id: winlog-system-60c77a4b-f690-4089-85fe-e00e60aebd23
+        ignore_older: 72h
+  - id: winlog-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 2
+    revision: 1
     type: winlog
     use_output: default
     meta:
@@ -378,30 +372,30 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: winlog-system.application-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: winlog-system.application-d359f952-c130-444b-a7f4-38cbabd36fbc
         name: Application
         data_stream:
           dataset: system.application
           type: logs
         condition: '${host.platform} == ''windows'''
         ignore_older: 72h
-      - id: winlog-system.security-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: winlog-system.security-d359f952-c130-444b-a7f4-38cbabd36fbc
         name: Security
         data_stream:
           dataset: system.security
           type: logs
         condition: '${host.platform} == ''windows'''
         ignore_older: 72h
-      - id: winlog-system.system-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: winlog-system.system-d359f952-c130-444b-a7f4-38cbabd36fbc
         name: System
         data_stream:
           dataset: system.system
           type: logs
         condition: '${host.platform} == ''windows'''
         ignore_older: 72h
-  - id: system/metrics-system-60c77a4b-f690-4089-85fe-e00e60aebd23
+  - id: system/metrics-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 2
+    revision: 1
     type: system/metrics
     use_output: default
     meta:
@@ -411,361 +405,107 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: system/metrics-system.cpu-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: system/metrics-system.cpu-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.cpu
           type: metrics
-        period: 10s
+        metricsets:
+          - cpu
         cpu.metrics:
           - percentages
           - normalized_percentages
-        metricsets:
-          - cpu
-      - id: system/metrics-system.diskio-60c77a4b-f690-4089-85fe-e00e60aebd23
+        period: 10s
+      - id: system/metrics-system.diskio-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.diskio
           type: metrics
-        period: 10s
-        diskio.include_devices: null
         metricsets:
           - diskio
-      - id: system/metrics-system.filesystem-60c77a4b-f690-4089-85fe-e00e60aebd23
+        diskio.include_devices: null
+        period: 10s
+      - id: system/metrics-system.filesystem-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.filesystem
           type: metrics
-        period: 1m
         metricsets:
           - filesystem
+        period: 1m
         processors:
           - drop_event.when.regexp:
               system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.fsstat-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: system/metrics-system.fsstat-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.fsstat
           type: metrics
-        period: 1m
         metricsets:
           - fsstat
+        period: 1m
         processors:
           - drop_event.when.regexp:
               system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.load-60c77a4b-f690-4089-85fe-e00e60aebd23
+      - id: system/metrics-system.load-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.load
           type: metrics
-        condition: '${host.platform} != ''windows'''
-        period: 10s
         metricsets:
           - load
-      - id: system/metrics-system.memory-60c77a4b-f690-4089-85fe-e00e60aebd23
+        condition: '${host.platform} != ''windows'''
+        period: 10s
+      - id: system/metrics-system.memory-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.memory
           type: metrics
-        period: 10s
         metricsets:
           - memory
-      - id: system/metrics-system.network-60c77a4b-f690-4089-85fe-e00e60aebd23
+        period: 10s
+      - id: system/metrics-system.network-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.network
           type: metrics
-        period: 10s
-        network.interfaces: null
         metricsets:
           - network
-      - id: system/metrics-system.process-60c77a4b-f690-4089-85fe-e00e60aebd23
+        period: 10s
+        network.interfaces: null
+      - id: system/metrics-system.process-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.process
           type: metrics
-        process.include_top_n.by_memory: 5
-        period: 10s
-        processes:
-          - .*
-        process.include_top_n.by_cpu: 5
-        process.cgroups.enabled: false
-        process.cmdline.cache.enabled: true
         metricsets:
           - process
+        period: 10s
+        process.include_top_n.by_cpu: 5
+        process.include_top_n.by_memory: 5
+        process.cmdline.cache.enabled: true
+        process.cgroups.enabled: false
         process.include_cpu_ticks: false
+        processes:
+          - .*
       - id: >-
-          system/metrics-system.process.summary-60c77a4b-f690-4089-85fe-e00e60aebd23
+          system/metrics-system.process.summary-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.process.summary
           type: metrics
-        period: 10s
         metricsets:
           - process_summary
+        period: 10s
       - id: >-
-          system/metrics-system.socket_summary-60c77a4b-f690-4089-85fe-e00e60aebd23
+          system/metrics-system.socket_summary-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.socket_summary
           type: metrics
-        period: 10s
         metricsets:
           - socket_summary
-      - id: system/metrics-system.uptime-60c77a4b-f690-4089-85fe-e00e60aebd23
+        period: 10s
+      - id: system/metrics-system.uptime-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.uptime
           type: metrics
-        period: 10s
         metricsets:
           - uptime
-  - id: httpjson-system-60c77a4b-f690-4089-85fe-e00e60aebd23
-    name: system-1
-    revision: 2
-    type: httpjson
-    use_output: default
-    meta:
-      package:
-        name: system
-        version: 1.19.3
-    data_stream:
-      namespace: default
-    streams:
-      - id: httpjson-system.application-60c77a4b-f690-4089-85fe-e00e60aebd23
-        data_stream:
-          dataset: system.application
-          type: logs
-        cursor:
-          index_earliest:
-            value: '[[.last_event.result.max_indextime]]'
-        response.decode_as: application/x-ndjson
-        request.ssl: null
-        request.method: POST
-        interval: 10s
-        request.url: 'https://server.example.com:8089/services/search/jobs/export'
-        processors:
-          - decode_json_fields:
-              add_error_key: true
-              fields: message
-              target: json
-          - drop_event:
-              when:
-                not:
-                  has_fields:
-                    - json.result
-          - fingerprint:
-              target_field: '@metadata._id'
-              fields:
-                - json.result._cd
-                - json.result._indextime
-                - json.result._raw
-                - json.result._time
-                - json.result.host
-                - json.result.source
-          - drop_fields:
-              fields: message
-          - rename:
-              ignore_missing: true
-              fail_on_error: false
-              fields:
-                - from: json.result._raw
-                  to: event.original
-                - from: json.result.host
-                  to: host.name
-                - from: json.result.source
-                  to: event.provider
-          - drop_fields:
-              fields: json
-          - decode_xml_wineventlog:
-              ignore_failure: true
-              field: event.original
-              target_field: winlog
-              ignore_missing: true
-              map_ecs_fields: true
-          - timestamp:
-              field: winlog.time_created
-              test:
-                - '2019-06-22T16:33:51Z'
-                - '2019-11-18T04:59:51.123Z'
-                - '2020-08-03T07:10:20.123456+02:00'
-              layouts:
-                - '2006-01-02T15:04:05Z'
-                - '2006-01-02T15:04:05.999Z'
-                - '2006-01-02T15:04:05.999-07:00'
-        config_version: '2'
-        request.transforms:
-          - set:
-              value: >-
-                search sourcetype="XmlWinEventLog:Application" | streamstats
-                max(_indextime) AS max_indextime
-              target: url.params.search
-          - set:
-              value: json
-              target: url.params.output_mode
-          - set:
-              default: '[[(now (parseDuration "-10s")).Unix]]'
-              value: '[[ .cursor.index_earliest ]]'
-              target: url.params.index_earliest
-          - set:
-              value: '[[(now).Unix]]'
-              target: url.params.index_latest
-          - set:
-              value: application/x-www-form-urlencoded
-              target: header.Content-Type
-        tags:
-          - forwarded
-        publisher_pipeline.disable_host: true
-      - id: httpjson-system.security-60c77a4b-f690-4089-85fe-e00e60aebd23
-        data_stream:
-          dataset: system.security
-          type: logs
-        cursor:
-          index_earliest:
-            value: '[[.last_event.result.max_indextime]]'
-        response.decode_as: application/x-ndjson
-        request.ssl: null
-        request.method: POST
-        interval: 10s
-        request.url: 'https://server.example.com:8089/services/search/jobs/export'
-        processors:
-          - decode_json_fields:
-              add_error_key: true
-              fields: message
-              target: json
-          - drop_event:
-              when:
-                not:
-                  has_fields:
-                    - json.result
-          - fingerprint:
-              target_field: '@metadata._id'
-              fields:
-                - json.result._cd
-                - json.result._indextime
-                - json.result._raw
-                - json.result._time
-                - json.result.host
-                - json.result.source
-          - drop_fields:
-              fields: message
-          - rename:
-              ignore_missing: true
-              fail_on_error: false
-              fields:
-                - from: json.result._raw
-                  to: event.original
-                - from: json.result.host
-                  to: host.name
-                - from: json.result.source
-                  to: event.provider
-          - drop_fields:
-              fields: json
-          - decode_xml_wineventlog:
-              ignore_failure: true
-              field: event.original
-              target_field: winlog
-              ignore_missing: true
-              map_ecs_fields: true
-        config_version: '2'
-        request.transforms:
-          - set:
-              value: >-
-                search sourcetype="XmlWinEventLog:Security" | streamstats
-                max(_indextime) AS max_indextime
-              target: url.params.search
-          - set:
-              value: json
-              target: url.params.output_mode
-          - set:
-              default: '[[(now (parseDuration "-10s")).Unix]]'
-              value: '[[ .cursor.index_earliest ]]'
-              target: url.params.index_earliest
-          - set:
-              value: '[[(now).Unix]]'
-              target: url.params.index_latest
-          - set:
-              value: application/x-www-form-urlencoded
-              target: header.Content-Type
-        tags:
-          - forwarded
-        publisher_pipeline.disable_host: true
-      - id: httpjson-system.system-60c77a4b-f690-4089-85fe-e00e60aebd23
-        data_stream:
-          dataset: system.system
-          type: logs
-        cursor:
-          index_earliest:
-            value: '[[.last_event.result.max_indextime]]'
-        response.decode_as: application/x-ndjson
-        request.ssl: null
-        request.method: POST
-        interval: 10s
-        request.url: 'https://server.example.com:8089/services/search/jobs/export'
-        processors:
-          - decode_json_fields:
-              add_error_key: true
-              fields: message
-              target: json
-          - drop_event:
-              when:
-                not:
-                  has_fields:
-                    - json.result
-          - fingerprint:
-              target_field: '@metadata._id'
-              fields:
-                - json.result._cd
-                - json.result._indextime
-                - json.result._raw
-                - json.result._time
-                - json.result.host
-                - json.result.source
-          - drop_fields:
-              fields: message
-          - rename:
-              ignore_missing: true
-              fail_on_error: false
-              fields:
-                - from: json.result._raw
-                  to: event.original
-                - from: json.result.host
-                  to: host.name
-                - from: json.result.source
-                  to: event.provider
-          - drop_fields:
-              fields: json
-          - decode_xml_wineventlog:
-              ignore_failure: true
-              field: event.original
-              target_field: winlog
-              ignore_missing: true
-              map_ecs_fields: true
-          - timestamp:
-              field: winlog.time_created
-              test:
-                - '2019-06-22T16:33:51Z'
-                - '2019-11-18T04:59:51.123Z'
-                - '2020-08-03T07:10:20.123456+02:00'
-              layouts:
-                - '2006-01-02T15:04:05Z'
-                - '2006-01-02T15:04:05.999Z'
-                - '2006-01-02T15:04:05.999-07:00'
-        config_version: '2'
-        request.transforms:
-          - set:
-              value: >-
-                search sourcetype="XmlWinEventLog:System" | streamstats
-                max(_indextime) AS max_indextime
-              target: url.params.search
-          - set:
-              value: json
-              target: url.params.output_mode
-          - set:
-              default: '[[(now (parseDuration "-10s")).Unix]]'
-              value: '[[ .cursor.index_earliest ]]'
-              target: url.params.index_earliest
-          - set:
-              value: '[[(now).Unix]]'
-              target: url.params.index_latest
-          - set:
-              value: application/x-www-form-urlencoded
-              target: header.Content-Type
-        tags:
-          - forwarded
-        publisher_pipeline.disable_host: true
-  - id: b6c1febe-a6ca-46fb-824e-a7e2123b43ab
+        period: 10s
+  - id: d4bc6317-c234-4841-a0bb-608f14b33793
     name: apm-1
-    revision: 1
+    revision: 2
     type: apm
     use_output: default
     meta:
@@ -775,7 +515,13 @@ inputs:
     data_stream:
       namespace: default
     apm-server:
+      capture_personal_data: true
+      max_connections: 0
+      max_event_size: 307200
       auth:
+        api_key:
+          enabled: false
+          limit: 100
         anonymous:
           enabled: true
           allow_agent:
@@ -784,55 +530,87 @@ inputs:
             - iOS/swift
           allow_service: null
           rate_limit:
-            event_limit: 300
             ip_limit: 1000
-        api_key:
-          enabled: false
-          limit: 100
+            event_limit: 300
         secret_token: null
-      capture_personal_data: true
-      idle_timeout: 45s
       default_service_environment: null
-      expvar.enabled: false
-      pprof.enabled: false
-      host: 'fleet:8200'
-      max_connections: 0
-      max_event_size: 307200
-      max_header_size: 1048576
-      read_timeout: 3600s
-      response_headers: null
-      java_attacher:
-        enabled: false
-        discovery-rules: null
-        download-agent-version: null
+      shutdown_timeout: 30s
+      sampling:
+        tail:
+          enabled: false
+          storage_limit: 3GB
+          policies:
+            - sample_rate: 0.1
+          interval: 1m
       rum:
         enabled: true
+        exclude_from_grouping: ^/webpack
         allow_headers: null
+        response_headers: null
+        library_pattern: node_modules|bower_components|~
         allow_origins:
           - '*'
-        exclude_from_grouping: ^/webpack
-        library_pattern: node_modules|bower_components|~
-        response_headers: null
         source_mapping:
           metadata: []
-      shutdown_timeout: 30s
       ssl:
         enabled: false
-        certificate: null
-        key: null
         key_passphrase: null
+        certificate: null
         supported_protocols:
           - TLSv1.1
           - TLSv1.2
           - TLSv1.3
-        cipher_suites: null
         curve_types: null
+        key: null
+        cipher_suites: null
+      response_headers: null
       write_timeout: 30s
-      sampling:
-        tail:
-          enabled: false
-          interval: 1m
-          policies:
-            - sample_rate: 0.1
-          storage_limit: 3GB
+      pprof.enabled: false
+      host: 'apm:8200'
+      max_header_size: 1048576
+      idle_timeout: 45s
+      expvar.enabled: false
+      read_timeout: 3600s
+      java_attacher:
+        enabled: false
+        discovery-rules: null
+        download-agent-version: null
       agent_config: []
+  - id: audit/file_integrity-fim-7c0a4f68-53e5-431b-b2cc-8a6f81591c4b
+    name: fim-1
+    revision: 1
+    type: audit/file_integrity
+    use_output: default
+    meta:
+      package:
+        name: fim
+        version: 1.2.0
+    data_stream:
+      namespace: default
+    streams:
+      - id: audit/file_integrity-fim.event-7c0a4f68-53e5-431b-b2cc-8a6f81591c4b
+        type: audit/file_integrity
+        data_stream:
+          dataset: fim.event
+          type: logs
+        paths:
+          - /bin
+          - /usr/bin
+          - /sbin
+          - /usr/sbin
+          - /etc
+          - /usr/share
+        recursive: true
+        scan_at_start: true
+        hash_types:
+          - sha1
+        max_file_size: 100 MiB
+        scan_rate_per_sec: 50 MiB
+        exclude_files:
+          - '(?i)\.sw[nop]$'
+          - ~$
+          - /\.git($|/)
+        include_files: null
+        keep_null: false
+        tags:
+          - fim-event

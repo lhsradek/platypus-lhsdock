@@ -95,16 +95,16 @@ apm-server:
   #---------------------------- APM Server - Secure Communication with Agents ----------------------------
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
-  ssl:
-    enabled: false
+  #ssl:
+    #enabled: false
 
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
-    certificate: '/usr/share/apm-server/config/certs/log/log.crt'
+    #certificate: '/usr/share/apm-server/certs/log/log.crt'
 
     # Path to file containing server certificate key.
     # Needs to be configured when ssl is enabled.
-    key: '/usr/share/apm-server/config/certs/log/log.key'
+    # key: '/usr/share/apm-server/certs/log/log.key'
 
     # Optional configuration options for ssl communication.
 
@@ -127,8 +127,8 @@ apm-server:
   # Enable Real User Monitoring (RUM) Support. By default RUM is disabled.
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
-  #rum:
-    #enabled: false
+  rum:
+    enabled: true
 
     #-- General RUM settings
 
@@ -170,7 +170,7 @@ apm-server:
       # Note that values configured without a time unit will be interpreted as seconds.
       #cache.expiration: 5m
 
-      # Source maps may be fetched from Elasticsearch by using the output.elasticsearch configuration,
+      # Source maps may be fetched from Elasticsearch by using the output.es01 configuration,
       # and running apm-server standalone.
       #
       # Note: fetching source maps from Elasticsearch is not supported if apm-server is being managed by
@@ -178,13 +178,14 @@ apm-server:
       # with source maps stored in Elasticsearch by older versions of apm-server. New source maps must now
       # be uploaded via Kibana, and `apm-server.kibana` configured in standalone apm-servers for fetching
       # them.
-      # elasticsearch:
+      #elasticsearch:
         # Array of hosts to connect to.
         # Scheme and port can be left out and will be set to the default (`http` and `9200`).
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
 
-        #hosts: ["localhost:9200"]
+        #hosts: ["https://es01:9200"]
+        #hosts: ["es01:9200", "es02:9200"]
 
         # Protocol - either `http` (default) or `https`.
         #protocol: "https"
@@ -193,6 +194,7 @@ apm-server:
         #api_key: "id:api_key"
         #username: "elastic"
         #password: "changeme"
+        #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
       #index_pattern: "apm-*-sourcemap*"
@@ -210,10 +212,10 @@ apm-server:
     # Scheme and port can be left out and will be set to the default (`http` and `5601`).
     # In case you specify an additional path, the scheme is required: `http://localhost:5601/path`.
     # IPv6 addresses should always be defined as: `https://[2001:db8::1]:5601`.
-    host: "localhost:5601"
+    host: "kibana:5601"
 
     # Optional protocol and basic auth credentials.
-    #protocol: "https"
+    protocol: "https"
     username: "elastic"
     password: "changeme"
 
@@ -247,13 +249,13 @@ apm-server:
     #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
     # List of root certificates for HTTPS server verifications.
-    ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
+    ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
     # Certificate for SSL client authentication.
-    #ssl.certificate: "/etc/certs/elastic/log/log.crt"
+    ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
     # Client Certificate Key
-    #ssl.key: "/etc/certs/elastic/log/log.key"
+    ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
     # Optional passphrase for decrypting the Certificate Key.
     # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -314,7 +316,8 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["https://es01:9200"]
+  #hosts: ["es01:9200"]
+  hosts: ["es01:9200", "es02:9200"]
 
   # Boolean flag to enable or disable the output module.
   enabled: true
@@ -326,7 +329,7 @@ output.elasticsearch:
   protocol: "https"
 
   # Authentication credentials - either API key or username/password.
-  #api_key: "id:api_key"
+  # api_key: "id:api_key"
   username: "elastic"
   password: "changeme"
 
@@ -398,13 +401,13 @@ output.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
+  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/root/platypus-box/traefik/certs/elastic/log/log.crt"
+  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
-  #ssl.key: "/root/platypus-box/traefik/certs/elastic/log/log.key"
+  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -461,7 +464,7 @@ output.logstash:
   #enabled: false
 
   # The Logstash hosts.
-  hosts: ["localhost:5044"]
+  hosts: ["log:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -902,7 +905,7 @@ monitoring.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["es01:9200"]
+  hosts: ["es01:9200", "es02:9200"]
 
   # Set gzip compression level.
   #compression_level: 0
@@ -969,11 +972,11 @@ monitoring.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/usr/share/apm-server/config/certs/ca/ca.crt"]
+  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/etc/certs/elastic/log/log.crt"
+  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
   # Client Certificate Key
-  #ssl.key: "/etc/certs/elastic/log/log.key"
+  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.

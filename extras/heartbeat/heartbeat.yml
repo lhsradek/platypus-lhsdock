@@ -12,13 +12,13 @@ heartbeat.monitors:
 - type: http
   schedule: '@every 5s'
   urls:
-    - http://kibana:5601
-    - https://elasticsearch:9200
+    - https://kibana:5601
+    - https://es01:9200
 
 - type: icmp
   schedule: '@every 5s'
   hosts:
-    - elasticsearch
+    - es01
     - kibana
 
 processors:
@@ -26,7 +26,6 @@ processors:
   - add_docker_metadata: ~
 
 output.elasticsearch:
-  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
-  username: '${ELASTICSEARCH_USERNAME:}'
-  password: '${ELASTICSEARCH_PASSWORD:}'
-  ssl.ca_trusted_fingerprint: '/usr/share/heartbeat/config/certs/ca/ca.crt'
+  hosts: ["https://es01:9200", "https://es02:9200"]
+  username: "elastic"
+  password: "changeme"

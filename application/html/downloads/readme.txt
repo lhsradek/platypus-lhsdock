@@ -107,13 +107,13 @@ Creating lhsdock-eps    ... done
 | elasticsearch        | 9200/tcp, 9300/tcp            | lhsdock-es01   | es01.www.nginx.local
 | elasticsearch        | 9300->9301/tcp, 9201->9200/tcp| lhsdock-es02   | es02.www.nginx.local
 | kibana               | 5601/tcp                      | lhsdock-kibana | kibana.www.nginx.local
-| enterprise-search    | 3002/tcp                      | lhsdock-eps    | 
-| elastic-agent        | 8200/tcp                      | elastic-agent  |
-| apm-server           | 8200/tcp                      | lhsdock-apm    |
-| logstash             | 5044/tcp                      | lhsdock-log    | log.www.nginx.local
-| heartbeat            |                               | lhsdock-heart  |
-| metricbeat           |                               | lhsdock-metric |
-| filebeat             |                               | lhsdock-file   |
+| enterprise-search    | 3002/tcp                      | lhsdock-eps    | eps.www.nginx.local 
+| elastic-agent        | 8200/tcp                      | elastic-agent  | fleet.nginx.local
+| apm-server           | 8200/tcp                      | lhsdock-apm    | apm.nginx.local
+| logstash             | 5044/tcp                      | lhsdock-log    | log.nginx.local
+| heartbeat            |                               | lhsdock-heart  | heart.nginx.local
+| metricbeat           |                               | lhsdock-metric | metric.nginx.local
+| filebeat             |                               | lhsdock-file   | file.nginx.local
 
 
 
