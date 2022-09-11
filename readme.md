@@ -99,21 +99,21 @@ Creating lhsdock-eps    ... done
 |          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB           
 
 
-| IMAGES               | PORTS                         | NAMES          | HOSTNAMES
-| -------------------- | ----------------------------- | -------------- | ------------------------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp               | lhsdock        | www.nginx.local
-| php:fpm-alpine       | 9000/tcp                      | lhsdock-php    | weblhs-php.nginx.local
-| elasticsearch        |                               | lhsdock-setup  | setup
-| elasticsearch        | 9200/tcp, 9300/tcp            | lhsdock-es01   | es01.www.nginx.local
-| elasticsearch        | 9300->9301/tcp, 9201->9200/tcp| lhsdock-es02   | es02.www.nginx.local
-| kibana               | 5601/tcp                      | lhsdock-kibana | kibana.www.nginx.local
-| enterprise-search    | 3002/tcp                      | lhsdock-eps    | eps.www.nginx.local 
-| elastic-agent        | 8200/tcp                      | elastic-agent  | fleet.nginx.local
-| apm-server           | 8200/tcp                      | lhsdock-apm    | apm.nginx.local
-| logstash             | 5044/tcp                      | lhsdock-log    | log.nginx.local
-| heartbeat            |                               | lhsdock-heart  | heart.nginx.local
-| metricbeat           |                               | lhsdock-metric | metric.nginx.local
-| filebeat             |                               | lhsdock-file   | file.nginx.local
+| IMAGES               | PORTS                    | NAMES          | HOSTNAMES
+| -------------------- | ------------------------ | -------------- | ------------------------
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp          | lhsdock        | www.nginx.local
+| php:fpm-alpine       | 9000/tcp                 | lhsdock-php    | weblhs-php.nginx.local
+| elasticsearch        |                          | lhsdock-setup  | setup
+| elasticsearch        | 9200/tcp, 9300/tcp       | lhsdock-es01   | es01.www.nginx.local
+| elasticsearch        | 9200/tcp, 9301->9300/tcp | lhsdock-es02   | es02.www.nginx.local
+| kibana               | 5601/tcp                 | lhsdock-kibana | kibana.www.nginx.local
+| enterprise-search    | 3002/tcp                 | lhsdock-eps    | eps.nginx.local 
+| elastic-agent        | 8200/tcp                 | elastic-agent  | fleet.nginx.local
+| apm-server           | 8200/tcp                 | lhsdock-apm    | apm.nginx.local
+| logstash             | 5044/tcp                 | lhsdock-log    | log.nginx.local
+| heartbeat            |                          | lhsdock-heart  | heart.nginx.local
+| metricbeat           |                          | lhsdock-metric | metric.nginx.local
+| filebeat             |                          | lhsdock-file   | file.nginx.local
 
 
 
