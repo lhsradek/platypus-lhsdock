@@ -45,16 +45,17 @@ fleet:
 #   exponential: false
 
 id: 108e8d80-3200-11ed-99b0-a7b088e95c1c
-revision: 7
+revision: 13
 outputs:
   default:
     type: elasticsearch
     hosts:
       - 'https://es01:9200'
-      # - 'https://es02:9200'
+    #  - 'https://es02:9200'
+    #  - 'https://es01.docker.nginx.local'
     username: 'elastic'
     password: 'changeme'
-    ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/certs/ca.crt"]
+    ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
 output_permissions:
   default:
     _elastic_agent_monitoring:
@@ -75,22 +76,22 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
             - logs-elastic_agent.cloudbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.cloudbeat-default
+            - logs-elastic_agent-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent-default
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -140,6 +141,11 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
+            - logs-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
             - logs-elastic_agent.metricbeat-default
           privileges:
             - auto_configure
@@ -150,22 +156,17 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
             - logs-elastic_agent.packetbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
             - metrics-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.osquerybeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -272,17 +273,17 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-apm.internal-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
             - metrics-apm.profiling-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - traces-apm.rum-default
+            - traces-apm-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.internal-default
           privileges:
             - auto_configure
             - create_doc
@@ -295,10 +296,12 @@ output_permissions:
             - monitor
             - read
         - names:
-            - traces-apm-default
+            - traces-apm.rum-default
           privileges:
             - auto_configure
             - create_doc
+      cluster:
+        - 'cluster:monitor/main'
     7c0a4f68-53e5-431b-b2cc-8a6f81591c4b:
       indices:
         - names:
@@ -318,7 +321,7 @@ agent:
 inputs:
   - id: logfile-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 1
+    revision: 2
     type: logfile
     use_output: default
     meta:
@@ -332,37 +335,37 @@ inputs:
         data_stream:
           dataset: system.auth
           type: logs
+        exclude_files:
+          - .gz$
         ignore_older: 72h
         paths:
           - /var/log/auth.log*
           - /var/log/secure*
-        exclude_files:
-          - .gz$
         multiline:
           pattern: ^\s
           match: after
-        tags:
-          - hashicorp-vault-log
         processors:
           - add_locale: null
+        tags:
+          - hashicorp-vault-log
       - id: logfile-system.syslog-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.syslog
           type: logs
+        exclude_files:
+          - .gz$
+        ignore_older: 72h
         paths:
           - /var/log/messages*
           - /var/log/syslog*
-        exclude_files:
-          - .gz$
         multiline:
           pattern: ^\s
           match: after
         processors:
           - add_locale: null
-        ignore_older: 72h
   - id: winlog-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 1
+    revision: 2
     type: winlog
     use_output: default
     meta:
@@ -395,7 +398,7 @@ inputs:
         ignore_older: 72h
   - id: system/metrics-system-d359f952-c130-444b-a7f4-38cbabd36fbc
     name: system-1
-    revision: 1
+    revision: 2
     type: system/metrics
     use_output: default
     meta:
@@ -409,27 +412,27 @@ inputs:
         data_stream:
           dataset: system.cpu
           type: metrics
-        metricsets:
-          - cpu
+        period: 10s
         cpu.metrics:
           - percentages
           - normalized_percentages
-        period: 10s
+        metricsets:
+          - cpu
       - id: system/metrics-system.diskio-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.diskio
           type: metrics
+        period: 10s
+        diskio.include_devices: null
         metricsets:
           - diskio
-        diskio.include_devices: null
-        period: 10s
       - id: system/metrics-system.filesystem-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.filesystem
           type: metrics
+        period: 1m
         metricsets:
           - filesystem
-        period: 1m
         processors:
           - drop_event.when.regexp:
               system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
@@ -437,9 +440,9 @@ inputs:
         data_stream:
           dataset: system.fsstat
           type: metrics
+        period: 1m
         metricsets:
           - fsstat
-        period: 1m
         processors:
           - drop_event.when.regexp:
               system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
@@ -447,65 +450,65 @@ inputs:
         data_stream:
           dataset: system.load
           type: metrics
-        metricsets:
-          - load
         condition: '${host.platform} != ''windows'''
         period: 10s
+        metricsets:
+          - load
       - id: system/metrics-system.memory-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.memory
           type: metrics
+        period: 10s
         metricsets:
           - memory
-        period: 10s
       - id: system/metrics-system.network-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.network
           type: metrics
-        metricsets:
-          - network
         period: 10s
         network.interfaces: null
+        metricsets:
+          - network
       - id: system/metrics-system.process-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.process
           type: metrics
-        metricsets:
-          - process
-        period: 10s
-        process.include_top_n.by_cpu: 5
         process.include_top_n.by_memory: 5
-        process.cmdline.cache.enabled: true
-        process.cgroups.enabled: false
-        process.include_cpu_ticks: false
+        period: 10s
         processes:
           - .*
+        process.include_top_n.by_cpu: 5
+        process.cgroups.enabled: false
+        process.cmdline.cache.enabled: true
+        metricsets:
+          - process
+        process.include_cpu_ticks: false
       - id: >-
           system/metrics-system.process.summary-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.process.summary
           type: metrics
+        period: 10s
         metricsets:
           - process_summary
-        period: 10s
       - id: >-
           system/metrics-system.socket_summary-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.socket_summary
           type: metrics
+        period: 10s
         metricsets:
           - socket_summary
-        period: 10s
       - id: system/metrics-system.uptime-d359f952-c130-444b-a7f4-38cbabd36fbc
         data_stream:
           dataset: system.uptime
           type: metrics
+        period: 10s
         metricsets:
           - uptime
-        period: 10s
   - id: d4bc6317-c234-4841-a0bb-608f14b33793
     name: apm-1
-    revision: 2
+    revision: 3
     type: apm
     use_output: default
     meta:
@@ -566,7 +569,7 @@ inputs:
       response_headers: null
       write_timeout: 30s
       pprof.enabled: false
-      host: 'apm:8200'
+      host: 'localhost:8200'
       max_header_size: 1048576
       idle_timeout: 45s
       expvar.enabled: false

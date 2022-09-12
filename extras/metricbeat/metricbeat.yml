@@ -6,7 +6,9 @@ processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
 
-output.elasticsearch.hosts: ["https://es01:9200", "https://es02:9200"]
+output.elasticsearch.hosts: ["https://es01:9200"]
+# output.elasticsearch.hosts: ["https://es01.docker.nginx.local:8443"]
+# output.elasticsearch.hosts: ["https://es01:9200", "https://es02:9200"]
 output.elasticsearch.ssl.certificate_authorities: ["/usr/share/metricbeat/certs/ca/ca.crt"]
 output.elasticsearch.ssl.certificate: "/usr/share/metricbeat/certs/metric/metric.crt"
 output.elasticsearch.ssl.key: "/usr/share/metricbeat/certs/metric/metric.key"
@@ -14,6 +16,7 @@ output.elasticsearch.username: "elastic"
 output.elasticsearch.password: "changeme"
 
 setup.kibana.host: "https://kibana:5601"
+# setup.kibana.host: "https://kibana.docker.nginx.local:8443"
 setup.kibana.username: "elastic"
 setup.kibana.password: "changeme"
 setup.kibana.ssl.enabled: true

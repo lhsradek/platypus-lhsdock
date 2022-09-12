@@ -95,16 +95,19 @@ apm-server:
   #---------------------------- APM Server - Secure Communication with Agents ----------------------------
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
-  #ssl:
-    #enabled: false
+  ssl:
+    enabled: true
 
+    username: "elastic"
+    password: "changeme"
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
-    #certificate: '/usr/share/apm-server/certs/log/log.crt'
+    certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+    certificate: '/usr/share/apm-server/certs/apm/apm.crt'
 
     # Path to file containing server certificate key.
     # Needs to be configured when ssl is enabled.
-    # key: '/usr/share/apm-server/certs/log/log.key'
+    key: '/usr/share/apm-server/certs/apm/apm.key'
 
     # Optional configuration options for ssl communication.
 
@@ -127,8 +130,8 @@ apm-server:
   # Enable Real User Monitoring (RUM) Support. By default RUM is disabled.
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
-  rum:
-    enabled: true
+  #rum:
+    #eabled: false
 
     #-- General RUM settings
 
@@ -195,6 +198,8 @@ apm-server:
         #username: "elastic"
         #password: "changeme"
         #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+        #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+        #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
       #index_pattern: "apm-*-sourcemap*"
@@ -404,10 +409,10 @@ output.elasticsearch:
   ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
-  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
-  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -507,7 +512,7 @@ output.logstash:
 
   # Optional index name. The default index name is set to apm
   # in all lowercase.
-  #index: 'apm'
+  index: 'apm'
 
   # SOCKS5 proxy server URL
   #proxy_url: socks5://user:password@socks5-server:2233
@@ -517,6 +522,7 @@ output.logstash:
 
   # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
   #ssl.enabled: false
+  ssl.enabled: true
 
   # Optional SSL configuration options. SSL is off by default.
   #
@@ -542,13 +548,15 @@ output.logstash:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  #ssl.certificate_authorities: ["/etc/certs/elastic/ca/ca.crt"]
+  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/etc/pki/client/cert.pem"
+  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
+  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -905,7 +913,8 @@ monitoring.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["es01:9200", "es02:9200"]
+  # hosts: ["es01:9200", "es02:9200"]
+  hosts: ["es01:9200"]
 
   # Set gzip compression level.
   #compression_level: 0
