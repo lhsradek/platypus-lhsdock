@@ -41,12 +41,8 @@ services:
       # - esdata02:/root/bin/volume/es02:ro
       - kibanadata:/root/bin/volume/kibana:ro
       - fleetdata:/root/bin/volume/fleet:ro
-      - apmdata:/root/bin/volume/apm:ro
       - logstashdata:/root/bin/volume/log:ro
       - filedata:/root/bin/volume/file:ro
-      - metricdata:/root/bin/volume/metric:ro
-      - heartdata:/root/bin/volume/heart:ro
-      - enterprisesearchdata:/root/bin/volume/eps:ro
       - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro
@@ -146,14 +142,6 @@ services:
           "      - 127.0.0.1\n"\
           "      - 192.168.100.132\n"\
           "      - 192.168.122.20\n"\
-          "  - name: kibana\n"\
-          "    dns:\n"\
-          "      - kibana\n"\
-          "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
           "  - name: eps\n"\
           "    dns:\n"\
           "      - eps\n"\
@@ -162,10 +150,34 @@ services:
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - 192.168.122.20\n"\
+          "  - name: file\n"\
+          "    dns:\n"\
+          "      - file\n"\
+          "      - file.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - 192.168.122.20\n"\
           "  - name: fleet\n"\
           "    dns:\n"\
           "      - fleet\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - 192.168.122.20\n"\
+          "  - name: kibana\n"\
+          "    dns:\n"\
+          "      - kibana\n"\
+          "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - 192.168.122.20\n"\
+          "  - name: log\n"\
+          "    dns:\n"\
+          "      - log\n"\
+          "      - log.${APP_HOST}.${INT_NETWORK}\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -254,6 +266,10 @@ services:
 # │   ├── eps.crt
 # │   ├── eps.key
 # │   └── eps.pem
+# ├── file
+# │   ├── file.crt
+# │   ├── file.key
+# │   └── file.pem
 # ├── fleet
 # │   ├── fleet.crt
 # │   ├── fleet.key
@@ -262,6 +278,10 @@ services:
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
+# ├── log
+# │   ├── log.crt
+# │   ├── log.key
+# │   └── log.pem
 # ├── ca.zip
 # ├── certs.zip
 # └── instances.yml
@@ -363,8 +383,6 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certs/ca/ca.crt
-      - ELASTICSEARCH_HOSTS=https://es01:9200
-      - ENTERPRISESEARCH_HOST=http://eps:3002
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -409,13 +427,9 @@ services:
     volumes:
       - ./certs:/usr/share/enterprise-search/config/certs:ro
       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
-      - enterprisesearchdata:/usr/share/enterprise-search/data
     environment:
       - SERVERNAME=eps
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-      - allow_es_settings_modification=true
-      # - kibana.external_url=https://kibana:5601
-      - kibana.external_url=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -425,6 +439,7 @@ services:
       - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
     mem_limit: ${MEM_LIMIT2}
     healthcheck:
+      #      "curl -s --cacert config/certs/ca/ca.crt -I https://localhost:3002 | grep -q 'HTTP/1.1 302 Found'",
       test:
         [
             "CMD-SHELL",
@@ -434,6 +449,27 @@ services:
       timeout: 10s
       retries: 500
 
+  apm:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-apm"
+    hostname: "apm"
+    networks:
+      # local network:
+      - intnet
+    ports:
+      - 8200:8200
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/apm-server/certs:ro
+      - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+
 #   fleet:
 #     # Ubuntu - fleet
 #     depends_on:
@@ -441,6 +477,9 @@ services:
 #         condition: service_healthy
 #     depends_on:
 #       kibana:
+#         condition: service_healthy
+#     depends_on:
+#       eps:
 #         condition: service_healthy
 #     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
 #     restart: ${DOCKER_RESTART_POLICY}
@@ -474,31 +513,7 @@ services:
 #       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
 #       - KIBANA_FLEET_SETUP=1
 
-  apm-server:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      kibana:
-        condition: service_healthy
-    image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-apm"
-    hostname: "apm"
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    ports:
-      - 8200:8200
-    volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/apm-server/certs:ro
-      - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
-      - apmdata:/usr/share/apm-server/data
-
-  logstash:
+  log:
     # Ubuntu - logstash 
     depends_on:
       es01:
@@ -511,6 +526,8 @@ services:
     container_name: "${APP_ID}-log"
     hostname: "log"
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     ports:
@@ -519,7 +536,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/logstash/config/certs:ro
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
-      # - ./extras/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf:rw
+      - ./extras/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf:rw
       - logstashdata:/usr/share/logstash/data
 
   filebeat:
@@ -554,13 +571,14 @@ services:
     container_name: "${APP_ID}-heart"
     hostname: "heart"
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs:ro
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
-      - heartdata:/usr/share/heartbeat/data
   
   metricbeat:
     depends_on:
@@ -569,18 +587,22 @@ services:
     depends_on:
       kibana:
         condition: service_healthy
+    depends_on:
+      eps:
+        condition: service_healthy
     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-metric"
     hostname: "metric"
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/metricbeat/certs:ro
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
-      - metricdata:/usr/share/metricbeat/data
 
 volumes:
   esdata01:
@@ -595,24 +617,12 @@ volumes:
   fleetdata:
     external: true
     name: "${APP_ID}-fleet"
-  apmdata:
-    external: true
-    name: "${APP_ID}-apm"
   filedata:
     external: true
     name: "${APP_ID}-file"
   logstashdata:
     external: true
     name: "${APP_ID}-log"
-  heartdata:
-    external: true
-    name: "${APP_ID}-heart"
-  metricdata:
-    external: true
-    name: "${APP_ID}-metric"
-  enterprisesearchdata:
-    external: true
-    name: "${APP_ID}-eps"
 #    
 # You can remove this. It's for my prune volume deletion protection ;-)
 #

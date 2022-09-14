@@ -20,33 +20,53 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 ```
 ================= STOP =================
+Stopping lhsdock-log    ... done
+Stopping lhsdock-file   ... done
+Stopping lhsdock-metric ... done
+Stopping lhsdock-apm    ... done
 Stopping lhsdock-eps    ... done
-Stopping elastic-agent  ... done
+Stopping lhsdock-heart  ... done
+Stopping lhsdock-kibana ... done
 Stopping lhsdock-es01   ... done
 Stopping lhsdock        ... done
 Stopping lhsdock-php    ... done
+Removing lhsdock-log    ... done
+Removing lhsdock-file   ... done
+Removing lhsdock-metric ... done
+Removing lhsdock-apm    ... done
 Removing lhsdock-eps    ... done
-Removing elastic-agent  ... done
+Removing lhsdock-heart  ... done
 Removing lhsdock-kibana ... done
 Removing lhsdock-es01   ... done
 Removing lhsdock        ... done
-Removing lhsdock-php    ... done
 Removing lhsdock-setup  ... done
+Removing lhsdock-php    ... done
 Network platypus-local is external, skipping
 Removing network nginx.local
 ================= START =================
-Pulling weblhs        ... done
-Pulling weblhs-php    ... done
-Pulling setup         ... done
-Pulling es01          ... done
-Pulling kibana        ... done
-Pulling elastic-agent ... done
+Pulling weblhs     ... done
+Pulling weblhs-php ... done
+Pulling setup      ... done
+Pulling es01       ... done
+Pulling kibana     ... done
+Pulling eps        ... done
+Pulling apm-server ... done
+Pulling log        ... done
+Pulling filebeat   ... done
+Pulling heartbeat  ... done
+Pulling metricbeat ... done
 Creating network "nginx.local" with the default driver
-Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
 Creating lhsdock       ... done
+Creating lhsdock-php   ... done
 Creating lhsdock-es01  ... done
-Creating elastic-agent  ... done
+Creating lhsdock-kibana ... done
+Creating lhsdock-log    ... done
+Creating lhsdock-eps    ... done
+Creating lhsdock-metric ... done
+Creating lhsdock-file   ... done
+Creating lhsdock-apm    ... done
+Creating lhsdock-heart  ... done
 ```
 
 
@@ -79,7 +99,7 @@ Creating elastic-agent  ... done
 | elasticsearch        | 9200/tcp, 9301->9300/tcp | lhsdock-es02   | es02.www.nginx.local
 | kibana               | 5601/tcp                 | lhsdock-kibana | kibana.www.nginx.local
 | enterprise-search    | 3002/tcp                 | lhsdock-eps    | eps.nginx.local 
-| elastic-agent        | 8200/tcp                 | lhsdock-fleet  | fleet.nginx.local
+| elastic-agent        | 8220/tcp                 | lhsdock-fleet  | fleet.nginx.local
 | apm-server           | 8200/tcp                 | lhsdock-apm    | apm.nginx.local
 | logstash             | 5044/tcp                 | lhsdock-log    | log.nginx.local
 | heartbeat            |                          | lhsdock-heart  | heart.nginx.local

@@ -321,8 +321,7 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  #hosts: ["es01:9200"]
-  hosts: ["es01:9200", "es02:9200"]
+  hosts: ["es01:9200"]
 
   # Boolean flag to enable or disable the output module.
   enabled: true
@@ -409,10 +408,10 @@ output.elasticsearch:
   ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
-  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -466,10 +465,10 @@ output.elasticsearch:
 #---------------------------- Logstash output -----------------------------
 output.logstash:
   # Boolean flag to enable or disable the output module.
-  enabled: false
+  #enabled: false
 
   # The Logstash hosts.
-  #hosts: ["log:5044"]
+  hosts: ["localhost:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -521,7 +520,6 @@ output.logstash:
   #proxy_use_local_resolver: false
 
   # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
-  #ssl.enabled: false
   #ssl.enabled: true
 
   # Optional SSL configuration options. SSL is off by default.
@@ -551,11 +549,9 @@ output.logstash:
   #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/etc/pki/client/cert.pem"
   #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
   #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.

@@ -1,18 +1,34 @@
 # Default Enterprisesearch configuration for docker target
+
 allow_es_settings_modification: true
-ent_search.listen_host: 0.0.0.0
-audit_log_directory: /var/log/enterprise-search
-elasticsearch.host: https://es01:9200
-elasticsearch.username: elastic
-elasticsearch.password: changeme
-elasticsearch.ssl.enabled: true
-elasticsearch.ssl.certificate_authority: "/usr/share/enterprise-search/config/certs/ca/ca.crt"
-elasticsearch.ssl.certificate: "/usr/share/enterprise-search/config/certs/eps/eps.crt"
-elasticsearch.ssl.key: "/usr/share/enterprise-search/config/certs/eps/eps.key"
-secret_management.encryption_keys: [ca37b020db8c8f798c0b63e3a67c195e330a8ce849a159c50bf3d3015bb25576]
-filebeat_log_directory: /var/log/enterprise-search
-log_directory: /var/log/enterprise-search
-metricbeat_log_directory: /var/log/enterprise-search
-kibana.startup_retry.fail_after: 600
-kibana.host: https://kibana:5601
-kibana.external_url: https://kibana.docker.nginx.local:5601
+
+ent_search:
+  listen_host: 0.0.0.0
+  listen_port: 3002
+  external_url: http://eps:3002
+  #ssl:
+  #  enabled: true
+  #  certificate_authorities: ["/usr/share/enterprise-search/config/certs/ca/ca.crt"]
+  #  certificate: "/usr/share/enterprise-search/config/certs/eps/eps.crt"
+  #  key: "/usr/share/enterprise-search/config/certs/eps/eps.key"
+
+elasticsearch:
+  host: https://es01:9200
+  username: elastic
+  password: changeme
+  ssl:
+    enabled: true
+    certificate_authority: "/usr/share/enterprise-search/config/certs/ca/ca.crt"
+
+kibana:
+  startup_retry.fail_after: 600
+  host: https://kibana:5601
+  external_url: https://kibana.docker.nginx.local:5601
+  # external_url: https://kibana:5601
+
+secret_management.encryption_keys: [14926757649583afea1ba9a26787ecc5a93b1169e35b30f6d2e59d56370a9829]
+secret_session_key: 5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58
+audit_log_directory: "/var/log/enterprise-search"
+filebeat_log_directory: "/var/log/enterprise-search"
+log_directory: "/var/log/enterprise-search"
+metricbeat_log_directory: "/var/log/enterprise-search"
