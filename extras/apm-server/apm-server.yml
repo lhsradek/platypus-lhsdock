@@ -17,7 +17,7 @@ apm-server:
       #limit: 100
 
     # Define a shared secret token for authorizing agents using the "Bearer" authorization method.
-    #secret_token:
+    #secret_token: 'AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NjMwODUyMDg3MTM6d2VPZmZnU3RRNUM1MzZxQVNxTlVvZw'
 
     # Allow anonymous access only for specified agents and/or services. This is primarily intended to allow
     # limited access for untrusted agents, such as Real User Monitoring.
@@ -96,18 +96,18 @@ apm-server:
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
   ssl:
-    enabled: true
+    enabled: false
 
-    username: "elastic"
-    password: "changeme"
+    # username: "elastic"
+    # password: "changeme"
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
-    certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
-    certificate: '/usr/share/apm-server/certs/apm/apm.crt'
+    # certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+    # certificate: '/usr/share/apm-server/certs/apm/apm.crt'
 
     # Path to file containing server certificate key.
     # Needs to be configured when ssl is enabled.
-    key: '/usr/share/apm-server/certs/apm/apm.key'
+    # key: '/usr/share/apm-server/certs/apm/apm.key'
 
     # Optional configuration options for ssl communication.
 
@@ -130,8 +130,8 @@ apm-server:
   # Enable Real User Monitoring (RUM) Support. By default RUM is disabled.
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
-  #rum:
-    #eabled: false
+  rum:
+    eabled: true
 
     #-- General RUM settings
 
@@ -161,7 +161,7 @@ apm-server:
 
     # If a source map has previously been uploaded, source mapping is automatically applied.
     # to all error and transaction documents sent to the RUM endpoint.
-    #source_mapping:
+    source_mapping:
 
       # Sourcemapping is enabled by default.
       #enabled: true
@@ -181,23 +181,23 @@ apm-server:
       # with source maps stored in Elasticsearch by older versions of apm-server. New source maps must now
       # be uploaded via Kibana, and `apm-server.kibana` configured in standalone apm-servers for fetching
       # them.
-      #elasticsearch:
+      elasticsearch:
         # Array of hosts to connect to.
         # Scheme and port can be left out and will be set to the default (`http` and `9200`).
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
 
-        #hosts: ["https://es01:9200"]
-        #hosts: ["es01:9200", "es02:9200"]
+        #hosts: ["es01:9200"]
+        hosts: ["es01:9200", "es02:9200"]
 
         # Protocol - either `http` (default) or `https`.
-        #protocol: "https"
+        protocol: "https"
 
         # Authentication credentials - either API key or username/password.
         #api_key: "id:api_key"
-        #username: "elastic"
-        #password: "changeme"
-        #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+        username: "elastic"
+        password: "changeme"
+        ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
         #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
         #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
@@ -321,7 +321,8 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["es01:9200"]
+  #hosts: ["es01:9200"]
+  hosts: ["es01:9200", "es02:9200"]
 
   # Boolean flag to enable or disable the output module.
   enabled: true
@@ -909,8 +910,8 @@ monitoring.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  # hosts: ["es01:9200", "es02:9200"]
-  hosts: ["es01:9200"]
+  #hosts: ["es01:9200"]
+  hosts: ["es01:9200", "es02:9200"]
 
   # Set gzip compression level.
   #compression_level: 0

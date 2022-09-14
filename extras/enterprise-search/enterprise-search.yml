@@ -6,11 +6,6 @@ ent_search:
   listen_host: 0.0.0.0
   listen_port: 3002
   external_url: http://eps:3002
-  #ssl:
-  #  enabled: true
-  #  certificate_authorities: ["/usr/share/enterprise-search/config/certs/ca/ca.crt"]
-  #  certificate: "/usr/share/enterprise-search/config/certs/eps/eps.crt"
-  #  key: "/usr/share/enterprise-search/config/certs/eps/eps.key"
 
 elasticsearch:
   host: https://es01:9200
@@ -25,6 +20,11 @@ kibana:
   host: https://kibana:5601
   external_url: https://kibana.docker.nginx.local:5601
   # external_url: https://kibana:5601
+
+# apm:
+#  enabled: true
+#  service_name: enterprise-search
+#  server_url: http://apm:8200
 
 secret_management.encryption_keys: [14926757649583afea1ba9a26787ecc5a93b1169e35b30f6d2e59d56370a9829]
 secret_session_key: 5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58

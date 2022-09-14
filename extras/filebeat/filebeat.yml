@@ -7,10 +7,20 @@ processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
 
-output.elasticsearch:
-  hosts: ["https://es01:9200"]
-  username: "elastic"
-  password: "changeme"
-  ssl:
-    enabled: true
-    certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]
+output:
+  elasticsearch:
+    hosts: ["https://es01:9200", "https://es02:9200"]
+    username: "elastic"
+    password: "changeme"
+    ssl:
+      enabled: true
+      certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]
+
+setup:      
+  kibana:
+    host: "https://kibana:5601"
+    username: "elastic"
+    password: "changeme"
+    ssl:
+      enabled: true
+      certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]

@@ -20,27 +20,30 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 ```
 ================= STOP =================
-Stopping lhsdock-log    ... done
-Stopping lhsdock-heart  ... done
-Stopping lhsdock-metric ... done
-Stopping lhsdock-apm    ... done
 Stopping lhsdock-file   ... done
 Stopping lhsdock-eps    ... done
+Stopping lhsdock-fleet  ... done
+Stopping lhsdock-log    ... done
+Stopping lhsdock-metric ... done
+Stopping lhsdock-apm    ... done
+Stopping lhsdock-heart  ... done
 Stopping lhsdock-kibana ... done
+Stopping lhsdock-es02   ... done
 Stopping lhsdock-es01   ... done
-Stopping lhsdock-php    ... done
 Stopping lhsdock        ... done
-Removing lhsdock-log    ... done
-Removing lhsdock-heart  ... done
-Removing lhsdock-metric ... done
-Removing lhsdock-apm    ... done
+Stopping lhsdock-php    ... done
 Removing lhsdock-file   ... done
 Removing lhsdock-eps    ... done
+Removing lhsdock-fleet  ... done
+Removing lhsdock-log    ... done
+Removing lhsdock-metric ... done
+Removing lhsdock-apm    ... done
+Removing lhsdock-heart  ... done
 Removing lhsdock-kibana ... done
+Removing lhsdock-es02   ... done
 Removing lhsdock-es01   ... done
-Removing lhsdock-php    ... done
-Removing lhsdock-setup  ... done
 Removing lhsdock        ... done
+Removing lhsdock-php    ... done
 Network platypus-local is external, skipping
 Removing network nginx.local
 ================= START =================
@@ -48,27 +51,30 @@ Pulling weblhs     ... done
 Pulling weblhs-php ... done
 Pulling setup      ... done
 Pulling es01       ... done
+Pulling es02       ... done
 Pulling kibana     ... done
-Pulling eps        ... done
+Pulling fleet      ... done
 Pulling apm        ... done
 Pulling log        ... done
 Pulling filebeat   ... done
 Pulling heartbeat  ... done
 Pulling metricbeat ... done
+Pulling eps        ... done
 Creating network "nginx.local" with the default driver
-Creating lhsdock       ... done
 Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
+Creating lhsdock       ... done
 Creating lhsdock-es01  ... done
+Creating lhsdock-es02  ... done
 Creating lhsdock-kibana ... done
-Creating lhsdock-file   ... done
 Creating lhsdock-apm    ... done
 Creating lhsdock-eps    ... done
+Creating lhsdock-file   ... done
 Creating lhsdock-heart  ... done
-Creating lhsdock-log    ... done
+Creating lhsdock-fleet  ... done
 Creating lhsdock-metric ... done
+Creating lhsdock-log    ... done
 ```
-
 
 6) exec lhsdock ```bin/stop```
 
