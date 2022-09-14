@@ -40,13 +40,13 @@ services:
       - esdata01:/root/bin/volume/es01:ro
       # - esdata02:/root/bin/volume/es02:ro
       - kibanadata:/root/bin/volume/kibana:ro
-      - logstashdata:/root/bin/volume/logstash:ro
-      - enterprisesearchdata:/root/bin/volume/eps:ro
       - fleetdata:/root/bin/volume/fleet:ro
       - apmdata:/root/bin/volume/apm:ro
+      - logstashdata:/root/bin/volume/log:ro
       - filedata:/root/bin/volume/file:ro
-      - heartdata:/root/bin/volume/heart:ro
       - metricdata:/root/bin/volume/metric:ro
+      - heartdata:/root/bin/volume/heart:ro
+      - enterprisesearchdata:/root/bin/volume/eps:ro
       - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro
@@ -110,11 +110,19 @@ services:
           echo "Creating certs";
           echo -ne \
           "instances:\n"\
+          "  - name: apm\n"\
+          "    dns:\n"\
+          "      - apm\n"\
+          "      - apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - 192.168.100.248\n"\
+          "      - 192.168.122.20\n"\
           "  - name: es01\n"\
           "    dns:\n"\
           "      - es01\n"\
           "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - es01.${APP_HOST}.traefik.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -124,7 +132,6 @@ services:
           "    dns:\n"\
           "      - es02\n"\
           "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - es02.${APP_HOST}.traefik.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -134,7 +141,6 @@ services:
           "    dns:\n"\
           "      - es03\n"\
           "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - es03.${APP_HOST}.traefik.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -144,7 +150,6 @@ services:
           "    dns:\n"\
           "      - kibana\n"\
           "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - kibana.${APP_HOST}.traefik.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -153,57 +158,6 @@ services:
           "    dns:\n"\
           "      - eps\n"\
           "      - eps.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - eps.${APP_HOST}.traefik.local\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
-          "  - name: log\n"\
-          "    dns:\n"\
-          "      - log\n"\
-          "      - log.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - log.${APP_HOST}.traefik.local\n"\
-          "      - log.${APP_HOST}.intranet.local\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
-          "  - name: file\n"\
-          "    dns:\n"\
-          "      - file\n"\
-          "      - file.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - file.${APP_HOST}.traefik.local\n"\
-          "      - file.${APP_HOST}.intranet.local\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
-          "  - name: metric\n"\
-          "    dns:\n"\
-          "      - metric\n"\
-          "      - metric.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - metric.${APP_HOST}.traefik.local\n"\
-          "      - metric.${APP_HOST}.intranet.local\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
-          "  - name: heart\n"\
-          "    dns:\n"\
-          "      - heart\n"\
-          "      - heart.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - heart.${APP_HOST}.traefik.local\n"\
-          "      - heart.${APP_HOST}.intranet.local\n"\
-          "      - localhost\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - 192.168.122.20\n"\
-          "  - name: apm\n"\
-          "    dns:\n"\
-          "      - apm\n"\
-          "      - apm.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - apm.${APP_HOST}.traefik.local\n"\
-          "      - apm.${APP_HOST}.intranet.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -212,8 +166,6 @@ services:
           "    dns:\n"\
           "      - fleet\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - fleet.${APP_HOST}.traefik.local\n"\
-          "      - fleet.${APP_HOST}.intranet.local\n"\
           "      - localhost\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
@@ -244,11 +196,11 @@ services:
           echo "Setting file permissions"
         chown -R root:root config/certs;
         # find . -type d -exec chmod 750 \{\} \;;
-        find . -type d -exec chmod 755 \{\} \;; # for logstash 755
+        find . -type d -exec chmod 755 \{\} \;; # logstash
         find . -type f -exec chmod 640 \{\} \;;
-        find . -type f -name ca.crt -exec chmod 644 \{\} \;; # for logstash
-        find . -type f -name log.crt -exec chmod 644 \{\} \;; # for logstash
-        find . -type f -name log.key -exec chmod 644 \{\} \;; # for logstash
+        find . -type f -name ca.crt -exec chmod 644 \{\} \;; # logstash
+        find . -type f -name log.crt -exec chmod 644 \{\} \;; # logstash
+        find . -type f -name log.key -exec chmod 644 \{\} \;; # logstash
         echo "Waiting for Elasticsearch availability";
         until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
         echo "Setting kibana_system password";
@@ -261,8 +213,8 @@ services:
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         echo "Setting remote_monitoring_user password";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${ELASTIC_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        echo "Setting fleet_server password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/fleet_server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting fleet_server password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/fleet_server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         echo "All done!";
       '
     healthcheck:
@@ -278,18 +230,14 @@ services:
 # │   ├── ca.crt
 # │   ├── ca.key
 # │   └── ca.pem
-# ├── www (docker host)
-# │   ├── www.crt
-# │   ├── www.key
-# │   └── www.pem
 # ├── apm (apm-server)
 # │   ├── apm.crt
 # │   ├── apm.key
 # │   └── apm.pem
-# ├── eps (enterprisesearch)
-# │   ├── eps.crt
-# │   ├── eps.key
-# │   └── eps.pem
+# ├── www (docker host)
+# │   ├── www.crt
+# │   ├── www.key
+# │   └── www.pem
 # ├── es01 (elasticsearch 01)
 # │   ├── es01.crt
 # │   ├── es01.key
@@ -302,30 +250,18 @@ services:
 # │   ├── es03.crt
 # │   ├── es03.key
 # │   └── es03.pem
-# ├── file (filebeat)
-# │   ├── file.crt
-# │   ├── file.key
-# │   └── file.pem
+# ├── eps
+# │   ├── eps.crt
+# │   ├── eps.key
+# │   └── eps.pem
 # ├── fleet
 # │   ├── fleet.crt
 # │   ├── fleet.key
 # │   └── fleet.pem
-# ├── heart (heartbeat)
-# │   ├── heart.crt
-# │   ├── heart.key
-# │   └── heart.pem
 # ├── kibana
 # │   ├── kibana.crt
 # │   ├── kibana.key
 # │   └── kibana.pem
-# ├── log (logstash)
-# │   ├── log.crt
-# │   ├── log.key
-# │   └── log.pem
-# ├── metric (metricbeat)
-# │   ├── metric.crt
-# │   ├── metric.key
-# │   └── metric.pem
 # ├── ca.zip
 # ├── certs.zip
 # └── instances.yml
@@ -370,7 +306,7 @@ services:
       - xpack.security.transport.ssl.key=certs/es01/es01.key
       - xpack.security.transport.ssl.certificate=certs/es01/es01.crt
       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-      # - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.verification_mode=certificate
       - xpack.license.self_generated.type=${LICENSE}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     labels:
@@ -379,9 +315,9 @@ services:
       - "traefik.http.routers.es01-public.rule=Host(`es01.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.es01-public.entrypoints=https"
       - "traefik.http.routers.es01-public.tls=true"
-      # - "traefik.http.routers.es01-public.middlewares=es01-platypus-${APP_ID}@docker"
-      # - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.scheme=https"
-      # - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.port=9200"
+      - "traefik.http.routers.es01-public.middlewares=es01-platypus-${APP_ID}@docker"
+      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.es01-platypus-${APP_ID}.redirectscheme.port=9200"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.port=9200"
       - "traefik.http.services.es01-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     mem_limit: ${MEM_LIMIT}
@@ -427,20 +363,8 @@ services:
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certs/ca/ca.crt
+      - ELASTICSEARCH_HOSTS=https://es01:9200
       - ENTERPRISESEARCH_HOST=http://eps:3002
-      - XPACK_SECURITY_ENABLED=true
-      - XPACK_MONITORING_ENABLED=true
-      - xpack.security.enabled=true
-      - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=certs/kibana/kibana.key
-      - xpack.security.http.ssl.certificate=certs/kibana/kibana.crt
-      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.http.ssl.verification_mode=certificate
-      - xpack.security.transport.ssl.enabled=true
-      - xpack.security.transport.ssl.key=certs/kibana/kibana.key
-      - xpack.security.transport.ssl.certificate=certs/kibana/kibana.crt
-      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-      # - xpack.security.transport.ssl.verification_mode=certificate
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -460,366 +384,204 @@ services:
       timeout: 10s
       retries: 500
 
-  elastic-agent:
-    # Ubuntu - fleet
+  eps:
+    # Ubuntu - enterprisesearch
     depends_on:
       es01:
         condition: service_healthy
+    # depends_on:
+    #   es02:
+    #     condition: service_healthy
     depends_on:
       kibana:
         condition: service_healthy
-    image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
+    image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-eps"
+    hostname: "eps"
     networks:
       # for traefik:
       - default
       # local network:
       - intnet
     ports:
-      - 8220:8220
-    container_name: "elastic-agent"
-    # !!! not set this hostname: "elastic-agent"
-    restart: always
-    user: root # note, synthetic browser monitors require this set to `elastic-agent`
-    # user: elastic-agent
+      - ${ENTERPRISE_SEARCH_PORT}:3002
+    volumes:
+      - ./certs:/usr/share/enterprise-search/config/certs:ro
+      - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
+      - enterprisesearchdata:/usr/share/enterprise-search/data
+    environment:
+      - SERVERNAME=eps
+      - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
+      - allow_es_settings_modification=true
+      # - kibana.external_url=https://kibana:5601
+      - kibana.external_url=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.eps-public.rule=Host(`eps.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.eps-public.entrypoints=https"
+      - "traefik.http.routers.eps-public.tls=true"
+      - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
+    mem_limit: ${MEM_LIMIT2}
+    healthcheck:
+      test:
+        [
+            "CMD-SHELL",
+            "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 500
+
+#   fleet:
+#     # Ubuntu - fleet
+#     depends_on:
+#       es01:
+#         condition: service_healthy
+#     depends_on:
+#       kibana:
+#         condition: service_healthy
+#     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
+#     restart: ${DOCKER_RESTART_POLICY}
+#     networks:
+#       # local network:
+#       - intnet
+#     ports:
+#       - 8220:8220
+#     container_name: "${APP_ID}-fleet"
+#     hostname: "fleet"
+#     # user: root # note, synthetic browser monitors require this set to `elastic-agent`
+#     user: elastic-agent
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./certs:/usr/share/elastic-agent/certs:ro
+#       - fleetdata:/usr/share/elastic-agent/data
+#     environment:
+#       - FLEET_ENROLL=1
+#       - FLEET_SERVER_ENABLE=1
+#       - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01:9200
+#       - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
+#       - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
+#       - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+#       - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+#       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/fleet/fleet.crt
+#       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/fleet/fleet.key
+#       - FLEET_URL=https://fleet:8220
+#       - KIBANA_FLEET_USERNAME=elastic
+#       - KIBANA_FLEET_PASSWORD=${ELASTIC_PASSWORD}
+#       - KIBANA_FLEET_HOST=https://kibana:5601
+#       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+#       - KIBANA_FLEET_SETUP=1
+
+  apm-server:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-apm"
+    hostname: "apm"
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    ports:
+      - 8200:8200
+    volumes:
+      # - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/apm-server/certs:ro
+      - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+      - apmdata:/usr/share/apm-server/data
+
+  logstash:
+    # Ubuntu - logstash 
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: logstash:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-log"
+    hostname: "log"
+    networks:
+      # local network:
+      - intnet
+    ports:
+      - 5044:5044
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/elastic-agent/certs:ro
-      - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml:ro
-      - fleetdata:/usr/share/elastic-agent/data
-    environment:
-      - FLEET_ENROLL=1
-      - FLEET_URL=http://elastic-agent
-      - FLEET_SERVER_ENABLE=true
-      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01
-      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-      - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
-      # - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
-      - KIBANA_FLEET_HOST=https://kibana:5601
-    #   - xpack.security.enabled=true
-    #   - xpack.security.http.ssl.enabled=true
-    #   - xpack.security.http.ssl.key=certs/apm/apm.key
-    #   - xpack.security.http.ssl.certificate=certs/apm/apm.crt
-    #   - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-    #   - xpack.security.http.ssl.verification_mode=certificate
-    #   - xpack.security.transport.ssl.enabled=true
-    #   - xpack.security.transport.ssl.key=certs/kibana/fleet.key
-    #   - xpack.security.transport.ssl.certificate=certs/fleet/fleet.crt
-    #   - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-    #   - xpack.security.transport.ssl.verification_mode=certificate
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.docker.network=${DOCKER_NETWORK}"
-    #   - "traefik.http.routers.elastic-agent-public.rule=Host(`elastic-agent.${APP_HOST}.${INT_NETWORK}`)"
-    #   - "traefik.http.routers.elastic-agent-public.entrypoints=https"
-    #   - "traefik.http.routers.elastic-agent-public.tls=true"
-    #   - "traefik.http.services.elastic-agent-platypus-${APP_ID}.loadbalancer.server.port=8220"
- 
-#   log:
-#     # Ubuntu - logstash 
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: logstash:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-log"
-#     hostname: "log"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     ports:
-#       - 5044:5044
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
-#       - ./certs:/usr/share/logstash/config/certs:ro
-#       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
-#       - logstashdata:/usr/share/logstash/data
-#     environment:
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=certs/ca/ca.crt
-#       - elasticsearch.ssl.certificate=certs/log/log.crt
-#       - elasticsearch.ssl.key=certs/log/log.key
-#     # labels:
-#     #   - "traefik.enable=true"
-#     #   - "traefik.docker.network=${DOCKER_NETWORK}"
-#     #   - "traefik.http.routers.log-public.rule=Host(`log.${APP_HOST}.${INT_NETWORK}`)"
-#     #   - "traefik.http.routers.log-public.entrypoints=https"
-#     #   - "traefik.http.routers.log-public.tls=true"
-#     #   - "traefik.http.services.log-platypus-${APP_ID}.loadbalancer.server.port=5044"
-#     #   - "traefik.http.services.log-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+      - ./certs:/usr/share/logstash/config/certs:ro
+      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:rw
+      # - ./extras/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf:rw
+      - logstashdata:/usr/share/logstash/data
 
-#   apm-server:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       es02:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-apm"
-#     hostname: "apm"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     # ports:
-#     #  - 8200:8200
-#     volumes:
-#       # - /var/run/docker.sock:/var/run/docker.sock
-#       - ./certs:/usr/share/apm-server/certs:ro
-#       - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
-#       - apmdata:/usr/share/apm-server/data
-#     environment:
-#       - elasticsearch.host=https://es01:9200
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=/usr/share/apm-server/certs/ca/ca.crt
-#       - elasticsearch.ssl.certificate=/usr/share/apm-server/certs/apm/apm.crt
-#       - elasticsearch.ssl.key=/usr/share/apm-server/certs/apm/apm.key
-#       # - xpack.security.enabled=true
-#       # - xpack.security.http.ssl.enabled=true
-#       # - xpack.security.http.ssl.key=certs/apm/apm.key
-#       # - xpack.security.http.ssl.certificate=certs/apm/apm.crt
-#       # - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       # - xpack.security.http.ssl.verification_mode=certificate
-#       # - xpack.security.transport.ssl.enabled=true
-#       # - xpack.security.transport.ssl.key=certs/apm/apm.key
-#       # - xpack.security.transport.ssl.certificate=certs/apm/apm.crt
-#       # - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       # - xpack.security.transport.ssl.verification_mode=certificate
-#    #  labels:
-#    #    - "traefik.enable=true"
-#    #    - "traefik.docker.network=${DOCKER_NETWORK}"
-#    #    - "traefik.http.routers.apm-public.rule=Host(`apm.${APP_HOST}.${INT_NETWORK}`)"
-#    #    - "traefik.http.routers.apm-public.entrypoints=https"
-#    #    - "traefik.http.routers.apm-public.tls=true"
-#    #    - "traefik.http.services.apm-platypus-${APP_ID}.loadbalancer.server.port=8200"
-#    #   - "traefik.http.services.apm-platypus-${APP_ID}.loadbalancer.server.scheme=http"
-   
-#   eps:
-#     # Ubuntu - enterprisesearch
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     # depends_on:
-#     #   es02:
-#     #     condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-eps"
-#     hostname: "eps"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     ports:
-#       - ${ENTERPRISE_SEARCH_PORT}:3002
-#     volumes:
-#       - ./certs:/usr/share/enterprise-search/config/certs:ro
-#       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
-#       - enterprisesearchdata:/usr/share/enterprise-search/data
-#     environment:
-#       - SERVERNAME=eps
-#       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-#       - allow_es_settings_modification=true
-#       - elasticsearch.host=https://es01
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.enabled=true
-#       - xpack.security.http.ssl.enabled=true
-#       - xpack.security.http.ssl.key=certs/kibana/kibana.key
-#       - xpack.security.http.ssl.certificate=certs/kibana/kibana.crt
-#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.http.ssl.verification_mode=certificate
-#       - xpack.security.transport.ssl.enabled=true
-#       - xpack.security.transport.ssl.key=certs/kibana/kibana.key
-#       - xpack.security.transport.ssl.certificate=certs/kibana/kibana.crt
-#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       # - xpack.security.transport.ssl.verification_mode=certificate
-#       # - kibana.external_url=https://kibana:5601
-#       - kibana.external_url=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
-#     # labels:
-#     #  - "traefik.enable=true"
-#     #  - "traefik.docker.network=${DOCKER_NETWORK}"
-#     #  - "traefik.http.routers.eps-public.rule=Host(`eps.${APP_HOST}.${INT_NETWORK}`)"
-#     #  - "traefik.http.routers.eps-public.entrypoints=https"
-#     #  - "traefik.http.routers.eps-public.tls=true"
-#     #  - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
-#     mem_limit: ${MEM_LIMIT2}
-#     healthcheck:
-#       # "curl -s --cacert config/certs/ca/ca.crt -I https://localhost:3002 | grep -q 'HTTP/1.1 302 Found'",
-#       test:
-#         [
-#             "CMD-SHELL",
-#             "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'",
-#         ]
-#       interval: 10s
-#       timeout: 10s
-#       retries: 500
-# 
-#   filebeat:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-file"
-#     hostname: "file"
-#     networks:
-#       # local network:
-#       - intnet
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
-#       - ./certs:/usr/share/filebeat/certs:ro
-#       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-#       - filedata:/usr/share/filebeat/data
-#     environment:
-#       - elasticsearch.host=https://es01:9200
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=/usr/share/filebeat/certs/ca/ca.crt
+  filebeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-file"
+    hostname: "file"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/filebeat/certs:ro
+      - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - filedata:/usr/share/filebeat/data
  
-#   heartbeat:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-heart"
-#     hostname: "heart"
-#     networks:
-#       # local network:
-#       - intnet
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
-#       - ./certs:/usr/share/heartbeat/certs:ro
-#       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
-#       - heartdata:/usr/share/heartbeat/data
-#     environment:
-#       - elasticsearch.host=https://es01:9200
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=/usr/share/heartbeat/certs/ca/ca.crt
+  heartbeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-heart"
+    hostname: "heart"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/heartbeat/certs:ro
+      - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+      - heartdata:/usr/share/heartbeat/data
   
-#   metricbeat:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-metric"
-#     hostname: "metric"
-#     networks:
-#       # local network:
-#       - intnet
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
-#       - ./certs:/usr/share/metricbeat/certs:ro
-#       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
-#       - metricdata:/usr/share/metricbeat/data
-#     environment:
-#       - elasticsearch.host=https://es01:9200
-#       - elasticsearch.username=elastic
-#       - elasticsearch.password=${ELASTIC_PASSWORD}
-#       - elasticsearch.ssl.enabled=true
-#       - elasticsearch.ssl.certificate_authorities=/usr/share/metricbeat/certs/ca/ca.crt
-  
-#   es02:
-#     # Ubuntu - elasticsearch
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-es02"
-#     hostname: "es02"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     # ports:
-#     #  - 9201:9200
-#     #  - 9301:9301
-#     volumes:
-#       - ./certs:/usr/share/elasticsearch/config/certs:ro
-#       - esdata02:/usr/share/elasticsearch/data
-#     environment:
-#       - node.name=es02
-#       - node.roles=[master, data]
-#       - transport.port=9301
-#       - http.host=0.0.0.0
-#       - cluster.name=${CLUSTER_NAME}
-#       - cluster.initial_master_nodes=es01,es02
-#       - discovery.seed_hosts=es01:9300
-#       - bootstrap.memory_lock=true
-#       - xpack.security.enabled=true
-#       - xpack.security.http.ssl.enabled=true
-#       - xpack.security.http.ssl.key=certs/es02/es02.key
-#       - xpack.security.http.ssl.certificate=certs/es02/es02.crt
-#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.http.ssl.verification_mode=certificate
-#       - xpack.security.transport.ssl.enabled=true
-#       - xpack.security.transport.ssl.key=certs/es02/es02.key
-#       - xpack.security.transport.ssl.certificate=certs/es02/es02.crt
-#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       # - xpack.security.transport.ssl.verification_mode=certificate
-#       - xpack.license.self_generated.type=${LICENSE}
-#       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.docker.network=${DOCKER_NETWORK}"
-#       - "traefik.http.routers.es02-public.rule=Host(`es02.${APP_HOST}.${INT_NETWORK}`)"
-#       - "traefik.http.routers.es02-public.entrypoints=https"
-#       - "traefik.http.routers.es02-public.tls=true"
-#       - "traefik.http.routers.es02-public.middlewares=es01-platypus-${APP_ID}@docker"
-#       - "traefik.http.services.es02-platypus-${APP_ID}.loadbalancer.server.port=9200"
-#       - "traefik.http.services.es02-platypus-${APP_ID}.loadbalancer.server.scheme=https"
-#     mem_limit: ${MEM_LIMIT}
-#     ulimits:
-#       memlock:
-#         soft: -1
-#         hard: -1
-#     healthcheck:
-#       test:
-#         [
-#             "CMD-SHELL",
-#             "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
-#         ]
-#       interval: 10s
-#       timeout: 10s
-#       retries: 500
- 
+  metricbeat:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-metric"
+    hostname: "metric"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/metricbeat/certs:ro
+      - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - metricdata:/usr/share/metricbeat/data
+
 volumes:
   esdata01:
     external: true
@@ -830,12 +592,6 @@ volumes:
   kibanadata:
     external: true
     name: "${APP_ID}-kibana"
-  enterprisesearchdata:
-    external: true
-    name: "${APP_ID}-eps"
-  logstashdata:
-    external: true
-    name: "${APP_ID}-log"
   fleetdata:
     external: true
     name: "${APP_ID}-fleet"
@@ -845,12 +601,18 @@ volumes:
   filedata:
     external: true
     name: "${APP_ID}-file"
+  logstashdata:
+    external: true
+    name: "${APP_ID}-log"
   heartdata:
     external: true
     name: "${APP_ID}-heart"
   metricdata:
     external: true
     name: "${APP_ID}-metric"
+  enterprisesearchdata:
+    external: true
+    name: "${APP_ID}-eps"
 #    
 # You can remove this. It's for my prune volume deletion protection ;-)
 #

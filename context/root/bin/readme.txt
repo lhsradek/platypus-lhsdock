@@ -61,13 +61,13 @@ Creating elastic-agent  ... done
 |          | php                                                   | fpm-alpine | 73.4MB
 |          | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB
 |          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB
-|          | <strike>docker.elastic.co/enterprise-search/enterprise-search</strike> | <strike>8.4.1</strike>      | <strike>1.45GB</strike>
-|          | <strike>logstash</strike>                                              | <strike>8.4.1</strike>      | <strike>735MB</strike>
+|          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB
+|          | logstash                                              | 8.4.1      | 735MB
 |          | docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB
-|          | <strike>docker.elastic.co/apm/apm-server</strike>                      | <strike>8.4.1</strike>      | <strike>229MB</strike>
-|          | <strike>docker.elastic.co/beats/heartbeat</strike>                     | <strike>8.4.1</strike>      | <strike>2.08GB</strike>
-|          | <strike>docker.elastic.co/beats/metricbeat</strike>                    | <strike>8.4.1</strike>      | <strike>496MB</strike>
-|          | <strike>docker.elastic.co/beats/filebeat</strike>                      | <strike>8.4.1</strike>      | <strike>405MB</strike>
+|          | docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB
+|          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB
+|          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB
+|          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB
 
 
 | IMAGES               | PORTS                    | NAMES          | HOSTNAMES
@@ -76,15 +76,15 @@ Creating elastic-agent  ... done
 | php:fpm-alpine       | 9000/tcp                 | lhsdock-php    | weblhs-php.nginx.local
 | elasticsearch        |                          | lhsdock-setup  | setup
 | elasticsearch        | 9200/tcp, 9300/tcp       | lhsdock-es01   | es01.www.nginx.local
-| <strike>elasticsearch</strike>        | <strike>9200/tcp, 9301->9300/tcp</strike> | <strike>lhsdock-es02</strike>   | <strike>es02.www.nginx.local</strike>
+| elasticsearch        | 9200/tcp, 9301->9300/tcp | lhsdock-es02   | es02.www.nginx.local
 | kibana               | 5601/tcp                 | lhsdock-kibana | kibana.www.nginx.local
-| <strike>enterprise-search</strike>    | <strike>3002/tcp</strike>                 | <strike>lhsdock-eps</strike>    | <strike>eps.nginx.local</strike> 
-| elastic-agent        | 8200/tcp                 | elastic-agent  | fleet.nginx.local
-| <strike>apm-server</strike>           | <strike>8200/tcp</strike>                 | <strike>lhsdock-apm</strike>    | <strike>apm.nginx.local</strike>
-| <strike>logstash</strike>             | <strike>5044/tcp</strike>                 | <strike>lhsdock-log</strike>    | <strike>log.nginx.local</strike>
-| <strike>heartbeat</strike>            |                          | <strike>lhsdock-heart</strike>  | <strike>heart.nginx.local</strike>
-| <strike>metricbeat</strike>           |                          | <strike>lhsdock-metric</strike> | <strike>metric.nginx.local</strike>
-| <strike>filebeat</strike>             |                          | <strike>lhsdock-file</strike>   | <strike>file.nginx.local</strike>
+| enterprise-search    | 3002/tcp                 | lhsdock-eps    | eps.nginx.local 
+| elastic-agent        | 8200/tcp                 | lhsdock-fleet  | fleet.nginx.local
+| apm-server           | 8200/tcp                 | lhsdock-apm    | apm.nginx.local
+| logstash             | 5044/tcp                 | lhsdock-log    | log.nginx.local
+| heartbeat            |                          | lhsdock-heart  | heart.nginx.local
+| metricbeat           |                          | lhsdock-metric | metric.nginx.local
+| filebeat             |                          | lhsdock-file   | file.nginx.local
 
 
 

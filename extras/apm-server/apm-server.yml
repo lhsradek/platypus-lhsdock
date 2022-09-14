@@ -466,10 +466,10 @@ output.elasticsearch:
 #---------------------------- Logstash output -----------------------------
 output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: false
+  enabled: false
 
   # The Logstash hosts.
-  hosts: ["log:5044"]
+  #hosts: ["log:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -512,7 +512,7 @@ output.logstash:
 
   # Optional index name. The default index name is set to apm
   # in all lowercase.
-  index: 'apm'
+  #index: 'apm'
 
   # SOCKS5 proxy server URL
   #proxy_url: socks5://user:password@socks5-server:2233
@@ -522,7 +522,7 @@ output.logstash:
 
   # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
   #ssl.enabled: false
-  ssl.enabled: true
+  #ssl.enabled: true
 
   # Optional SSL configuration options. SSL is off by default.
   #
@@ -548,15 +548,15 @@ output.logstash:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+  #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/etc/pki/client/cert.pem"
-  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
-  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
