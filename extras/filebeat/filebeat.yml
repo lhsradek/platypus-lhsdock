@@ -1,3 +1,9 @@
+# http.enabled: true
+# http.port: 5068
+# http.host: 127.0.0.1
+# monitoring.enabled: false
+# monitoring.cluster_uuid: "cluster-uuid"
+
 filebeat.config:
   modules:
     path: ${path.config}/modules.d/*.yml
@@ -9,18 +15,22 @@ processors:
 
 output:
   elasticsearch:
-    hosts: ["https://es01:9200", "https://es02:9200"]
-    username: "elastic"
-    password: "changeme"
+    hosts: ["https://es01:9200"]
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
 
 setup:      
   kibana:
     host: "https://kibana:5601"
-    username: "elastic"
-    password: "changeme"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/filebeat/certs/ca/ca.crt"]
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+  apm:
+    enabled: true
+    service_name: "filebeat"
+    server_url: "http://kibana:8200"

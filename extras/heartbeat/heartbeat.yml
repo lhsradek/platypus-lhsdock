@@ -1,5 +1,12 @@
 # Define a directory to load monitor definitions from. Definitions take the form
 # of individual yaml files.
+
+# http.enabled: true
+# http.port: 5067
+# http.host: "localhost"
+# monitoring.enabled: false
+monitoring.cluster_uuid: "cluster-uuid"
+
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
   path: ${path.config}/monitors.d/*.yml
@@ -10,15 +17,23 @@ heartbeat.config.monitors:
 
 heartbeat.monitors:
 - type: http
-  schedule: '@every 5s'
+  schedule: '@every 30s'
+  username: '${ELASTICSEARCH_USERNAME:}'
+  password: '${ELASTICSEARCH_PASSWORD:}'
   urls:
-    - https://kibana:5601
+    - https://kibana.docker.nginx.local:5601
+    - https://es01.docker.nginx.local:9200
   ssl:
-    certificate_authorities: ["/usr/share/heartbeat/certs/ca/ca.crt"]
+    certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+
 - type: icmp
-  schedule: '@every 5s'
+  schedule: '@every 30s'
   hosts:
+    - es01.docker.nginx.local
+    - kibana.docker.nginx.local
     - lhs.intranet.local
+    - docker.intranet.local
+    - mamka.intranet.local
 
 processors:
   - add_cloud_metadata: ~
@@ -26,18 +41,22 @@ processors:
 
 output:
   elasticsearch:
-    hosts: ["https://es01:9200", "https://es02:9200"]
-    username: "elastic"
-    password: "changeme"
+    hosts: ["https://es01:9200"]
+    username: '${ELASTICSEARCH_USERNAME:}'
+    password: '${ELASTICSEARCH_PASSWORD:}'
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/heartbeat/certs/ca/ca.crt"]
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
 
 setup:
   kibana:
     host: "https://kibana:5601"
-    username: "elastic"
-    password: "changeme"
+    username: '${ELASTICSEARCH_USERNAME:}'
+    password: '${ELASTICSEARCH_PASSWORD:}'
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/metricbeat/certs/ca/ca.crt"]
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+  apm:
+    enabled: true
+    service_name: "heartbeat"
+    server_url: "http://kibana:8200"

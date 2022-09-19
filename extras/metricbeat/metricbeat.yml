@@ -1,3 +1,8 @@
+http.enabled: true
+http.port: 5066
+http.hosts: ["127.0.0.1", "unix:///var/run/docker.sock"]
+monitoring.cluster_uuid: "cluster-uuid"
+
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
@@ -8,18 +13,23 @@ processors:
 
 output:
   elasticsearch:
-    hosts: ["https://es01:9200", "https://es02:9200"]
-    username: "elastic"
-    password: "changeme"
+    hosts: ["https://es01:9200"]
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/metricbeat/certs/ca/ca.crt"]
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
 
 setup:
   kibana:
-    host: "https://kibana:5601"
-    username: "elastic"
-    password: "changeme"
+    host: 'https://kibana:5601'
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
-      certificate_authorities: ["/usr/share/metricbeat/certs/ca/ca.crt"]
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  apm:
+    enabled: true
+    service_name: "metricbeat"
+    server_url: "http://kibana:8200"
+

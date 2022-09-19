@@ -1,0 +1,13 @@
+# Module: enterprisesearch
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-enterprisesearch.html
+
+- module: enterprisesearch
+  metricsets: ["health", "stats"]
+  enabled: true
+  period: 10s
+  hosts: ["http://eps:3002"]
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

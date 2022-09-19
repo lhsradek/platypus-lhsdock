@@ -95,14 +95,14 @@ apm-server:
   #---------------------------- APM Server - Secure Communication with Agents ----------------------------
 
   # Enable secure communication between APM agents and the server. By default ssl is disabled.
-  ssl:
-    enabled: false
+  #ssl:
+  #enabled: false
 
-    # username: "elastic"
-    # password: "changeme"
+    # username: "${ELASTICSEARCH_USERNAME}"
+    # password: "${ELASTICSEARCH_PASSWORD}"
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
-    # certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+    # ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     # certificate: '/usr/share/apm-server/certs/apm/apm.crt'
 
     # Path to file containing server certificate key.
@@ -187,17 +187,18 @@ apm-server:
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
 
-        #hosts: ["es01:9200"]
-        hosts: ["es01:9200", "es02:9200"]
+        hosts: ["es01:9200"]
+        #hosts: ["es01:9200", "es02:9200"]
 
         # Protocol - either `http` (default) or `https`.
         protocol: "https"
 
         # Authentication credentials - either API key or username/password.
         #api_key: "id:api_key"
-        username: "elastic"
-        password: "changeme"
-        ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+        username: "${ELASTICSEARCH_USERNAME}"
+        password: "${ELASTICSEARCH_PASSWORD}"
+
+        ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
         #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
         #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
@@ -221,8 +222,8 @@ apm-server:
 
     # Optional protocol and basic auth credentials.
     protocol: "https"
-    username: "elastic"
-    password: "changeme"
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
 
     # Optional HTTP path.
     #path: ""
@@ -254,13 +255,13 @@ apm-server:
     #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
     # List of root certificates for HTTPS server verifications.
-    ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
 
     # Certificate for SSL client authentication.
-    ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+    #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
     # Client Certificate Key
-    ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+    #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
     # Optional passphrase for decrypting the Certificate Key.
     # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -321,8 +322,8 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  #hosts: ["es01:9200"]
-  hosts: ["es01:9200", "es02:9200"]
+  hosts: ["es01:9200"]
+  #hosts: ["es01:9200", "es02:9200"]
 
   # Boolean flag to enable or disable the output module.
   enabled: true
@@ -335,8 +336,8 @@ output.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   # api_key: "id:api_key"
-  username: "elastic"
-  password: "changeme"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
 
   # Dictionary of HTTP parameters to pass within the url with index operations.
   #parameters:
@@ -406,13 +407,13 @@ output.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
 
   # Certificate for SSL client authentication.
-  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
   # Client Certificate Key
-  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -453,7 +454,7 @@ output.elasticsearch:
 #----------------------------- Console output -----------------------------
 #output.console:
   # Boolean flag to enable or disable the output module.
-  enabled: false
+  #enabled: true
 
   # Configure JSON encoding.
   #codec.json:
@@ -464,12 +465,16 @@ output.elasticsearch:
     #escape_html: false
 
 #---------------------------- Logstash output -----------------------------
-output.logstash:
+#output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: false
+  #enabled: true
 
   # The Logstash hosts.
-  hosts: ["localhost:5044"]
+  #hosts: ["logstash:5044"]
+  # hosts: ["es01:9200", "kibana:5601"]
+  #protocol: "https"
+  #username: "${ELASTICSEARCH_USERNAME}"
+  #password: "${ELASTICSEARCH_PASSWORD}"
 
   # Number of workers per Logstash host.
   #worker: 1
@@ -547,8 +552,8 @@ output.logstash:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  #ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
-
+  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+ 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
 
@@ -706,7 +711,7 @@ output.logstash:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  #ssl.certificate_authorities: ["/etc/certs/elastic/ca/ca.crt"]
+  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
 
   # Certificate for SSL client authentication.
   #ssl.certificate: "/etc/certs/elastic/log/log.crt"
@@ -903,15 +908,15 @@ monitoring.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
-  username: "elastic"
-  password: "changeme"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
 
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  #hosts: ["es01:9200"]
-  hosts: ["es01:9200", "es02:9200"]
+  hosts: ["http://es01:9200"]
+  #hosts: ["es01:9200", "es02:9200"]
 
   # Set gzip compression level.
   #compression_level: 0
@@ -978,11 +983,11 @@ monitoring.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["/usr/share/apm-server/certs/ca/ca.crt"]
+  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   # Certificate for SSL client authentication.
-  ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
   # Client Certificate Key
-  ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
