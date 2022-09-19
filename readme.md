@@ -10,7 +10,7 @@
 
 4) If used lhsradek/lhsdock (*) to run use:
 
-```/ # perl /root/bin/platypus.pl```
+``` # perl /root/bin/platypus.pl```
 
 ``` # ls /root/bin```
 

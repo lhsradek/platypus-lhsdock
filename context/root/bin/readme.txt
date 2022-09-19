@@ -10,7 +10,7 @@
 
 4) If used lhsradek/lhsdock (*) to run use:
 
-```/ # perl /root/bin/platypus.pl```
+``` # perl /root/bin/platypus.pl```
 
 ``` # ls /root/bin```
 
@@ -82,8 +82,6 @@ Creating lhsdock-file     ... done
 |          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB
 |          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB
 |          | logstash                                              | 8.4.1      | 735MB
-|          | <strike>docker.elastic.co/beats/elastic-agent</strike>                 | <strike>8.4.1</strike>      | <strike>2.16GB</strike>
-|          | <strike>docker.elastic.co/apm/apm-server</strike>                      | <strike>8.4.1</strike>      | <strike>229MB</strike>
 |          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB
 |          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB
 |          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB
@@ -91,23 +89,19 @@ Creating lhsdock-file     ... done
 
 
 
-| IMAGES               | PORTS                    | NAMES           | HOSTNAMES
-| -------------------- | ------------------------ | --------------- | -------------------------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp          | lhsdock         | www.nginx.local
-| php:fpm-alpine       | 9000/tcp                 | lhsdock-php     | weblhs-php.nginx.local
-| elasticsearch        |                          | lhsdock-setup   | setup
-| elasticsearch        | 9200/tcp, 9300/tcp       | lhsdock-es01    | es01.www.nginx.local
-| <strike>elasticsearch</strike>        | <strike>9200/tcp, 9301->9301/tcp</strike> | <strike>lhsdock-es02</strike>    | <strike>es02.www.nginx.local</strike>
-| <strike>elasticsearch</strike>        | <strike>9200/tcp, 9302->9302/tcp</strike> | <strike>lhsdock-es03</strike>    | <strike>es03.www.nginx.local</strike>
-| kibana               | 5601/tcp (8200, 8220)    | lhsdock-kibana  | kibana.www.nginx.local
-| enterprise-search    | 3002/tcp                 | lhsdock-eps     | eps.nginx.local 
-| <strike>elastic-agent</strike>        | <strike>8220/tcp</strike>                 | <strike>lhsdock-fleet</strike>   | <strike>fleet.nginx.local</strike>
-| <strike>apm-server</strike>           | <strike>8200/tcp</strike>                 | <strike>lhsdock-apm</strike>     | <strike>apm.nginx.local</strike>
-| logstash             | 5044/tcp                 | lhsdock-log     | log.nginx.local
-| heartbeat            |                          | lhsdock-heart   | heart.nginx.local
-| metricbeat           |                          | lhsdock-metric  | metric.nginx.local
-| filebeat             |                          | lhsdock-file    | file.nginx.local
-| cerebro              | 9000/tcp                 | lhsdock-cerebro | cerebro.www.nginx.local
+| IMAGES               | PORTS                        | NAMES           | HOSTNAMES
+| -------------------- | ---------------------------- | --------------- | -------------------------
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp              | lhsdock         | www.nginx.local
+| php:fpm-alpine       | 9000/tcp                     | lhsdock-php     | weblhs-php.nginx.local
+| elasticsearch        |                              | lhsdock-setup   | setup
+| elasticsearch        | 9200/tcp, 9300/tcp           | lhsdock-es01    | es01.www.nginx.local
+| kibana               | 5601/tcp, 8200/tcp, 8220/tcp | lhsdock-kibana  | kibana.www.nginx.local
+| enterprise-search    | 3002/tcp                     | lhsdock-eps     | eps.nginx.local 
+| logstash             | 5044/tcp, 9600/tcp           | lhsdock-log     | log.nginx.local
+| heartbeat            |                              | lhsdock-heart   | heart.nginx.local
+| metricbeat           |                              | lhsdock-metric  | metric.nginx.local
+| filebeat             |                              | lhsdock-file    | file.nginx.local
+| cerebro              | 9000/tcp                     | lhsdock-cerebro | cerebro.www.nginx.local
 
 
 
