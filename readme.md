@@ -1,4 +1,4 @@
-### "platypus-lhsdock" with Elasticsearch, Logstash and Kibana "ELK"
+### platypus-lhsdock with elasticsearch, logstash and kibana (ELK)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
