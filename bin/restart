@@ -6,7 +6,7 @@ rootPath="$(dirname "${scriptPath}")"
 echo "================= STOP ================="
 ${scriptPath}/stop
 
-echo "-================ START ================"
+echo "================= START ================"
 ${scriptPath}/start
 
 

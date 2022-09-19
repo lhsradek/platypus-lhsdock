@@ -462,7 +462,8 @@ services:
       - ./certs:/usr/share/logstash/config/certs
       - /var/run/docker.sock:/var/run/docker.sock
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./extras/logstash/elastic-agent-pipeline.conf:/usr/share/logstash/config/elastic-agent-pipeline.conf
+      - ./extras/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf
+      # - ./extras/logstash/elastic-agent-pipeline.conf:/usr/share/logstash/config/elastic-agent-pipeline.conf
       - logstashdata:/usr/share/logstash/
       - ./logs/logstash:/usr/share/logstash/logs
     environment:

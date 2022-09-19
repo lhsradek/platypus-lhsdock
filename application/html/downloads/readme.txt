@@ -20,60 +20,53 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 ```
 ================= STOP =================
-Stopping lhsdock-file   ... done
-Stopping lhsdock-eps    ... done
-Stopping lhsdock-fleet  ... done
-Stopping lhsdock-log    ... done
-Stopping lhsdock-metric ... done
-Stopping lhsdock-apm    ... done
-Stopping lhsdock-heart  ... done
-Stopping lhsdock-kibana ... done
-Stopping lhsdock-es02   ... done
-Stopping lhsdock-es01   ... done
-Stopping lhsdock        ... done
-Stopping lhsdock-php    ... done
-Removing lhsdock-file   ... done
-Removing lhsdock-eps    ... done
-Removing lhsdock-fleet  ... done
-Removing lhsdock-log    ... done
-Removing lhsdock-metric ... done
-Removing lhsdock-apm    ... done
-Removing lhsdock-heart  ... done
-Removing lhsdock-kibana ... done
-Removing lhsdock-es02   ... done
-Removing lhsdock-es01   ... done
-Removing lhsdock        ... done
-Removing lhsdock-php    ... done
+Stopping lhsdock-eps      ... done
+Stopping lhsdock-metric   ... done
+Stopping lhsdock-file     ... done
+Stopping lhsdock-logstash ... done
+Stopping lhsdock-heart    ... done
+Stopping lhsdock-kibana   ... done
+Stopping lhsdock-cerebro  ... done
+Stopping lhsdock-es01     ... done
+Stopping lhsdock-php      ... done
+Stopping lhsdock          ... done
+Removing lhsdock-eps      ... done
+Removing lhsdock-metric   ... done
+Removing lhsdock-file     ... done
+Removing lhsdock-logstash ... done
+Removing lhsdock-heart    ... done
+Removing lhsdock-kibana   ... done
+Removing lhsdock-cerebro  ... done
+Removing lhsdock-es01     ... done
+Removing lhsdock-setup    ... done
+Removing lhsdock-php      ... done
+Removing lhsdock          ... done
 Network platypus-local is external, skipping
 Removing network nginx.local
-================= START =================
+================= START ================
 Pulling weblhs     ... done
 Pulling weblhs-php ... done
 Pulling setup      ... done
 Pulling es01       ... done
-Pulling es02       ... done
 Pulling kibana     ... done
-Pulling fleet      ... done
-Pulling apm        ... done
-Pulling log        ... done
-Pulling filebeat   ... done
-Pulling heartbeat  ... done
+Pulling logstash   ... done
 Pulling metricbeat ... done
+Pulling heartbeat  ... done
+Pulling filebeat   ... done
 Pulling eps        ... done
+Pulling cerebro    ... done
 Creating network "nginx.local" with the default driver
+Creating lhsdock       ... done
 Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
-Creating lhsdock       ... done
 Creating lhsdock-es01  ... done
-Creating lhsdock-es02  ... done
-Creating lhsdock-kibana ... done
-Creating lhsdock-apm    ... done
-Creating lhsdock-eps    ... done
-Creating lhsdock-file   ... done
-Creating lhsdock-heart  ... done
-Creating lhsdock-fleet  ... done
-Creating lhsdock-metric ... done
-Creating lhsdock-log    ... done
+Creating lhsdock-kibana  ... done
+Creating lhsdock-cerebro ... done
+Creating lhsdock-logstash ... done
+Creating lhsdock-metric   ... done
+Creating lhsdock-eps      ... done
+Creating lhsdock-heart    ... done
+Creating lhsdock-file     ... done
 ```
 
 6) exec lhsdock ```bin/stop```
@@ -89,28 +82,31 @@ Creating lhsdock-log    ... done
 |          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB
 |          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB
 |          | logstash                                              | 8.4.1      | 735MB
-|          | docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB
-|          | docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB
+|          | <strike>docker.elastic.co/beats/elastic-agent</strike>                 | <strike>8.4.1</strike>      | <strike>2.16GB</strike>
+|          | <strike>docker.elastic.co/apm/apm-server</strike>                      | <strike>8.4.1</strike>      | <strike>229MB</strike>
 |          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB
 |          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB
 |          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB
+|          | lmenezes/cerebro                                      | 0.9.4      | 284MB
 
 
-| IMAGES               | PORTS                    | NAMES          | HOSTNAMES
-| -------------------- | ------------------------ | -------------- | ------------------------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp          | lhsdock        | www.nginx.local
-| php:fpm-alpine       | 9000/tcp                 | lhsdock-php    | weblhs-php.nginx.local
-| elasticsearch        |                          | lhsdock-setup  | setup
-| elasticsearch        | 9200/tcp, 9300/tcp       | lhsdock-es01   | es01.www.nginx.local
-| elasticsearch        | 9200/tcp, 9301->9300/tcp | lhsdock-es02   | es02.www.nginx.local
-| kibana               | 5601/tcp                 | lhsdock-kibana | kibana.www.nginx.local
-| enterprise-search    | 3002/tcp                 | lhsdock-eps    | eps.nginx.local 
-| elastic-agent        | 8220/tcp                 | lhsdock-fleet  | fleet.nginx.local
-| apm-server           | 8200/tcp                 | lhsdock-apm    | apm.nginx.local
-| logstash             | 5044/tcp                 | lhsdock-log    | log.nginx.local
-| heartbeat            |                          | lhsdock-heart  | heart.nginx.local
-| metricbeat           |                          | lhsdock-metric | metric.nginx.local
-| filebeat             |                          | lhsdock-file   | file.nginx.local
+
+| IMAGES               | PORTS                    | NAMES           | HOSTNAMES
+| -------------------- | ------------------------ | --------------- | -------------------------
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp          | lhsdock         | www.nginx.local
+| php:fpm-alpine       | 9000/tcp                 | lhsdock-php     | weblhs-php.nginx.local
+| elasticsearch        |                          | lhsdock-setup   | setup
+| elasticsearch        | 9200/tcp, 9300/tcp       | lhsdock-es01    | es01.www.nginx.local
+| elasticsearch        | 9200/tcp, 9301->9300/tcp | lhsdock-es02    | es02.www.nginx.local
+| kibana               | 5601/tcp (8200, 8220)    | lhsdock-kibana  | kibana.www.nginx.local
+| enterprise-search    | 3002/tcp                 | lhsdock-eps     | eps.nginx.local 
+| <strike>elastic-agent</strike>        | <strike>8220/tcp</strike>                 | <strike>lhsdock-fleet</strike>   | <strike>fleet.nginx.local</strike>
+| <strike>apm-server</strike>           | <strike>8200/tcp</strike>                 | <strike>lhsdock-apm</strike>     | <strike>apm.nginx.local</strike>
+| logstash             | 5044/tcp                 | lhsdock-log     | log.nginx.local
+| heartbeat            |                          | lhsdock-heart   | heart.nginx.local
+| metricbeat           |                          | lhsdock-metric  | metric.nginx.local
+| filebeat             |                          | lhsdock-file    | file.nginx.local
+| cerebro              | 9000/tcp                 | lhsdock-cerebro | cerebro.www.nginx.local
 
 
 
@@ -139,16 +135,16 @@ HOSTNAME='weblhs-php.nginx.local'
 
 | TCP Connections (Source Host:Port)                 |      Packets    |    Bytes  |  Flag   |  Iface        
 | -------------------------------------------------- | --------------- | --------- | ------- | ------
-|┌platypus-box_traefik_1.platypus-dev.local:36236    |    =        8   |     2025  |  --A-   |  eth1
+|┌traefik.platypus-dev.local:36236                   |    =        8   |     2025  |  --A-   |  eth1
 |└www.nginx.local:80                                 |    =       24   |    29881  |  CLOSE  |  eth1
 |┌www.nginx.local:59090                              |    =        5   |     1660  |  CLOSE  |  eth0
 |└weblhs-php.nginx.local:9000                        |    =        5   |     4508  |  CLOSE  |  eth0
 
 -----
 
-https://www.facebook.com/radek.kadner/
+* https://www.facebook.com/radek.kadner/
 
-https://www.linkedin.com/in/radekkadner/
+* https://www.linkedin.com/in/radekkadner/
 
-mailto:radek.kadner@gmail.com
+* mailto:radek.kadner@gmail.com
 
