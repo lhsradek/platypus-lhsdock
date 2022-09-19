@@ -4,11 +4,11 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 #### Setup
 
-# create .env file ```cp .env.dist .env```
-# run lhsdock ```bin/start```
-# exec lhsdock ```bin/exec```
+1) create .env file ```cp .env.dist .env```
+2) run lhsdock ```bin/start```
+3) exec lhsdock ```bin/exec```
 
-# If used lhsradek/lhsdock (*) to run use:
+4) If used lhsradek/lhsdock (*) to run use:
 
 ```/ # perl /root/bin/platypus.pl```
 
@@ -16,7 +16,7 @@ https://hub.docker.com/repository/docker/lhsradek/lhsdock
 
 ```READme.txt   add.sh       lhsdock      lhsvol       platypus.pl```
 
-# exec lhsdock ```bin/restart```
+5) exec lhsdock ```bin/restart```
 
 ```
 ================= STOP =================
@@ -69,7 +69,7 @@ Creating lhsdock-heart    ... done
 Creating lhsdock-file     ... done
 ```
 
-# exec lhsdock ```bin/stop```
+6) exec lhsdock ```bin/stop```
 
 ## Setup
 
@@ -144,6 +144,8 @@ HOSTNAME='weblhs-php.nginx.local'
 -----
 
 * https://www.facebook.com/radek.kadner/
+
 * https://www.linkedin.com/in/radekkadner/
+
 * mailto:radek.kadner@gmail.com
 
