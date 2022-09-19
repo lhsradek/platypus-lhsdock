@@ -1,6 +1,6 @@
 ### platypus-lhsdock with Elasticsearch and Kibana
 
-https://hub.docker.com/repository/docker/lhsradek/lhsdock
+[![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
 #### Setup
 
