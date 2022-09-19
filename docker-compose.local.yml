@@ -12,7 +12,8 @@ services:
 
   # Alpine Linux
   weblhs:
-    # lhsradek/lhsdock has bash, openssl, perl and the program platypus.pl for certificates, which I don't use much anymore, because the Elastic Certificate Tool is used by webservice 'setup'.
+    # lhsradek/lhsdock has bash, openssl, perl and the program platypus.pl for certificates, which I don't use much anymore,
+    # because the Elastic Certificate Tool is used by webservice 'setup'.
     # build:
     #   context: ./context
     #   dockerfile: Dockerfile 
