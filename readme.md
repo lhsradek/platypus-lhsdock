@@ -1,4 +1,4 @@
-### platypus-lhsdock with Elasticsearch and Kibana
+### "platypus-lhsdock" with Elasticsearch, Logstash and Kibana "ELK"
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
@@ -110,8 +110,9 @@ Creating lhsdock-file     ... done
 | cerebro              | 9000/tcp                     | lhsdock-cerebro | cerebro.www.nginx.local
 
 
+-----
 
-#### Sample for php
+#### Example of connection for php
 
 | NETWORK                    | DRIVER | SCOPE
 | -------------------------- | ------ | -----
