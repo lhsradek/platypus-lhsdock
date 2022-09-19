@@ -223,7 +223,7 @@ services:
           fi;
           unzip -n config/certs/certs.zip -d config/certs;
         fi;
-          echo "Setting file permissions"
+        echo "Setting file permissions"
         chown -R root:root config/certs;
         # find . -type d -exec chmod 750 \{\} \;;
         find . -type d -exec chmod 755 \{\} \;; # logstash
