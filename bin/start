@@ -49,19 +49,15 @@ fi
 
 IMG="lhsradek/lhsdock:v3"
 IMGFILE="lhsdock-v3.img"
-if !(docker-compose ${ARGS} pull) # !
-then
-  if !(docker image inspect "${IMG}" >/dev/null 2>&1)
-  then
-    if [[ ! -f "$rootPath/${IMGFILE}" ]]
-    then
+if !(docker-compose ${ARGS} pull); then
+  if !(docker image inspect "${IMG}" >/dev/null 2>&1); then
+    if [[ ! -f "$rootPath/${IMGFILE}" ]]; then
       docker-compose ${ARGS} build --no-cache
       docker save -o ${IMGFILE} ${IMG}
       docker image rm ${IMG}
       docker container prune -f
     fi
-    if (docker load -i ${IMGFILE})
-    then	   
+    if (docker load -i ${IMGFILE}); then	   
       echo "An image file:'${IMGFILE}' is loaded.."
     fi
     docker push ${IMG} # !

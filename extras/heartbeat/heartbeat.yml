@@ -6,6 +6,7 @@
 # http.host: "localhost"
 # monitoring.enabled: false
 monitoring.cluster_uuid: "cluster-uuid"
+cluster.name: ${CLUSTER_NAME}
 
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
@@ -13,21 +14,42 @@ heartbeat.config.monitors:
   # If enabled, heartbeat will periodically check the config.monitors path for changes
   reload.enabled: false
   # How often to check for changes
-  reload.period: 5s
+  reload.period: 15s
 
 heartbeat.monitors:
 - type: http
-  schedule: '@every 30s'
+  schedule: '*/5 * * * * * *'
+  id: http-service
+  name: HTTP Service
+  ipv6: false
+  data_stream.namespace: default
+  service.name: heartbeat-http
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
-  urls:
+  check.response.status: [200, 301, 302]
+  hosts:
+    - http://docker.nginx.local/nginx_status
     - https://kibana.docker.nginx.local:5601
     - https://es01.docker.nginx.local:9200
+    - https://es02.docker.nginx.local:9201
+    # - https://es03.docker.nginx.local:9202
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
 
+- type: tcp
+  id: tcp-services
+  name: TCP Services
+  hosts: ["apm", "fleet", "kibana"]
+  ports: [8200, 8220]
+  schedule: '*/1 * * * * * *'
+
 - type: icmp
-  schedule: '@every 30s'
+  schedule: '*/3 * * * * * *'
+  id: icmp-service
+  name: ICMP Service
+  ipv6: false
+  data_stream.namespace: default
+  service.name: heartbeat-icmp
   hosts:
     - es01.docker.nginx.local
     - kibana.docker.nginx.local
@@ -35,18 +57,12 @@ heartbeat.monitors:
     - docker.intranet.local
     - mamka.intranet.local
 
+heartbeat.scheduler:
+  limit: 0
+
 processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
-
-output:
-  elasticsearch:
-    hosts: ["https://es01:9200"]
-    username: '${ELASTICSEARCH_USERNAME:}'
-    password: '${ELASTICSEARCH_PASSWORD:}'
-    ssl:
-      enabled: true
-      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
 
 setup:
   kibana:
@@ -56,7 +72,19 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-  apm:
-    enabled: true
-    service_name: "heartbeat"
-    server_url: "http://kibana:8200"
+  # apm:
+  #   enabled: true
+  #   service_name: "heartbeat"
+  #   server_url: "http://localhost:8200"
+
+output:
+  elasticsearch:
+    hosts: 
+      - "https://es01:9200"
+      - "https://es02:9201"
+      # - "https://es03:9202"
+    username: '${ELASTICSEARCH_USERNAME:}'
+    password: '${ELASTICSEARCH_PASSWORD:}'
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']

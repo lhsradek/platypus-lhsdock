@@ -103,9 +103,8 @@ $index = new IndexController();
 $parent = $index->getParent();
 $port = $index->getPort();
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-$isEs01 = @$index->isUrl("https://es01.".$parent.".nginx.local:9200");
 $isKibana = @$index->isSocket("kibana.".$parent.".nginx.local", 5601);
-$isCerebro = @$index->isUrl("https://cerebro.".$parent.".nginx.local");
+$isCerebro = @$index->isSocket("cerebro.".$parent.".nginx.local", 9000);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
@@ -157,7 +156,6 @@ if ($printEnv) {
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
             <?php if($isPma) { ?><li><?php print("<a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local")?></a></li><?php } ?>
-	    <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local")?></a></li><?php } ?>
           </ul>
 	  </p>
 

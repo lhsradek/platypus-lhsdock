@@ -1,44 +1,39 @@
-### platypus-lhsdock with Elasticsearch and Kibana
+### platypus-lhsdock with elasticsearch, logstash and kibana (ELK)
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
 #### Setup
 
-1) create .env file ```cp .env.dist .env```
-2) run lhsdock ```bin/start```
-3) exec lhsdock ```bin/exec```
+* create .env file ```cp .env.dist .env```
+* run lhsdock ```bin/start```
+* exec lhsdock ```bin/exec```
 
-4) If used lhsradek/lhsdock (*) to run use:
+* If used lhsradek/lhsdock (*) to run use:
 
 ``` # perl /root/bin/platypus.pl```
 
-``` # ls /root/bin```
-
-```READme.txt   add.sh       lhsdock      lhsvol       platypus.pl```
-
-5) exec lhsdock ```bin/restart```
+* exec lhsdock ```bin/restart```
 
 ```
 ================= STOP =================
-Stopping lhsdock-eps      ... done
-Stopping lhsdock-metric   ... done
-Stopping lhsdock-file     ... done
 Stopping lhsdock-logstash ... done
-Stopping lhsdock-heart    ... done
+Stopping lhsdock-eps      ... done
+Stopping lhsdock-fleet    ... done
 Stopping lhsdock-kibana   ... done
+Stopping lhsdock-es03     ... done
 Stopping lhsdock-cerebro  ... done
+Stopping lhsdock-es02     ... done
 Stopping lhsdock-es01     ... done
 Stopping lhsdock-php      ... done
 Stopping lhsdock          ... done
-Removing lhsdock-eps      ... done
-Removing lhsdock-metric   ... done
-Removing lhsdock-file     ... done
 Removing lhsdock-logstash ... done
-Removing lhsdock-heart    ... done
+Removing lhsdock-eps      ... done
+Removing lhsdock-fleet    ... done
 Removing lhsdock-kibana   ... done
+Removing lhsdock-es03     ... done
 Removing lhsdock-cerebro  ... done
+Removing lhsdock-es02     ... done
 Removing lhsdock-es01     ... done
-Removing lhsdock-setup    ... done
 Removing lhsdock-php      ... done
 Removing lhsdock          ... done
 Network platypus-local is external, skipping
@@ -48,64 +43,70 @@ Pulling weblhs     ... done
 Pulling weblhs-php ... done
 Pulling setup      ... done
 Pulling es01       ... done
+Pulling es02       ... done
+Pulling es03       ... done
 Pulling kibana     ... done
+Pulling fleet      ... done
 Pulling logstash   ... done
-Pulling metricbeat ... done
-Pulling heartbeat  ... done
-Pulling filebeat   ... done
 Pulling eps        ... done
 Pulling cerebro    ... done
 Creating network "nginx.local" with the default driver
-Creating lhsdock       ... done
 Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
+Creating lhsdock       ... done
 Creating lhsdock-es01  ... done
-Creating lhsdock-kibana  ... done
 Creating lhsdock-cerebro ... done
+Creating lhsdock-es02    ... done
+Creating lhsdock-es03    ... done
+Creating lhsdock-kibana  ... done
+Creating lhsdock-fleet   ... done
 Creating lhsdock-logstash ... done
-Creating lhsdock-metric   ... done
 Creating lhsdock-eps      ... done
-Creating lhsdock-heart    ... done
-Creating lhsdock-file     ... done
 ```
 
-6) exec lhsdock ```bin/stop```
+*) exec lhsdock ```bin/stop```
 
-## Setup
+-----
 
-| OPTIONAL | REPOSITORY                                            |  TAG       | SIZE            
-| -------- | ----------------------------------------------------- | ---------- | ----------------
-|          | nginx:alpine                                          | latest     | 23.5MB
-| *        | lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-)
-|          | php                                                   | fpm-alpine | 73.4MB
-|          | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB
-|          | docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB
-|          | docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB
-|          | logstash                                              | 8.4.1      | 735MB
-|          | docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB
-|          | docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB
-|          | docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB
-|          | lmenezes/cerebro                                      | 0.9.4      | 284MB
-
-
-
-| IMAGES               | PORTS                        | NAMES           | HOSTNAMES
-| -------------------- | ---------------------------- | --------------- | -------------------------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp              | lhsdock         | www.nginx.local
-| php:fpm-alpine       | 9000/tcp                     | lhsdock-php     | weblhs-php.nginx.local
-| elasticsearch        |                              | lhsdock-setup   | setup
-| elasticsearch        | 9200/tcp, 9300/tcp           | lhsdock-es01    | es01.www.nginx.local
-| kibana               | 5601/tcp, 8200/tcp, 8220/tcp | lhsdock-kibana  | kibana.www.nginx.local
-| enterprise-search    | 3002/tcp                     | lhsdock-eps     | eps.nginx.local 
-| logstash             | 5044/tcp, 9600/tcp           | lhsdock-log     | log.nginx.local
-| heartbeat            |                              | lhsdock-heart   | heart.nginx.local
-| metricbeat           |                              | lhsdock-metric  | metric.nginx.local
-| filebeat             |                              | lhsdock-file    | file.nginx.local
-| cerebro              | 9000/tcp                     | lhsdock-cerebro | cerebro.www.nginx.local
+| REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
+| ----------------------------------------------------- | ---------- | ---------------- | --------
+| nginx:alpine                                          | latest     | 23.5MB           |
+| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | *
+| php                                                   | fpm-alpine | 73.4MB           |
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB           |
+| docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB            |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB           |
+| logstash                                              | 8.4.1      | 735MB            |
+| docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB           | 
+| docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB            |
+| docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB           |
+| docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB            |
+| docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB            |
+| lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
 
 
-#### Sample for php
+| IMAGES               | PORTS                | NAMES           | HOSTNAMES                 | OPTIONAL  
+| -------------------- | -------------------- | --------------- | ------------------------- | -------- 
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp      | lhsdock         | www.nginx.local           |
+| php:fpm-alpine       | 9000/tcp             | lhsdock-php     | weblhs-php.nginx.local    | 
+| elasticsearch        |                      | lhsdock-setup   | setup                     | *
+| elasticsearch        | 9200/tcp, 9300/tcp   | lhsdock-es01    | es01.www.nginx.local      |
+| elasticsearch        | 9201/tcp, 9301/tcp   | lhsdock-es02    | es02.www.nginx.local      | 
+| elasticsearch        | 9202/tcp, 9302/tcp   | lhsdock-es03    | es03.www.nginx.local      | *
+| kibana               | 5601/tcp             | lhsdock-kibana  | kibana.www.nginx.local    |
+| cerebro              | 9000/tcp             | lhsdock-cerebro | cerebro.www.nginx.local   | *
+| enterprise-search    | 3002/tcp             | lhsdock-eps     | eps.nginx.local           | *
+| elastic-agent        | 8200/tcp, 8220/tcp   | lhsdock-fleet   | fleet.nginx.local         |
+| apm-server           | 8200/tcp             | lhsdock-apm     | apm.nginx.loca            | *
+| logstash             | 5044/tcp, 9600/tcp   | lhsdock-log     | log.nginx.local           |
+| heartbeat            |                      | lhsdock-heart   | heart.nginx.local         | *
+| metricbeat           |                      | lhsdock-metric  | metric.nginx.local        | * 
+| filebeat             |                      | lhsdock-file    | file.nginx.local          | *
+
+-----
+
+#### Example of connection for php
 
 | NETWORK                    | DRIVER | SCOPE
 | -------------------------- | ------ | -----
@@ -138,8 +139,5 @@ HOSTNAME='weblhs-php.nginx.local'
 -----
 
 * https://www.facebook.com/radek.kadner/
-
 * https://www.linkedin.com/in/radekkadner/
-
 * mailto:radek.kadner@gmail.com
-

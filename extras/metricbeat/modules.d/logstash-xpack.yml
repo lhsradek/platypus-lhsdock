@@ -1,0 +1,9 @@
+# Module: logstash
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-logstash.html
+
+- module: logstash
+  xpack.enabled: true
+  period: 10s
+  hosts: ["logstash:9600"]
+  username: "logstash_system"
+  password: "${ELASTICSEARCH_PASSWORD}"

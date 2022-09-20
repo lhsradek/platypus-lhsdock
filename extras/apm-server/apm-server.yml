@@ -187,8 +187,10 @@ apm-server:
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
 
-        hosts: ["es01:9200"]
-        #hosts: ["es01:9200", "es02:9200"]
+        hosts:
+          - "es01:9200"
+          - "es02:9201"
+          # - "es03:9202"
 
         # Protocol - either `http` (default) or `https`.
         protocol: "https"
@@ -322,8 +324,10 @@ output.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["es01:9200"]
-  #hosts: ["es01:9200", "es02:9200"]
+  hosts: 
+    - "es01:9200"
+    - "es02:9201"
+    # - "es03:9202"
 
   # Boolean flag to enable or disable the output module.
   enabled: true
@@ -915,8 +919,10 @@ monitoring.elasticsearch:
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: ["http://es01:9200"]
-  #hosts: ["es01:9200", "es02:9200"]
+  hosts: 
+    - "http://es01:9200"
+    - "http://es02:9201"
+    # - "http://es03:9202"
 
   # Set gzip compression level.
   #compression_level: 0

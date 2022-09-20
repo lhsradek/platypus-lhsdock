@@ -6,8 +6,8 @@
     - stats
     - state
   period: 10s
-  hosts: ["http://localhost:5066"]
-  username: "${ELASTICSEARCH_USERNAME}"
+  hosts: ["http://metric:5066"]
+  username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"
   #ssl:
   #  enabled: true
