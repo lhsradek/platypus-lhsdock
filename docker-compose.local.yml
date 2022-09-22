@@ -371,7 +371,7 @@ services:
       # - discovery.seed_hosts=es02:9301,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
-      # - xpack.security.authc.api_key.enabled=true
+      - xpack.security.authc.api_key.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/es01/es01.key
       - xpack.security.http.ssl.certificate=certs/es01/es01.crt
@@ -440,7 +440,7 @@ services:
       # - discovery.seed_hosts=es01:9300,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
-      # - xpack.security.authc.api_key.enabled=true
+      - xpack.security.authc.api_key.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/es02/es02.key
       - xpack.security.http.ssl.certificate=certs/es02/es02.crt
@@ -510,7 +510,7 @@ services:
 #       - discovery.seed_hosts=es01:9300,es02:9301
 #       - bootstrap.memory_lock=true
 #       - xpack.security.enabled=true
-#       # - xpack.security.authc.api_key.enabled=true
+#       - xpack.security.authc.api_key.enabled=true
 #       - xpack.security.http.ssl.enabled=true
 #       - xpack.security.http.ssl.key=certs/es03/es03.key
 #       - xpack.security.http.ssl.certificate=certs/es03/es03.crt
@@ -698,44 +698,6 @@ services:
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca/ca.crt
       - CLUSTER_NAME=${CLUSTER_NAME}
  
-  heartbeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
-      kibana:
-        condition: service_healthy
-    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-heart"
-    hostname: "heart"
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    # ports:
-    #  - 5067:5067
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/heartbeat/certs
-      - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-      - heartbeat:/usr/share/heartbeat
-      - ./logs/heart:/usr/share/heartbeat/logs
-    environment:
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
-      - CLUSTER_NAME=${CLUSTER_NAME}
-    healthcheck:
-      test: "heartbeat test output | grep 'talk to server... OK'"
-      interval: 10s
-      timeout: 60s
-      retries: 500
-
 #
 #   If you want enterprisesearch
 #
@@ -790,6 +752,47 @@ services:
 #       timeout: 10s
 #       retries: 500
  
+#
+#   If you want your own configured metricbeat or if you want to train the configuration 
+#
+#   heartbeat:
+#     depends_on:
+#       es01:
+#         condition: service_healthy
+#     depends_on:
+#       es02:
+#         condition: service_healthy
+#     depends_on:
+#       kibana:
+#         condition: service_healthy
+#     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
+#     restart: ${DOCKER_RESTART_POLICY}
+#     container_name: "${APP_ID}-heart"
+#     hostname: "heart"
+#     networks:
+#       # for traefik:
+#       - default
+#       # local network:
+#       - intnet
+#     # ports:
+#     #  - 5067:5067
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./certs:/usr/share/heartbeat/certs
+#       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+#       - heartbeat:/usr/share/heartbeat
+#       - ./logs/heart:/usr/share/heartbeat/logs
+#     environment:
+#       - ELASTICSEARCH_USERNAME=elastic
+#       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+#       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
+#       - CLUSTER_NAME=${CLUSTER_NAME}
+#     healthcheck:
+#       test: "heartbeat test output | grep 'talk to server... OK'"
+#       interval: 10s
+#       timeout: 60s
+#       retries: 500
+
 #
 #   If you want your own configured metricbeat or if you want to train the configuration 
 #
