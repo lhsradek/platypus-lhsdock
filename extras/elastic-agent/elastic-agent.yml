@@ -2,8 +2,13 @@
 # Beats is configured under Fleet, you can define most settings
 # from the Kibana UI. You can update this file to configure the settings that
 # are not supported by Fleet.
-# fleet:
-#  enabled: true
+#
+# install fleet:
+#
+# ./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key
+#
+fleet:
+  enabled: true
 
 # agent.download:
 #   # source of the artifacts, requires elastic like structure and naming of the binaries
@@ -45,140 +50,103 @@
 #   exponential: false
 
 id: fleet-server-policy
-revision: 2
+revision: 5
 outputs:
   default:
     type: elasticsearch
     hosts:
       - 'https://es01:9200'
       - 'https://es02:9201'
-    #  - 'https://es03:9202'
-    # api_key: 
+      # - 'https://es03:9202'
     username: fleet-server
     password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}
     ssl:
       enabled: true
       certificate_authorities:
         - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
+      verification_mode: certificate        
 output_permissions:
   default:
     _elastic_agent_monitoring:
       indices:
         - names:
-            - logs-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
             - logs-elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.endpoint_security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.filebeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.endpoint_security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
+            - logs-elastic_agent.elastic_agent-default
+            - logs-elastic_agent.apm_server-default
             - logs-elastic_agent.filebeat-default
+            - logs-elastic_agent.fleet_server-default
+            - logs-elastic_agent.metricbeat-default
+            - logs-elastic_agent.osquerybeat-default
+            - logs-elastic_agent.packetbeat-default
+            - logs-elastic_agent.endpoint_security-default
+            - logs-elastic_agent.auditbeat-default
+            - logs-elastic_agent.heartbeat-default
+            - logs-elastic_agent.cloudbeat-default
+            - metrics-elastic_agent-default
+            - metrics-elastic_agent.elastic_agent-default
+            - metrics-elastic_agent.apm_server-default
+            - metrics-elastic_agent.filebeat-default
+            - metrics-elastic_agent.fleet_server-default
+            - metrics-elastic_agent.metricbeat-default
+            - metrics-elastic_agent.osquerybeat-default
+            - metrics-elastic_agent.packetbeat-default
+            - metrics-elastic_agent.endpoint_security-default
+            - metrics-elastic_agent.auditbeat-default
+            - metrics-elastic_agent.heartbeat-default
+            - metrics-elastic_agent.cloudbeat-default
           privileges:
             - auto_configure
             - create_doc
     _elastic_agent_checks:
       cluster:
         - monitor
-    1b48ff15-f37b-4309-b2f2-fdc6c4ce9436:
-      indices: []
+    e43aa77e-70ce-42c0-a98f-380c4ae72841:
+      indices:
+        - names:
+            - logs-apm.error-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-apm.app-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.app.*-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.internal-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.profiling-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - traces-apm.rum-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - traces-apm-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - traces-apm.sampled-default
+          privileges:
+            - auto_configure
+            - create_doc
+            - maintenance
+            - monitor
+            - read
+      cluster:
+        - 'cluster:monitor/main'
 agent:
   download:
     source_uri: 'https://artifacts.elastic.co/downloads/'
@@ -189,9 +157,9 @@ agent:
     logs: true
     metrics: true
 inputs:
-  - id: fleet-server-fleet_server-b6b66267-51ba-48f8-8be3-8731b40a563b
+  - id: fleet-server-fleet_server-b4295c10-d853-4a72-a8d4-e091ee765ab1
     name: fleet_server-1
-    revision: 1
+    revision: 2
     type: fleet-server
     use_output: default
     meta:
@@ -202,4 +170,80 @@ inputs:
       namespace: default
     server:
       port: 8220
-      host: 0.0.0.0      
+      host: 0.0.0.0
+  - id: e43aa77e-70ce-42c0-a98f-380c4ae72841
+    name: apm-1
+    revision: 2
+    type: apm
+    use_output: default
+    meta:
+      package:
+        name: apm
+        version: 8.4.2
+    data_stream:
+      namespace: default
+    apm-server:
+      capture_personal_data: true
+      max_connections: 0
+      max_event_size: 307200
+      auth:
+        api_key:
+          enabled: false
+          limit: 100
+        anonymous:
+          enabled: true
+          allow_agent:
+            - rum-js
+            - js-base
+            - iOS/swift
+          allow_service: null
+          rate_limit:
+            ip_limit: 1000
+            event_limit: 300
+        secret_token: null
+      default_service_environment: null
+      shutdown_timeout: 30s
+      sampling:
+        tail:
+          enabled: false
+          storage_limit: 3GB
+          policies:
+            - sample_rate: 0.1
+          interval: 1m
+      rum:
+        enabled: true
+        exclude_from_grouping: ^/webpack
+        allow_headers: null
+        response_headers: null
+        library_pattern: node_modules|bower_components|~
+        allow_origins:
+          - '*'
+        source_mapping:
+          metadata: []
+      ssl:
+        enabled: false
+        key_passphrase: null
+        certificate: null
+        supported_protocols:
+          - TLSv1.1
+          - TLSv1.2
+          - TLSv1.3
+        curve_types: null
+        key: null
+        cipher_suites: null
+      response_headers: null
+      write_timeout: 30s
+      pprof.enabled: false
+      host: 'fleet:8200'
+      max_header_size: 1048576
+      idle_timeout: 45s
+      expvar.enabled: false
+      read_timeout: 3600s
+      java_attacher:
+        enabled: false
+        discovery-rules: null
+        download-agent-version: null
+      agent_config: []
+fleet:
+  hosts:
+    - 'https://fleet:8220'

@@ -4,7 +4,9 @@
 
 apm-server:
   # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
-  host: "localhost:8200"
+  host: "fleet:8200"
+  # host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
+  # host: "unix:/usr/share/elastic-agent/state/data/tmp/elastic-agent-control.sock"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:
@@ -190,7 +192,7 @@ apm-server:
         hosts:
           - "es01:9200"
           - "es02:9201"
-          # - "es03:9202"
+          - "es03:9202"
 
         # Protocol - either `http` (default) or `https`.
         protocol: "https"
@@ -327,8 +329,9 @@ output.elasticsearch:
   hosts: 
     - "es01:9200"
     - "es02:9201"
-    # - "es03:9202"
+    - "es03:9202"
 
+  protocol: "https"
   # Boolean flag to enable or disable the output module.
   enabled: true
 
@@ -336,7 +339,6 @@ output.elasticsearch:
   #compression_level: 0
 
   # Protocol - either `http` (default) or `https`.
-  protocol: "https"
 
   # Authentication credentials - either API key or username/password.
   # api_key: "id:api_key"
@@ -907,9 +909,6 @@ output.elasticsearch:
 # you can simply uncomment the following line.
 monitoring.elasticsearch:
 
-  # Protocol - either `http` (default) or `https`.
-  protocol: "https"
-
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -920,9 +919,12 @@ monitoring.elasticsearch:
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
-    - "http://es01:9200"
-    - "http://es02:9201"
-    # - "http://es03:9202"
+    - "es01:9200"
+    - "es02:9201"
+    - "es03:9202"
+
+  # Protocol - either `http` (default) or `https`.
+  protocol: "https"
 
   # Set gzip compression level.
   #compression_level: 0

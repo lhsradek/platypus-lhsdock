@@ -1,6 +1,10 @@
 http.enabled: true
 http.port: 5066
-http.hosts: ["127.0.0.1", "unix:///var/run/docker.sock"]
+http.hosts:
+  - "127.0.0.1"
+  - "unix:///var/run/docker.sock"
+
+# monitoring.enabled: false
 monitoring.cluster_uuid: "cluster-uuid"
 cluster.name: ${CLUSTER_NAME}
 
@@ -16,8 +20,8 @@ output:
   elasticsearch:
     hosts: 
       - "https://es01:9200"
-      # - "https://es02:9201"
-      # - "https://es03:9202"
+      - "https://es02:9201"
+      - "https://es03:9202"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:

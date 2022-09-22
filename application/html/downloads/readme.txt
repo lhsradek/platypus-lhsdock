@@ -138,6 +138,12 @@ HOSTNAME='weblhs-php.nginx.local'
 
 -----
 
+Install fleet on fleet server:
+
+```./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key```
+
+-----
+
 * https://www.facebook.com/radek.kadner/
 * https://www.linkedin.com/in/radekkadner/
 * mailto:radek.kadner@gmail.com

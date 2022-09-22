@@ -1,9 +1,12 @@
 # Define a directory to load monitor definitions from. Definitions take the form
 # of individual yaml files.
 
-# http.enabled: true
-# http.port: 5067
-# http.host: "localhost"
+http.enabled: true
+http.port: 5067
+http.hosts:
+  # - "127.0.0.1"
+  - "unix:///var/run/docker.sock"
+
 # monitoring.enabled: false
 monitoring.cluster_uuid: "cluster-uuid"
 cluster.name: ${CLUSTER_NAME}
@@ -35,13 +38,7 @@ heartbeat.monitors:
     # - https://es03.docker.nginx.local:9202
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-
-- type: tcp
-  id: tcp-services
-  name: TCP Services
-  hosts: ["apm", "fleet", "kibana"]
-  ports: [8200, 8220]
-  schedule: '*/1 * * * * * *'
+    verification_mode: none
 
 - type: icmp
   schedule: '*/3 * * * * * *'
@@ -72,19 +69,20 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-  # apm:
-  #   enabled: true
-  #   service_name: "heartbeat"
-  #   server_url: "http://localhost:8200"
+  apm:
+    enabled: true
+    service_name: "heartbeat"
+    server_url: "http://fleet:8200"
 
 output:
   elasticsearch:
     hosts: 
       - "https://es01:9200"
-      - "https://es02:9201"
+      # - "https://es02:9201"
       # - "https://es03:9202"
     username: '${ELASTICSEARCH_USERNAME:}'
     password: '${ELASTICSEARCH_PASSWORD:}'
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: certificate

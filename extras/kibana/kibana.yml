@@ -11,13 +11,17 @@ xpack:
     encryptionKey: 363792db7b8cf9581c6cbdddbb8ff95f
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
+  # apm.serviceMapEnabled: false
   fleet:
     agents:
-      fleet_server.hosts: ["https://fleet:8220"]
-      elasticsearch.hosts: 
-        - "https://es01:9200"
-        - "https://es02:9201"
-        # - "https://es03:9202"
+      fleet_server:
+        hosts:
+          - "https://fleet:8220"
+      elasticsearch:
+        hosts: 
+          - "https://es01:9200"
+          - "https://es02:9201"
+          # - "https://es03:9202"
 
 monitoring:
   ui:
@@ -41,7 +45,9 @@ elasticsearch:
     - "https://es01:9200"
     - "https://es02:9201"
     # - "https://es03:9202"
-  requestTimeout: 300000
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  requestTimeout: 120000
 
 # enterpriseSearch.host: "http://eps:3002"
 

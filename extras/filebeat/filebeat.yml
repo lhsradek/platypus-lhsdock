@@ -1,11 +1,12 @@
-# http.enabled: true
-# http.port: 5068
-# http.host: 127.0.0.1
+http.enabled: true
+http.port: 5068
+http.hosts:
+  - "127.0.0.1"
+  - "unix:///var/run/docker.sock"
 
 # monitoring.enabled: false
-# monitoring.cluster_uuid: "cluster-uuid"
+monitoring.cluster_uuid: "cluster-uuid"
 cluster.name: ${CLUSTER_NAME}
-
 
 filebeat.config:
   modules:
