@@ -98,7 +98,7 @@ Creating lhsdock-eps      ... done
 | cerebro              | 9000/tcp             | lhsdock-cerebro | cerebro.www.nginx.local   | *
 | enterprise-search    | 3002/tcp             | lhsdock-eps     | eps.nginx.local           | *
 | elastic-agent        | 8200/tcp, 8220/tcp   | lhsdock-fleet   | fleet.nginx.local         |
-| apm-server           | 8200/tcp             | lhsdock-apm     | apm.nginx.loca            | *
+| apm-server           | 8200/tcp             | lhsdock-apm     | apm.nginx.local           | *
 | logstash             | 5044/tcp, 9600/tcp   | lhsdock-log     | log.nginx.local           |
 | heartbeat            |                      | lhsdock-heart   | heart.nginx.local         | *
 | metricbeat           |                      | lhsdock-metric  | metric.nginx.local        | * 
