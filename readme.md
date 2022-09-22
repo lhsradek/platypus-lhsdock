@@ -64,7 +64,7 @@ Creating lhsdock-logstash ... done
 Creating lhsdock-eps      ... done
 ```
 
-*) exec lhsdock ```bin/stop```
+* exec lhsdock ```bin/stop```
 
 -----
 
@@ -138,7 +138,7 @@ HOSTNAME='weblhs-php.nginx.local'
 
 -----
 
-Install fleet on fleet server:
+Install fleet server:
 
 ```./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key```
 
