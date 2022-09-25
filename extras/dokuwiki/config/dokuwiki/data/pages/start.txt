@@ -1,11 +1,15 @@
-### platypus-lhsdock with Elasticsearch, Logstash and Kibana ([[https://www.elastic.co/|ELK]])
+[[https://www.elastic.co/|ELK]]
+
+====== platypus-lhsdock with Elasticsearch, Logstash and Kibana ======
 
 [[https://github.com/lhsradek/platypus-lhsdock]]
 
-#### Setup
+=== Setup ===
 
 * create .env file <code>cp .env.dist .env</code>
+
 * run lhsdock <code>bin/start</code>
+
 * exec lhsdock <code>bin/exec</code>
 
 * If used lhsradek/lhsdock (*) to run use:
@@ -68,9 +72,9 @@ Creating lhsdock-eps      ... done
 
 -----
 
-| REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
+^ REPOSITORY                                            ^  TAG       ^ SIZE             ^ OPTIONAL ^
 | nginx:alpine                                          | latest     | 23.5MB           | lhsradek/lhsdock
-| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine
+| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine |
 | php                                                   | fpm-alpine | 73.4MB           |
 | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.2      | 1.26GB           |
 | docker.elastic.co/kibana/kibana                       | 8.4.2      | 797MB            |
@@ -84,22 +88,22 @@ Creating lhsdock-eps      ... done
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
 
-| IMAGES               | PORTS                  | NAMES            | HOSTNAMES                 | OPTIONAL  
+^ IMAGES               ^ PORTS                  ^ NAMES            ^ HOSTNAMES                 ^ OPTIONAL^
 | lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock          | www.nginx.local           |
-| php:fpm-alpine       | 9000/tcp               | lhsdock-php      | weblhs-php.nginx.local    | 
-| elasticsearch        |                        | lhsdock-setup    | setup                     | *
+| php:fpm-alpine       | 9000/tcp               | lhsdock-php      | weblhs-php.nginx.local    |
+| elasticsearch        |                        | lhsdock-setup    | setup                     | * |
 | elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01     | es01.www.nginx.local      |
-| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | es02.www.nginx.local      | 
-| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | es03.www.nginx.local      | *
+| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | es02.www.nginx.local      |
+| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | es03.www.nginx.local      | * |
 | kibana               | 5601/tcp               | lhsdock-kibana   | kibana.www.nginx.local    |
-| metricbeat           | 5066/tcp               | lhsdock-metric   | metric.nginx.local        | * 
-| heartbeat            | 5067/tcp               | lhsdock-heart    | heart.nginx.local         | *
-| filebeat             | 5068/tcp               | lhsdock-file     | file.nginx.local          | *
-| enterprise-search    | 3002/tcp               | lhsdock-eps      | eps.nginx.local           | *
-| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | fleet.nginx.local         | *
-| apm-server           | 8200/tcp               | lhsdock-apm      | apm.nginx.local           | *
-| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | logstash.nginx.local      | *
-| cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | *
+| metricbeat           | 5066/tcp               | lhsdock-metric   | metric.nginx.local        | * |
+| heartbeat            | 5067/tcp               | lhsdock-heart    | heart.nginx.local         | * |
+| filebeat             | 5068/tcp               | lhsdock-file     | file.nginx.local          | * |
+| enterprise-search    | 3002/tcp               | lhsdock-eps      | eps.nginx.local           | * |
+| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | fleet.nginx.local         | * |
+| apm-server           | 8200/tcp               | lhsdock-apm      | apm.nginx.local           | * |
+| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | logstash.nginx.local      | * |
+| cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | * |
 
 -----
 
