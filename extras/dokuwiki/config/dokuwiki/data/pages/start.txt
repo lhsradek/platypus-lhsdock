@@ -5,22 +5,18 @@
 
 === setup lhsdock ===
 create .env file
-<code># cp .env.dist .env</code>
+<code bash># cp .env.dist .env</code>
 
 === run lhsdock ===
-<code># bin/start</code>
+<code bash># bin/start</code>
 
 === exec lhsdock ===
-<code># bin/exec</code>
-
-* If used lhsradek/lhsdock (*) to run use:
-
-<code># perl /root/bin/platypus.pl</code>
+<code bash># bin/exec</code>
 
 === restart lhsdock ===
-<code># bin/restart</code>
+<code bash># bin/restart</code>
 
-<code>
+<code bash>
 ================= STOP =================
 Stopping lhsdock-logstash ... done
 Stopping lhsdock-eps      ... done
@@ -71,7 +67,7 @@ Creating lhsdock-eps      ... done
 </code>
 
 === stop lhsdock ===
-<code># bin/stop</code>
+<code bash># bin/stop</code>
 
 -----
 
@@ -90,6 +86,11 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/beats/filebeat                      | 8.4.2      | 405MB            |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
+Width [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use:
+
+<code bash># perl /root/bin/platypus.pl</code>
+
+-----
 
 ^ IMAGES               ^ PORTS                  ^ NAMES            ^ HOSTNAMES                 ^ OPTIONAL^
 | lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock          | www.nginx.local           |
@@ -99,12 +100,12 @@ Creating lhsdock-eps      ... done
 | elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | es02.www.nginx.local      |
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | es03.www.nginx.local      | * |
 | kibana               | 5601/tcp               | lhsdock-kibana   | kibana.www.nginx.local    |
-| metricbeat           | 5066/tcp               | lhsdock-metric   | metric.nginx.local        | * |
-| heartbeat            | 5067/tcp               | lhsdock-heart    | heart.nginx.local         | * |
+| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm      | apm.nginx.local           | * |
+| metricbeat           | 5067/tcp               | lhsdock-metric   | metric.nginx.local        | * |
 | filebeat             | 5068/tcp               | lhsdock-file     | file.nginx.local          | * |
+| heartbeat            | 5069/tcp               | lhsdock-heart    | heart.nginx.local         | * |
 | enterprise-search    | 3002/tcp               | lhsdock-eps      | eps.nginx.local           | * |
 | elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | fleet.nginx.local         | * |
-| apm-server           | 8200/tcp               | lhsdock-apm      | apm.nginx.local           | * |
 | logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | logstash.nginx.local      | * |
 | cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | * |
 
@@ -116,4 +117,6 @@ Creating lhsdock-eps      ... done
 
 [[https://www.linkedin.com/in/radekkadner/]]
 
-mailto:radek.kadner@gmail.com
+[[mailto:radek.kadner@gmail.com]]
+
+
