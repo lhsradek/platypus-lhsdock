@@ -4,4 +4,7 @@ certs/
 context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
+extras/dokuwiki/config/dokuwiki/data/index/
+extras/dokuwiki/config/dokuwiki/data/meta/
+extras/dokuwiki/config/dokuwiki/data/attic/
 logs/

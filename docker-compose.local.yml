@@ -949,9 +949,9 @@ services:
       - esdata02:/root/bin/volume/es02:ro
       - esdata03:/root/bin/volume/es03:ro
       - kibana:/root/bin/volume/kibana:ro
-      - fleet:/root/bin/volume/fleet:ro
+      # - fleet:/root/bin/volume/fleet:ro
       - logstash:/root/bin/volume/logstash:ro
-      # - epsdata:/root/bin/volume/eps:ro
+      - epsdata:/root/bin/volume/eps:ro
       # It's for my prune volume deletion protection:
       - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
@@ -1021,8 +1021,8 @@ services:
       - "traefik.http.routers.wiki-public.rule=Host(`wiki.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.wiki-public.entrypoints=https"
       - "traefik.http.routers.wiki-public.tls=true"
-      - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.port=80"
-      - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.scheme=http"
+      # - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.port=80"
+      # - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.scheme=http"
 
 #   fleet:
 #     depends_on:
@@ -1101,6 +1101,9 @@ services:
 #       retries: 500
   
 volumes:
+  apm:
+    external: false
+    name: "${APP_ID}-apm"
   esdata01:
     external: true
     name: "${APP_ID}-es01"
@@ -1110,30 +1113,27 @@ volumes:
   esdata03:
     external: true
     name: "${APP_ID}-es03"
-  kibana:
+  epsdata:
     external: true
-    name: "${APP_ID}-kibana"
-  fleet:
-    external: true
-    name: "${APP_ID}-fleet"
-  logstash:
-    external: true
-    name: "${APP_ID}-log"
-  apm:
-    external: false
-    name: "${APP_ID}-apm"
-  heartbeat:
-    external: false
-    name: "${APP_ID}-heart"
+    name: "${APP_ID}-eps"
   filebeat:
     external: false
     name: "${APP_ID}-file"
+  fleet:
+    external: false
+    name: "${APP_ID}-fleet"
+  kibana:
+    external: true
+    name: "${APP_ID}-kibana"
+  logstash:
+    external: true
+    name: "${APP_ID}-log"
+  heartbeat:
+    external: false
+    name: "${APP_ID}-heart"
   metricbeat:
     external: false
     name: "${APP_ID}-metric"
-  epsdata:
-    external: false
-    name: "${APP_ID}-eps"
 #    
 # You can remove this. It's for my prune volume deletion protection:
 #
