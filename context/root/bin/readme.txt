@@ -4,20 +4,21 @@ with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
-##### setup
+#### setup
 create .env file
+
 ```# cp .env.dist .env```
 
-##### run lhsdock
+#### run lhsdock
 ```# bin/start```
 
-##### exec lhsdock
+#### exec lhsdock
 ```# bin/exec```
 
-####### If used lhsradek/lhsdock to run You can use:
+##### If used lhsradek/lhsdock to run You can use:
 ```# perl /root/bin/platypus.pl```
 
-##### restart lhsdock
+#### restart lhsdock
 ```# bin/restart```
 
 ```
@@ -70,7 +71,7 @@ Creating lhsdock-logstash ... done
 Creating lhsdock-eps      ... done
 ```
 
-##### stop lhsdock
+#### stop lhsdock
 ```# bin/stop```
 
 -----
