@@ -1012,7 +1012,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
+      - DOKUWIKI_PASSWORD=${APM_PASSWORD}
     volumes:
+      # - ./context/root/bin/platypus.pl:/config/dokuwiki/data/pages/wiki/platypus.pl:ro
       - ./extras/dokuwiki/config:/config
       - ./logs/dokuwiki:/config/log
     labels:
