@@ -1,4 +1,4 @@
-### platypus-lhsdock with elasticsearch, logstash and kibana (ELK)
+### platypus-lhsdock with Elasticsearch, Logstash and Kibana ([[https://www.elastic.co/|ELK]])
 
 [[https://github.com/lhsradek/platypus-lhsdock]]
 

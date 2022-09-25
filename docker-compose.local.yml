@@ -1014,6 +1014,7 @@ services:
       - TZ=Europe/London
     volumes:
       - ./extras/dokuwiki/config:/config
+      - ./logs/dokuwiki:/config/log
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"

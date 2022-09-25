@@ -15,7 +15,7 @@
 /* Basic Settings */
 $conf['title']       = 'DokuWiki';        //what to show in the title
 $conf['start']       = 'start';           //name of start page
-$conf['lang']        = 'en';              //your language
+$conf['lang']        = 'cz';              //your language
 $conf['template']    = 'dokuwiki';         //see lib/tpl directory
 $conf['tagline']     = '';                //tagline in header (if template supports it)
 $conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
@@ -35,7 +35,7 @@ $conf['breadcrumbs'] = 10;                //how many recent visited pages to sho
 $conf['youarehere']  = 0;                 //show "You are here" navigation? 0|1
 $conf['fullpath']    = 0;                 //show full path of the document or relative to datadir only? 0|1
 $conf['typography']  = 1;                 //smartquote conversion 0=off, 1=doublequotes, 2=all quotes
-$conf['dformat']     = '%Y/%m/%d %H:%M';  //dateformat accepted by PHPs strftime() function
+$conf['dformat']     = '%Y-%m-%d %H:%M';  //dateformat accepted by PHPs strftime() function
 $conf['signature']   = ' --- //[[@MAIL@|@NAME@]] @DATE@//'; //signature see wiki page for details
 $conf['showuseras']  = 'loginname';       // 'loginname' users login name
                                           // 'username' users full name
@@ -80,7 +80,7 @@ $conf['mailguard']   = 'hex';            //obfuscate email addresses against spa
 $conf['iexssprotect']= 1;                // check for JavaScript and HTML in uploaded files 0|1
 
 /* Editing Settings */
-$conf['usedraft']    = 1;                //automatically save a draft while editing (0|1)
+$conf['usedraft']    = 0;                //automatically save a draft while editing (0|1)
 $conf['htmlok']      = 0;                //may raw HTML be embedded? This may break layout and XHTML validity 0|1
 $conf['phpok']       = 0;                //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
