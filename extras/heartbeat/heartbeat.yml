@@ -2,13 +2,13 @@
 # of individual yaml files.
 
 http.enabled: true
-http.port: 5067
+http.port: 5069
 http.hosts:
-  # - "127.0.0.1"
+  - "0.0.0.0"
   - "unix:///var/run/docker.sock"
 
-# monitoring.enabled: false
-monitoring.cluster_uuid: "cluster-uuid"
+xpack.monitoring.enabled: true
+monitoring.enabled: true
 cluster.name: ${CLUSTER_NAME}
 
 heartbeat.config.monitors:
@@ -24,11 +24,11 @@ heartbeat.monitors:
   schedule: '*/5 * * * * * *'
   id: http-service
   name: HTTP Service
-  ipv6: false
   data_stream.namespace: default
   service.name: heartbeat-http
   username: '${ELASTICSEARCH_USERNAME:}'
   password: '${ELASTICSEARCH_PASSWORD:}'
+  # api_key: ${AGENT_API_KEY}
   check.response.status: [200, 301, 302]
   hosts:
     - http://docker.nginx.local/nginx_status
@@ -44,7 +44,6 @@ heartbeat.monitors:
   schedule: '*/3 * * * * * *'
   id: icmp-service
   name: ICMP Service
-  ipv6: false
   data_stream.namespace: default
   service.name: heartbeat-icmp
   hosts:
@@ -55,33 +54,43 @@ heartbeat.monitors:
     - mamka.intranet.local
 
 heartbeat.scheduler:
-  limit: 0
+  limit: 2
+heartbeat.jobs:
+  http:
+    limit: 3
+  browser:
+    limit: 2    
 
 processors:
+  - add_host_metadata: ~
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
 
 setup:
   kibana:
     host: "https://kibana:5601"
     username: '${ELASTICSEARCH_USERNAME:}'
     password: '${ELASTICSEARCH_PASSWORD:}'
+    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
   apm:
     enabled: true
     service_name: "heartbeat"
-    server_url: "http://fleet:8200"
+    server_url: "http://apm:8200"
+  ilm.overwrite: true
 
 output:
   elasticsearch:
     hosts: 
       - "https://es01:9200"
-      # - "https://es02:9201"
-      # - "https://es03:9202"
+      - "https://es02:9201"
+      - "https://es03:9202"
     username: '${ELASTICSEARCH_USERNAME:}'
     password: '${ELASTICSEARCH_PASSWORD:}'
+    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']

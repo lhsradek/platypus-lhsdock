@@ -2,13 +2,8 @@
 # Beats is configured under Fleet, you can define most settings
 # from the Kibana UI. You can update this file to configure the settings that
 # are not supported by Fleet.
-#
-# install fleet:
-#
-# ./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key
-#
 # fleet:
-#   enabled: true
+#  enabled: true
 
 # agent.download:
 #   # source of the artifacts, requires elastic like structure and naming of the binaries
@@ -49,6 +44,17 @@
 #   # Default is false
 #   exponential: false
 
+# agent.logging.level: debug
+# agent.logging.to_files: true
+# agent.logging.files:
+#   # path: /var/log/elastic-agent
+#   name: elastic-agent-debug
+#   keepfiles: 7
+#  permissions: 0600
+
+http.hosts:
+  - "unix:///var/run/docker.sock"
+
 id: fleet-server-policy
 revision: 3
 outputs:
@@ -56,37 +62,55 @@ outputs:
     type: elasticsearch
     hosts:
       - 'https://es01:9200'
-      - 'https://es02:9201'
+      # - 'https://es02:9201'
       # - 'https://es03:9202'
     username: ${FLEET_SERVER_ELASTICSEARCH_USERNAME}
+    # username: fleet-server
     password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}
+    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities:
         - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
-      verification_mode: certificate
-id: 9856a370-39fc-11ed-b8d7-afa261708046
+      # certificate: ${FLEET_SERVER_CERT}
+      # key: ${FLEET_SERVER_CERT_KEY}
+      # verification_mode: certificate
 output_permissions:
   default:
     _elastic_agent_monitoring:
       indices:
         - names:
-            - logs-elastic_agent-default
+            - logs-elastic_agent.apm_server-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.metricbeat-default
+            - metrics-elastic_agent.apm_server-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.packetbeat-default
+            - logs-elastic_agent.auditbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.fleet_server-default
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -101,22 +125,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.endpoint_security-default
+            - logs-elastic_agent.heartbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -126,37 +135,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.endpoint_security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.filebeat-default
+            - logs-elastic_agent.metricbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -166,24 +145,54 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
+            - metrics-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
             - metrics-elastic_agent.heartbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.apm_server-default
+            - logs-elastic_agent.fleet_server-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.auditbeat-default
+            - logs-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.endpoint_security-default
           privileges:
             - auto_configure
             - create_doc
     _elastic_agent_checks:
       cluster:
         - monitor
-    bd557a42-eb3b-4ee7-85f5-1377190887a9:
+    cbb00fb2-aa1a-4eec-a1f7-f60378be82b2:
       indices:
         - names:
             - logs-system.auth-default
@@ -196,7 +205,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.application-default
+            - logs-system.system-default
           privileges:
             - auto_configure
             - create_doc
@@ -206,27 +215,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.system-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.cpu-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.diskio-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.filesystem-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.fsstat-default
+            - logs-system.application-default
           privileges:
             - auto_configure
             - create_doc
@@ -236,12 +225,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-system.memory-default
+            - metrics-system.network-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-system.network-default
+            - metrics-system.memory-default
           privileges:
             - auto_configure
             - create_doc
@@ -251,7 +240,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-system.process.summary-default
+            - metrics-system.fsstat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.diskio-default
           privileges:
             - auto_configure
             - create_doc
@@ -265,54 +259,22 @@ output_permissions:
           privileges:
             - auto_configure
             - create_doc
-    e29f8d46-7869-4fe0-9423-79d2992b7d60:
-      indices:
         - names:
-            - metrics-apm.profiling-default
+            - metrics-system.process.summary-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-apm.error-default
+            - metrics-system.filesystem-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - traces-apm.rum-default
+            - metrics-system.cpu-default
           privileges:
             - auto_configure
             - create_doc
-        - names:
-            - metrics-apm.internal-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-apm.app.*-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - traces-apm.sampled-default
-          privileges:
-            - auto_configure
-            - create_doc
-            - maintenance
-            - monitor
-            - read
-        - names:
-            - logs-apm.app-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - traces-apm-default
-          privileges:
-            - auto_configure
-            - create_doc
-      cluster:
-        - 'cluster:monitor/main'
-    ce18a480-a479-4026-9622-9e927d64d117:
+    307bd049-d32a-4014-82b2-857a62104aa7:
       indices:
         - names:
             - metrics-docker.container-default
@@ -364,8 +326,8 @@ agent:
     logs: true
     metrics: true
 inputs:
-  - id: logfile-system-bd557a42-eb3b-4ee7-85f5-1377190887a9
-    name: system-1
+  - id: logfile-system-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+    name: system-2
     revision: 1
     type: logfile
     use_output: default
@@ -376,7 +338,7 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: logfile-system.auth-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: logfile-system.auth-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.auth
           type: logs
@@ -393,7 +355,7 @@ inputs:
           - hashicorp-vault-log
         processors:
           - add_locale: null
-      - id: logfile-system.syslog-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: logfile-system.syslog-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.syslog
           type: logs
@@ -408,8 +370,8 @@ inputs:
         processors:
           - add_locale: null
         ignore_older: 72h
-  - id: winlog-system-bd557a42-eb3b-4ee7-85f5-1377190887a9
-    name: system-1
+  - id: winlog-system-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+    name: system-2
     revision: 1
     type: winlog
     use_output: default
@@ -420,29 +382,29 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: winlog-system.application-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        name: Application
-        data_stream:
-          dataset: system.application
-          type: logs
-        condition: '${host.platform} == ''windows'''
-        ignore_older: 72h
-      - id: winlog-system.security-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        name: Security
-        data_stream:
-          dataset: system.security
-          type: logs
-        condition: '${host.platform} == ''windows'''
-        ignore_older: 72h
-      - id: winlog-system.system-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: winlog-system.system-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         name: System
         data_stream:
           dataset: system.system
           type: logs
         condition: '${host.platform} == ''windows'''
         ignore_older: 72h
-  - id: system/metrics-system-bd557a42-eb3b-4ee7-85f5-1377190887a9
-    name: system-1
+      - id: winlog-system.security-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        name: Security
+        data_stream:
+          dataset: system.security
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+      - id: winlog-system.application-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        name: Application
+        data_stream:
+          dataset: system.application
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+  - id: system/metrics-system-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+    name: system-2
     revision: 1
     type: system/metrics
     use_output: default
@@ -453,45 +415,7 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: system/metrics-system.cpu-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        data_stream:
-          dataset: system.cpu
-          type: metrics
-        metricsets:
-          - cpu
-        cpu.metrics:
-          - percentages
-          - normalized_percentages
-        period: 10s
-      - id: system/metrics-system.diskio-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        data_stream:
-          dataset: system.diskio
-          type: metrics
-        metricsets:
-          - diskio
-        diskio.include_devices: null
-        period: 10s
-      - id: system/metrics-system.filesystem-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        data_stream:
-          dataset: system.filesystem
-          type: metrics
-        metricsets:
-          - filesystem
-        period: 1m
-        processors:
-          - drop_event.when.regexp:
-              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.fsstat-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        data_stream:
-          dataset: system.fsstat
-          type: metrics
-        metricsets:
-          - fsstat
-        period: 1m
-        processors:
-          - drop_event.when.regexp:
-              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.load-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: system/metrics-system.load-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.load
           type: metrics
@@ -499,14 +423,7 @@ inputs:
           - load
         condition: '${host.platform} != ''windows'''
         period: 10s
-      - id: system/metrics-system.memory-bd557a42-eb3b-4ee7-85f5-1377190887a9
-        data_stream:
-          dataset: system.memory
-          type: metrics
-        metricsets:
-          - memory
-        period: 10s
-      - id: system/metrics-system.network-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: system/metrics-system.network-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.network
           type: metrics
@@ -514,7 +431,14 @@ inputs:
           - network
         period: 10s
         network.interfaces: null
-      - id: system/metrics-system.process-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: system/metrics-system.memory-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        data_stream:
+          dataset: system.memory
+          type: metrics
+        metricsets:
+          - memory
+        period: 10s
+      - id: system/metrics-system.process-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.process
           type: metrics
@@ -528,104 +452,69 @@ inputs:
         process.include_cpu_ticks: false
         processes:
           - .*
-      - id: >-
-          system/metrics-system.process.summary-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: system/metrics-system.fsstat-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
-          dataset: system.process.summary
+          dataset: system.fsstat
           type: metrics
         metricsets:
-          - process_summary
+          - fsstat
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.diskio-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        data_stream:
+          dataset: system.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        diskio.include_devices: null
         period: 10s
       - id: >-
-          system/metrics-system.socket_summary-bd557a42-eb3b-4ee7-85f5-1377190887a9
+          system/metrics-system.socket_summary-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.socket_summary
           type: metrics
         metricsets:
           - socket_summary
         period: 10s
-      - id: system/metrics-system.uptime-bd557a42-eb3b-4ee7-85f5-1377190887a9
+      - id: system/metrics-system.uptime-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
         data_stream:
           dataset: system.uptime
           type: metrics
         metricsets:
           - uptime
         period: 10s
-  - id: e29f8d46-7869-4fe0-9423-79d2992b7d60
-    name: apm-1
-    revision: 1
-    type: apm
-    use_output: default
-    meta:
-      package:
-        name: apm
-        version: 8.4.2
-    data_stream:
-      namespace: default
-    apm-server:
-      auth:
-        anonymous:
-          enabled: true
-          allow_agent:
-            - rum-js
-            - js-base
-            - iOS/swift
-          allow_service: null
-          rate_limit:
-            event_limit: 300
-            ip_limit: 1000
-        api_key:
-          enabled: false
-          limit: 100
-        secret_token: null
-      capture_personal_data: true
-      idle_timeout: 45s
-      default_service_environment: null
-      expvar.enabled: false
-      pprof.enabled: false
-      host: 'localhost:8200'
-      max_connections: 0
-      max_event_size: 307200
-      max_header_size: 1048576
-      read_timeout: 3600s
-      response_headers: null
-      java_attacher:
-        enabled: false
-        discovery-rules: null
-        download-agent-version: null
-      rum:
-        enabled: true
-        allow_headers: null
-        allow_origins:
-          - '*'
-        exclude_from_grouping: ^/webpack
-        library_pattern: node_modules|bower_components|~
-        response_headers: null
-        source_mapping:
-          metadata: []
-      shutdown_timeout: 30s
-      ssl:
-        enabled: false
-        certificate: null
-        key: null
-        key_passphrase: null
-        supported_protocols:
-          - TLSv1.1
-          - TLSv1.2
-          - TLSv1.3
-        cipher_suites: null
-        curve_types: null
-      write_timeout: 30s
-      sampling:
-        tail:
-          enabled: false
-          interval: 1m
-          policies:
-            - sample_rate: 0.1
-          storage_limit: 3GB
-      agent_config: []
-  - id: docker/metrics-docker-ce18a480-a479-4026-9622-9e927d64d117
-    name: docker-1
+      - id: >-
+          system/metrics-system.process.summary-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        data_stream:
+          dataset: system.process.summary
+          type: metrics
+        metricsets:
+          - process_summary
+        period: 10s
+      - id: system/metrics-system.filesystem-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        data_stream:
+          dataset: system.filesystem
+          type: metrics
+        metricsets:
+          - filesystem
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.cpu-cbb00fb2-aa1a-4eec-a1f7-f60378be82b2
+        data_stream:
+          dataset: system.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        cpu.metrics:
+          - percentages
+          - normalized_percentages
+        period: 10s
+  - id: docker/metrics-docker-307bd049-d32a-4014-82b2-857a62104aa7
+    name: docker-2
     revision: 1
     type: docker/metrics
     use_output: default
@@ -636,7 +525,7 @@ inputs:
     data_stream:
       namespace: default
     streams:
-      - id: docker/metrics-docker.container-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.container-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.container
           type: metrics
@@ -645,7 +534,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.cpu-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.cpu-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.cpu
           type: metrics
@@ -654,7 +543,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.diskio-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.diskio-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.diskio
           type: metrics
@@ -663,7 +552,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.event-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.event-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.event
           type: metrics
@@ -672,7 +561,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.healthcheck-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.healthcheck-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.healthcheck
           type: metrics
@@ -681,7 +570,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.info-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.info-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.info
           type: metrics
@@ -690,7 +579,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.memory-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.memory-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.memory
           type: metrics
@@ -699,7 +588,7 @@ inputs:
         hosts:
           - 'unix:///var/run/docker.sock'
         period: 10s
-      - id: docker/metrics-docker.network-ce18a480-a479-4026-9622-9e927d64d117
+      - id: docker/metrics-docker.network-307bd049-d32a-4014-82b2-857a62104aa7
         data_stream:
           dataset: docker.network
           type: metrics

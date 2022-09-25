@@ -1,11 +1,14 @@
 # Default Enterprisesearch configuration for docker target
 
 allow_es_settings_modification: true
-# connector_id: 3NEUUoMBjfs4SXvOO5Sq
+# connector_uuid: 3NEUUoMBjfs4SXvOO5Sq
 # api_key: Nk5FVVVvTUJqZnM0U1h2T2FaVkU6M1ZVbVR5bjZSV3FwYS1jemJpZHNuUQ==
 
+# monitoring.enabled: false
+# monitoring.cluster.uuid: "N25AxvDIRK-Y_9nKG8BVnA"
+
 ent_search:
-  listen_host: 0.0.0.0
+  listen_host: "0.0.0.0"
   listen_port: 3002
   external_url: "http://eps:3002"
 
@@ -18,18 +21,17 @@ elasticsearch:
     certificate_authority: '${ELASTIC_SSL_CERTIFICATEAUTHORITIES}'
 
 kibana:
-  startup_retry.fail_after: 600
-  host: https://kibana:5601
-  external_url: https://kibana.docker.nginx.local:5601
-  # external_url: https://kibana:5601
+  startup_retry.fail_after: 12000
+  host: "https://kibana:5601"
+  external_url: "https://kibana.docker.nginx.local:5601"
 
-# apm:
-#  enabled: true
-#  service_name: enterprise-search
-#  server_url: http://apm:8200
+apm:
+  enabled: true
+  service_name: "enterprise-search"
+  server_url: "http://apm:8200"
 
-secret_management.encryption_keys: [14926757649583afea1ba9a26787ecc5a93b1169e35b30f6d2e59d56370a9829]
-secret_session_key: 5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58
+secret_management.encryption_keys: [7414dd7195c3a73b9303c4ad027498f6248bc015efff4911518ad60ecfec328d]
+secret_session_key: "5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58"
 audit_log_directory: "/var/log/enterprise-search"
 filebeat_log_directory: "/var/log/enterprise-search"
 log_directory: "/var/log/enterprise-search"

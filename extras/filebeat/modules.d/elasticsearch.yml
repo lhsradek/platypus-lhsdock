@@ -1,0 +1,57 @@
+# Module: elasticsearch
+# Docs: https://www.elastic.co/guide/en/beats/filebeat/8.4/filebeat-module-elasticsearch.html
+
+- module: elasticsearch
+  # Server log
+  server:
+    enabled: false
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths:
+      - /usr/share/filebeat/log/es01/*_server.json  # JSON logs
+      - /usr/share/filebeat/log/es02/*_server.json  # JSON logs
+      - /usr/share/filebeat/log/es03/*_server.json  # JSON logs
+
+  gc:
+    enabled: true
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths:
+      - /usr/share/filebeat/logs/es01/gc.log.[0-9]*
+      - /usr/share/filebeat/logs/es01/gc.log
+      - /usr/share/filebeat/logs/es02/gc.log.[0-9]*
+      - /usr/share/filebeat/logs/es02/gc.log
+      - /usr/share/filebeat/logs/es03/gc.log.[0-9]*
+      - /usr/share/filebeat/logs/es03/gc.log
+
+  audit:
+    enabled: false
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths:
+      # - /var/log/elasticsearch/*_access.log  # Plain text logs
+      - /usr/share/filebeat/log/es01/*_audit.json  # JSON logs
+      - /usr/share/filebeat/log/es02/*_audit.json  # JSON logs
+      - /usr/share/filebeat/log/es03/*_audit.json  # JSON logs
+
+  slowlog:
+    enabled: false
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths:
+      - /usr/share/filebeat/log/es01/*_index_search_slowlog.json    # JSON logs
+      - /usr/share/filebeat/log/es01/*_index_indexing_slowlog.json  # JSON logs
+      - /usr/share/filebeat/log/es02/*_index_search_slowlog.json    # JSON logs
+      - /usr/share/filebeat/log/es02/*_index_indexing_slowlog.json  # JSON logs
+      - /usr/share/filebeat/log/es03/*_index_search_slowlog.json    # JSON logs
+      - /usr/share/filebeat/log/es03/*_index_indexing_slowlog.json  # JSON logs
+
+  deprecation:
+    enabled: false
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    var.paths:
+      - /usr/share/filebeat/log/es01/*_deprecation.json  # JSON logs
+      - /usr/share/filebeat/log/es02/*_deprecation.json  # JSON logs
+      - /usr/share/filebeat/log/es03/*_deprecation.json  # JSON logs

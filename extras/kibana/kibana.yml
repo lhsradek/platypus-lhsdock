@@ -1,6 +1,7 @@
 # Kibana configuration for docker target
 
 xpack:
+  monitoring.kibana.collection.enabled: false
   reporting:
     kibanaServer:
       hostname: "kibana"
@@ -11,6 +12,9 @@ xpack:
     encryptionKey: 363792db7b8cf9581c6cbdddbb8ff95f
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
+  task_manager:
+    poll_interval: 3000
+    max_workers: 2
   # apm.serviceMapEnabled: false
   fleet:
     agents:
@@ -22,12 +26,181 @@ xpack:
           - "https://es01:9200"
           - "https://es02:9201"
           # - "https://es03:9202"
+# https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
+    packages:
+      - name: apm 
+        version: latest
+      - name: docker 
+        version: latest
+      - name: elastic_agent
+        version: latest
+      - name: fleet_server
+        version: latest
+      - name: mysql 
+        version: latest
+      - name: nginx 
+        version: latest
+      - name: postgresql
+        version: latest
+      - name: redis
+        version: latest
+      - name: synthetics
+        version: latest
+      - name: system
+        version: latest
+      - name: tomcat 
+        version: latest
+      - name: traefik
+        version: latest
+    agentPolicies:
+      - name: Agent policy 1
+        description: Agent policy
+        id: agent-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: system-1
+            id: default-system
+            package:
+              name: system
+
+      - name: Elastic Synthetics 1
+        description: Elastic Synthetics
+        id: elastic-synthetics-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: synthetics
+            id: synthetics
+            package:
+              name: synthetics
+
+      - name: Fleet Server policy 1
+        description: Fleet Server policy
+        id: fleet-server-policy
+        namespace: default
+        package_policies:
+          - name: fleet_server
+            package:
+              name: fleet_server
+        monitoring_enabled:
+          - logs
+          - metrics
+
+      - name: APM policy 1
+        description: APM policy
+        id: apm-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: apm
+            id: apm
+            package:
+              name: apm
+
+      - name: Docker policy 1
+        description: Docker policy
+        id: docker-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: docker
+            id: docker
+            package:
+              name: docker
+
+      - name: MySQL policy 1
+        description: MySQL policy
+        id: mysql-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: mysql
+            id: mysql
+            package:
+              name: mysql
+
+      - name: Nginx policy 1
+        description: Nginx policy
+        id: nginx-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: nginx
+            id: nginx
+            package:
+              name: nginx
+
+      - name: PostgreSQL policy 1
+        description: PostgreSQL policy
+        id: postgres-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: postgresql
+            id: postgresql
+            package:
+              name: postgresql
+
+      - name: Redis policy 1
+        description: Redis policy
+        id: redis-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: redis
+            id: redis
+            package:
+              name: redis
+
+      - name: Tomcat policy 1
+        description: Tomcat policy
+        id: tomcat-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: tomcat
+            id: tomcat
+            package:
+              name: tomcat
+
+      - name: Traefik policy 1
+        description: Traefik policy
+        id: traefik-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: traefik
+            id: traefik
+            package:
+              name: traefik
 
 monitoring:
   ui:
+    # enabled: false # disable self monitoring
     container:
       elasticsearch:
-        enabled: true
+        enabled: false
     ccs:
       enabled: false
 
@@ -47,9 +220,10 @@ elasticsearch:
     # - "https://es03:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
-  requestTimeout: 120000
+  requestTimeout: 3000000
 
-# enterpriseSearch.host: "http://eps:3002"
+enterpriseSearch:
+  host: "http://eps:3002"
 
 logging:
   appenders:
@@ -76,3 +250,21 @@ logging:
     - name: metrics.ops
       appenders: [default]
       level: info
+        
+    #packages:
+    #  - name: security_solution
+    #    version: latest
+    #policies:
+    #  - name: Endpoint and Cloud Security policy 1
+    #    description: Endpoint and Cloud Security policy 1
+    #    id: endpoint-and-cloud-security-policy-1
+    #    namespace: default
+    #    monitoring_enabled:
+    #      - logs
+    #      - metrics
+    #    package_policies:
+    #      - name: security_solution
+    #         id: security_solution
+    #         package:
+    #           name: security_solution
+

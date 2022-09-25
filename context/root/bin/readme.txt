@@ -12,7 +12,7 @@
 
 ``` # perl /root/bin/platypus.pl```
 
-* exec lhsdock ```bin/restart```
+* restart lhsdock ```bin/restart```
 
 ```
 ================= STOP =================
@@ -64,45 +64,45 @@ Creating lhsdock-logstash ... done
 Creating lhsdock-eps      ... done
 ```
 
-* exec lhsdock ```bin/stop```
+* stop lhsdock ```bin/stop```
 
 -----
 
 | REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
-| ----------------------------------------------------- | ---------- | ---------------- | --------
+| ----------------------------------------------------- | ---------- | ---------------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB           |
-| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | *
+| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine
 | php                                                   | fpm-alpine | 73.4MB           |
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.1      | 1.26GB           |
-| docker.elastic.co/kibana/kibana                       | 8.4.1      | 799MB            |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.4.1      | 1.45GB           |
-| logstash                                              | 8.4.1      | 735MB            |
-| docker.elastic.co/beats/elastic-agent                 | 8.4.1      | 2.16GB           | 
-| docker.elastic.co/apm/apm-server                      | 8.4.1      | 229MB            |
-| docker.elastic.co/beats/heartbeat                     | 8.4.1      | 2.08GB           |
-| docker.elastic.co/beats/metricbeat                    | 8.4.1      | 496MB            |
-| docker.elastic.co/beats/filebeat                      | 8.4.1      | 405MB            |
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.2      | 1.26GB           |
+| docker.elastic.co/kibana/kibana                       | 8.4.2      | 797MB            |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.4.2      | 1.45GB           |
+| logstash                                              | 8.4.2      | 735MB            |
+| docker.elastic.co/beats/elastic-agent                 | 8.4.2      | 2.16GB           | 
+| docker.elastic.co/beats/elastic-agent-complete        | 8.4.2      | 3.67GB           | * 
+| docker.elastic.co/apm/apm-server                      | 8.4.2      | 230MB            |
+| docker.elastic.co/beats/metricbeat                    | 8.4.2      | 496MB            |
+| docker.elastic.co/beats/heartbeat                     | 8.4.2      | 2.09GB           |
+| docker.elastic.co/beats/filebeat                      | 8.4.2      | 405MB            |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
 
-
-| IMAGES               | PORTS                | NAMES           | HOSTNAMES                 | OPTIONAL  
-| -------------------- | -------------------- | --------------- | ------------------------- | -------- 
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp      | lhsdock         | www.nginx.local           |
-| php:fpm-alpine       | 9000/tcp             | lhsdock-php     | weblhs-php.nginx.local    | 
-| elasticsearch        |                      | lhsdock-setup   | setup                     | *
-| elasticsearch        | 9200/tcp, 9300/tcp   | lhsdock-es01    | es01.www.nginx.local      |
-| elasticsearch        | 9201/tcp, 9301/tcp   | lhsdock-es02    | es02.www.nginx.local      | 
-| elasticsearch        | 9202/tcp, 9302/tcp   | lhsdock-es03    | es03.www.nginx.local      | *
-| kibana               | 5601/tcp             | lhsdock-kibana  | kibana.www.nginx.local    |
-| cerebro              | 9000/tcp             | lhsdock-cerebro | cerebro.www.nginx.local   | *
-| enterprise-search    | 3002/tcp             | lhsdock-eps     | eps.nginx.local           | *
-| elastic-agent        | 8200/tcp, 8220/tcp   | lhsdock-fleet   | fleet.nginx.local         |
-| apm-server           | 8200/tcp             | lhsdock-apm     | apm.nginx.local           | *
-| logstash             | 5044/tcp, 9600/tcp   | lhsdock-log     | log.nginx.local           |
-| heartbeat            |                      | lhsdock-heart   | heart.nginx.local         | *
-| metricbeat           |                      | lhsdock-metric  | metric.nginx.local        | * 
-| filebeat             |                      | lhsdock-file    | file.nginx.local          | *
+| IMAGES               | PORTS                  | NAMES            | HOSTNAMES                 | OPTIONAL  
+| -------------------- | ---------------------- | ---------------- | ------------------------- | --------
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock          | www.nginx.local           |
+| php:fpm-alpine       | 9000/tcp               | lhsdock-php      | weblhs-php.nginx.local    | 
+| elasticsearch        |                        | lhsdock-setup    | setup                     | *
+| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01     | es01.www.nginx.local      |
+| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | es02.www.nginx.local      | 
+| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | es03.www.nginx.local      |
+| kibana               | 5601/tcp               | lhsdock-kibana   | kibana.www.nginx.local    |
+| metricbeat           | 5066/tcp               | lhsdock-metric   | metric.nginx.local        | * 
+| heartbeat            | 5067/tcp               | lhsdock-heart    | heart.nginx.local         | *
+| filebeat             | 5068/tcp               | lhsdock-file     | file.nginx.local          | *
+| enterprise-search    | 3002/tcp               | lhsdock-eps      | eps.nginx.local           | *
+| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | fleet.nginx.local         | *
+| apm-server           | 8200/tcp               | lhsdock-apm      | apm.nginx.local           | *
+| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | logstash.nginx.local      | *
+| cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | *
 
 -----
 
@@ -135,12 +135,6 @@ HOSTNAME='weblhs-php.nginx.local'
 |└www.nginx.local:80                                 |    =       24   |    29881  |  CLOSE  |  eth1
 |┌www.nginx.local:59090                              |    =        5   |     1660  |  CLOSE  |  eth0
 |└weblhs-php.nginx.local:9000                        |    =        5   |     4508  |  CLOSE  |  eth0
-
------
-
-Install fleet server:
-
-```./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key```
 
 -----
 

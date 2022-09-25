@@ -4,9 +4,9 @@
 
 apm-server:
   # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
-  host: "fleet:8200"
+  host: "apm:8200"
+  # host: "unix:///var/run/docker.sock"
   # host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
-  # host: "unix:/usr/share/elastic-agent/state/data/tmp/elastic-agent-control.sock"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:
@@ -105,11 +105,9 @@ apm-server:
     # Path to file containing the certificate for server authentication.
     # Needs to be configured when ssl is enabled.
     # ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    # certificate: '/usr/share/apm-server/certs/apm/apm.crt'
-
-    # Path to file containing server certificate key.
-    # Needs to be configured when ssl is enabled.
-    # key: '/usr/share/apm-server/certs/apm/apm.key'
+    # ssl.certificate: "${APM_SERVER_CERT}"
+    # ssl.key: "${APM_SERVER_CERT_KEY}"
+    # ssl.verification_mode: "certificate"
 
     # Optional configuration options for ssl communication.
 
@@ -188,23 +186,28 @@ apm-server:
         # Scheme and port can be left out and will be set to the default (`http` and `9200`).
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-
         hosts:
           - "es01:9200"
           - "es02:9201"
-          - "es03:9202"
+          # - "es03:9202"
 
         # Protocol - either `http` (default) or `https`.
         protocol: "https"
 
         # Authentication credentials - either API key or username/password.
         #api_key: "id:api_key"
+        # api_key: "${AGENT_API_KEY}"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
 
         ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-        #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
-        #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+        ssl.verification_mode: "certificate"
+        # ssl.verification_mode: "none"
+
+        # Certificate for SSL client authentication.
+        ssl.certificate: "${APM_SERVER_CERT}"
+        # Client Certificate Key
+        ssl.key: "${APM_SERVER_CERT_KEY}"
 
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
       #index_pattern: "apm-*-sourcemap*"
@@ -226,6 +229,7 @@ apm-server:
 
     # Optional protocol and basic auth credentials.
     protocol: "https"
+    # api_key: "${AGENT_API_KEY}"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
 
@@ -260,12 +264,12 @@ apm-server:
 
     # List of root certificates for HTTPS server verifications.
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-
+    ssl.verification_mode: "certificate"
+    #ssl.verification_mode: "none"
     # Certificate for SSL client authentication.
-    #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
-
+    ssl.certificate: "${APM_SERVER_CERT}"
     # Client Certificate Key
-    #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+    ssl.key: "${APM_SERVER_CERT_KEY}"
 
     # Optional passphrase for decrypting the Certificate Key.
     # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -329,7 +333,7 @@ output.elasticsearch:
   hosts: 
     - "es01:9200"
     - "es02:9201"
-    - "es03:9202"
+    # - "es03:9202"
 
   protocol: "https"
   # Boolean flag to enable or disable the output module.
@@ -342,6 +346,7 @@ output.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   # api_key: "id:api_key"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
 
@@ -414,12 +419,12 @@ output.elasticsearch:
 
   # List of root certificates for HTTPS server verifications.
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-
+  ssl.verification_mode: "certificate"
+  #ssl.verification_mode: "none"
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
-
+  ssl.certificate: "${APM_SERVER_CERT}"
   # Client Certificate Key
-  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -558,13 +563,13 @@ output.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
- 
+  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl.verification_mode: "certificate"
+  #ssl.verification_mode: "none"
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
-
+  ssl.certificate: "${APM_SERVER_CERT}"
   # Client Certificate Key
-  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -718,12 +723,13 @@ output.elasticsearch:
 
   # List of root certificates for HTTPS server verifications.
   #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #ssl.verification_mode: none
 
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/etc/certs/elastic/log/log.crt"
+  #ssl.certificate: "${APM_SERVER_CERT}"
 
   # Client Certificate Key
-  #ssl.key: "/etc/certs/elastic/log/log.key"
+  #ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -885,13 +891,15 @@ output.elasticsearch:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-#http.enabled: false
+http.enabled: false
+#http.enabled: true
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
 #http.host: localhost
+http.host: "apm"
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+http.port: 5066
 
 #============================= X-pack Monitoring =============================
 
@@ -900,7 +908,7 @@ output.elasticsearch:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-#monitoring.enabled: false
+monitoring.enabled: false
 
 # Most settings from the Elasticsearch output are accepted here as well.
 # Note that these settings should be configured to point to your Elasticsearch *monitoring* cluster.
@@ -911,6 +919,7 @@ monitoring.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
 
@@ -921,7 +930,7 @@ monitoring.elasticsearch:
   hosts: 
     - "es01:9200"
     - "es02:9201"
-    - "es03:9202"
+    # - "es03:9202"
 
   # Protocol - either `http` (default) or `https`.
   protocol: "https"
@@ -992,10 +1001,12 @@ monitoring.elasticsearch:
 
   # List of root certificates for HTTPS server verifications.
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl.verification_mode: "certificate"
+  #ssl.verification_mode: "none"
   # Certificate for SSL client authentication.
-  #ssl.certificate: "/usr/share/apm-server/certs/apm/apm.crt"
+  ssl.certificate: "${APM_SERVER_CERT}"
   # Client Certificate Key
-  #ssl.key: "/usr/share/apm-server/certs/apm/apm.key"
+  ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.

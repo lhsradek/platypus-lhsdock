@@ -1,0 +1,84 @@
+# ================================ General =====================================
+# Beats is configured under Fleet, you can define most settings
+# from the Kibana UI. You can update this file to configure the settings that
+# are not supported by Fleet.
+#
+# install fleet:
+#
+# ./elastic-agent enroll -i --url=https://fleet:8220 --fleet-server-es=https://es01:9200 --fleet-server-service-token=<token> --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01/es01.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet/fleet.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet/fleet.key
+#
+# fleet:
+#  enabled: true
+
+# agent.download:
+#   # source of the artifacts, requires elastic like structure and naming of the binaries
+#   # e.g /windows-x86.zip
+#   sourceURI: "https://artifacts.elastic.co/downloads/beats/"
+#   # path to the directory containing downloaded packages
+#   target_directory: "${path.data}/downloads"
+#   # timeout for downloading package
+#   timeout: 120s
+#   # file path to a public key used for verifying downloaded artifacts
+#   # if not file is present Elastic Agent will try to load public key from elastic.co website.
+#   pgpfile: "${path.data}/elastic.pgp"
+#   # install_path describes the location of installed packages/programs. It is also used
+#   # for reading program specifications.
+#   install_path: "${path.data}/install"
+
+# agent.process:
+#   # minimal port number for spawned processes
+#   min_port: 10000
+#   # maximum port number for spawned processes
+#   max_port: 30000
+#   # timeout for creating new processes. when process is not successfully created by this timeout
+#   # start operation is considered a failure
+#   spawn_timeout: 30s
+
+# agent.retry:
+#   # enabled determines whether retry is possible. Default is false.
+#   enabled: true
+#   # retries_count specifies number of retries. Default is 3.
+#   # Retry count of 1 means it will be retried one time after one failure.
+#   retries_count: 3
+#   # delay specifies delay in ms between retries. Default is 30s
+#   delay: 30s
+#   # max_delay specifies maximum delay in ms between retries. Default is 300s
+#   max_delay: 5m
+#   # Exponential determines whether delay is treated as exponential.
+#   # With 30s delay and 3 retries: 30, 60, 120s
+#   # Default is false
+#   exponential: false
+
+agent.logging.level: debug
+agent.logging.to_files: true
+agent.logging.files:
+  # path: /var/log/elastic-agent
+  name: elastic-agent-debug
+  keepfiles: 7
+  permissions: 0600
+
+outputs:
+  default:
+    type: elasticsearch
+    hosts:
+      - 'https://es01:9200'
+      # - 'https://es02:9201'
+      # - 'https://es03:9202'
+    username: ${FLEET_SERVER_ELASTICSEARCH_USERNAME}
+    password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}
+    ssl:
+      enabled: true
+      certificate_authorities:
+        - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
+inputs:
+  - type: logfile
+    data_stream.namespace: default
+    paths: [/usr/share/elastic-agent/state/data/logs/default/input.log]
+    use_output: default
+
+  - type: system/metrics
+    data_stream.namespace: default
+    use_output: default
+    streams:
+      - metricset: cpu
+        data_stream.dataset: system.cpu
