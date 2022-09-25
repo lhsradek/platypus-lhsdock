@@ -227,28 +227,32 @@ enterpriseSearch:
 
 logging:
   appenders:
-    file:
+    json-file:
       type: file
-      fileName: /usr/share/kibana/logs/kibana.log
+      fileName: /usr/share/kibana/logs/kibana.json
       layout:
-        # type: json
-        type: pattern
-        pattern: "[%date][%level][%name] %message"
+        type: json
+    #file:
+    #  type: file
+    #  fileName: /usr/share/kibana/logs/kibana.log
+    #  layout:
+    #     type: pattern
+    #     pattern: "[%date][%level][%name] %message"
   root:
-    appenders: [default, file]
+    appenders: [default, json-file]
     level: info
   loggers:
     - name: plugins
-      appenders: [default, file]
+      appenders: [default, json-file]
       level: info
     - name: optimize
-      appenders: [default]
+      appenders: [default, json-file]
       level: info
     - name: telemetry
-      appenders: [default]
+      appenders: [default, json-file]
       level: info
     - name: metrics.ops
-      appenders: [default]
+      appenders: [default, json-file]
       level: info
         
     #packages:

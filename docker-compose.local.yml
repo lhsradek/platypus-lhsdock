@@ -361,8 +361,8 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-      - ${ENTERPRISE_SEARCH_PORT}:3002
+    #ports:
+    #  - ${ENTERPRISE_SEARCH_PORT}:3002
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/enterprise-search/config/certs:ro

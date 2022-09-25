@@ -1,18 +1,25 @@
-### platypus-lhsdock with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
+### platypus-lhsdock
+
+with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
 #### Setup
 
-* create .env file ```cp .env.dist .env```
-* run lhsdock ```bin/start```
-* exec lhsdock ```bin/exec```
+##### create .env file
+```# cp .env.dist .env```
 
-* If used lhsradek/lhsdock (*) to run use:
+##### run lhsdock
+```# bin/start```
 
-``` # perl /root/bin/platypus.pl```
+##### exec lhsdock
+```# bin/exec```
 
-* restart lhsdock ```bin/restart```
+##### If used lhsradek/lhsdock to run use:
+```# perl /root/bin/platypus.pl```
+
+##### restart lhsdock
+```# bin/restart```
 
 ```
 ================= STOP =================
@@ -64,7 +71,8 @@ Creating lhsdock-logstash ... done
 Creating lhsdock-eps      ... done
 ```
 
-* stop lhsdock ```bin/stop```
+##### stop lhsdock
+```# bin/stop```
 
 -----
 

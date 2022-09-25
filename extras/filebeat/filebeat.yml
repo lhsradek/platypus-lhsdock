@@ -36,7 +36,7 @@ filebeat.inputs:
       # - /usr/share/filebeat/logs/filebeat/*
       # - /usr/share/filebeat/logs/fleet/*
       # - /usr/share/filebeat/logs/heart/*
-      - /usr/share/filebeat/logs/kibana/kibana.log
+      - /usr/share/filebeat/logs/kibana/kibana.json
       # - /usr/share/filebeat/logs/metric/*
       - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/access.log
       - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/pma.access.log

@@ -4,20 +4,21 @@
 ===== Elasticsearch, Logstash and Kibana =====
 
 === setup lhsdock ===
-create .env file <code>cp .env.dist .env</code>
+create .env file
+<code># cp .env.dist .env</code>
 
 === run lhsdock ===
-<code>bin/start</code>
+<code># bin/start</code>
 
 === exec lhsdock ===
-<code>bin/exec</code>
+<code># bin/exec</code>
 
 * If used lhsradek/lhsdock (*) to run use:
 
-<code> # perl /root/bin/platypus.pl</code>
+<code># perl /root/bin/platypus.pl</code>
 
 === restart lhsdock ===
-<code>bin/restart</code>
+<code># bin/restart</code>
 
 <code>
 ================= STOP =================
@@ -70,7 +71,7 @@ Creating lhsdock-eps      ... done
 </code>
 
 === stop lhsdock ===
-<code>bin/stop</code>
+<code># bin/stop</code>
 
 -----
 

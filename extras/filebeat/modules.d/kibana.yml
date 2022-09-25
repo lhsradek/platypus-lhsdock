@@ -9,7 +9,7 @@
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     var.paths:
-      - /usr/share/filebeat/logs/kibana/kibana.log
+      - /usr/share/filebeat/logs/kibana/kibana.json
 
   # Audit logs
   audit:
