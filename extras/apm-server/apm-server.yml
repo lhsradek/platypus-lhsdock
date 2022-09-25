@@ -188,7 +188,7 @@ apm-server:
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
         hosts:
           - "es01:9200"
-          - "es02:9201"
+          # - "es02:9201"
           # - "es03:9202"
 
         # Protocol - either `http` (default) or `https`.
@@ -332,7 +332,7 @@ output.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "es01:9200"
-    - "es02:9201"
+    # - "es02:9201"
     # - "es03:9202"
 
   protocol: "https"
@@ -929,7 +929,7 @@ monitoring.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "es01:9200"
-    - "es02:9201"
+    # - "es02:9201"
     # - "es03:9202"
 
   # Protocol - either `http` (default) or `https`.

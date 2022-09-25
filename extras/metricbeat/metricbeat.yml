@@ -26,8 +26,8 @@ output:
   elasticsearch:
     hosts: 
       - "https://es01:9200"
-      - "https://es02:9201"
-      - "https://es03:9202"
+      # - "https://es02:9201"
+      # - "https://es03:9202"
     # api_key: ${AGENT_API_KEY}
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -44,7 +44,7 @@ setup:
     hosts: 
       - "https://es01:9200"
       - "https://es02:9201"
-      # - "https://es03:9202"
+      - "https://es03:9202"
     # api_key: ${AGENT_API_KEY}
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
