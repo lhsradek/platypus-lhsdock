@@ -1,6 +1,6 @@
 http.host: 0.0.0.0
 monitoring.enabled: false
-monitoring.cluster_uuid: N25AxvDIRK-Y_9nKG8BVnA
+monitoring.cluster_uuid: zpFF4lHaR9238ak322M4gg
 xpack:
   monitoring:
     enabled: true

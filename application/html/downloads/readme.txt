@@ -90,7 +90,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/beats/filebeat                      | 8.4.2      | 405MB            |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
-Width [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use:
+With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use:
 
 ```# perl /root/bin/platypus.pl```
 

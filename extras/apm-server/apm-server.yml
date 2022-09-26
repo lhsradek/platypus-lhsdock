@@ -465,7 +465,7 @@ output.elasticsearch:
 #----------------------------- Console output -----------------------------
 #output.console:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: true
 
   # Configure JSON encoding.
   #codec.json:
@@ -481,8 +481,7 @@ output.elasticsearch:
   #enabled: true
 
   # The Logstash hosts.
-  #hosts: ["logstash:5044"]
-  # hosts: ["es01:9200", "kibana:5601"]
+  #hosts: ["logstash.docker.nginx.local:5044"]
   #protocol: "https"
   #username: "${ELASTICSEARCH_USERNAME}"
   #password: "${ELASTICSEARCH_PASSWORD}"
@@ -537,7 +536,7 @@ output.elasticsearch:
   #proxy_use_local_resolver: false
 
   # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
-  #ssl.enabled: true
+  #ssl.enabled: false
 
   # Optional SSL configuration options. SSL is off by default.
   #
@@ -556,20 +555,19 @@ output.elasticsearch:
   # after very careful consideration. It is primarily intended as a temporary
   # diagnostic mechanism when attempting to resolve TLS errors; its use in
   # production environments is strongly discouraged.
-  #ssl.verification_mode: full
+  #ssl.verification_mode: "certificate"
+  #ssl.verification_mode: "none"
 
   # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
   # 1.2 are enabled.
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.verification_mode: "certificate"
-  #ssl.verification_mode: "none"
+  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   # Certificate for SSL client authentication.
-  ssl.certificate: "${APM_SERVER_CERT}"
+  #ssl.certificate: "${APM_SERVER_CERT}"
   # Client Certificate Key
-  ssl.key: "${APM_SERVER_CERT_KEY}"
+  #ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -908,7 +906,7 @@ http.port: 5066
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-monitoring.enabled: false
+monitoring.enabled: true
 
 # Most settings from the Elasticsearch output are accepted here as well.
 # Note that these settings should be configured to point to your Elasticsearch *monitoring* cluster.

@@ -1,0 +1,18 @@
+===== Elasticksearch =====
+
+Elastic is on url [[https://es01.docker.nginx.local:9200]]
+
+-----
+
+==== Important urls: ====
+
+[[https://es01.docker.nginx.local:9200/_cluster/stats]]
+
+[[https://es01.docker.nginx.local:9200/_xpack]]
+
+-----
+
+==== Cerebro ====
+
+Cerebro is on [[https://cerebro.docker.nginx.local/]] Cerebro is a web console and status view.
+

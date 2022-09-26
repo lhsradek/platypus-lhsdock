@@ -31,7 +31,8 @@ services:
       - 9300:9300
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
-      - esdata01:/usr/share/elasticsearch/data
+      - esdata01:/usr/share/elasticsearch
+      #- esdata01:/usr/share/elasticsearch/data
       - ./logs/es01:/usr/share/elasticsearch/logs
     environment:
       - node.name=es01
@@ -40,11 +41,11 @@ services:
       - transport.port=9300
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       - cluster.name=${CLUSTER_NAME}
-      # - discovery.type=single-node
-      # - cluster.initial_master_nodes=es01,es02
-      - cluster.initial_master_nodes=es01,es02,es03
-      # - discovery.seed_hosts=es02:9301
-      - discovery.seed_hosts=es02:9301,es03:9302
+      # - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
+      - cluster.initial_master_nodes=es01,es02
+      # - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es02:9301
+      # - discovery.seed_hosts=es02:9301,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -100,7 +101,8 @@ services:
       - 9301:9301
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
-      - esdata02:/usr/share/elasticsearch/data
+      - esdata02:/usr/share/elasticsearch
+      #- esdata02:/usr/share/elasticsearch/data
       - ./logs/es02:/usr/share/elasticsearch/logs
     environment:
       - node.name=es02
@@ -109,10 +111,10 @@ services:
       - transport.port=9301
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       - cluster.name=${CLUSTER_NAME}
-      # - cluster.initial_master_nodes=es01,es02
-      - cluster.initial_master_nodes=es01,es02,es03
-      # - discovery.seed_hosts=es01:9300
-      - discovery.seed_hosts=es01:9300,es03:9302
+      - cluster.initial_master_nodes=es01,es02
+      # - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01:9300
+      # - discovery.seed_hosts=es01:9300,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -152,71 +154,71 @@ services:
 #
 #   Start with two elasticsearch, the third can be easily added after installation 
 #
-  es03:
-    depends_on:
-      es02:
-        condition: service_healthy
-    # Ubuntu - elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-es03"
-    hostname: "es03"
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    ports:
-      - 9202:9202
-      - 9302:9302
-    volumes:
-      - ./certs:/usr/share/elasticsearch/config/certs
-      - ./logs/es03:/usr/share/elasticsearch/logs
-      - esdata03:/usr/share/elasticsearch/data
-    environment:
-      - node.name=es03
-      - http.host=0.0.0.0
-      - http.port=9202
-      - transport.port=9302
-      - node.roles=[master, data, ingest, ml, remote_cluster_client]
-      - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02,es03
-      - discovery.seed_hosts=es01:9300,es02:9301
-      - bootstrap.memory_lock=true
-      - xpack.security.enabled=true
-      - xpack.security.http.ssl.enabled=true
-      - xpack.security.http.ssl.key=certs/es03/es03.key
-      - xpack.security.http.ssl.certificate=certs/es03/es03.crt
-      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.http.ssl.verification_mode=certificate
-      - xpack.security.transport.ssl.enabled=true
-      - xpack.security.transport.ssl.key=certs/es03/es03.key
-      - xpack.security.transport.ssl.certificate=certs/es03/es03.crt
-      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.transport.ssl.verification_mode=certificate
-      - xpack.license.self_generated.type=${LICENSE}
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - "ES_JAVA_OPTS=${ES03_JAVA_OPTS}"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.es03-public.entrypoints=https"
-      - "traefik.http.routers.es03-public.tls=true"
-      - "traefik.http.routers.es03-public.middlewares=es03-platypus-${APP_ID}@docker"
-      - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.port=9202"
-      - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.port=9202"
-      - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.scheme=https"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9202 | grep -q 'missing authentication credentials'" ]
-      interval: 10s
-      timeout: 60s
-      retries: 500
+#   es03:
+#     depends_on:
+#       es02:
+#         condition: service_healthy
+#     # Ubuntu - elasticsearch
+#     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+#     restart: ${DOCKER_RESTART_POLICY}
+#     container_name: "${APP_ID}-es03"
+#     hostname: "es03"
+#     networks:
+#       # for traefik:
+#       - default
+#       # local network:
+#       - intnet
+#     ports:
+#       - 9202:9202
+#       - 9302:9302
+#     volumes:
+#       - ./certs:/usr/share/elasticsearch/config/certs
+#       - ./logs/es03:/usr/share/elasticsearch/logs
+#       - esdata03:/usr/share/elasticsearch/data
+#     environment:
+#       - node.name=es03
+#       - http.host=0.0.0.0
+#       - http.port=9202
+#       - transport.port=9302
+#       - node.roles=[master, data, ingest, ml, remote_cluster_client]
+#       - cluster.name=${CLUSTER_NAME}
+#       - cluster.initial_master_nodes=es01,es02,es03
+#       - discovery.seed_hosts=es01:9300,es02:9301
+#       - bootstrap.memory_lock=true
+#       - xpack.security.enabled=true
+#       - xpack.security.http.ssl.enabled=true
+#       - xpack.security.http.ssl.key=certs/es03/es03.key
+#       - xpack.security.http.ssl.certificate=certs/es03/es03.crt
+#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+#       - xpack.security.http.ssl.verification_mode=certificate
+#       - xpack.security.transport.ssl.enabled=true
+#       - xpack.security.transport.ssl.key=certs/es03/es03.key
+#       - xpack.security.transport.ssl.certificate=certs/es03/es03.crt
+#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+#       - xpack.security.transport.ssl.verification_mode=certificate
+#       - xpack.license.self_generated.type=${LICENSE}
+#       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+#       - "ES_JAVA_OPTS=${ES03_JAVA_OPTS}"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.es03-public.entrypoints=https"
+#       - "traefik.http.routers.es03-public.tls=true"
+#       - "traefik.http.routers.es03-public.middlewares=es03-platypus-${APP_ID}@docker"
+#       - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.scheme=https"
+#       - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.port=9202"
+#       - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.port=9202"
+#       - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+#     ulimits:
+#       memlock:
+#         soft: -1
+#         hard: -1
+#     healthcheck:
+#       test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9202 | grep -q 'missing authentication credentials'" ]
+#       interval: 10s
+#       timeout: 60s
+#       retries: 500
   
 #
 # === L - Logstash ===
@@ -227,9 +229,6 @@ services:
         condition: service_healthy
     depends_on:
       es02:
-        condition: service_healthy
-    depends_on:
-      es03:
         condition: service_healthy
     # Ubuntu - logstash 
     image: logstash:${STACK_VERSION}
@@ -248,7 +247,7 @@ services:
       - ./certs:/usr/share/logstash/config/certs
       - ./extras/logstash/jvm.options:/usr/share/logstash/config/jvm.options:ro
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./extras/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf:ro
+      - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
       - logstash:/usr/share/logstash/
       # - ./logs/logstash:/usr/share/logstash/logs
     environment:
@@ -272,9 +271,6 @@ services:
         condition: service_healthy
     depends_on:
       es02:
-        condition: service_healthy
-    depends_on:
-      es03:
         condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
@@ -331,63 +327,60 @@ services:
       timeout: 60s
       retries: 50
 
-#
-#   If you want enterprisesearch
-#
-  eps:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
-      es03:
-        condition: service_healthy
-    depends_on:
-      logstash:
-        condition: service_healthy
-    depends_on:
-      apm:
-        condition: service_healthy
-    depends_on:
-      kibana:
-        condition: service_healthy
-    # Ubuntu - enterprisesearch
-    image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-eps"
-    hostname: "eps"
-    networks:
-    # local network:
-      - intnet
-    #ports:
-    #  - ${ENTERPRISE_SEARCH_PORT}:3002
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/enterprise-search/config/certs:ro
-      - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml
-      - epsdata:/usr/share/enterprise-search
-      - ./logs/eps:/var/log/enterprise-search:rw
-    environment:
-      - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-      # - cluster.name=${CLUSTER_NAME}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.eps-public.rule=Host(`eps.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.eps-public.entrypoints=https"
-      - "traefik.http.routers.eps-public.tls=true"
-      - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
-    mem_limit: ${MEM_LIMIT2}
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'"]
-      interval: 10s
-      timeout: 10s
-      retries: 500
+# #
+# #   If you want enterprisesearch
+# #
+#   eps:
+#     depends_on:
+#       es01:
+#         condition: service_healthy
+#     depends_on:
+#       es02:
+#         condition: service_healthy
+#     depends_on:
+#       logstash:
+#         condition: service_healthy
+#     depends_on:
+#       apm:
+#         condition: service_healthy
+#     depends_on:
+#       kibana:
+#         condition: service_healthy
+#     # Ubuntu - enterprisesearch
+#     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
+#     restart: ${DOCKER_RESTART_POLICY}
+#     container_name: "${APP_ID}-eps"
+#     hostname: "eps"
+#     networks:
+#     # local network:
+#       - intnet
+#     #ports:
+#     #  - ${ENTERPRISE_SEARCH_PORT}:3002
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./certs:/usr/share/enterprise-search/config/certs:ro
+#       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml
+#       - epsdata:/usr/share/enterprise-search
+#       - ./logs/eps:/var/log/enterprise-search:rw
+#     environment:
+#       - ELASTIC_USERNAME=elastic
+#       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+#       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
+#       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
+#       # - cluster.name=${CLUSTER_NAME}
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.eps-public.rule=Host(`eps.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.eps-public.entrypoints=https"
+#       - "traefik.http.routers.eps-public.tls=true"
+#       - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
+#     mem_limit: ${MEM_LIMIT2}
+#     healthcheck:
+#       test: ["CMD-SHELL", "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'"]
+#       interval: 10s
+#       timeout: 10s
+#       retries: 500
   
 #
 #   If you want your own configured apm-server or if you want to train the configuration elastic-agent
@@ -399,9 +392,6 @@ services:
     depends_on:
       es02:
         condition: service_healthy
-    depends_on:
-      es03:
-        condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
@@ -410,9 +400,9 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-      - 5066:5066
-      - ${APM_PORT}:8200
+    #ports:
+    #  - 5066:5066
+    #  - ${APM_PORT}:8200
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -444,9 +434,6 @@ services:
       es02:
         condition: service_healthy
     depends_on:
-      es03:
-        condition: service_healthy
-    depends_on:
       kibana:
         condition: service_healthy
     # Ubuntu - enterprisesearch
@@ -458,8 +445,8 @@ services:
     networks:
       # local network:
       - intnet
-    ports:
-      - 5067:5067
+    #ports:
+    #  - 5067:5067
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -493,10 +480,7 @@ services:
       es02:
         condition: service_healthy
     depends_on:
-      es03:
-        condition: service_healthy
-    depends_on:
-      kibana:
+      logstash:
         condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
@@ -506,8 +490,8 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-      - 5068:5068
+    #ports:
+    #  - 5068:5068
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -521,11 +505,9 @@ services:
       - ./logs/es02:/usr/share/filebeat/logs/es02
       - ./logs/es03:/usr/share/filebeat/logs/es03
       - ./logs/eps:/usr/share/filebeat/logs/eps
-      # - ./logs/file:/usr/share/filebeat/logs/filebeat
       - ./logs/fleet:/usr/share/filebeat/logs/fleet
       - ./logs/heart:/usr/share/filebeat/logs/heart
       - ./logs/kibana:/usr/share/filebeat/logs/kibana
-      # - ./logs/metric:/usr/share/filebeat/logs/metric
       - ./logs/nginx:/usr/share/filebeat/logs/nginx/default
       - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/filebeat/logs/nginx/platypus-wordpress-mysql
       - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/logs/nginx/tombola
@@ -553,9 +535,6 @@ services:
     depends_on:
       es02:
         condition: service_healthy
-    depends_on:
-      es03:
-        condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
@@ -564,8 +543,8 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-      - 5069:5069
+    #ports:
+    #  - 5069:5069
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -596,9 +575,6 @@ services:
         condition: service_healthy
     depends_on:
       es02:
-        condition: service_healthy
-    depends_on:
-      es03:
         condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:0.9.4
@@ -828,8 +804,8 @@ services:
         # echo "Setting logstash_writer password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
-        echo "Setting enterprise_search password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        #echo "Setting enterprise_search password";
+        #until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         echo "All done!";
       '
     healthcheck:
@@ -947,11 +923,11 @@ services:
       - ./logs/nginx:/var/log/nginx
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
-      - esdata03:/root/bin/volume/es03:ro
+      #- esdata03:/root/bin/volume/es03:ro
       - kibana:/root/bin/volume/kibana:ro
-      # - fleet:/root/bin/volume/fleet:ro
+      #- fleet:/root/bin/volume/fleet:ro
       - logstash:/root/bin/volume/logstash:ro
-      - epsdata:/root/bin/volume/eps:ro
+      #- epsdata:/root/bin/volume/eps:ro
       # It's for my prune volume deletion protection:
       - wordpressbedrockdb:/root/bin/volume/bedrock-db:ro
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
@@ -991,7 +967,7 @@ services:
     volumes:
       - ./application/html:/var/www/html:ro
 
-  dokuwiki:
+  wiki:
     depends_on:
       weblhs:
         condition: service_healthy
@@ -1112,9 +1088,9 @@ volumes:
   esdata02:
     external: true
     name: "${APP_ID}-es02"
-  esdata03:
-    external: true
-    name: "${APP_ID}-es03"
+  #esdata03:
+  #  external: true
+  #  name: "${APP_ID}-es03"
   epsdata:
     external: true
     name: "${APP_ID}-eps"

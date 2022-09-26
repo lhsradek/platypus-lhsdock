@@ -1,19 +1,22 @@
-======= platypus-lhsdock =======
+^  [[https://github.com/lhsradek/platypus-lhsdock|{{wiki:github.png}}]]  ^  [[https://hub.docker.com/repository/docker/lhsradek/lhsdock|{{wiki:docker.png}}]]  ^  [[https://github.com/lhsradek/platypus-wordpress-mysql|{{wiki:github-wordpress.png}}]]  ^  [[https://www.facebook.com/radek.kadner/|{{wiki:facebook.png}}]]  ^  [[https://www.linkedin.com/in/radekkadner/|{{wiki:in.png}}]]  ^  [[mailto:radek.kadner@gmail.com|{{wiki:mail.png}}]]  ^^^
+====== platypus-lhsdock ======
 
 [[https://github.com/lhsradek/platypus-lhsdock]] with [[https://www.elastic.co/|ELK]]
 ===== Elasticsearch, Logstash and Kibana =====
 
-=== setup lhsdock ===
+[[Elasticsearch]]
+
+==== setup lhsdock ====
 create .env file
 <code bash># cp .env.dist .env</code>
 
-=== run lhsdock ===
+==== run lhsdock ====
 <code bash># bin/start</code>
 
-=== exec lhsdock ===
+==== exec lhsdock ====
 <code bash># bin/exec</code>
 
-=== restart lhsdock ===
+==== restart lhsdock ====
 <code bash># bin/restart</code>
 
 <code bash>
@@ -66,7 +69,7 @@ Creating lhsdock-logstash ... done
 Creating lhsdock-eps      ... done
 </code>
 
-=== stop lhsdock ===
+==== stop lhsdock ====
 <code bash># bin/stop</code>
 
 -----
@@ -86,7 +89,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/beats/filebeat                      | 8.4.2      | 405MB            |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 
-Width [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] script:
+With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] script:
 
 <code bash># perl /root/bin/platypus.pl</code>
 
@@ -110,13 +113,6 @@ Width [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsd
 | cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | * |
 
 -----
-
-[[https://hub.docker.com/repository/docker/lhsradek/lhsdock]]
-
-[[https://www.facebook.com/radek.kadner/]]
-
-[[https://www.linkedin.com/in/radekkadner/]]
-
 [[mailto:radek.kadner@gmail.com]]
-
+-----
 

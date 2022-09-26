@@ -24,8 +24,8 @@ xpack:
       elasticsearch:
         hosts: 
           - "https://es01:9200"
-          # - "https://es02:9201"
-          # - "https://es03:9202"
+          #- "https://es02:9201"
+          #- "https://es03:9202"
 # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
     packages:
       - name: apm 
@@ -74,7 +74,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: synthetics
+          - name: synthetics-1
             id: synthetics
             package:
               name: synthetics
@@ -84,7 +84,7 @@ xpack:
         id: fleet-server-policy
         namespace: default
         package_policies:
-          - name: fleet_server
+          - name: fleet_server-1
             package:
               name: fleet_server
         monitoring_enabled:
@@ -99,7 +99,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: apm
+          - name: apm-1
             id: apm
             package:
               name: apm
@@ -112,7 +112,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: docker
+          - name: docker-1
             id: docker
             package:
               name: docker
@@ -125,7 +125,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: mysql
+          - name: mysql-1
             id: mysql
             package:
               name: mysql
@@ -138,20 +138,20 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: nginx
+          - name: nginx-1
             id: nginx
             package:
               name: nginx
 
       - name: PostgreSQL policy 1
         description: PostgreSQL policy
-        id: postgres-policy-1
+        id: postgresql-policy-1
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: postgresql
+          - name: postgresql-1
             id: postgresql
             package:
               name: postgresql
@@ -164,7 +164,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: redis
+          - name: redis-1
             id: redis
             package:
               name: redis
@@ -177,7 +177,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: tomcat
+          - name: tomcat-1
             id: tomcat
             package:
               name: tomcat
@@ -190,7 +190,7 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: traefik
+          - name: traefik-1
             id: traefik
             package:
               name: traefik
@@ -222,8 +222,7 @@ elasticsearch:
   password: "${ELASTICSEARCH_PASSWORD}"
   requestTimeout: 3000000
 
-enterpriseSearch:
-  host: "http://eps:3002"
+#enterpriseSearch.host: "http://eps:3002"
 
 logging:
   appenders:

@@ -54,6 +54,11 @@ filebeat.inputs:
       - /usr/share/filebeat/logs/traefik/traefik.log
 
 output:
+  #logstash:
+  #  hosts: ["logstash:5044"]
+  #  #username: "${ELASTICSEARCH_USERNAME}"
+  #  #password: "${ELASTICSEARCH_PASSWORD}"
+
   elasticsearch:
     hosts: 
       - "https://es01:9200"

@@ -8,9 +8,9 @@ http.hosts:
 
 xpack.monitoring.enabled: true
 monitoring.enabled: true
-monitoring.cluster_uuid: "N25AxvDIRK-Y_9nKG8BVnA"
+monitoring.cluster_uuid: "zpFF4lHaR9238ak322M4gg"
 cluster.name: "${CLUSTER_NAME}"
-cluster.uuid: "N25AxvDIRK-Y_9nKG8BVnA"
+cluster.uuid: "zpFF4lHaR9238ak322M4gg"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
