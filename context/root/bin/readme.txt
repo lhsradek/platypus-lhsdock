@@ -75,7 +75,7 @@ Creating lhsdock-eps      ... done
 
 | REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
 | ----------------------------------------------------- | ---------- | ---------------- | ----------------
-| nginx:alpine                                          | latest     | 23.5MB           |
+| nginx:alpine                                          | latest     | 23.5MB           | lhsradek/lhsdock
 | lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine
 | php                                                   | fpm-alpine | 73.4MB           |
 | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.2      | 1.26GB           |
@@ -98,21 +98,21 @@ With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdoc
 
 | IMAGES               | PORTS                  | NAMES            | HOSTNAMES                 | OPTIONAL  
 | -------------------- | ---------------------- | ---------------- | ------------------------- | --------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock          | www.nginx.local           |
-| php:fpm-alpine       | 9000/tcp               | lhsdock-php      | weblhs-php.nginx.local    | 
-| elasticsearch        |                        | lhsdock-setup    | setup                     | *
-| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01     | es01.www.nginx.local      |
-| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | es02.www.nginx.local      | 
-| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | es03.www.nginx.local      |
-| kibana               | 5601/tcp               | lhsdock-kibana   | kibana.www.nginx.local    |
-| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm      | apm.nginx.local           | *
-| metricbeat           | 5067/tcp               | lhsdock-metric   | metric.nginx.local        | * 
-| filebeat             | 5068/tcp               | lhsdock-file     | file.nginx.local          | *
-| heartbeat            | 5069/tcp               | lhsdock-heart    | heart.nginx.local         | *
-| enterprise-search    | 3002/tcp               | lhsdock-eps      | eps.nginx.local           | *
-| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | fleet.nginx.local         | *
-| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | logstash.nginx.local      | *
-| cerebro              | 9000/tcp               | lhsdock-cerebro  | cerebro.www.nginx.local   | *
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock          | <code>www.nginx.local</code>           |
+| php:fpm-alpine       | 9000/tcp               | lhsdock-php      | <code>weblhs-php.nginx.local</code>    | 
+| elasticsearch        |                        | lhsdock-setup    | <code>setup.www.nginx.local</code>     | *
+| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01     | <code>es01.www.nginx.local</code>      |
+| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02     | <code>es02.www.nginx.local</code>      | 
+| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | <code>es03.www.nginx.local</code>      |
+| kibana               | 5601/tcp               | lhsdock-kibana   | <code>kibana.www.nginx.local</code>    |
+| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm      | <code>apm.nginx.local</code>           | *
+| metricbeat           | 5067/tcp               | lhsdock-metric   | <code>metric.nginx.local</code>        | * 
+| filebeat             | 5068/tcp               | lhsdock-file     | <code>file.nginx.local</code>          | *
+| heartbeat            | 5069/tcp               | lhsdock-heart    | <code>heart.nginx.local</code>         | *
+| enterprise-search    | 3002/tcp               | lhsdock-eps      | <code>eps.nginx.local</code>           | *
+| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | <code>fleet.nginx.local</code>         | *
+| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | <code>logstash.nginx.local</code>      | *
+| cerebro              | 9000/tcp               | lhsdock-cerebro  | <code>cerebro.www.nginx.local</code>   | *
 
 -----
 

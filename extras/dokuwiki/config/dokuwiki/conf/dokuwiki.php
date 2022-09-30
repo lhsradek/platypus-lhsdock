@@ -13,9 +13,10 @@
 
 
 /* Basic Settings */
-$conf['title']       = 'DokuWiki';        //what to show in the title
+# $conf['title']       = 'DokuWiki';        //what to show in the title
+$conf['title']       = 'platypus-lhsdock';        //what to show in the title
 $conf['start']       = 'start';           //name of start page
-$conf['lang']        = 'cz';              //your language
+$conf['lang']        = 'en';              //your language
 $conf['template']    = 'dokuwiki';         //see lib/tpl directory
 $conf['tagline']     = '';                //tagline in header (if template supports it)
 $conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
@@ -53,7 +54,7 @@ $conf['hidepages']   = '';                //Regexp for pages to be skipped from 
 
 /* Authentication Settings */
 $conf['useacl']      = 0;                //Use Access Control Lists to restrict access?
-$conf['autopasswd']  = 1;                //autogenerate passwords and email them to user
+$conf['autopasswd']  = 0;                //autogenerate passwords and email them to user
 $conf['authtype']    = 'authplain';      //which authentication backend should be used
 $conf['passcrypt']   = 'bcrypt';           //Used crypt method (smd5,md5,sha1,ssha,crypt,mysql,my411,bcrypt)
 $conf['defaultgroup']= 'user';           //Default groups new Users are added to
@@ -61,7 +62,7 @@ $conf['superuser']   = '!!not set!!';    //The admin can be user or @group or co
 $conf['manager']     = '!!not set!!';    //The manager can be user or @group or comma separated list user1,@group1,user2
 $conf['profileconfirm'] = 1;             //Require current password to confirm changes to user profile
 $conf['rememberme'] = 1;                 //Enable/disable remember me on login
-$conf['disableactions'] = '';            //comma separated list of actions to disable
+$conf['disableactions'] = 'register,login,backlink,revisions,edit,upload';            //comma separated list of actions to disable
 $conf['auth_security_timeout'] = 900;    //time (seconds) auth data is considered valid, set to 0 to recheck on every page view
 $conf['securecookie'] = 1;               //never send HTTPS cookies via HTTP
 $conf['remote']      = 0;                //Enable/disable remote interfaces
@@ -90,7 +91,7 @@ $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds 
 // Set target to use when creating links - leave empty for same window
 $conf['target']['wiki']      = '';
 $conf['target']['interwiki'] = '';
-$conf['target']['extern']    = '';
+$conf['target']['extern']    = '_tab';
 $conf['target']['media']     = '';
 $conf['target']['windows']   = '';
 
@@ -141,7 +142,7 @@ $conf['rss_show_summary'] = 1;           //Add revision summary to title? 0|1
 $conf['rss_show_deleted'] = 1;           //Show deleted items 0|1
 
 /* Advanced Settings */
-$conf['updatecheck'] = 1;                //automatically check for new releases?
+$conf['updatecheck'] = 0;                //automatically check for new releases?
 $conf['userewrite']  = 0;                //this makes nice URLs: 0: off 1: .htaccess 2: internal
 $conf['useslash']    = 0;                //use slash instead of colon? only when rewrite is on
 $conf['sepchar']     = '_';              //word separator character in page names; may be a

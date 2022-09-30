@@ -4,7 +4,7 @@
 - module: nginx
   #metricsets:
   #  - stubstatus
-  period: 10s
+  period: 180s
 
   # Nginx hosts
   hosts: ["http://docker"]

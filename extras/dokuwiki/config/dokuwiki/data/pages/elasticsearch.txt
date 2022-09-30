@@ -1,18 +1,32 @@
-===== Elasticksearch =====
+====== Elasticksearch ======
 
-Elastic is on url [[https://es01.docker.nginx.local:9200]]
+===== Elastic is on url: =====
 
------
+[[https://es01.docker.nginx.local:9200]]
 
-==== Important urls: ====
+[[https://es02.docker.nginx.local:9201]]
 
-[[https://es01.docker.nginx.local:9200/_cluster/stats]]
-
-[[https://es01.docker.nginx.local:9200/_xpack]]
+[[https://es03.docker.nginx.local:9202]] (If there are three elastics)
 
 -----
 
-==== Cerebro ====
+===== Important urls: =====
 
-Cerebro is on [[https://cerebro.docker.nginx.local/]] Cerebro is a web console and status view.
+GET [[https://es01.docker.nginx.local:9200/_cluster/stats?human=true|_cluster/stats]]
+
+GET [[https://es01.docker.nginx.local:9200/_cluster/settings?human=true|_cluster/settings]]
+
+GET [[https://es01.docker.nginx.local:9200/_xpack?human=true|_xpack]]
+
+GET [[https://es01.docker.nginx.local:9200/_tasks?actions=data_frame/transforms*&detailed&human=true|_tasks]]
+
+GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7?human=true|.fleet-policies-7]]
+
+GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7/_fleet/global_checkpoints?human=true|.fleet-policies-7/_fleet/global_checkpoints]]
+
+-----
+
+For advanced settings with JSON body, for other methods (POST, PUT, DELETE ..) use [[Cerebro]] or [[https://en.wikipedia.org/wiki/CURL|curl]].
+
+-----
 

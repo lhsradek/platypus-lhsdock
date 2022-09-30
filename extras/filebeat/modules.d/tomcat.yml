@@ -12,9 +12,9 @@
 
     # Set paths for the log files when file input is used.
     var.paths:
-      - /usr/share/filebeat/logs/tomcat/catalina.log
-      - /usr/share/filebeat/logs/tomcat/localhost_access*
-      - /usr/share/filebeat/logs/tomcat/manager*
+      - /usr/share/filebeat/elogs/tomcat/catalina.log
+      - /usr/share/filebeat/elogs/tomcat/localhost_access*
+      - /usr/share/filebeat/elogs/tomcat/manager*
 
     # Toggle output of non-ECS fields (default true).
     # var.rsa_fields: true

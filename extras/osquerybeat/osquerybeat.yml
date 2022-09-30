@@ -1,78 +1,19 @@
-###################### Filebeat Configuration Example #########################
+################### Osquerybeat Configuration Example #########################
 
-# This file is an example configuration file highlighting only the most common
-# options. The filebeat.reference.yml file from the same directory contains all the
-# supported options with more comments. You can use it as a reference.
-#
-# You can find the full configuration reference here:
-# https://www.elastic.co/guide/en/beats/filebeat/index.html
+############################# Osquerybeat ######################################
 
-# For more available modules and options, please see the filebeat.reference.yml sample
-# configuration file.
+osquerybeat:
+#  inputs:
+#    - type: osquery
+#      streams:
+#        - id: "CFDE1EAA-0C6C-4D19-9EEC-45802B2A8C01"
+#          query: "select * from processes"
+#          interval: 60
 
-# ============================== Filebeat inputs ===============================
-
-filebeat.inputs:
-
-# Each - is an input. Most options can be set at the input level, so
-# you can use different inputs for various configurations.
-# Below are the input specific configurations.
-
-# filestream is an input for collecting log messages from files.
-- type: filestream
-
-  # Unique ID among all inputs, an ID is required.
-  id: my-filestream-id
-
-  # Change to true to enable this input configuration.
-  enabled: false
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - /var/log/*.log
-    #- c:\programdata\elasticsearch\logs\*
-
-  # Exclude lines. A list of regular expressions to match. It drops the lines that are
-  # matching any regular expression from the list.
-  # Line filtering happens after the parsers pipeline. If you would like to filter lines
-  # before parsers, use include_message parser.
-  #exclude_lines: ['^DBG']
-
-  # Include lines. A list of regular expressions to match. It exports the lines that are
-  # matching any regular expression from the list.
-  # Line filtering happens after the parsers pipeline. If you would like to filter lines
-  # before parsers, use include_message parser.
-  #include_lines: ['^ERR', '^WARN']
-
-  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
-  # are matching any regular expression from the list. By default, no files are dropped.
-  #prospector.scanner.exclude_files: ['.gz$']
-
-  # Optional additional fields. These fields can be freely picked
-  # to add additional information to the crawled log files for filtering
-  #fields:
-  #  level: debug
-  #  review: 1
-
-# ============================== Filebeat modules ==============================
-
-filebeat.config.modules:
-  # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
-
-# ======================= Elasticsearch template setting =======================
-
-setup.template.settings:
-  index.number_of_shards: 1
-  #index.codec: best_compression
-  #_source.enabled: false
-
+# ============================== Process Security ==============================
+# Disable seccomp system call filtering on Linux.
+# Otherwise osquerybeat can't fork osqueryd with error: Failed to start osqueryd process: fork/exec ./osqueryd: operation not permitted
+seccomp.enabled: false
 
 # ================================== General ===================================
 
@@ -120,7 +61,7 @@ setup.kibana:
 
 # =============================== Elastic Cloud ================================
 
-# These settings simplify using Filebeat with the Elastic Cloud (https://cloud.elastic.co/).
+# These settings simplify using Osquerybeat with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
@@ -138,15 +79,17 @@ setup.kibana:
 # ---------------------------- Elasticsearch Output ----------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
-
+  hosts: ["es01:9200"]
   # Protocol - either `http` (default) or `https`.
-  #protocol: "https"
-
+  protocol: "https"
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
-  #username: "elastic"
-  #password: "changeme"
+  # username: "elastic"
+  # password: "changeme"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl.verification_mode: "certificate"
 
 # ------------------------------ Logstash Output -------------------------------
 #output.logstash:
@@ -164,12 +107,13 @@ output.elasticsearch:
   #ssl.key: "/etc/pki/client/cert.key"
 
 # ================================= Processors =================================
+
+# Configure processors to enhance or manipulate events generated by the beat.
+
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
+  - add_host_metadata: ~
   - add_cloud_metadata: ~
-  - add_docker_metadata: ~
-  - add_kubernetes_metadata: ~
+
 
 # ================================== Logging ===================================
 
@@ -183,7 +127,7 @@ processors:
 #logging.selectors: ["*"]
 
 # ============================= X-Pack Monitoring ==============================
-# Filebeat can export internal metrics to a central Elasticsearch monitoring
+# Osquerybeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
@@ -191,7 +135,7 @@ processors:
 #monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
-# Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
+# Osquerybeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
@@ -206,12 +150,12 @@ processors:
 
 # ============================== Instrumentation ===============================
 
-# Instrumentation support for the filebeat.
+# Instrumentation support for the osquerybeat.
 #instrumentation:
-    # Set to true to enable instrumentation of filebeat.
+    # Set to true to enable instrumentation of osquerybeat.
     #enabled: false
 
-    # Environment in which filebeat is running on (eg: staging, production, etc.)
+    # Environment in which osquerybeat is running on (eg: staging, production, etc.)
     #environment: ""
 
     # APM Server hosts to report instrumentation results to.

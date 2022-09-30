@@ -9,13 +9,13 @@
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     var.paths:
-      - /usr/share/filebeat/logs/nginx/default/access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/pma.access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/wp.access.log
-      - /usr/share/filebeat/logs/nginx/tombola/access.log
-      - /usr/share/filebeat/logs/nginx/tombola/ad.access.log
-      - /usr/share/filebeat/logs/nginx/tombola/web.access.log
+      - /usr/share/filebeat/elogs/nginx/default/access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/ad.access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/web.access.log
   # Error logs
   error:
     enabled: true
@@ -23,13 +23,13 @@
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     var.paths:
-      - /usr/share/filebeat/logs/nginx/default/error.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/error.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/pma.error.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/wp.error.log
-      - /usr/share/filebeat/logs/nginx/tombola/error.log
-      - /usr/share/filebeat/logs/nginx/tombola/ad.error.log
-      - /usr/share/filebeat/logs/nginx/tombola/web.error.log
+      - /usr/share/filebeat/elogs/nginx/default/error.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/ad.error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/web.error.log
 
   # Ingress-nginx controller logs. This is disabled by default. It could be used in Kubernetes environments to parse ingress-nginx logs
   ingress_controller:

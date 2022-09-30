@@ -2,9 +2,8 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-kibana.html
 
 - module: kibana
-  metricsets:
-    - status
-  period: 10s
+  xpack.enabled: true
+  period: 60s
   hosts: ["https://kibana:5601"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"

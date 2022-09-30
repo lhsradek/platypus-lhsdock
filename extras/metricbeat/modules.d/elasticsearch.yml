@@ -1,12 +1,12 @@
 # Module: elasticsearch
-# Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-elasticsearch.html
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/8.4/metricbeat-module-elasticsearch.html
 
 - module: elasticsearch
   metricsets:
     - node
     - node_stats
-  period: 10s
-  hosts: 
+  period: 60s
+  hosts:
     - "https://es01:9200"
     - "https://es02:9201"
     # - "https://es03:9202"
@@ -15,3 +15,4 @@
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+

@@ -3,11 +3,12 @@
 
 - module: elasticsearch
   xpack.enabled: true
-  period: 10s
+  period: 60s
   hosts: 
     - "https://es01:9200"
     - "https://es02:9201"
     # - "https://es03:9202"
+  protocol: "https"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:

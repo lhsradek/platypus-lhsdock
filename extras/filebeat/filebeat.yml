@@ -1,12 +1,15 @@
+###################### Filebeat Configuration #######################
+
 http.enabled: true
 http.port: 5068
-http.hosts:
-  - "0.0.0.0"
-  - "unix:///var/run/docker.sock"
+http.host: "0.0.0.0"
 
 xpack.monitoring.enabled: true
 monitoring.enabled: false
-elasticsearch.cluster.name: ${CLUSTER_NAME}
+elasticsearch.cluster.name: "${CLUSTER_NAME}"
+elasticsearch.cluster.uuid: "${CLUSTER_UUID}"
+cluster.name: "${CLUSTER_NAME}"
+cluster.uuid: "${CLUSTER_UUID}"
 
 filebeat.config:
   modules:
@@ -24,41 +27,36 @@ filebeat.inputs:
     id: filestream-id
     enabled: true
     paths:
-      # - /usr/share/filebeat/logs/apm-server/*
-      - /usr/share/filebeat/logs/nginx/default/access.log
-      - /usr/share/filebeat/logs/nginx/default/error.log
-      - /usr/share/filebeat/logs/es01/gc.log.[0-9]*
-      - /usr/share/filebeat/logs/es01/gc.log
-      - /usr/share/filebeat/logs/es02/gc.log.[0-9]*
-      - /usr/share/filebeat/logs/es02/gc.log
-      - /usr/share/filebeat/logs/es03/gc.log.[0-9]*
-      - /usr/share/filebeat/logs/es03/gc.log
-      # - /usr/share/filebeat/logs/filebeat/*
-      # - /usr/share/filebeat/logs/fleet/*
-      # - /usr/share/filebeat/logs/heart/*
-      - /usr/share/filebeat/logs/kibana/kibana.json
-      # - /usr/share/filebeat/logs/metric/*
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/pma.access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/wp.access.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/error.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/pma.error.log
-      - /usr/share/filebeat/logs/nginx/platypus-wordpress-mysql/wp.error.log
-      - /usr/share/filebeat/logs/nginx/tombola/access.log
-      - /usr/share/filebeat/logs/nginx/tombola/ad.access.log
-      - /usr/share/filebeat/logs/nginx/tombola/web.access.log
-      - /usr/share/filebeat/logs/nginx/tombola/error.log
-      - /usr/share/filebeat/logs/nginx/tombola/ad.error.log
-      - /usr/share/filebeat/logs/nginx/tombola/web.error.log
-      - /usr/share/filebeat/logs/traefik/access.log
-      - /usr/share/filebeat/logs/traefik/traefik.log
+      - /usr/share/filebeat/logs/* # filebeat
+      - /usr/share/filebeat/elogs/nginx/default/access.log
+      - /usr/share/filebeat/elogs/nginx/default/error.log
+      #- /usr/share/filebeat/elogs/es01/gc.log.[0-9]*
+      #- /usr/share/filebeat/elogs/es01/gc.log
+      #- /usr/share/filebeat/elogs/es02/gc.log.[0-9]*
+      #- /usr/share/filebeat/elogs/es02/gc.log
+      #- /usr/share/filebeat/elogs/es03/gc.log.[0-9]*
+      #- /usr/share/filebeat/elogs/es03/gc.log
+      #- /usr/share/filebeat/elogs/fleet/*
+      - /usr/share/filebeat/elogs/apm-server/*
+      - /usr/share/filebeat/elogs/heart/*
+      - /usr/share/filebeat/elogs/metric/*
+      - /usr/share/filebeat/elogs/kibana/kibana.json
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.access.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log
+      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/ad.access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/web.access.log
+      - /usr/share/filebeat/elogs/nginx/tombola/error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/ad.error.log
+      - /usr/share/filebeat/elogs/nginx/tombola/web.error.log
+      - /usr/share/filebeat/elogs/traefik/access.log
+      - /usr/share/filebeat/elogs/traefik/traefik.log
 
 output:
-  #logstash:
-  #  hosts: ["logstash:5044"]
-  #  #username: "${ELASTICSEARCH_USERNAME}"
-  #  #password: "${ELASTICSEARCH_PASSWORD}"
-
   elasticsearch:
     hosts: 
       - "https://es01:9200"
@@ -71,22 +69,25 @@ output:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+      # verification_mode: certificate
+      verification_mode: none
 
 setup:      
   ilm.overwrite: true
   template.settings:
     index.number_of_shards: 1
-    #index.codec: best_compression
+    index.codec: best_compression
     #source.enabled: false
   kibana:
-  #  host: "https://kibana:5601"
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
-    #api_key: "${AGENT_API_KEY}"
+    host: "${KIBANA_FLEET_HOST}"
+    username: '${ELASTICSEARCH_USERNAME:}'
+    password: '${ELASTICSEARCH_PASSWORD:}'
+    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: none
   apm:
     enabled: true
-    service_name: "filebeat"
-    server_url: "http://apm:8200"
+    # service_name: "filebeat"
+    server_url: "${APM_APP}"

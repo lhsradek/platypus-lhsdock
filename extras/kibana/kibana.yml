@@ -1,7 +1,18 @@
 # Kibana configuration for docker target
 
+monitoring:
+  ui:
+    enabled: true
+    container:
+      elasticsearch:
+        enabled: false
+    ccs:
+      enabled: false
+
 xpack:
-  monitoring.kibana.collection.enabled: false
+  monitoring:
+    kibana:
+      collection.enabled: false
   reporting:
     kibanaServer:
       hostname: "kibana"
@@ -13,32 +24,35 @@ xpack:
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
-    poll_interval: 3000
+    poll_interval: 4000
     max_workers: 2
   # apm.serviceMapEnabled: false
   fleet:
     agents:
       fleet_server:
         hosts:
-          - "https://fleet:8220"
+          - "https://localhost:8220"
       elasticsearch:
         hosts: 
           - "https://es01:9200"
-          #- "https://es02:9201"
-          #- "https://es03:9202"
-# https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
+          #- https://es02:9201
+          #- https://es03:9202
+
+    # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
     packages:
+      - name: system
+        version: latest
       - name: apm 
         version: latest
-      - name: docker 
+      - name: docker
         version: latest
       - name: elastic_agent
         version: latest
-      - name: fleet_server
+      - name: mysql
         version: latest
-      - name: mysql 
+      - name: nginx
         version: latest
-      - name: nginx 
+      - name: osquery
         version: latest
       - name: postgresql
         version: latest
@@ -46,22 +60,23 @@ xpack:
         version: latest
       - name: synthetics
         version: latest
-      - name: system
-        version: latest
-      - name: tomcat 
+      - name: tomcat
         version: latest
       - name: traefik
         version: latest
+
     agentPolicies:
       - name: Agent policy 1
         description: Agent policy
         id: agent-policy-1
+        is_managed: false
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
           - name: system-1
+            description: system
             id: default-system
             package:
               name: system
@@ -75,21 +90,10 @@ xpack:
           - metrics
         package_policies:
           - name: synthetics-1
+            description: synthetics
             id: synthetics
             package:
               name: synthetics
-
-      - name: Fleet Server policy 1
-        description: Fleet Server policy
-        id: fleet-server-policy
-        namespace: default
-        package_policies:
-          - name: fleet_server-1
-            package:
-              name: fleet_server
-        monitoring_enabled:
-          - logs
-          - metrics
 
       - name: APM policy 1
         description: APM policy
@@ -100,6 +104,7 @@ xpack:
           - metrics
         package_policies:
           - name: apm-1
+            description: apm
             id: apm
             package:
               name: apm
@@ -109,10 +114,11 @@ xpack:
         id: docker-policy-1
         namespace: default
         monitoring_enabled:
-          - logs
+          # - logs
           - metrics
         package_policies:
           - name: docker-1
+            description: docker
             id: docker
             package:
               name: docker
@@ -123,9 +129,10 @@ xpack:
         namespace: default
         monitoring_enabled:
           - logs
-          - metrics
+          # - metrics
         package_policies:
           - name: mysql-1
+            description: mysql
             id: mysql
             package:
               name: mysql
@@ -139,6 +146,7 @@ xpack:
           - metrics
         package_policies:
           - name: nginx-1
+            description: nginx
             id: nginx
             package:
               name: nginx
@@ -149,9 +157,10 @@ xpack:
         namespace: default
         monitoring_enabled:
           - logs
-          - metrics
+          # - metrics
         package_policies:
           - name: postgresql-1
+            description: postgresql
             id: postgresql
             package:
               name: postgresql
@@ -161,10 +170,11 @@ xpack:
         id: redis-policy-1
         namespace: default
         monitoring_enabled:
-          - logs
+          # - logs
           - metrics
         package_policies:
           - name: redis-1
+            description: redis
             id: redis
             package:
               name: redis
@@ -178,6 +188,7 @@ xpack:
           - metrics
         package_policies:
           - name: tomcat-1
+            description: tomcat
             id: tomcat
             package:
               name: tomcat
@@ -188,21 +199,27 @@ xpack:
         namespace: default
         monitoring_enabled:
           - logs
-          - metrics
+          # - metrics
         package_policies:
           - name: traefik-1
+            description: traefik
             id: traefik
             package:
               name: traefik
 
-monitoring:
-  ui:
-    # enabled: false # disable self monitoring
-    container:
-      elasticsearch:
-        enabled: false
-    ccs:
-      enabled: false
+      - name: Osquery Logs 1
+        description: Osquery Logs
+        id: osquery-1
+        namespace: default
+        monitoring_enabled:
+          # - logs
+          - metrics
+        package_policies:
+          - name: osquery-1
+            description: osquery
+            id: osquery
+            package:
+              name: osquery
 
 server:
   host: "0.0.0.0"
@@ -210,19 +227,18 @@ server:
   publicBaseUrl: "https://kibana.docker.nginx.local:5601"
   ssl:
     enabled: true
-    certificate: "/usr/share/kibana/config/certs/kibana/kibana.crt"
-    key: "/usr/share/kibana/config/certs/kibana/kibana.key"
+    certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
+    key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
 
 elasticsearch:
   hosts: 
     - "https://es01:9200"
-    # - "https://es02:9201"
-    # - "https://es03:9202"
+    - "https://es02:9201"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
-  requestTimeout: 3000000
+  requestTimeout: 60000
 
-#enterpriseSearch.host: "http://eps:3002"
+enterpriseSearch.host: "http://eps:3002"
 
 logging:
   appenders:
@@ -253,21 +269,3 @@ logging:
     - name: metrics.ops
       appenders: [default, json-file]
       level: info
-        
-    #packages:
-    #  - name: security_solution
-    #    version: latest
-    #policies:
-    #  - name: Endpoint and Cloud Security policy 1
-    #    description: Endpoint and Cloud Security policy 1
-    #    id: endpoint-and-cloud-security-policy-1
-    #    namespace: default
-    #    monitoring_enabled:
-    #      - logs
-    #      - metrics
-    #    package_policies:
-    #      - name: security_solution
-    #         id: security_solution
-    #         package:
-    #           name: security_solution
-

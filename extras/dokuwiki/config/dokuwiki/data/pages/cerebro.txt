@@ -1,0 +1,10 @@
+====== Cerebro ======
+
+[[https://github.com/lmenezes/cerebro|Cerebro]] is a web console and status view for [[Elasticsearch]].
+Cerebro is installed on url [[https://cerebro.docker.nginx.local]] 
+
+{{cerebro01.png?600x200}}
+
+{{cerebro02.png?600x200}}
+
+{{cerebro03.png?600x200}}

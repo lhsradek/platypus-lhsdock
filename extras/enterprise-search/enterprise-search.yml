@@ -21,7 +21,7 @@ elasticsearch:
     certificate_authority: '${ELASTIC_SSL_CERTIFICATEAUTHORITIES}'
 
 kibana:
-  startup_retry.fail_after: 12000
+  # startup_retry.fail_after: 12000
   host: "https://kibana:5601"
   external_url: "https://kibana.docker.nginx.local:5601"
 
@@ -30,9 +30,10 @@ apm:
   service_name: "enterprise-search"
   server_url: "http://apm:8200"
 
-secret_management.encryption_keys: [7414dd7195c3a73b9303c4ad027498f6248bc015efff4911518ad60ecfec328d]
+secret_management.encryption_keys: [d24d3d10193be6ec7f75e6957a0f6322fa45faaa1c21dfc5d24edc32a7b1c888]
 secret_session_key: "5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58"
 audit_log_directory: "/var/log/enterprise-search"
 filebeat_log_directory: "/var/log/enterprise-search"
 log_directory: "/var/log/enterprise-search"
 metricbeat_log_directory: "/var/log/enterprise-search"
+

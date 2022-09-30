@@ -1,15 +1,14 @@
-# Define a directory to load monitor definitions from. Definitions take the form
-# of individual yaml files.
+###################### Heartbeat Configuration #######################
 
 http.enabled: true
 http.port: 5069
-http.hosts:
-  - "0.0.0.0"
-  - "unix:///var/run/docker.sock"
+http.host: "0.0.0.0"
 
 xpack.monitoring.enabled: true
-monitoring.enabled: true
-cluster.name: ${CLUSTER_NAME}
+monitoring.enabled: false
+monitoring.cluster_uuid: "${CLUSTER_UUID}"
+cluster.name: "${CLUSTER_NAME}"
+cluster.uuid: "${CLUSTER_UUID}"
 
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
@@ -21,7 +20,7 @@ heartbeat.config.monitors:
 
 heartbeat.monitors:
 - type: http
-  schedule: '*/5 * * * * * *'
+  schedule: '*/15 * * * * * *'
   id: http-service
   name: HTTP Service
   data_stream.namespace: default
@@ -31,27 +30,49 @@ heartbeat.monitors:
   # api_key: ${AGENT_API_KEY}
   check.response.status: [200, 301, 302]
   hosts:
-    - http://docker.nginx.local/nginx_status
-    - https://kibana.docker.nginx.local:5601
+    # ELK
+    - http://apm.nginx.local:8200
+    - http://cerebro.docker.nginx.local:9000
     - https://es01.docker.nginx.local:9200
     - https://es02.docker.nginx.local:9201
     # - https://es03.docker.nginx.local:9202
+    # - https://fleet.nginx.local:8820
+    - https://docker.nginx.local:443/downloads/
+    - http://eps.nginx.local:3002
+    - https://kibana.docker.nginx.local:5601
+    - https://weblhs.nginx.local:443/downloads/
+    - http://wiki.docker.nginx.local/doku.php?id=start&do=index
+    # tomcat
+    - https://docker.tomcat.local/tombola
+    - https://docker.tomcat.local/tombola-javadoc/
+    - https://docker.tomcat.local/manager
+    - https://ad.docker.tomcat.local
+    # wordpress
+    - https://docker.wordpress.local
+    - https://pma.docker.wordpress.local
+    - https://rc.docker.wordpress.local
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-    verification_mode: none
+    verification_mode: "none"
 
 - type: icmp
-  schedule: '*/3 * * * * * *'
+  schedule: '*/15 * * * * * *'
   id: icmp-service
   name: ICMP Service
   data_stream.namespace: default
   service.name: heartbeat-icmp
   hosts:
-    - es01.docker.nginx.local
-    - kibana.docker.nginx.local
-    - lhs.intranet.local
-    - docker.intranet.local
-    - mamka.intranet.local
+    - apm.nginx.local
+    - cerebro.docker.nginx.local
+    - file.nginx.local
+    # - fleet.nginx.local
+    - heart.nginx.local
+    - logstash.docker.nginx.local
+    - metric.nginx.local
+    - weblhs.nginx.local
+    - weblhs-php.nginx.local
+    - wiki.nginx.local
+    # - lhs.intranet.local
 
 heartbeat.scheduler:
   limit: 2
@@ -67,31 +88,35 @@ processors:
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
 
-setup:
-  kibana:
-    host: "https://kibana:5601"
-    username: '${ELASTICSEARCH_USERNAME:}'
-    password: '${ELASTICSEARCH_PASSWORD:}'
-    # api_key: ${AGENT_API_KEY}
-    ssl:
-      enabled: true
-      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-  apm:
-    enabled: true
-    service_name: "heartbeat"
-    server_url: "http://apm:8200"
-  ilm.overwrite: true
-
 output:
   elasticsearch:
     hosts: 
-      - "https://es01:9200"
-      # - "https://es02:9201"
-      # - "https://es03:9202"
+      - "${ELASTICSEARCH_HOSTS}"
+      ## - "https://es02:9201"
+      ## - "https://es03:9202"
+      # - "https://${APP_ID}-es02.${APP_NET}:9201"
+      # - "https://${APP_ID}-es03.${APP_NET}:9202"
     username: '${ELASTICSEARCH_USERNAME:}'
     password: '${ELASTICSEARCH_PASSWORD:}'
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      verification_mode: certificate
+      verification_mode: "none"
+
+setup:
+  ilm.overwrite: true
+  kibana:
+    host: "${KIBANA_FLEET_HOST}"
+    username: '${ELASTICSEARCH_USERNAME:}'
+    password: '${ELASTICSEARCH_PASSWORD:}'
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      # verification_mode: "certificate"
+      verification_mode: "none"
+  apm:
+    enabled: true
+  #  service_name: "heartbeat"
+    server_url: "http://apm:8200"

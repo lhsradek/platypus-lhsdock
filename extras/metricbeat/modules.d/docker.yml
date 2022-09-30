@@ -12,7 +12,7 @@
   #  - memory
   #  - network
   #  - network_summary
-  period: 10s
+  period: 180s
   hosts: ["unix:///var/run/docker.sock"]
 
   # If set to true, replace dots in labels with `_`.

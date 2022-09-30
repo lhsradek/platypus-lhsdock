@@ -3,8 +3,8 @@
 
 - module: beat
   xpack.enabled: true
-  period: 10s
-  hosts: ["http://metric:5067"]
+  period: 120s
+  hosts: ["apm:5066", "file:5068", "heart:5069"]
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"
   # ssl:

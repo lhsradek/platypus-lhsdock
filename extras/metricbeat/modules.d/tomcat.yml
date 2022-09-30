@@ -1,0 +1,8 @@
+# Module: tomcat
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/8.4/metricbeat-module-tomcat.html
+
+- module: tomcat
+  metricsets: ['threading', 'cache', 'memory', 'requests']
+  period: 500s
+  hosts: ['https://docker.tomcat.local']
+  path: "/info.jsp/?ignoreErrors=true&canonicalNaming=false"

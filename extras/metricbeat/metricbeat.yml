@@ -2,15 +2,12 @@
 
 http.enabled: true
 http.port: 5067
-http.hosts:
- - "0.0.0.0"
- - "unix:///var/run/docker.sock"
+http.host: "0.0.0.0"
 
+monitoring.enabled: false
 xpack.monitoring.enabled: true
-monitoring.enabled: true
-monitoring.cluster_uuid: "zpFF4lHaR9238ak322M4gg"
 cluster.name: "${CLUSTER_NAME}"
-cluster.uuid: "zpFF4lHaR9238ak322M4gg"
+cluster.uuid: "${CLUSTER_UUID}"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -28,38 +25,45 @@ output:
       - "https://es01:9200"
       # - "https://es02:9201"
       # - "https://es03:9202"
-    # api_key: ${AGENT_API_KEY}
+    protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # verification_mode: certificate
+      verification_mode: none
 
 setup:
-  template.settings:
-    index.number_of_shards: 1
-    index.codec: best_compression
-    source.enabled: false
+  # template.settings:
+  #  index.number_of_shards: 1
+  #  index.codec: best_compression
+  #  # source.enabled: false
   elasticsearch:
     hosts: 
       - "https://es01:9200"
       - "https://es02:9201"
-      - "https://es03:9202"
+      # - "https://es03:9202"
     # api_key: ${AGENT_API_KEY}
+    protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # verification_mode: certificate
+      verification_mode: none
   kibana:
-    host: 'https://kibana:5601'
+    host: "${KIBANA_FLEET_HOST}"
     # api_key: ${AGENT_API_KEY}
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # verification_mode: certificate
+      verification_mode: none
   apm:
     enabled: true
     service_name: "metricbeat"
-    server_url: "http://apm:8200"
+    server_url: "${APM_APP}"
