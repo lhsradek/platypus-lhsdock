@@ -3,13 +3,12 @@
 http.enabled: true
 http.port: 5068
 http.host: "0.0.0.0"
+#http.host: "file.nginx.local"
 
 xpack.monitoring.enabled: true
-monitoring.enabled: false
-elasticsearch.cluster.name: "${CLUSTER_NAME}"
-elasticsearch.cluster.uuid: "${CLUSTER_UUID}"
-cluster.name: "${CLUSTER_NAME}"
-cluster.uuid: "${CLUSTER_UUID}"
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
 
 filebeat.config:
   modules:
@@ -17,51 +16,52 @@ filebeat.config:
     reload.enabled: false
 
 processors:
-  - add_host_metadata: ~
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_kubernetes_metadata: ~
   - add_docker_metadata: ~
   - add_cloud_metadata: ~
-  - add_kubernetes_metadata: ~
-
-filebeat.inputs:
-  - type: filestream
-    id: filestream-id
-    enabled: true
-    paths:
-      - /usr/share/filebeat/logs/* # filebeat
-      - /usr/share/filebeat/elogs/nginx/default/access.log
-      - /usr/share/filebeat/elogs/nginx/default/error.log
-      #- /usr/share/filebeat/elogs/es01/gc.log.[0-9]*
-      #- /usr/share/filebeat/elogs/es01/gc.log
-      #- /usr/share/filebeat/elogs/es02/gc.log.[0-9]*
-      #- /usr/share/filebeat/elogs/es02/gc.log
-      #- /usr/share/filebeat/elogs/es03/gc.log.[0-9]*
-      #- /usr/share/filebeat/elogs/es03/gc.log
-      #- /usr/share/filebeat/elogs/fleet/*
-      - /usr/share/filebeat/elogs/apm-server/*
-      - /usr/share/filebeat/elogs/heart/*
-      - /usr/share/filebeat/elogs/metric/*
-      - /usr/share/filebeat/elogs/kibana/kibana.json
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/access.log
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.access.log
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.access.log
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log
-      - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.error.log
-      - /usr/share/filebeat/elogs/nginx/tombola/access.log
-      - /usr/share/filebeat/elogs/nginx/tombola/ad.access.log
-      - /usr/share/filebeat/elogs/nginx/tombola/web.access.log
-      - /usr/share/filebeat/elogs/nginx/tombola/error.log
-      - /usr/share/filebeat/elogs/nginx/tombola/ad.error.log
-      - /usr/share/filebeat/elogs/nginx/tombola/web.error.log
-      - /usr/share/filebeat/elogs/traefik/access.log
-      - /usr/share/filebeat/elogs/traefik/traefik.log
 
 output:
+  # for provisioning:
+   logstash:
+     # Boolean flag to enable or disable the output module.
+     enabled: true
+     # The Logstash hosts.
+     hosts: ["logstash.docker.nginx.local:5044"]
+     # username: "logstash_writer"
+     username: "${ELASTICSEARCH_USERNAME}"
+     password: "${ELASTICSEARCH_PASSWORD}"
+
+  # for /filebeat -e setup --dashboards:
+  # elasticsearch:
+  #   hosts: 
+  #    - "https://es01.docker.nginx.local:9200"
+  #    - "https://es02.docker.nginx.local:9201"
+  #    # - "https://es03.docker.nginx.local:9202"
+  #  protocol: "https"
+  #  username: "${ELASTICSEARCH_USERNAME}"
+  #  password: "${ELASTICSEARCH_PASSWORD}"
+  #  # api_key: "${AGENT_API_KEY}"
+  #  ssl:
+  #    enabled: true
+  #    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #    # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+  #    # verification_mode: none
+  #    verification_mode: certificate
+
+setup:      
+  ilm.overwrite: true
+  template.settings:
+    index.number_of_shards: 1
+    #index.codec: best_compression
+    source.enabled: false
   elasticsearch:
     hosts: 
-      - "https://es01:9200"
-      # - "https://es02:9201"
-      # - "https://es03:9202"
+      - "https://es01.docker.nginx.local:9200"
+      - "https://es02.docker.nginx.local:9201"
+      # - "https://es03.docker.nginx.local:9202"
+    protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     # api_key: "${AGENT_API_KEY}"
@@ -69,25 +69,21 @@ output:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-      # verification_mode: certificate
-      verification_mode: none
-
-setup:      
-  ilm.overwrite: true
-  template.settings:
-    index.number_of_shards: 1
-    index.codec: best_compression
-    #source.enabled: false
+      # verification_mode: none
+      verification_mode: certificate
   kibana:
-    host: "${KIBANA_FLEET_HOST}"
-    username: '${ELASTICSEARCH_USERNAME:}'
-    password: '${ELASTICSEARCH_PASSWORD:}'
+    host: "https://kibana.docker.nginx.local:5601"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    protocol: "https"
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      verification_mode: none
+      # verification_mode: none
+      verification_mode: certificate
   apm:
     enabled: true
-    # service_name: "filebeat"
-    server_url: "${APM_APP}"
+    service_name: "filebeat"
+    protocol: "http"
+    server_url: "http://apm.nginx.local:8200"

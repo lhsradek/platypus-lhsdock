@@ -3,11 +3,11 @@
 
 - module: elasticsearch
   xpack.enabled: true
-  period: 60s
+  period: 10s
   hosts: 
-    - "https://es01:9200"
-    - "https://es02:9201"
-    # - "https://es03:9202"
+    - "https://es01.docker.nginx.local:9200"
+    - "https://es02.docker.nginx.local:9201"
+    # - "https://es03.docker.nginx.local:9202"
   protocol: "https"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"

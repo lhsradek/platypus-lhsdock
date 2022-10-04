@@ -2,7 +2,7 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/8.4/metricbeat-module-system.html
 
 - module: system
-  period: 120s
+  period: 10s
   metricsets:
     - cpu
     - load

@@ -3,16 +3,15 @@ monitoring.enabled: false
 monitoring.cluster_uuid: ${CLUSTER_UUID}
 xpack:
   monitoring:
-    enabled: true
+    enabled: false
     elasticsearch:
       ssl.certificate_authority: ${ELASTIC_SSL_CERTIFICATEAUTHORITY}
       ssl.verification_mode: "certificate"
       #ssl.verification_mode: "none"
-
       hosts: 
-        - "https://es01:9200"
-        - "https://es02:9201"
-        # - "https://es03:9202"
+        - "https://es01.docker.nginx.local:9200"
+        - "https://es02.docker.nginx.local:9201"
+        # - "https://es03.docker.nginx.local:9202"
       # username: logstash_system
       # username: logstash_writer
       username: ${ELASTIC_USERNAME}

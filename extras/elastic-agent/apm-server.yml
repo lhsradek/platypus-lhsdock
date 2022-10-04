@@ -3,6 +3,7 @@
 ################################ APM Server ################################
 
 apm-server:
+  # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
   #host: "unix:///var/run/docker.sock"
   #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
   host: "0.0.0.0"
@@ -139,11 +140,11 @@ apm-server:
     # An origin is made of a protocol scheme, host and port, without the url path.
     # Allowed origins in this setting can have * to match anything (eg.: http://*.example.com)
     # If an item in the list is a single '*', everything will be allowed.
-    allow_origins: ['*']
+    #allow_origins: ['*']
 
     # A list of Access-Control-Allow-Headers to allow RUM requests, in addition to "Content-Type",
     # "Content-Encoding", and "Accept"
-    allow_headers: []
+    #allow_headers: []
 
     # Custom HTTP headers to add to RUM responses, e.g. for security policy compliance.
     #response_headers:
@@ -203,12 +204,12 @@ apm-server:
         ssl.verification_mode: "certificate"
 
         # Certificate for SSL client authentication.
-        ssl.certificate: "${APM_SERVER_CERT}"
+        #ssl.certificate: "${APM_SERVER_CERT}"
         # Client Certificate Key
-        ssl.key: "${APM_SERVER_CERT_KEY}"
+        #ssl.key: "${APM_SERVER_CERT_KEY}"
 
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
-      index_pattern: "apm-*-sourcemap*"
+      #index_pattern: "apm-*-sourcemap*"
 
   #---------------------------- APM Server - Agent Configuration ----------------------------
 
@@ -223,7 +224,7 @@ apm-server:
     # Scheme and port can be left out and will be set to the default (`http` and `5601`).
     # In case you specify an additional path, the scheme is required: `http://localhost:5601/path`.
     # IPv6 addresses should always be defined as: `https://[2001:db8::1]:5601`.
-    host: "https://kibana.docker.nginx.local:5601"
+    host: "https://kibana:5601"
     # Optional protocol and basic auth credentials.
     protocol: "https"
     # api_key: "${AGENT_API_KEY}"
@@ -261,12 +262,12 @@ apm-server:
 
     # List of root certificates for HTTPS server verifications.
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "certificate"
-    #ssl.verification_mode: "none"
+    ##ssl.verification_mode: "certificate"
+    ssl.verification_mode: "none"
     # Certificate for SSL client authentication.
-    ssl.certificate: "${APM_SERVER_CERT}"
+    #ssl.certificate: "${APM_SERVER_CERT}"
     # Client Certificate Key
-    ssl.key: "${APM_SERVER_CERT_KEY}"
+    #ssl.key: "${APM_SERVER_CERT_KEY}"
 
     # Optional passphrase for decrypting the Certificate Key.
     # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
@@ -329,15 +330,16 @@ output.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
+    # - "https://es02.docker.nginx.local:9201"
 
-  # Protocol - either `http` (default) or `https`.
   protocol: "https"
   # Boolean flag to enable or disable the output module.
   enabled: true
 
   # Set gzip compression level.
   #compression_level: 0
+
+  # Protocol - either `http` (default) or `https`.
 
   # Authentication credentials - either API key or username/password.
   # api_key: "id:api_key"
@@ -883,10 +885,11 @@ output.elasticsearch:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-http.enabled: false
+http.enabled: true
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-http.host: "0.0.0.0"
+#http.host: localhost
+http.host: "apm"
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
 http.port: 5066
@@ -898,10 +901,7 @@ http.port: 5066
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-xpack.monitoring.enabled: true
-monitoring:
-  enabled: true
-  cluster_uuid: "${CLUSTER_UUID}"
+#monitoring.enabled: false
 
 # Most settings from the Elasticsearch output are accepted here as well.
 # Note that these settings should be configured to point to your Elasticsearch *monitoring* cluster.
@@ -996,9 +996,9 @@ monitoring.elasticsearch:
   ssl.verification_mode: "certificate"
   #ssl.verification_mode: "none"
   # Certificate for SSL client authentication.
-  #ssl.certificate: "${APM_SERVER_CERT}"
+  ssl.certificate: "${APM_SERVER_CERT}"
   # Client Certificate Key
-  #ssl.key: "${APM_SERVER_CERT_KEY}"
+  ssl.key: "${APM_SERVER_CERT_KEY}"
 
   # Optional passphrase for decrypting the Certificate Key.
   # It is recommended to use the provided keystore instead of entering the passphrase in plain text.

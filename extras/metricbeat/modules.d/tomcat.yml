@@ -3,6 +3,13 @@
 
 - module: tomcat
   metricsets: ['threading', 'cache', 'memory', 'requests']
-  period: 500s
+  period: 10s
   hosts: ['https://docker.tomcat.local']
-  path: "/info.jsp/?ignoreErrors=true&canonicalNaming=false"
+  protocol: "https"
+  path: "/jolokia/?ignoreErrors=true&canonicalNaming=false"
+  username: "jolokia"
+  password: "jolokia"
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+

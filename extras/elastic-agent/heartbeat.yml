@@ -1,0 +1,123 @@
+###################### Heartbeat Configuration #######################
+
+http.enabled: true
+http.port: 5069
+http.host: "0.0.0.0"
+
+xpack.monitoring.enabled: true
+monitoring.enabled: false
+monitoring.cluster_uuid: "${CLUSTER_UUID}"
+cluster.name: "${CLUSTER_NAME}"
+cluster.uuid: "${CLUSTER_UUID}"
+
+heartbeat.config.monitors:
+  # Directory + glob pattern to search for configuration files
+  path: ${path.config}/monitors.d/*.yml
+  # If enabled, heartbeat will periodically check the config.monitors path for changes
+  reload.enabled: false
+  # How often to check for changes
+  reload.period: 15s
+
+heartbeat.monitors:
+- type: http
+  schedule: '0 0 */1 * * * *'
+  id: http-service
+  name: HTTP Service
+  data_stream.namespace: default
+  service.name: heartbeat-http
+  username: '${ELASTICSEARCH_USERNAME}'
+  password: '${ELASTICSEARCH_PASSWORD}'
+  # api_key: ${AGENT_API_KEY}
+  check.response.status: [200, 301, 302]
+  hosts:
+    # ELK
+    #- http://apm.nginx.local:8200
+    #- http://cerebro.nginx.local:9000
+    #- https://es01.docker.nginx.local:9200
+    #- https://es02.docker.nginx.local:9201
+    #- https://es03.docker.nginx.local:9202
+    #- https://docker.nginx.local:443/downloads
+    #- http://eps.nginx.local:3002
+    #- https://fleet.nginx.local:8820
+    #- https://kibana.docker.nginx.local:5601
+    #- https://wiki.docker.nginx.local/doku.php?id=start&do=index
+    #- https://docker.traefik.local
+    # tomcat
+    #- https://docker.tomcat.local/tombola
+    #- https://docker.tomcat.local/tombola-javadoc
+    #- https://docker.tomcat.local/manager
+    #- https://ad.docker.tomcat.local
+    # wordpress
+    #- https://docker.wordpress.local
+    #- https://pma.docker.wordpress.local
+    # intranet
+    #- https://lhs.intranet.local:443/downloads/
+    #- https://mamka.intranet.local/downloads
+  ssl:
+    certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+    verification_mode: "none"
+
+- type: icmp
+  schedule: '0 0 */1 * * * *'
+  id: icmp-service
+  name: ICMP Service
+  data_stream.namespace: default
+  service.name: heartbeat-icmp
+  hosts:
+    #- apm.nginx.local
+    #- cerebro.docker.nginx.local
+    #- file.nginx.local
+    #- fleet.nginx.local
+    #- heart.nginx.local
+    #- logstash.docker.nginx.local
+    #- metric.nginx.local
+    #- docker.nginx.local
+    #- weblhs-php.nginx.local
+    #- wiki.nginx.local
+    #- lhs.intranet.local
+    #- mamka.intranet.local
+    #- docker.traefik.local
+
+heartbeat.scheduler:
+  limit: 2
+heartbeat.jobs:
+  http:
+    limit: 3
+  browser:
+    limit: 2    
+
+processors:
+  - add_host_metadata: ~
+  - add_docker_metadata: ~
+
+output:
+  elasticsearch:
+    hosts: 
+      - "https://es01.nginx.local:9200"
+      # - "https://es02.nginx.local:9201"
+      # - "https://es03.nginx.local:9202"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: "certificate"
+      # verification_mode: "none"
+
+setup:
+  ilm.overwrite: true
+  kibana:
+    host: "https://kibana.nginx.local:5601"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      # verification_mode: "certificate"
+      verification_mode: "none"
+  apm:
+    enabled: true
+    service_name: "heartbeat"
+    server_url: "http://apm.nginx.local:8200"

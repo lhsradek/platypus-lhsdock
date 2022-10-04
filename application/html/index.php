@@ -156,7 +156,7 @@ if ($printEnv) {
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
             <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isCerebro) { ?><li><?php print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local")?></a></li><?php } ?>
-            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local:9200")?></a></li><?php } ?>
+            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWiki) { ?><li><?php print("<a href=\"https://wiki.".$parent.".nginx.local".$port."\" target=\"_blank\">wiki.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>

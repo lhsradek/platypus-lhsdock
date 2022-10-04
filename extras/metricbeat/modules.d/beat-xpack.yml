@@ -3,8 +3,8 @@
 
 - module: beat
   xpack.enabled: true
-  period: 120s
-  hosts: ["apm:5066", "file:5068", "heart:5069"]
+  period: 10s
+  hosts: ["metric.nginx.local:5067", "file.nginx.local:5068", "heart.nginx.local:5069"]
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"
   # ssl:

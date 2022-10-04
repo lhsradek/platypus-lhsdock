@@ -6,11 +6,11 @@ input {
 
 output {
   elasticsearch {
-    hosts => ["https://es01.docker.nginx.local:9200", "https://es02.docker.nginx.local:9201"]
+    hosts => ["https://es01.docker.nginx.local:9200"]
     ssl => true
     data_stream => true
     cacert => ["/usr/share/logstash/config/certs/ca/ca.crt"]
-    user => "logstash_writer"
+    user => "elastic"
     password => "changeme"
   }
 }

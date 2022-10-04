@@ -4,8 +4,8 @@
 - module: kibana
   #metricsets:
   #  - status
-  period: 60s
-  hosts: ["https://kibana:5601"]
+  period: 10s
+  hosts: ["https://kibana.docker.nginx.local:5601"]
   #basepath: ""
   #username: "user"
   #password: "secret"

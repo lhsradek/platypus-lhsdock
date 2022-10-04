@@ -10,6 +10,7 @@
     # Filebeat will choose the paths depending on your OS.
     var.paths:
       - /usr/share/filebeat/elogs/nginx/default/access.log
+      - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/access.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/access.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.access.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.access.log
@@ -24,6 +25,7 @@
     # Filebeat will choose the paths depending on your OS.
     var.paths:
       - /usr/share/filebeat/elogs/nginx/default/error.log
+      - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/error.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log
       - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.error.log

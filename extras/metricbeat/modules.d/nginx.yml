@@ -4,16 +4,16 @@
 - module: nginx
   #metricsets:
   #  - stubstatus
-  period: 180s
+  period: 10s
 
   # Nginx hosts
-  hosts: ["http://docker"]
+  hosts: ["https://docker.nginx.local", "https://wiki.docker.nginx.local", "https://docker.wordpress.local", "https://docker.tomcat.local"]
 
   # Path to server status. Default nginx_status
   #server_status_path: "nginx_status"
 
   #username: "user"
   #password: "secret"
-  #ssl:
-  #  enabled: true
-  #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

@@ -24,22 +24,24 @@ xpack:
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
-    poll_interval: 4000
+    # poll_interval: 4000
     max_workers: 2
   # apm.serviceMapEnabled: false
   fleet:
     agents:
       fleet_server:
         hosts:
-          - "https://localhost:8220"
+          - "https://fleet.nginx.local:8220"
       elasticsearch:
         hosts: 
-          - "https://es01:9200"
-          #- https://es02:9201
-          #- https://es03:9202
+          - "https://es01.docker.nginx.local:9200"
+          - "https://es02.docker.nginx.local:9201"
+          #- "https://es03.docker.nginx.local:9202"
 
     # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
     packages:
+      - name: fleet_server
+        version: latest
       - name: system
         version: latest
       - name: apm 
@@ -66,6 +68,16 @@ xpack:
         version: latest
 
     agentPolicies:
+      - name: Fleet Server policy
+        description: Fleet Server policy
+        id: fleet-server-policy
+        namespace: default
+        package_policies:
+          - name: fleet_server-1
+            description: fleet_server
+            package:
+              name: fleet_server
+
       - name: Agent policy 1
         description: Agent policy
         id: agent-policy-1
@@ -80,7 +92,7 @@ xpack:
             id: default-system
             package:
               name: system
-
+      
       - name: Elastic Synthetics 1
         description: Elastic Synthetics
         id: elastic-synthetics-policy-1
@@ -94,7 +106,7 @@ xpack:
             id: synthetics
             package:
               name: synthetics
-
+      
       - name: APM policy 1
         description: APM policy
         id: apm-1
@@ -108,7 +120,7 @@ xpack:
             id: apm
             package:
               name: apm
-
+      
       - name: Docker policy 1
         description: Docker policy
         id: docker-policy-1
@@ -122,7 +134,7 @@ xpack:
             id: docker
             package:
               name: docker
-
+      
       - name: MySQL policy 1
         description: MySQL policy
         id: mysql-policy-1
@@ -136,7 +148,7 @@ xpack:
             id: mysql
             package:
               name: mysql
-
+      
       - name: Nginx policy 1
         description: Nginx policy
         id: nginx-policy-1
@@ -150,7 +162,7 @@ xpack:
             id: nginx
             package:
               name: nginx
-
+      
       - name: PostgreSQL policy 1
         description: PostgreSQL policy
         id: postgresql-policy-1
@@ -164,7 +176,7 @@ xpack:
             id: postgresql
             package:
               name: postgresql
-
+      
       - name: Redis policy 1
         description: Redis policy
         id: redis-policy-1
@@ -178,7 +190,7 @@ xpack:
             id: redis
             package:
               name: redis
-
+      
       - name: Tomcat policy 1
         description: Tomcat policy
         id: tomcat-policy-1
@@ -192,7 +204,7 @@ xpack:
             id: tomcat
             package:
               name: tomcat
-
+      
       - name: Traefik policy 1
         description: Traefik policy
         id: traefik-policy-1
@@ -206,7 +218,7 @@ xpack:
             id: traefik
             package:
               name: traefik
-
+      
       - name: Osquery Logs 1
         description: Osquery Logs
         id: osquery-1
@@ -220,7 +232,7 @@ xpack:
             id: osquery
             package:
               name: osquery
-
+  
 server:
   host: "0.0.0.0"
   shutdownTimeout: "5s"
@@ -232,13 +244,13 @@ server:
 
 elasticsearch:
   hosts: 
-    - "https://es01:9200"
-    - "https://es02:9201"
+    - "https://es01.docker.nginx.local:9200"
+    - "https://es02.docker.nginx.local:9201"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   requestTimeout: 60000
 
-enterpriseSearch.host: "http://eps:3002"
+enterpriseSearch.host: "http://eps.nginx.local:3002"
 
 logging:
   appenders:
