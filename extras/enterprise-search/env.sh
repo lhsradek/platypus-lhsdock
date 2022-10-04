@@ -3,14 +3,16 @@
 #####################################################
 
 # Java options for JVM tuning (used for app-server and CLI commands)
-export JAVA_OPTS=${JAVA_OPTS:-"-Xms800m -Xmx800m"}
+export JAVA_OPTS=${JAVA_OPTS:-"-Xms700m -Xmx700m"}
 
 # Additional Java options for the application server
 export APP_SERVER_JAVA_OPTS="${APP_SERVER_JAVA_OPTS:-}"
 
 #------------------------------------------------------------------------------
 # Enable Java GC logging (see below for the default configuration)
-export JAVA_GC_LOGGING=true
+# by lhs disabled
+#export JAVA_GC_LOGGING=true
+export JAVA_GC_LOGGING=false # by lhs
 
 # Example Environment variables for further logging configuration:
 

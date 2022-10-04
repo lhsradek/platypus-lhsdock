@@ -20,3 +20,21 @@ Add agent to configured [[Elastic Agent|elastic agent]] with runnnig [[Fleet Ser
 
 <code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
 <code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>
+
+-----
+
+{{kibana01.png?600x200}}
+
+{{kibana02.png?600x200}}
+
+{{kibana03.png?600x200}}
+
+{{kibana04.png?600x200}}
+
+{{kibana05.png?600x200}}
+
+{{kibana06.png?600x200}}
+
+{{kibana07.png?600x200}}
+
+{{kibana08.png?600x200}}

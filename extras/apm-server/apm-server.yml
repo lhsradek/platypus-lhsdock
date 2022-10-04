@@ -329,7 +329,7 @@ output.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
+    #- "https://es02.docker.nginx.local:9201"
 
   # Protocol - either `http` (default) or `https`.
   protocol: "https"
@@ -883,13 +883,13 @@ output.elasticsearch:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-http.enabled: false
+#http.enabled: true
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-http.host: "0.0.0.0"
+#http.host: "0.0.0.0"
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-http.port: 5066
+#http.port: 5066
 
 #============================= X-pack Monitoring =============================
 
@@ -897,8 +897,9 @@ http.port: 5066
 # cluster.  This requires x-pack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
+xpack.monitoring.enabled: false
+#
 # Set to true to enable the monitoring reporter.
-xpack.monitoring.enabled: true
 monitoring:
   enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
@@ -912,8 +913,8 @@ monitoring.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
-  # api_key: "${AGENT_API_KEY}"
-  username: "${ELASTICSEARCH_USERNAME}"
+  #api_key: "${AGENT_API_KEY}"
+  username: "apm_system"
   password: "${ELASTICSEARCH_PASSWORD}"
 
   # Array of hosts to connect to.
@@ -922,7 +923,7 @@ monitoring.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
+    #- "https://es02.docker.nginx.local:9201"
 
   # Protocol - either `http` (default) or `https`.
   protocol: "https"

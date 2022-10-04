@@ -249,10 +249,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/logstash/config/certs
-      # - ./extras/logstash/jvm.options:/usr/share/logstash/config/jvm.options:ro
+      - ./extras/logstash/jvm.options:/usr/share/logstash/config/jvm.options:ro
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      # - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
-      # - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
       # - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
       - logstash:/usr/share/logstash
     environment:

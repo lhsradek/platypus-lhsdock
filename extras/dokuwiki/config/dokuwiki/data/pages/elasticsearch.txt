@@ -12,17 +12,21 @@
 
 ===== Important urls: =====
 
-GET [[https://es01.docker.nginx.local:9200/_cluster/stats?human=true|_cluster/stats]]
+GET [[https://es01.docker.nginx.local:9200/_cluster/stats?pretty|_cluster/stats]]
 
-GET [[https://es01.docker.nginx.local:9200/_cluster/settings?human=true|_cluster/settings]]
+GET [[https://es01.docker.nginx.local:9200/_cluster/settings?pretty|_cluster/settings]]
 
-GET [[https://es01.docker.nginx.local:9200/_xpack?human=true|_xpack]]
+GET [[https://es01.docker.nginx.local:9200/_xpack?pretty|_xpack]]
 
-GET [[https://es01.docker.nginx.local:9200/_tasks?actions=data_frame/transforms*&detailed&human=true|_tasks]]
+GET [[https://es01.docker.nginx.local:9200/_cat/indices?pretty|_cat/indices]]
 
-GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7?human=true|.fleet-policies-7]]
+GET [[https://es01.docker.nginx.local:9200/_tasks?actions=data_frame/transforms*&detailed&pretty|_tasks]]
 
-GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7/_fleet/global_checkpoints?human=true|.fleet-policies-7/_fleet/global_checkpoints]]
+GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7?pretty|.fleet-policies-7]]
+
+GET [[https://es01.docker.nginx.local:9200/.fleet-policies-7/_fleet/global_checkpoints?pretty|.fleet-policies-7/_fleet/global_checkpoints]]
+
+GET [[https://es01.docker.nginx.local:9200/_search?q=application&pretty|_search?q=application]]
 
 -----
 

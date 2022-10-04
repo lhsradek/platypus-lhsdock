@@ -5,6 +5,8 @@
 
  - [[Elasticsearch]]
 
+ - [[Logstash]]
+
  - [[Kibana]]
 
  - [[Cerebro]]
