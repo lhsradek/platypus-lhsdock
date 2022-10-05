@@ -20,7 +20,7 @@ heartbeat.config.monitors:
 
 heartbeat.monitors:
 - type: http
-  schedule: '0 */2 * * * * *'
+  schedule: '0 * * * * * *'
   id: http-service
   name: HTTP Service
   data_stream.namespace: default
@@ -35,7 +35,7 @@ heartbeat.monitors:
     - http://cerebro.nginx.local:9000
     - https://es01.docker.nginx.local:9200
     - https://es02.docker.nginx.local:9201
-    # - https://es03.docker.nginx.local:9202
+    - https://es03.docker.nginx.local:9202
     - https://docker.nginx.local:443/downloads
     - http://eps.nginx.local:3002
     - https://fleet.nginx.local:8820
@@ -58,7 +58,7 @@ heartbeat.monitors:
     verification_mode: "none"
 
 - type: icmp
-  schedule: '0 */2 * * * * *'
+  schedule: '0 * * * * * *'
   id: icmp-service
   name: ICMP Service
   data_stream.namespace: default
@@ -68,6 +68,7 @@ heartbeat.monitors:
     - cerebro.docker.nginx.local
     - es01.docker.nginx.local
     - es02.docker.nginx.local
+    - es03.docker.nginx.local
     - file.nginx.local
     - fleet.nginx.local
     - heart.nginx.local
