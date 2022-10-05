@@ -1,0 +1,15 @@
+====== Elastic-agent ======
+
+Debian:
+
+[[https://docker.nginx.local/downloads/elastic-agent-8.4.2-amd64.deb|elastic-agent-8.4.2-amd64.deb]]
+
+Linux:
+
+[[https://docker.nginx.local/downloads/elastic-agent-8.4.2-linux-x86_64.tar.gz|elastic-agent-8.4.2-linux-x86_64.tar.gz]]
+
+RPM:
+
+[[https://docker.nginx.local/downloads/elastic-agent-8.4.2-x86_64.rpm|elastic-agent-8.4.2-x86_64.rpm]]
+
+-----

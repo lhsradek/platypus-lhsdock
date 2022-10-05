@@ -43,9 +43,9 @@ heartbeat.monitors:
     - https://wiki.docker.nginx.local/doku.php?id=start&do=index
     - https://docker.traefik.local
     # tomcat
-    - https://docker.tomcat.local/tombola
+    - https://tombola.docker.tomcat.local:8443/tomcat.jsp
     - https://docker.tomcat.local/tombola-javadoc
-    - https://docker.tomcat.local/manager
+    #- https://docker.tomcat.local/manager
     - https://ad.docker.tomcat.local
     # wordpress
     - https://docker.wordpress.local
@@ -126,5 +126,5 @@ setup:
        # verification_mode: "none"
   apm:
     enabled: true
-    service_name: "heartbeat"
+    service_name: "lhs"
     server_url: "http://apm.nginx.local:8200"

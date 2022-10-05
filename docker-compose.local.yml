@@ -40,7 +40,7 @@ services:
       - http.port=9200
       - transport.port=9300
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
-      # - cluster.name=${CLUSTER_NAME}
+      - cluster.name=${CLUSTER_NAME}
       # - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
       # - cluster.initial_master_nodes=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
@@ -62,6 +62,7 @@ services:
       - xpack.license.self_generated.type=${LICENSE}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - "ES_JAVA_OPTS=${ES01_JAVA_OPTS}"
+    # Traefik redirects the stray query directly to elastic. It is nice that the running service can be seen in traffic
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -78,7 +79,7 @@ services:
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'" ]
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q 'missing authentication credentials'" ]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -131,6 +132,7 @@ services:
       - xpack.license.self_generated.type=${LICENSE}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - "ES_JAVA_OPTS=${ES02_JAVA_OPTS}"
+    # Traefik redirects the stray query directly to elastic.
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -147,7 +149,7 @@ services:
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9201 | grep -q 'missing authentication credentials'" ]
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://es02.${APP_HOST}.${INT_NETWORK}:9201 | grep -q 'missing authentication credentials'" ]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -202,6 +204,7 @@ services:
       - xpack.license.self_generated.type=${LICENSE}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - "ES_JAVA_OPTS=${ES03_JAVA_OPTS}"
+    # Traefik redirects the stray query directly to elastic.
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -218,7 +221,7 @@ services:
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9202 | grep -q 'missing authentication credentials'" ]
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://es03.${APP_HOST}.${INT_NETWORK}:9202 | grep -q 'missing authentication credentials'" ]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -227,12 +230,6 @@ services:
 # === L - Logstash ===
 #
   logstash:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       es03:
         condition: service_healthy
@@ -256,7 +253,7 @@ services:
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      # - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
+      - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
       - logstash:/usr/share/logstash
     environment:
       - CLUSTER_NAME=${CLUSTER_NAME}
@@ -265,7 +262,7 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca/ca.crt
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://localhost:9600 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://logstash.${APP_HOST}.${INT_NETWORK}:9600 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -274,12 +271,6 @@ services:
 # === K - kibana ===
 #
   kibana:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       es03:
         condition: service_healthy
@@ -310,6 +301,7 @@ services:
       - ELASTICSEARCH_SSL_SERVER_CERT=/usr/share/kibana/config/certs/kibana/kibana.crt
       - ELASTICSEARCH_SSL_SERVER_CERT_KEY=/usr/share/kibana/config/certs/kibana/kibana.key
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+    # Traefik redirects the stray query directly to kibana.
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -322,7 +314,7 @@ services:
       - "traefik.http.services.kibana-platypus-${APP_ID}.loadbalancer.server.port=5601"
       - "traefik.http.services.kibana-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://localhost:5601 | grep -q 'HTTP/1.1 302 Found'"]
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -331,12 +323,6 @@ services:
 # === APM Server ===
 #
   apm:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       es03:
         condition: service_healthy
@@ -378,104 +364,7 @@ services:
 #
 # === Elastic Agent as fleet server ===
 #
-#   fleet:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       es02:
-#         condition: service_healthy
-#     depends_on:
-#       kibana:
-#         condition: service_healthy
-#     depends_on:
-#       apm:
-#         condition: service_healthy
-#     depends_on:
-#       heartbeat:
-#         condition: service_healthy
-#     depends_on:
-#       filebeat:
-#         condition: service_healthy
-#     # Ubuntu - fleet
-#     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
-#     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     networks:
-#       # local network:
-#       - intnet
-#     ports:
-#       - ${FLEET_PORT}:8220
-#     container_name: "${APP_ID}-fleet"
-#     hostname: "fleet"
-#     user: root # note, synthetic browser monitors require this set to `elastic-agent`
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock
-#       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-#       - /proc:/hostfs/proc:ro
-#       - /:/hostfs:ro
-#       - ./certs:/usr/share/elastic-agent/certs
-#       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
-#       #- ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
-#       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
-#       - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
-#       #- ./extras/elastic-agent/heartbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/heartbeat.yml
-# 
-#       - ./logs/fleet/elastic-agent:/usr/share/elastic-agent/state/data/logs
-#       - ./logs/fleet/apm-server:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/logs
-#       - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
-#       - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
-#       - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
-#       - ./logs/es01:/usr/share/filebeat/elogs/es01
-#       - ./logs/es02:/usr/share/filebeat/elogs/es02
-#       - ./logs/es03:/usr/share/filebeat/elogs/es03
-#       - fleet:/usr/share/elastic-agent
-#     environment:
-#       - APP_ID=${APP_ID}
-#       - APP_NET=${INT_NETWORK}
-#       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-#       - ELASTICSEARCH_USERNAME=elastic
-#       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
-#       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
-#       - FLEET_ENROLL=1
-#       - FLEET_SERVER_ENABLE=1
-#       - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-#       - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
-#       - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
-#       - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-#       - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
-#       - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-#       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/fleet/fleet.crt
-#       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/fleet/fleet.key
-#       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
-#       # - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
-#       # - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
-#       - FLEET_URL=https://fleet.${INT_NETWORK}:8220
-#       - KIBANA_FLEET_USERNAME=elastic
-#       - KIBANA_FLEET_PASSWORD=${APM_PASSWORD}
-#       - KIBANA_FLEET_HOST=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
-#       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-#       - KIBANA_FLEET_SETUP=1
-#       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
-#       - CLUSTER_NAME=${CLUSTER_NAME}
-#       - CLUSTER_UUID=${CLUSTER_UUID}
-#     healthcheck:
-#       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-#       # test: ["CMD-SHELL", "curl -I http://localhost:5068 | grep -q 'HTTP/1.1 200 OK'"]
-#       interval: 10s
-#       timeout: 60s
-#       retries: 500
-    
-#
-# === Metricbeat ===
-#
-  metricbeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
+  fleet:
     depends_on:
       es03:
         condition: service_healthy
@@ -483,7 +372,85 @@ services:
       kibana:
         condition: service_healthy
     depends_on:
-      logstash:
+      apm:
+        condition: service_healthy
+    # Ubuntu - fleet
+    image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
+    # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
+    restart: ${DOCKER_RESTART_POLICY}
+    networks:
+      # local network:
+      - intnet
+    ports:
+      - ${FLEET_PORT}:8220
+    container_name: "${APP_ID}-fleet"
+    hostname: "fleet.${INT_NETWORK}"
+    user: root # note, synthetic browser monitors require this set to `elastic-agent`
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+      - ./certs:/usr/share/elastic-agent/certs
+      - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
+      - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
+      - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
+      - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
+      - ./extras/elastic-agent/heartbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/heartbeat.yml
+      - ./logs/fleet/elastic-agent:/usr/share/elastic-agent/state/data/logs
+      - ./logs/fleet/apm-server:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/logs
+      - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
+      - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
+      - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
+      - ./logs/es01:/usr/share/filebeat/elogs/es01
+      - ./logs/es02:/usr/share/filebeat/elogs/es02
+      - ./logs/es03:/usr/share/filebeat/elogs/es03
+      - fleet:/usr/share/elastic-agent
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_NET=${INT_NETWORK}
+      - CLUSTER_NAME=${CLUSTER_NAME}
+      - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
+      - FLEET_ENROLL=0
+      - FLEET_SERVER_ENABLE=1
+      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
+      - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
+      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
+      - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/fleet/fleet.crt
+      - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/fleet/fleet.key
+      - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
+      # - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
+      # - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
+      - FLEET_URL=https://fleet.${INT_NETWORK}:8220
+      - KIBANA_FLEET_USERNAME=elastic
+      - KIBANA_FLEET_PASSWORD=${APM_PASSWORD}
+      - KIBANA_FLEET_HOST=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
+      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - KIBANA_FLEET_SETUP=1
+      - KIBANA_FLEET_REQUESTTIMEOUT=1200000
+    healthcheck:
+      test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
+      # test: ["CMD-SHELL", "curl -I http://fleet.${INT_NETWORK}:5068 | grep -q 'HTTP/1.1 200 OK'"]
+      interval: 30s
+      timeout: 60s
+      retries: 600
+    
+#
+# === Metricbeat ===
+#
+  metricbeat:
+    depends_on:
+      es03:
+        condition: service_healthy
+    depends_on:
+      kibana:
         condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
@@ -492,8 +459,6 @@ services:
     hostname: "metric.${INT_NETWORK}"
     user: root
     networks:
-      # for traefik:
-      - default
       # local network:
       - intnet
     ports:
@@ -527,12 +492,6 @@ services:
 # === Filebeat ===
 #
   filebeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       es03:
         condition: service_healthy
@@ -597,12 +556,6 @@ services:
 #
   heartbeat:
     depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
       es03:
         condition: service_healthy
     # Ubuntu - enterprisesearch
@@ -642,12 +595,6 @@ services:
 #
   eps:
     depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
       es03:
         condition: service_healthy
     depends_on:
@@ -682,6 +629,7 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
+    # If something goes astray on 443, traefik redirects them to elastic es01, Web enterprise-search is obsolete. Web functions is moved to kibana and enterprise-search is backend.
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -690,21 +638,15 @@ services:
       - "traefik.http.routers.eps-public.tls=true"
       - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://localhost:3002 | grep -q 'HTTP/1.1 302 Found'"]
+      test: ["CMD-SHELL", "curl -s -I http://eps.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
       timeout: 10s
       retries: 500
   
 #
-# Status and configuration of docker-cloud without using Kibana
+# Status and configurations of docker-cloud without using Kibana - Web console for REST.
 #
   cerebro:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       es03:
         condition: service_healthy
@@ -738,8 +680,11 @@ services:
       - "traefik.http.routers.cerebro-public.tls=true"
       - "traefik.http.services.cerebro-platypus-${APP_ID}.loadbalancer.server.port=9000"
       - "traefik.http.services.cerebro-platypus-${APP_ID}.loadbalancer.server.scheme=http"
- 
-  setup: # setup makes certs and change password
+
+#
+# setup makes certs and change passwords
+#
+  setup:
     # Ubuntu - elasticsearch
     # see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/docker.html
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
@@ -775,7 +720,6 @@ services:
           "  - name: ${APP_HOST}\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: apm\n"\
           "    dns:\n"\
           "      - apm.${INT_NETWORK}\n"\
@@ -783,98 +727,74 @@ services:
           "  - name: cerebro\n"\
           "    dns:\n"\
           "      - cerebro.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: es01\n"\
           "    dns:\n"\
           "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: es02\n"\
           "    dns:\n"\
           "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: es03\n"\
           "    dns:\n"\
           "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: eps\n"\
           "    dns:\n"\
           "      - eps.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: file\n"\
           "    dns:\n"\
           "      - file.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: fleet\n"\
           "    dns:\n"\
           "      - fleet.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: heart\n"\
           "    dns:\n"\
           "      - heart.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: kibana\n"\
           "    dns:\n"\
           "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: logstash\n"\
           "    dns:\n"\
           "      - logstash.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: metric\n"\
           "    dns:\n"\
           "      - metric.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: wiki\n"\
           "    dns:\n"\
           "      - wiki.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - localhost\n"\
           "  - name: tomcat\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.tomcat.local\n"\
-          "      - localhost\n"\
           "  - name: tomcat-web\n"\
           "    dns:\n"\
-          "      - web.${APP_HOST}.tomcat.local\n"\
-          "      - localhost\n"\
+          "      - tombola.${APP_HOST}.tomcat.local\n"\
           "  - name: tomcat-ad\n"\
           "    dns:\n"\
           "      - ad.${APP_HOST}.tomcat.local\n"\
-          "      - localhost\n"\
           "  - name: tomcat-db\n"\
           "    dns:\n"\
           "      - db.${APP_HOST}.tomcat.local\n"\
-          "      - localhost\n"\
           "  - name: tomcat-redis\n"\
           "    dns:\n"\
           "      - redis.${APP_HOST}.tomcat.local\n"\
-          "      - localhost\n"\
           "  - name: traefik\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.traefik.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.wordpress.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress-wp\n"\
           "    dns:\n"\
           "      - wp.${APP_HOST}.wordpress.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress-wpa\n"\
           "    dns:\n"\
           "      - wpa.${APP_HOST}.wordpress.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress-pma\n"\
           "    dns:\n"\
           "      - pma.${APP_HOST}.wordpress.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress-db\n"\
           "    dns:\n"\
           "      - db.${APP_HOST}.wordpress.local\n"\
-          "      - localhost\n"\
           "  - name: wordpress-redis\n"\
           "    dns:\n"\
-          "      - redis.${APP_HOST}.wordpress.local\n"\
           "      - localhost\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then
@@ -1053,11 +973,11 @@ services:
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
       - esdata03:/root/bin/volume/es03:ro
+      - logstash:/root/bin/volume/logstash:ro
       - kibana:/root/bin/volume/kibana:ro
       - apm:/root/bin/volume/apm:ro
-      - logstash:/root/bin/volume/logstash:ro
-      - filebeat:/root/bin/volume/file:ro
       - fleet:/root/bin/volume/fleet:ro
+      - filebeat:/root/bin/volume/file:ro
       - heartbeat:/root/bin/volume/heart:ro
       - metricbeat:/root/bin/volume/metric:ro
       - epsdata:/root/bin/volume/eps:ro
@@ -1082,7 +1002,7 @@ services:
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
       # fi
     healthcheck:
-      test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
+      test: "curl -s -I http://${APP_HOST}.${INT_NETWORK}/nginx_status | grep -q 'HTTP/1.1 200 OK'"
       interval: 30s
       timeout: 2s
       retries: 50
@@ -1124,13 +1044,23 @@ services:
       - TZ=${TIME_ZONE}
       - DOKUWIKI_PASSWORD=${APM_PASSWORD}
     volumes:
-      # The first mount add bash and ping to nginx:alpine - lhsradek/lhsdock this dont'n need, see:
-      # https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile of lhsradek/lhsdock:v3
+      # The first mount add bash and ping to nginx:alpine
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
       - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
       - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt
       - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key
       - ./extras/dokuwiki/config:/config
+      - ./png/cerebro01.png:/config/dokuwiki/data/media/cerebro01.png
+      - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
+      - ./png/cerebro03.png:/config/dokuwiki/data/media/cerebro03.png
+      - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
+      - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
+      - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
+      - ./png/kibana04.png:/config/dokuwiki/data/media/kibana04.png
+      - ./png/kibana05.png:/config/dokuwiki/data/media/kibana05.png
+      - ./png/kibana06.png:/config/dokuwiki/data/media/kibana06.png
+      - ./png/kibana07.png:/config/dokuwiki/data/media/kibana07.png
+      - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
       - ./logs/dokuwiki:/config/log
     labels:
       - "traefik.enable=true"

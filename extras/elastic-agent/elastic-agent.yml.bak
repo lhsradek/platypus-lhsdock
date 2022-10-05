@@ -1,0 +1,516 @@
+# ================================ General =====================================
+# Beats is configured under Fleet, you can define most settings
+# from the Kibana UI. You can update this file to configure the settings that
+# are not supported by Fleet.
+# fleet:
+#  enabled: true
+
+# agent.download:
+#   # source of the artifacts, requires elastic like structure and naming of the binaries
+#   # e.g /windows-x86.zip
+#   sourceURI: "https://artifacts.elastic.co/downloads/beats/"
+#   # path to the directory containing downloaded packages
+#   target_directory: "${path.data}/downloads"
+#   # timeout for downloading package
+#   timeout: 120s
+#   # file path to a public key used for verifying downloaded artifacts
+#   # if not file is present Elastic Agent will try to load public key from elastic.co website.
+#   pgpfile: "${path.data}/elastic.pgp"
+#   # install_path describes the location of installed packages/programs. It is also used
+#   # for reading program specifications.
+#   install_path: "${path.data}/install"
+
+# agent.process:
+#   # minimal port number for spawned processes
+#   min_port: 10000
+#   # maximum port number for spawned processes
+#   max_port: 30000
+#   # timeout for creating new processes. when process is not successfully created by this timeout
+#   # start operation is considered a failure
+#   spawn_timeout: 30s
+
+# agent.retry:
+#   # enabled determines whether retry is possible. Default is false.
+#   enabled: true
+#   # retries_count specifies number of retries. Default is 3.
+#   # Retry count of 1 means it will be retried one time after one failure.
+#   retries_count: 3
+#   # delay specifies delay in ms between retries. Default is 30s
+#   delay: 30s
+#   # max_delay specifies maximum delay in ms between retries. Default is 300s
+#   max_delay: 5m
+#   # Exponential determines whether delay is treated as exponential.
+#   # With 30s delay and 3 retries: 30, 60, 120s
+#   # Default is false
+#   exponential: false
+#
+#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.2-amd64.deb
+#sudo dpkg -i elastic-agent-8.4.2-amd64.deb
+#sudo elastic-agent enroll \
+#  --fleet-server-es=https://es01:9200 \
+#  --fleet-server-service-token=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NjQ2NjkzNTYzOTQ6c19HMDN5V2dTWlNGSmhRdEtpeUdnQQ \
+#  --fleet-server-policy=fleet-server-policy
+#sudo systemctl enable elastic-agent
+#sudo systemctl start elastic-agent
+#
+#
+#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.2-linux-x86_64.tar.gz
+#tar xzvf elastic-agent-8.4.2-linux-x86_64.tar.gz
+#cd elastic-agent-8.4.2-linux-x86_64
+#sudo ./elastic-agent install --url=https://localhost:8220 \
+#  --fleet-server-es=https://es01:9200 \
+#  --fleet-server-service-token=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NjQ2Njk4NjQ0NjM6WUw0a0lqYmtSb3lrbFpsT051TGQ3QQ \
+#  --fleet-server-policy=fleet-server-policy \
+#  --certificate-authorities=<PATH_TO_CA> \
+#  --fleet-server-es-ca=<PATH_TO_ES_CERT> \
+#  --fleet-server-cert=<PATH_TO_FLEET_SERVER_CERT> \
+#  --fleet-server-cert-key=<PATH_TO_FLEET_SERVER_CERT_KEY>
+#
+inputs:
+  - type: system/metrics
+    data_stream.namespace: default
+    use_output: default
+    streams:
+      - metricset: cpu
+        data_stream.dataset: system.cpu
+      - metricset: memory
+        data_stream.dataset: system.memory
+      - metricset: network
+        data_stream.dataset: system.network
+      - metricset: filesystem
+        data_stream.dataset: system.filesystem
+
+id: fleet-server-policy
+revision: 3
+outputs:
+  default:
+    type: elasticsearch
+    hosts:
+      - 'https://es01.docker.nginx.local:9200'
+      # - 'https://es02.docker.nginx.local:9201'
+      # - 'https://es03.docker.nginx.local:9202'
+    username: ${FLEET_SERVER_ELASTICSEARCH_USERNAME}
+    # username: fleet-server
+    password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities:
+        - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
+      # certificate: ${FLEET_SERVER_CERT}
+      # key: ${FLEET_SERVER_CERT_KEY}
+      # verification_mode: certificate
+      verification_mode: none
+output_permissions:
+  default:
+    _elastic_agent_monitoring:
+      indices:
+        - names:
+            - logs-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+    _elastic_agent_checks:
+      cluster:
+        - monitor
+    ec82c4c8-7aa8-4841-b372-e48c4ea48d16:
+      indices:
+        - names:
+            - logs-system.auth-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.syslog-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.application-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.system-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.cpu-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.fsstat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.diskio-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.filesystem-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.network-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.uptime-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.memory-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process.summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.load-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.socket_summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+agent:
+  download:
+    source_uri: 'https://artifacts.elastic.co/downloads/'
+  monitoring:
+    enabled: true
+    use_output: default
+    namespace: default
+    logs: true
+    metrics: true
+inputs:
+  - id: fleet-server-fleet_server-d4ca6eb8-ab85-499c-b755-5a1194ae43c4
+    name: fleet_server-1
+    revision: 2
+    type: fleet-server
+    use_output: default
+    meta:
+      package:
+        name: fleet_server
+        version: 1.2.0
+    data_stream:
+      namespace: default
+    server:
+      port: 8220
+      host: 0.0.0.0
+  - id: logfile-system-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+    name: system-2
+    revision: 1
+    type: logfile
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: logfile-system.auth-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.auth
+          type: logs
+        ignore_older: 72h
+        paths:
+          - /var/log/auth.log*
+          - /var/log/secure*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        tags:
+          - hashicorp-vault-log
+        processors:
+          - add_locale: null
+      - id: logfile-system.syslog-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.syslog
+          type: logs
+        paths:
+          - /var/log/messages*
+          - /var/log/syslog*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+        ignore_older: 72h
+  - id: winlog-system-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+    name: system-2
+    revision: 1
+    type: winlog
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: winlog-system.application-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        name: Application
+        data_stream:
+          dataset: system.application
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+      - id: winlog-system.security-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        name: Security
+        data_stream:
+          dataset: system.security
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+      - id: winlog-system.system-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        name: System
+        data_stream:
+          dataset: system.system
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+  - id: system/metrics-system-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+    name: system-2
+    revision: 1
+    type: system/metrics
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: system/metrics-system.cpu-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        cpu.metrics:
+          - percentages
+          - normalized_percentages
+        period: 10s
+      - id: system/metrics-system.fsstat-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.fsstat
+          type: metrics
+        metricsets:
+          - fsstat
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.diskio-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        diskio.include_devices: null
+        period: 10s
+      - id: system/metrics-system.filesystem-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.filesystem
+          type: metrics
+        metricsets:
+          - filesystem
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.network-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.network
+          type: metrics
+        metricsets:
+          - network
+        period: 10s
+        network.interfaces: null
+      - id: system/metrics-system.process-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.process
+          type: metrics
+        metricsets:
+          - process
+        period: 10s
+        process.include_top_n.by_cpu: 5
+        process.include_top_n.by_memory: 5
+        process.cmdline.cache.enabled: true
+        process.cgroups.enabled: false
+        process.include_cpu_ticks: false
+        processes:
+          - .*
+      - id: system/metrics-system.uptime-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.uptime
+          type: metrics
+        metricsets:
+          - uptime
+        period: 10s
+      - id: system/metrics-system.memory-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.memory
+          type: metrics
+        metricsets:
+          - memory
+        period: 10s
+      - id: >-
+          system/metrics-system.process.summary-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.process.summary
+          type: metrics
+        metricsets:
+          - process_summary
+        period: 10s
+      - id: system/metrics-system.load-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.load
+          type: metrics
+        metricsets:
+          - load
+        condition: '${host.platform} != ''windows'''
+        period: 10s
+      - id: >-
+          system/metrics-system.socket_summary-ec82c4c8-7aa8-4841-b372-e48c4ea48d16
+        data_stream:
+          dataset: system.socket_summary
+          type: metrics
+        metricsets:
+          - socket_summary
+        period: 10s
+fleet:
+  hosts:
+    - 'https://fleet.nginx.local:8220'

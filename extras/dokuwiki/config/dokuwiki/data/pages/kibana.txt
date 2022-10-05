@@ -1,5 +1,6 @@
 ====== Kibana ======
 
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]]K
 ===== Kibana is on url: =====
 
 [[https://kibana.docker.nginx.local:5601]]
@@ -16,25 +17,43 @@ GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
 ===== Add agent =====
 
-Add agent to configured [[Elastic Agent|elastic agent]] with runnnig [[Fleet Server|fleet server]] and [[APMt Server|APM server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
+Add agent to configured [[Elastic-Agent|elastic agent]] with runnnig [[Fleet Server|fleet server]] and [[APMt Server|APM server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
 
 <code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
 <code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>
 
 -----
 
+===== Screenshots =====
+
+==== Observability - Infrastructure - Inventory - metric.nginx.local ====
+
 {{kibana01.png?600x200}}
+
+==== Observability - Infrastructure - Inventory - Host - metric.nginx.local ====
 
 {{kibana02.png?600x200}}
 
+==== Observability - Infrastructure - Inventory - Docker Containers ====
+
 {{kibana03.png?600x200}}
+
+==== Observability - Infrastructure - Uptime - Monitors ====
 
 {{kibana04.png?600x200}}
 
+==== Observability - Infrastructure - Uptime - Certificates ====
+
 {{kibana05.png?600x200}}
+
+==== Observability - Monitor the Stack ====
 
 {{kibana06.png?600x200}}
 
+==== Stack Management - Rules - docker ====
+
 {{kibana07.png?600x200}}
+
+==== Observability - Logs - Stream ====
 
 {{kibana08.png?600x200}}

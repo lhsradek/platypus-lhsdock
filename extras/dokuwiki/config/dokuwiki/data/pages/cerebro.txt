@@ -1,4 +1,5 @@
 ====== Cerebro ======
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
 [[https://github.com/lmenezes/cerebro|Cerebro]] is a web console and status view for [[Elasticsearch]].
 Cerebro is installed on url [[https://cerebro.docker.nginx.local]] 

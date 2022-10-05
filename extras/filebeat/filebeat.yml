@@ -84,6 +84,6 @@ setup:
       verification_mode: certificate
   apm:
     enabled: true
-    service_name: "filebeat"
+    service_name: "lhs"
     protocol: "http"
     server_url: "http://apm.nginx.local:8200"

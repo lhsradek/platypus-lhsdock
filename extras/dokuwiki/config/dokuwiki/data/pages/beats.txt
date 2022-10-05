@@ -1,10 +1,17 @@
 ====== Beats ======
 
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 ===== Filebeat =====
+
+[[Filebeat]]
 
 ===== Heartbeat =====
 
+[[Heartbeat]]
+
 ===== Metricbeeat =====
+
+[[Metricbeat]]
 
 and other for example
 

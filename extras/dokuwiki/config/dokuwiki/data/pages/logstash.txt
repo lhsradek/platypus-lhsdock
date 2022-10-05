@@ -1,5 +1,6 @@
 ====== Logstash ======
 
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]]L[[Kibana|K]]
 ===== Important urls: =====
 
 GET [[https://es01.docker.nginx.local:9200/logstash-*/_search?pretty|logstash-*/_search]]

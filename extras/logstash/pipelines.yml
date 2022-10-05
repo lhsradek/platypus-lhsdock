@@ -4,6 +4,6 @@
 
 - pipeline.id: main
   path.config: "/usr/share/logstash/pipeline/logstash.conf"
-#- pipeline.id: gc-pipeline
-#  path.config: "/usr/share/logstash/pipeline/gc.conf"
-#  pipeline.workers: 2 # 2 is default
+- pipeline.id: gc-pipeline
+  path.config: "/usr/share/logstash/pipeline/gc.conf"
+  # pipeline.workers: 2 # 2 is default
