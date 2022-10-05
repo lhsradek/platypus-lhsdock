@@ -1,14 +1,15 @@
 ====== Elastic-agent ======
 
-Debian:
+[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
+===== Debian =====
 
 [[https://docker.nginx.local/downloads/elastic-agent-8.4.2-amd64.deb|elastic-agent-8.4.2-amd64.deb]]
 
-Linux:
+===== Linux =====
 
 [[https://docker.nginx.local/downloads/elastic-agent-8.4.2-linux-x86_64.tar.gz|elastic-agent-8.4.2-linux-x86_64.tar.gz]]
 
-RPM:
+===== RPM =====
 
 [[https://docker.nginx.local/downloads/elastic-agent-8.4.2-x86_64.rpm|elastic-agent-8.4.2-x86_64.rpm]]
 
