@@ -44,26 +44,29 @@ Removing lhsdock-es03     ... done
 Removing lhsdock-cerebro  ... done
 Removing lhsdock-es02     ... done
 Removing lhsdock-es01     ... done
+Removing lhsdock-wiki     ... done
 Removing lhsdock-php      ... done
 Removing lhsdock          ... done
 Network platypus-local is external, skipping
 Removing network nginx.local
 ================= START ================
-Pulling weblhs     ... done
-Pulling weblhs-php ... done
-Pulling setup      ... done
-Pulling es01       ... done
-Pulling es02       ... done
-Pulling es03       ... done
-Pulling kibana     ... done
-Pulling fleet      ... done
-Pulling logstash   ... done
-Pulling eps        ... done
-Pulling cerebro    ... done
+Pulling weblhs      ... done
+Pulling weblhs-php  ... done
+Pulling weblhs-wiki ... done
+Pulling setup       ... done
+Pulling es01        ... done
+Pulling es02        ... done
+Pulling es03        ... done
+Pulling kibana      ... done
+Pulling fleet       ... done
+Pulling logstash    ... done
+Pulling eps         ... done
+Pulling cerebro     ... done
 Creating network "nginx.local" with the default driver
 Creating lhsdock-php   ... done
 Creating lhsdock-setup ... done
 Creating lhsdock       ... done
+Creating lhsdock-wiki  ... done
 Creating lhsdock-es01  ... done
 Creating lhsdock-cerebro ... done
 Creating lhsdock-es02    ... done
@@ -94,6 +97,8 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/beats/heartbeat                     | 8.4.2      | 2.09GB           |
 | docker.elastic.co/beats/filebeat                      | 8.4.2      | 405MB            |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
+| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
+
 
 With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] script:
 
@@ -117,6 +122,8 @@ With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdo
 | elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | <code>fleet.nginx.local</code>         |  *  |
 | logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | <code>logstash.nginx.local</code>      |  *  |
 | cerebro              | 9000/tcp               | lhsdock-cerebro  | <code>cerebro.www.nginx.local</code>   |  *  |
+| dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki     | <code>wiki.www.nginx.local</code>      |  *  |
+
 
 -----
 
