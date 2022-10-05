@@ -35,7 +35,7 @@ xpack:
       elasticsearch:
         hosts: 
           - "https://es01.docker.nginx.local:9200"
-          - "https://es02.docker.nginx.local:9201"
+          #- "https://es02.docker.nginx.local:9201"
           #- "https://es03.docker.nginx.local:9202"
 
     # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
@@ -246,6 +246,7 @@ elasticsearch:
   hosts: 
     - "https://es01.docker.nginx.local:9200"
     - "https://es02.docker.nginx.local:9201"
+    - "https://es03.docker.nginx.local:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   requestTimeout: 60000

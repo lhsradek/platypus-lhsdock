@@ -40,12 +40,12 @@ services:
       - http.port=9200
       - transport.port=9300
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
-      - cluster.name=${CLUSTER_NAME}
-      # - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
-      - discovery.seed_hosts=es02:9301
-      # - discovery.seed_hosts=es02:9301,es03:9302
+      # - cluster.name=${CLUSTER_NAME}
+      - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
+      # - cluster.initial_master_nodes=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      # - discovery.seed_hosts=es02:9301
+      - discovery.seed_hosts=es02:9301,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
@@ -111,10 +111,10 @@ services:
       - transport.port=9301
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
-      - discovery.seed_hosts=es01:9300
-      # - discovery.seed_hosts=es01:9300,es03:9302
+      # - cluster.initial_master_nodes=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      # - discovery.seed_hosts=es01:9300
+      - discovery.seed_hosts=es01:9300,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
@@ -155,73 +155,73 @@ services:
 #
 #   Start with two elasticsearch, the third can be easily added after installation 
 #
-#   es03:
-#     depends_on:
-#       es02:
-#         condition: service_healthy
-#     # Ubuntu - elasticsearch
-#     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-es03"
-#     hostname: "es03.${APP_HOST}.${INT_NETWORK}"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     ports:
-#       - 9202:9202
-#       - 9302:9302
-#     volumes:
-#       - ./certs:/usr/share/elasticsearch/config/certs
-#       - ./logs/es03:/usr/share/elasticsearch/logs
-#       - ./logs/es03/var:/var/log
-#       - esdata03:/usr/share/elasticsearch
-#     environment:
-#       - node.name=es03
-#       - http.host=0.0.0.0
-#       - http.port=9202
-#       - transport.port=9302
-#       - node.roles=[master, data, ingest, ml, remote_cluster_client]
-#       - cluster.name=${CLUSTER_NAME}
-#       - cluster.initial_master_nodes=es01,es02,es03
-#       - discovery.seed_hosts=es01:9300,es02:9301
-#       - bootstrap.memory_lock=true
-#       - xpack.security.enabled=true
-#       - xpack.security.authc.api_key.enabled=true
-#       - xpack.security.http.ssl.enabled=true
-#       - xpack.security.http.ssl.key=certs/es03/es03.key
-#       - xpack.security.http.ssl.certificate=certs/es03/es03.crt
-#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.http.ssl.verification_mode=certificate
-#       - xpack.security.transport.ssl.enabled=true
-#       - xpack.security.transport.ssl.key=certs/es03/es03.key
-#       - xpack.security.transport.ssl.certificate=certs/es03/es03.crt
-#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.transport.ssl.verification_mode=certificate
-#       - xpack.license.self_generated.type=${LICENSE}
-#       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-#       - "ES_JAVA_OPTS=${ES03_JAVA_OPTS}"
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.docker.network=${DOCKER_NETWORK}"
-#       - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
-#       - "traefik.http.routers.es03-public.entrypoints=https"
-#       - "traefik.http.routers.es03-public.tls=true"
-#       - "traefik.http.routers.es03-public.middlewares=es03-platypus-${APP_ID}@docker"
-#       - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.scheme=https"
-#       - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.port=9202"
-#       - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.port=9202"
-#       - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.scheme=https"
-#     ulimits:
-#       memlock:
-#         soft: -1
-#         hard: -1
-#     healthcheck:
-#       test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9202 | grep -q 'missing authentication credentials'" ]
-#       interval: 10s
-#       timeout: 60s
-#       retries: 500
+  es03:
+    depends_on:
+      es02:
+        condition: service_healthy
+    # Ubuntu - elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-es03"
+    hostname: "es03.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    ports:
+      - 9202:9202
+      - 9302:9302
+    volumes:
+      - ./certs:/usr/share/elasticsearch/config/certs
+      - ./logs/es03:/usr/share/elasticsearch/logs
+      - ./logs/es03/var:/var/log
+      - esdata03:/usr/share/elasticsearch
+    environment:
+      - node.name=es03
+      - http.host=0.0.0.0
+      - http.port=9202
+      - transport.port=9302
+      - node.roles=[master, data, ingest, ml, remote_cluster_client]
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01:9300,es02:9301
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.authc.api_key.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/es03/es03.key
+      - xpack.security.http.ssl.certificate=certs/es03/es03.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/es03/es03.key
+      - xpack.security.transport.ssl.certificate=certs/es03/es03.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - "ES_JAVA_OPTS=${ES03_JAVA_OPTS}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.es03-public.entrypoints=https"
+      - "traefik.http.routers.es03-public.tls=true"
+      - "traefik.http.routers.es03-public.middlewares=es03-platypus-${APP_ID}@docker"
+      - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.es03-platypus-${APP_ID}.redirectscheme.port=9202"
+      - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.port=9202"
+      - "traefik.http.services.es03-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://localhost:9202 | grep -q 'missing authentication credentials'" ]
+      interval: 10s
+      timeout: 60s
+      retries: 500
   
 #
 # === L - Logstash ===
@@ -232,6 +232,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     # Ubuntu - logstash 
     image: logstash:${STACK_VERSION}
@@ -276,6 +279,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
@@ -330,6 +336,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     depends_on:
       kibana:
@@ -468,6 +477,9 @@ services:
       es02:
         condition: service_healthy
     depends_on:
+      es03:
+        condition: service_healthy
+    depends_on:
       kibana:
         condition: service_healthy
     depends_on:
@@ -520,6 +532,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     depends_on:
       kibana:
@@ -587,6 +602,9 @@ services:
     depends_on:
       es02:
         condition: service_healthy
+    depends_on:
+      es03:
+        condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
@@ -628,6 +646,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     depends_on:
       kibana:
@@ -683,6 +704,9 @@ services:
         condition: service_healthy
     depends_on:
       es02:
+        condition: service_healthy
+    depends_on:
+      es03:
         condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:0.9.4
@@ -1028,7 +1052,7 @@ services:
       - ./logs/nginx:/var/log/nginx
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
-      #- esdata03:/root/bin/volume/es03:ro
+      - esdata03:/root/bin/volume/es03:ro
       - kibana:/root/bin/volume/kibana:ro
       - apm:/root/bin/volume/apm:ro
       - logstash:/root/bin/volume/logstash:ro
@@ -1127,9 +1151,9 @@ volumes:
   esdata02:
     external: true
     name: "${APP_ID}-es02"
-  #esdata03:
-  #  external: true
-  #  name: "${APP_ID}-es03"
+  esdata03:
+    external: true
+    name: "${APP_ID}-es03"
   epsdata:
     external: true
     name: "${APP_ID}-eps"
