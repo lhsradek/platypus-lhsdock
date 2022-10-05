@@ -5,13 +5,9 @@
 
 [[https://kibana.docker.nginx.local:5601]]
 
------
-
 ===== Important url: =====
 
 GET [[https://kibana.docker.nginx.local:5601/status|status]]
-
------
 
 **Kibana** directs agents. Agents by agent policies directs [[Beats|beats]] or [[Apm Server|apm server]].
 
