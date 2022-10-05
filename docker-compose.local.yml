@@ -41,7 +41,7 @@ services:
       - transport.port=9300
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       # - cluster.name=${CLUSTER_NAME}
-      - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
+      # - discovery.type=single-node  # no! minimal is two elasticsearch for green elastic cluster and kibana!
       # - cluster.initial_master_nodes=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
       # - discovery.seed_hosts=es02:9301
