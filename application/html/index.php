@@ -106,6 +106,8 @@ $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 $isKibana = @$index->isUrl("https://kibana.".$parent.".nginx.local:5601");
 $isCerebro = @$index->isSocket("cerebro.".$parent.".nginx.local", 9000);
 $isEs01 = @$index->isSocket("es01.".$parent.".nginx.local", 9200);
+$isEs02 = @$index->isSocket("es02.".$parent.".nginx.local", 9201);
+$isEs03 = @$index->isSocket("es03.".$parent.".nginx.local", 9202);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".nginx.local");
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
@@ -157,6 +159,8 @@ if ($printEnv) {
             <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isCerebro) { ?><li><?php print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local")?></a></li><?php } ?>
+            <?php if($isEs02) { ?><li><?php print("<a href=\"https://es02.".$parent.".nginx.local:9201\" target=\"_blank\">es02.".$parent.".nginx.local")?></a></li><?php } ?>
+            <?php if($isEs03) { ?><li><?php print("<a href=\"https://es03.".$parent.".nginx.local:9202\" target=\"_blank\">es03.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWiki) { ?><li><?php print("<a href=\"https://wiki.".$parent.".nginx.local".$port."\" target=\"_blank\">wiki.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
