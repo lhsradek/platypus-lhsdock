@@ -1,20 +1,24 @@
 ====== Beats ======
 
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
-===== Filebeat =====
+===== Filebeat * =====
 
 [[Filebeat]]
 
-===== Heartbeat =====
+===== Heartbeat * =====
 
 [[Heartbeat]]
 
-===== Metricbeeat =====
+===== Metricbeat * =====
 
 [[Metricbeat]]
 
-and other for example
+==== ... and others for example: ====
 
-===== Packetbeat =====
+==== Packetbeat ====
+
+==== Osquerybeat * ====
+
+[[Elastic-agent]] contains beats marked with an asterisk *
 
 -----

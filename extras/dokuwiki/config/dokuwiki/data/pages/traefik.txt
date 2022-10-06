@@ -1,0 +1,7 @@
+====== Traefik ======
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
+
+Traefik is installed on url [[https://docker.traefik.local]] 
+
+{{traefik01.png?600x200}}
+

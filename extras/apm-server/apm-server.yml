@@ -320,8 +320,8 @@ apm-server:
 #================================ Outputs =================================
 
 # Configure the output to use when sending the data collected by apm-server.
-id: agent-policy-1
-revision: 15
+id: apm-1
+revision: 4
 #-------------------------- Elasticsearch output --------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
@@ -330,7 +330,7 @@ output.elasticsearch:
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
     - "https://es01.docker.nginx.local:9200"
-    #- "https://es02.docker.nginx.local:9201"
+    - "https://es02.docker.nginx.local:9201"
 
   # Protocol - either `http` (default) or `https`.
   protocol: "https"
@@ -457,19 +457,6 @@ output.elasticsearch:
   # Kerberos realm.
   #kerberos.realm: ELASTIC
 
-#----------------------------- Console output -----------------------------
-#output.console:
-  # Boolean flag to enable or disable the output module.
-  #enabled: true
-
-  # Configure JSON encoding.
-  #codec.json:
-    # Pretty-print JSON event.
-    #pretty: false
-
-    # Configure escaping HTML symbols in strings.
-    #escape_html: false
-
 #---------------------------- Logstash output -----------------------------
 #output.logstash:
   # Boolean flag to enable or disable the output module.
@@ -578,187 +565,6 @@ output.elasticsearch:
   # never, once, and freely. Default is never.
   #ssl.renegotiation: never
 
-#------------------------------ Kafka output ------------------------------
-#output.kafka:
-  # Boolean flag to enable or disable the output module.
-  #enabled: false
-
-  # The list of Kafka broker addresses from where to fetch the cluster metadata.
-  # The cluster metadata contain the actual Kafka brokers events are published
-  # to.
-  #hosts: ["localhost:9092"]
-
-  # The Kafka topic used for produced events. The setting can be a format string
-  # using any event field. To set the topic from document type use `%{[type]}`.
-  #topic: beats
-
-  # The Kafka event key setting. Use format string to create unique event key.
-  # By default no event key will be generated.
-  #key: ''
-
-  # The Kafka event partitioning strategy. Default hashing strategy is `hash`
-  # using the `output.kafka.key` setting or randomly distributes events if
-  # `output.kafka.key` is not configured.
-  #partition.hash:
-    # If enabled, events will only be published to partitions with reachable
-    # leaders. Default is false.
-    #reachable_only: false
-
-    # Configure alternative event field names used to compute the hash value.
-    # If empty `output.kafka.key` setting will be used.
-    # Default value is empty list.
-    #hash: []
-
-  # Authentication details. Password is required if username is set.
-  #username: ''
-  #password: ''
-
-  # Kafka version libbeat is assumed to run against. Defaults to the "1.0.0".
-  #version: '1.0.0'
-
-  # Configure JSON encoding.
-  #codec.json:
-    # Pretty print json event
-    #pretty: false
-
-    # Configure escaping html symbols in strings.
-    #escape_html: true
-
-  # Metadata update configuration. Metadata do contain leader information
-  # deciding which broker to use when publishing.
-  #metadata:
-    # Max metadata request retry attempts when cluster is in middle of leader
-    # election. Defaults to 3 retries.
-    #retry.max: 3
-
-    # Waiting time between retries during leader elections. Default is 250ms.
-    #retry.backoff: 250ms
-
-    # Refresh metadata interval. Defaults to every 10 minutes.
-    #refresh_frequency: 10m
-
-  # The number of concurrent load-balanced Kafka output workers.
-  #worker: 1
-
-  # The number of times to retry publishing an event after a publishing failure.
-  # After the specified number of retries, the events are typically dropped.
-  # Set max_retries to a value less than 0 to retry
-  # until all events are published. The default is 3.
-  #max_retries: 3
-
-  # The maximum number of events to bulk in a single Kafka request. The default
-  # is 2048.
-  #bulk_max_size: 2048
-
-  # The number of seconds to wait for responses from the Kafka brokers before
-  # timing out. The default is 30s.
-  #timeout: 30s
-
-  # The maximum duration a broker will wait for number of required ACKs. The
-  # default is 10s.
-  #broker_timeout: 10s
-
-  # The number of messages buffered for each Kafka broker. The default is 256.
-  #channel_buffer_size: 256
-
-  # The keep-alive period for an active network connection. If 0s, keep-alives
-  # are disabled. The default is 0 seconds.
-  #keep_alive: 0
-
-  # Sets the output compression codec. Must be one of none, snappy and gzip. The
-  # default is gzip.
-  #compression: gzip
-
-  # Set the compression level. Currently only gzip provides a compression level
-  # between 0 and 9. The default value is chosen by the compression algorithm.
-  #compression_level: 4
-
-  # The maximum permitted size of JSON-encoded messages. Bigger messages will be
-  # dropped. The default value is 1000000 (bytes). This value should be equal to
-  # or less than the broker's message.max.bytes.
-  #max_message_bytes: 1000000
-
-  # The ACK reliability level required from broker. 0=no response, 1=wait for
-  # local commit, -1=wait for all replicas to commit. The default is 1.  Note:
-  # If set to 0, no ACKs are returned by Kafka. Messages might be lost silently
-  # on error.
-  #required_acks: 1
-
-  # The configurable ClientID used for logging, debugging, and auditing
-  # purposes.  The default is "beats".
-  #client_id: beats
-
-  # Enable SSL support. SSL is automatically enabled if any SSL setting is set.
-  #ssl.enabled: false
-
-  # Optional SSL configuration options. SSL is off by default.
-  #
-  # Control the verification of Kafka certificates. Valid values are:
-  # * full, which verifies that the provided certificate is signed by a trusted
-  # authority (CA) and also verifies that the server's hostname (or IP address)
-  # matches the names identified within the certificate.
-  # * strict, which verifies that the provided certificate is signed by a trusted
-  # authority (CA) and also verifies that the server's hostname (or IP address)
-  # matches the names identified within the certificate. If the Subject Alternative
-  # Name is empty, it returns an error.
-  # * certificate, which verifies that the provided certificate is signed by a
-  # trusted authority (CA), but does not perform any hostname verification.
-  #  * none, which performs no verification of the server's certificate. This
-  # mode disables many of the security benefits of SSL/TLS and should only be used
-  # after very careful consideration. It is primarily intended as a temporary
-  # diagnostic mechanism when attempting to resolve TLS errors; its use in
-  # production environments is strongly discouraged.
-  #ssl.verification_mode: full
-
-  # List of supported/valid TLS versions. By default all TLS versions 1.0 up to
-  # 1.2 are enabled.
-  #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
-
-  # List of root certificates for HTTPS server verifications.
-  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #ssl.verification_mode: none
-
-  # Certificate for SSL client authentication.
-  #ssl.certificate: "${APM_SERVER_CERT}"
-
-  # Client Certificate Key
-  #ssl.key: "${APM_SERVER_CERT_KEY}"
-
-  # Optional passphrase for decrypting the Certificate Key.
-  # It is recommended to use the provided keystore instead of entering the passphrase in plain text.
-  #ssl.key_passphrase: ''
-
-  # Configure cipher suites to be used for SSL connections.
-  #ssl.cipher_suites: []
-
-  # Configure curve types for ECDHE based cipher suites.
-  #ssl.curve_types: []
-
-  # Configure what types of renegotiation are supported. Valid options are
-  # never, once, and freely. Default is never.
-  #ssl.renegotiation: never
-
-  # Authentication type to use with Kerberos. Available options: keytab, password.
-  #kerberos.auth_type: password
-
-  # Path to the keytab file. It is used when auth_type is set to keytab.
-  #kerberos.keytab: /etc/krb5kdc/kafka.keytab
-
-  # Path to the Kerberos configuration.
-  #kerberos.config_path: /etc/path/config
-
-  # The service principal name.
-  #kerberos.service_name: HTTP/my-service@realm
-
-  # Name of the Kerberos user. It is used when auth_type is set to password.
-  #kerberos.username: elastic
-
-  # Password of the Kerberos user. It is used when auth_type is set to password.
-  #kerberos.password: changeme
-
-  # Kerberos realm.
-  #kerberos.realm: ELASTIC
-
 #============================= Instrumentation =============================
 
 # Instrumentation support for the server's HTTP endpoints and event publisher.
@@ -795,86 +601,6 @@ output.elasticsearch:
       # Set to true to enable heap profiling.
       #enabled: false
       #interval: 60s
-
-#================================= Paths ==================================
-
-# The home path for the apm-server installation. This is the default base path
-# for all other path settings and for miscellaneous files that come with the
-# distribution.
-# If not set by a CLI flag or in the configuration file, the default for the
-# home path is the location of the binary.
-#path.home:
-
-# The configuration path for the apm-server installation. This is the default
-# base path for configuration files, including the main YAML configuration file
-# and the Elasticsearch template file. If not set by a CLI flag or in the
-# configuration file, the default for the configuration path is the home path.
-#path.config: ${path.home}
-
-# The data path for the apm-server installation. This is the default base path
-# for all the files in which apm-server needs to store its data. If not set by a
-# CLI flag or in the configuration file, the default for the data path is a data
-# subdirectory inside the home path.
-#path.data: ${path.home}/data
-
-# The logs path for an apm-server installation. If not set by a CLI flag or in the
-# configuration file, the default is a logs subdirectory inside the home path.
-#path.logs: ${path.home}/logs
-
-#================================= Logging =================================
-
-# There are three options for the log output: syslog, file, and stderr.
-# Windows systems default to file output. All other systems default to syslog.
-
-# Sets the minimum log level. The default log level is info.
-# Available log levels are: error, warning, info, or debug.
-#logging.level: info
-
-# Enable debug output for selected components. To enable all selectors use ["*"].
-# Other available selectors are "beat", "publish", or "service".
-# Multiple selectors can be chained.
-#logging.selectors: [ ]
-
-# Send all logging output to syslog. The default is false.
-#logging.to_syslog: true
-
-# If enabled, apm-server periodically logs its internal metrics that have changed
-# in the last period. For each metric that changed, the delta from the value at
-# the beginning of the period is logged. Also, the total values for
-# all non-zero internal metrics are logged on shutdown. The default is false.
-#logging.metrics.enabled: false
-
-# The period after which to log the internal metrics. The default is 30s.
-#logging.metrics.period: 30s
-
-# Logging to rotating files. When true, writes all logging output to files.
-# The log files are automatically rotated when the log file size limit is reached.
-#logging.to_files: true
-#logging.files:
-  # Configure the path where the logs are written. The default is the logs directory
-  # under the home path (the binary location).
-  #path: /var/log/apm-server
-
-  # The name of the files where the logs are written to.
-  #name: apm-server
-
-  # Configure log file size limit. If limit is reached, log file will be
-  # automatically rotated.
-  #rotateeverybytes: 10485760 # = 10MB
-
-  # Number of rotated log files to keep. Oldest files will be deleted first.
-  #keepfiles: 7
-
-  # The permissions mask to apply when rotating log files. The default value is 0600.
-  # Must be a valid Unix-style file permissions mask expressed in octal notation.
-  #permissions: 0600
-
-  # Enable log file rotation on time intervals in addition to size-based rotation.
-  # Intervals must be at least 1s. Values of 1m, 1h, 24h, 7*24h, 30*24h, and 365*24h
-  # are boundary-aligned with minutes, hours, days, weeks, months, and years as
-  # reported by the local system clock. All other intervals are calculated from the
-  # Unix epoch. Defaults to disabled.
-  #interval: 0
 
 #=============================== HTTP Endpoint ===============================
 
@@ -1045,22 +771,12 @@ output_permissions:
     _elastic_agent_monitoring:
       indices:
         - names:
-            - metrics-elastic_agent.elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
             - metrics-elastic_agent.endpoint_security-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.auditbeat-default
+            - logs-elastic_agent.auditbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -1070,7 +786,17 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.auditbeat-default
+            - logs-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.packetbeat-default
           privileges:
             - auto_configure
             - create_doc
@@ -1085,7 +811,12 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent-default
+            - logs-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
           privileges:
             - auto_configure
             - create_doc
@@ -1095,47 +826,7 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - logs-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.filebeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.filebeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.fleet_server-default
+            - metrics-elastic_agent.apm_server-default
           privileges:
             - auto_configure
             - create_doc
@@ -1145,135 +836,100 @@ output_permissions:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.cloudbeat-default
+            - metrics-elastic_agent.packetbeat-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-elastic_agent.metricbeat-default
+            - logs-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
           privileges:
             - auto_configure
             - create_doc
     _elastic_agent_checks:
       cluster:
         - monitor
-    default-system:
+    apm:
       indices:
         - names:
-            - logs-system.auth-default
+            - logs-apm.app-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.syslog-default
+            - traces-apm.rum-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.application-default
+            - logs-apm.error-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.security-default
+            - traces-apm-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - logs-system.system-default
+            - metrics-apm.profiling-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-system.cpu-default
+            - metrics-apm.app.*-default
           privileges:
             - auto_configure
             - create_doc
         - names:
-            - metrics-system.diskio-default
+            - traces-apm.sampled-default
           privileges:
             - auto_configure
             - create_doc
+            - maintenance
+            - monitor
+            - read
         - names:
-            - metrics-system.filesystem-default
+            - metrics-apm.internal-default
           privileges:
             - auto_configure
             - create_doc
-        - names:
-            - metrics-system.fsstat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.load-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.memory-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.network-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.process-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.process.summary-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.socket_summary-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-system.uptime-default
-          privileges:
-            - auto_configure
-            - create_doc
-    a0135270-4357-11ed-96fd-63a7800f928a-agent-policy-1-default:
-      indices:
-        - names:
-            - synthetics-icmp-default
-          privileges:
-            - auto_configure
-            - create_doc
-    e4e44ba0-4368-11ed-9ece-3972fccaccfc-agent-policy-1-default:
-      indices:
-        - names:
-            - synthetics-icmp-default
-          privileges:
-            - auto_configure
-            - create_doc
-    fabe2ae0-4368-11ed-9ece-3972fccaccfc-agent-policy-1-default:
-      indices:
-        - names:
-            - synthetics-icmp-default
-          privileges:
-            - auto_configure
-            - create_doc
-    0c954690-4369-11ed-9ece-3972fccaccfc-agent-policy-1-default:
-      indices:
-        - names:
-            - synthetics-icmp-default
-          privileges:
-            - auto_configure
-            - create_doc
-    248f1fa0-4369-11ed-9ece-3972fccaccfc-agent-policy-1-default:
-      indices:
-        - names:
-            - synthetics-icmp-default
-          privileges:
-            - auto_configure
-            - create_doc
+      cluster:
+        - 'cluster:monitor/main'
 agent:
   download:
     source_uri: 'https://artifacts.elastic.co/downloads/'
@@ -1284,372 +940,83 @@ agent:
     logs: true
     metrics: true
 inputs:
-  - id: logfile-system-default-system
-    name: system-1
-    revision: 1
-    type: logfile
+  - id: apm
+    name: apm-1
+    revision: 2
+    type: apm
     use_output: default
     meta:
       package:
-        name: system
-        version: 1.19.3
+        name: apm
+        version: 8.4.2
     data_stream:
       namespace: default
-    streams:
-      - id: logfile-system.auth-default-system
-        data_stream:
-          dataset: system.auth
-          type: logs
-        ignore_older: 72h
-        paths:
-          - /var/log/auth.log*
-          - /var/log/secure*
-        exclude_files:
-          - .gz$
-        multiline:
-          pattern: ^\s
-          match: after
-        tags:
-          - hashicorp-vault-log
-        processors:
-          - add_locale: null
-      - id: logfile-system.syslog-default-system
-        data_stream:
-          dataset: system.syslog
-          type: logs
-        paths:
-          - /var/log/messages*
-          - /var/log/syslog*
-        exclude_files:
-          - .gz$
-        multiline:
-          pattern: ^\s
-          match: after
-        processors:
-          - add_locale: null
-        ignore_older: 72h
-  - id: winlog-system-default-system
-    name: system-1
-    revision: 1
-    type: winlog
-    use_output: default
-    meta:
-      package:
-        name: system
-        version: 1.19.3
-    data_stream:
-      namespace: default
-    streams:
-      - id: winlog-system.application-default-system
-        name: Application
-        data_stream:
-          dataset: system.application
-          type: logs
-        condition: '${host.platform} == ''windows'''
-        ignore_older: 72h
-      - id: winlog-system.security-default-system
-        name: Security
-        data_stream:
-          dataset: system.security
-          type: logs
-        condition: '${host.platform} == ''windows'''
-        ignore_older: 72h
-      - id: winlog-system.system-default-system
-        name: System
-        data_stream:
-          dataset: system.system
-          type: logs
-        condition: '${host.platform} == ''windows'''
-        ignore_older: 72h
-  - id: system/metrics-system-default-system
-    name: system-1
-    revision: 1
-    type: system/metrics
-    use_output: default
-    meta:
-      package:
-        name: system
-        version: 1.19.3
-    data_stream:
-      namespace: default
-    streams:
-      - id: system/metrics-system.cpu-default-system
-        data_stream:
-          dataset: system.cpu
-          type: metrics
-        metricsets:
-          - cpu
-        cpu.metrics:
-          - percentages
-          - normalized_percentages
-        period: 10s
-      - id: system/metrics-system.diskio-default-system
-        data_stream:
-          dataset: system.diskio
-          type: metrics
-        metricsets:
-          - diskio
-        diskio.include_devices: null
-        period: 10s
-      - id: system/metrics-system.filesystem-default-system
-        data_stream:
-          dataset: system.filesystem
-          type: metrics
-        metricsets:
-          - filesystem
-        period: 1m
-        processors:
-          - drop_event.when.regexp:
-              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.fsstat-default-system
-        data_stream:
-          dataset: system.fsstat
-          type: metrics
-        metricsets:
-          - fsstat
-        period: 1m
-        processors:
-          - drop_event.when.regexp:
-              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-      - id: system/metrics-system.load-default-system
-        data_stream:
-          dataset: system.load
-          type: metrics
-        metricsets:
-          - load
-        condition: '${host.platform} != ''windows'''
-        period: 10s
-      - id: system/metrics-system.memory-default-system
-        data_stream:
-          dataset: system.memory
-          type: metrics
-        metricsets:
-          - memory
-        period: 10s
-      - id: system/metrics-system.network-default-system
-        data_stream:
-          dataset: system.network
-          type: metrics
-        metricsets:
-          - network
-        period: 10s
-        network.interfaces: null
-      - id: system/metrics-system.process-default-system
-        data_stream:
-          dataset: system.process
-          type: metrics
-        metricsets:
-          - process
-        period: 10s
-        process.include_top_n.by_cpu: 5
-        process.include_top_n.by_memory: 5
-        process.cmdline.cache.enabled: true
-        process.cgroups.enabled: false
-        process.include_cpu_ticks: false
-        processes:
-          - .*
-      - id: system/metrics-system.process.summary-default-system
-        data_stream:
-          dataset: system.process.summary
-          type: metrics
-        metricsets:
-          - process_summary
-        period: 10s
-      - id: system/metrics-system.socket_summary-default-system
-        data_stream:
-          dataset: system.socket_summary
-          type: metrics
-        metricsets:
-          - socket_summary
-        period: 10s
-      - id: system/metrics-system.uptime-default-system
-        data_stream:
-          dataset: system.uptime
-          type: metrics
-        metricsets:
-          - uptime
-        period: 10s
-  - id: >-
-      synthetics/icmp-synthetics-a0135270-4357-11ed-96fd-63a7800f928a-agent-policy-1-default
-    name: docker-Klášterec nad Ohří-default
-    revision: 4
-    type: synthetics/icmp
-    use_output: default
-    meta:
-      package:
-        name: synthetics
-        version: 0.10.2
-    data_stream:
-      namespace: default
-    streams:
-      - id: a0135270-4357-11ed-96fd-63a7800f928a
-        name: docker
-        type: icmp
+    apm-server:
+      capture_personal_data: true
+      max_connections: 0
+      max_event_size: 307200
+      auth:
+        api_key:
+          enabled: false
+          limit: 100
+        anonymous:
+          enabled: true
+          allow_agent:
+            - rum-js
+            - js-base
+            - iOS/swift
+          allow_service: null
+          rate_limit:
+            ip_limit: 1000
+            event_limit: 300
+        secret_token: null
+      default_service_environment: null
+      shutdown_timeout: 30s
+      sampling:
+        tail:
+          enabled: false
+          storage_limit: 3GB
+          policies:
+            - sample_rate: 0.1
+          interval: 1m
+      rum:
         enabled: true
-        data_stream:
-          dataset: icmp
-          type: synthetics
-        schedule: '@every 3m'
-        wait: 1s
-        service.name: docker
-        hosts: docker.nginx.local
-        origin: ui
-        __ui: null
-        processors:
-          - add_observer_metadata:
-              geo:
-                name: Klášterec nad Ohří
-          - add_fields:
-              fields:
-                config_id: a0135270-4357-11ed-96fd-63a7800f928a
-                monitor.fleet_managed: true
-              target: ''
-        timeout: 16s
-  - id: >-
-      synthetics/icmp-synthetics-e4e44ba0-4368-11ed-9ece-3972fccaccfc-agent-policy-1-default
-    name: wiki-Klášterec nad Ohří-default
-    revision: 4
-    type: synthetics/icmp
-    use_output: default
-    meta:
-      package:
-        name: synthetics
-        version: 0.10.2
-    data_stream:
-      namespace: default
-    streams:
-      - id: e4e44ba0-4368-11ed-9ece-3972fccaccfc
-        name: wiki
-        type: icmp
-        enabled: true
-        data_stream:
-          dataset: icmp
-          type: synthetics
-        schedule: '@every 3m'
-        wait: 1s
-        service.name: wiki
-        hosts: wiki.docker.nginx.local
-        origin: ui
-        __ui: null
-        processors:
-          - add_observer_metadata:
-              geo:
-                name: Klášterec nad Ohří
-          - add_fields:
-              fields:
-                config_id: e4e44ba0-4368-11ed-9ece-3972fccaccfc
-                monitor.fleet_managed: true
-              target: ''
-        timeout: 16s
-  - id: >-
-      synthetics/icmp-synthetics-fabe2ae0-4368-11ed-9ece-3972fccaccfc-agent-policy-1-default
-    name: es01-Klášterec nad Ohří-default
-    revision: 4
-    type: synthetics/icmp
-    use_output: default
-    meta:
-      package:
-        name: synthetics
-        version: 0.10.2
-    data_stream:
-      namespace: default
-    streams:
-      - id: fabe2ae0-4368-11ed-9ece-3972fccaccfc
-        name: es01
-        type: icmp
-        enabled: true
-        data_stream:
-          dataset: icmp
-          type: synthetics
-        schedule: '@every 3m'
-        wait: 1s
-        service.name: es01
-        hosts: es01.docker.nginx.local
-        origin: ui
-        __ui: null
-        processors:
-          - add_observer_metadata:
-              geo:
-                name: Klášterec nad Ohří
-          - add_fields:
-              fields:
-                config_id: fabe2ae0-4368-11ed-9ece-3972fccaccfc
-                monitor.fleet_managed: true
-              target: ''
-        timeout: 16s
-  - id: >-
-      synthetics/icmp-synthetics-0c954690-4369-11ed-9ece-3972fccaccfc-agent-policy-1-default
-    name: es02-Klášterec nad Ohří-default
-    revision: 4
-    type: synthetics/icmp
-    use_output: default
-    meta:
-      package:
-        name: synthetics
-        version: 0.10.2
-    data_stream:
-      namespace: default
-    streams:
-      - id: 0c954690-4369-11ed-9ece-3972fccaccfc
-        name: es02
-        type: icmp
-        enabled: true
-        data_stream:
-          dataset: icmp
-          type: synthetics
-        schedule: '@every 3m'
-        wait: 1s
-        service.name: es02
-        hosts: es02.docker.nginx.local
-        origin: ui
-        __ui: null
-        processors:
-          - add_observer_metadata:
-              geo:
-                name: Klášterec nad Ohří
-          - add_fields:
-              fields:
-                config_id: 0c954690-4369-11ed-9ece-3972fccaccfc
-                monitor.fleet_managed: true
-              target: ''
-        timeout: 16s
-  - id: >-
-      synthetics/icmp-synthetics-248f1fa0-4369-11ed-9ece-3972fccaccfc-agent-policy-1-default
-    name: kibana-Klášterec nad Ohří-default
-    revision: 3
-    type: synthetics/icmp
-    use_output: default
-    meta:
-      package:
-        name: synthetics
-        version: 0.10.2
-    data_stream:
-      namespace: default
-    streams:
-      - id: 248f1fa0-4369-11ed-9ece-3972fccaccfc
-        name: kibana
-        type: icmp
-        enabled: true
-        data_stream:
-          dataset: icmp
-          type: synthetics
-        schedule: '@every 3m'
-        wait: 1s
-        service.name: kibana
-        hosts: kibana.docker.nginx.local
-        origin: ui
-        __ui: null
-        processors:
-          - add_observer_metadata:
-              geo:
-                name: Klášterec nad Ohří
-          - add_fields:
-              fields:
-                config_id: 248f1fa0-4369-11ed-9ece-3972fccaccfc
-                monitor.fleet_managed: true
-              target: ''
-        timeout: 16s
+        exclude_from_grouping: ^/webpack
+        allow_headers: null
+        response_headers: null
+        library_pattern: node_modules|bower_components|~
+        allow_origins:
+          - '*'
+      ssl:
+        enabled: false
+        key_passphrase: null
+        certificate: null
+        supported_protocols:
+          - TLSv1.1
+          - TLSv1.2
+          - TLSv1.3
+        curve_types: null
+        key: null
+        cipher_suites: null
+      response_headers: null
+      write_timeout: 30s
+      pprof.enabled: false
+      host: 'apm.nginx.local:8200'
+      max_header_size: 1048576
+      idle_timeout: 45s
+      expvar.enabled: false
+      read_timeout: 3600s
+      java_attacher:
+        enabled: false
+        discovery-rules: null
+        download-agent-version: null
+      agent_config:
+        - service:
+            name: lhs
+          etag: 2ee97dd8fd494e100205406171636782edd6c635
+          config:
+            transaction_max_spans: '500'
+            transaction_sample_rate: '1.0'
 fleet:
   hosts:
     - 'https://fleet.nginx.local:8220'
-

@@ -1,6 +1,8 @@
 ====== Elastic-agent ======
 
-[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
+Elastic-agent contains [[beats]].
+
+[[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 ===== Debian =====
 
 [[https://docker.nginx.local/downloads/elastic-agent-8.4.2-amd64.deb|elastic-agent-8.4.2-amd64.deb]]

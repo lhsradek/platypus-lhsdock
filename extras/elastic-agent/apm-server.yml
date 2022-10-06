@@ -3,9 +3,9 @@
 ################################ APM Server ################################
 
 apm-server:
-  #host: "unix:///var/run/docker.sock"
+  host: "unix:///var/run/docker.sock"
   #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
-  host: "0.0.0.0"
+  #host: "0.0.0.0"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:
@@ -890,7 +890,7 @@ output.elasticsearch:
 #http.host: "0.0.0.0"
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+http.port: 5076
 
 #============================= X-pack Monitoring =============================
 

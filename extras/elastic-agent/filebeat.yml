@@ -1,7 +1,7 @@
 ###################### Filebeat Configuration #######################
 
 http.enabled: true
-http.port: 5068
+http.port: 5078
 http.host: "0.0.0.0"
 #http.host: "file.nginx.local"
 
@@ -28,7 +28,7 @@ output:
      # Boolean flag to enable or disable the output module.
      enabled: true
      # The Logstash hosts.
-     hosts: ["logstash.docker.nginx.local:5044"]
+     hosts: ["logstash.docker.nginx.local:5055"]
      # username: "logstash_writer"
      username: "${ELASTICSEARCH_USERNAME}"
      password: "${ELASTICSEARCH_PASSWORD}"

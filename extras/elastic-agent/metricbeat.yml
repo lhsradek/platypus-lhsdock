@@ -1,7 +1,7 @@
 ###################### Metricbeat Configuration #######################
 
 http.enabled: true
-http.port: 5067
+http.port: 5077
 http.host: "0.0.0.0"
 #http.host: "metric.nginx.local"
 

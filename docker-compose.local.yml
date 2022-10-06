@@ -339,7 +339,7 @@ services:
       - intnet
     ports:
     # - 5066:5066
-      - ${APM_PORT}:8200
+     - ${APM_PORT}:8200
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -379,6 +379,8 @@ services:
     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
     restart: ${DOCKER_RESTART_POLICY}
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     ports:
@@ -402,9 +404,9 @@ services:
       - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/es01:/usr/share/filebeat/elogs/es01
-      - ./logs/es02:/usr/share/filebeat/elogs/es02
-      - ./logs/es03:/usr/share/filebeat/elogs/es03
+      - ./logs/es01:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es01
+      - ./logs/es02:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es02
+      - ./logs/es03:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es03
       - fleet:/usr/share/elastic-agent
     environment:
       - APP_ID=${APP_ID}
@@ -435,6 +437,16 @@ services:
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
+      - STACK_VERSION=${STACK_VERSION}
+      - STV=${STV}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.fleet-public.rule=Host(`fleet.${INT_NETWORK}`, `apm.fleet.${INT_NETWORK}`, `metric.fleet.${INT_NETWORK}`, `file.fleet.${INT_NETWORK}`, `heart.fleet.${INT_NETWORK}`, `osquery.fleet.${INT_NETWORK}`)"
+      - "traefik.http.routers.fleet-public.entrypoints=https"
+      - "traefik.http.routers.fleet-public.tls=true"
+      - "traefik.http.services.fleet-platypus-${APP_ID}.loadbalancer.server.port=8220"
+      - "traefik.http.services.fleet-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       # test: ["CMD-SHELL", "curl -I http://fleet.${INT_NETWORK}:5068 | grep -q 'HTTP/1.1 200 OK'"]
@@ -461,8 +473,8 @@ services:
     networks:
       # local network:
       - intnet
-    ports:
-     - 5067:5067
+    # ports:
+    # - 5067:5067
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -509,8 +521,8 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-     - 5068:5068
+    # ports:
+    # - 5068:5068
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -564,10 +576,12 @@ services:
     container_name: "${APP_ID}-heart"
     hostname: "heart.${INT_NETWORK}"
     networks:
+      # for test all the world
+      - default
     # local network:
       - intnet
     ports:
-     - 5069:5069
+      - 5069:5069
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
@@ -1020,7 +1034,7 @@ services:
     volumes:
       - ./application/html:/var/www/html:ro
 
-  wiki:
+  weblhs-wiki:
     # Alpine Linux
     depends_on:
       weblhs:
@@ -1061,15 +1075,16 @@ services:
       - ./png/kibana06.png:/config/dokuwiki/data/media/kibana06.png
       - ./png/kibana07.png:/config/dokuwiki/data/media/kibana07.png
       - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
+      - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
       - ./logs/dokuwiki:/config/log
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.wiki-public.rule=Host(`wiki.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.wiki-public.entrypoints=https"
-      - "traefik.http.routers.wiki-public.tls=true"
-      - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.port=443"
-      - "traefik.http.services.wiki-platypus-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.weblhs-wiki-public.rule=Host(`wiki.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.weblhs-wiki-public.entrypoints=https"
+      - "traefik.http.routers.weblhs-wiki-public.tls=true"
+      - "traefik.http.services.weblhs-wiki-platypus-${APP_ID}.loadbalancer.server.port=443"
+      - "traefik.http.services.weblhs-wiki-platypus-${APP_ID}.loadbalancer.server.scheme=https"
 
 volumes:
   apm:

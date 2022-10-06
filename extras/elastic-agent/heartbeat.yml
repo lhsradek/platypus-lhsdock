@@ -1,7 +1,7 @@
 ###################### Heartbeat Configuration #######################
 
 http.enabled: true
-http.port: 5069
+http.port: 5079
 http.host: "0.0.0.0"
 #http.host: "heart.nginx.local"
 
@@ -39,7 +39,7 @@ heartbeat.monitors:
     #- https://docker.nginx.local:443/downloads
     #- http://eps.nginx.local:3002
     #- https://fleet.nginx.local:8820
-    - https://kibana.docker.nginx.local:5601
+    #- https://kibana.docker.nginx.local:5601
     #- https://wiki.docker.nginx.local/doku.php?id=start&do=index
     #- https://docker.traefik.local
     # tomcat

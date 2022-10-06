@@ -28,9 +28,9 @@ output:
      # Boolean flag to enable or disable the output module.
      enabled: true
      # The Logstash hosts.
-     hosts: ["logstash.docker.nginx.local:5044"]
-     # username: "logstash_writer"
-     username: "${ELASTICSEARCH_USERNAME}"
+     hosts: ["logstash.docker.nginx.local:5055"]
+     username: "logstash_writer"
+     #username: "${ELASTICSEARCH_USERNAME}"
      password: "${ELASTICSEARCH_PASSWORD}"
 
   # for /filebeat -e setup --dashboards:

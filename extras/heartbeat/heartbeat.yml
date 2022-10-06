@@ -38,7 +38,7 @@ heartbeat.monitors:
     - https://es03.docker.nginx.local:9202
     - https://docker.nginx.local:443/downloads
     - http://eps.nginx.local:3002
-    - https://fleet.nginx.local:8820
+    - https://fleet.nginx.local:8220
     - https://kibana.docker.nginx.local:5601
     - https://wiki.docker.nginx.local/doku.php?id=start&do=index
     - https://docker.traefik.local
@@ -77,7 +77,7 @@ heartbeat.monitors:
     - metric.nginx.local
     - docker.nginx.local
     - weblhs-php.nginx.local
-    - wiki.nginx.local
+    - wiki.docker.nginx.local
     - lhs.intranet.local
     - mamka.intranet.local
     - docker.traefik.local

@@ -13,7 +13,7 @@ xpack:
         - "https://es02.docker.nginx.local:9201"
         - "https://es03.docker.nginx.local:9202"
       # username: logstash_system
-      # username: logstash_writer
-      username: ${ELASTIC_USERNAME}
+      username: logstash_writer
+      # username: ${ELASTIC_USERNAME}
       password: ${ELASTIC_PASSWORD}
       # api_key:
