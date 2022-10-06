@@ -184,7 +184,7 @@ if ($printEnv) {
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <?php if ($isTomcat) { ?><li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\">".$parent.".tomcat.local")?></a></li><?php } ?>
+              <?php if ($isTomcat) { ?><li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li><?php } ?>
           </ul>
         </p>
 	<p><img src="tomcat.png" width="63" height="40"/></p>
@@ -206,6 +206,8 @@ if ($printEnv) {
           <ul>
               <li><a href="https://hub.docker.com/_/adminer" target="_blank">hub.docker.com - Adminer</a></li>
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Alpine Linux</a></li>
+              <li><a href="https://hub.docker.com/r/lmenezes/cerebro" target="_blank">hub.docker.com - Cerebro</a></li>
+              <li><a href="https://hub.docker.com/r/linuxserver/dokuwiki" target="_blank">hub.docker.com - Dokuwiki</a></li>
               <li><a href="https://hub.docker.com/_/elasticsearch" target="_blank">hub.docker.com - Elasticsearch</a></li>
               <li><a href="https://hub.docker.com/_/kibana" target="_blank">hub.docker.com - Kibana</a></li>
               <li><a href="https://hub.docker.com/_/logstash" target="_blank">hub.docker.com - Logstash</a></li>
