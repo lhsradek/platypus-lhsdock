@@ -671,14 +671,6 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-    # If something goes astray on 443, traefik redirects them to elastic es01, Web enterprise-search is obsolete. Web functions is moved to kibana and enterprise-search is backend.
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.eps-public.rule=Host(`eps.${INT_NETWORK}`)"
-      - "traefik.http.routers.eps-public.entrypoints=https"
-      - "traefik.http.routers.eps-public.tls=true"
-      - "traefik.http.routers.eps-public.middlewares=es01-platypus-${APP_ID}@docker"
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://eps.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
