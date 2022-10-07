@@ -250,7 +250,7 @@ elasticsearch:
   password: "${ELASTICSEARCH_PASSWORD}"
   requestTimeout: 120000
 
-# enterpriseSearch.host: "http://eps.nginx.local:3002"
+enterpriseSearch.host: "http://eps.nginx.local:3002"
 
 logging:
   appenders:
