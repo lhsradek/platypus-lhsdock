@@ -8,7 +8,7 @@
 
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
-    var.paths:
+    #var.paths:
       #- /usr/share/filebeat/elogs/es01/*_server.json  # JSON logs
       #- /usr/share/filebeat/elogs/es02/*_server.json  # JSON logs
       #- /usr/share/filebeat/elogs/es03/*_server.json  # JSON logs
@@ -29,7 +29,7 @@
     enabled: false
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
-    var.paths:
+    #var.paths:
       #- /var/log/elasticsearch/*_access.log  # Plain text logs
       #- /usr/share/filebeat/elogs/es01/*_audit.json  # JSON logs
       #- /usr/share/filebeat/elogs/es02/*_audit.json  # JSON logs
@@ -39,7 +39,7 @@
     enabled: false
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
-    var.paths:
+    #var.paths:
       #- /usr/share/filebeat/logs/es01/*_index_search_slowlog.json    # JSON logs
       #- /usr/share/filebeat/logs/es01/*_index_indexing_slowlog.json  # JSON logs
       #- /usr/share/filebeat/logs/es02/*_index_search_slowlog.json    # JSON logs
@@ -51,7 +51,7 @@
     enabled: false
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
-    var.paths:
+    #var.paths:
       #- /usr/share/filebeat/logs/es01/*_deprecation.json  # JSON logs
       #- /usr/share/filebeat/logs/es02/*_deprecation.json  # JSON logs
       #- /usr/share/filebeat/logs/es03/*_deprecation.json  # JSON logs

@@ -649,8 +649,6 @@ services:
     container_name: "${APP_ID}-eps"
     hostname: "eps.${INT_NETWORK}"
     networks:
-      # for traefik:
-      - default
     # local network:
       - intnet
     # ports:

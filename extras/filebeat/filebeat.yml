@@ -24,7 +24,7 @@ processors:
 
 output:
   # for provisioning:
-   logstash:
+  logstash:
     # Boolean flag to enable or disable the output module.
     enabled: true
     # The Logstash hosts.
@@ -57,7 +57,7 @@ setup:
     hosts: 
       - "https://es01.docker.nginx.local:9200"
       - "https://es02.docker.nginx.local:9201"
-      #- "https://es03.docker.nginx.local:9202"
+      # - "https://es03.docker.nginx.local:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
