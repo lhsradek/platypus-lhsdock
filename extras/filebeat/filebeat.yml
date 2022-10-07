@@ -5,7 +5,7 @@ http.port: 5068
 http.host: "0.0.0.0"
 #http.host: "file.nginx.local"
 
-xpack.monitoring.enabled: true
+xpack.monitoring. enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -25,13 +25,10 @@ processors:
 output:
   # for provisioning:
    logstash:
-     # Boolean flag to enable or disable the output module.
-     enabled: true
-     # The Logstash hosts.
-     hosts: ["logstash.docker.nginx.local:5055"]
-     username: "logstash_writer"
-     #username: "${ELASTICSEARCH_USERNAME}"
-     password: "${ELASTICSEARCH_PASSWORD}"
+    # Boolean flag to enable or disable the output module.
+    enabled: true
+    # The Logstash hosts.
+    hosts: ["logstash.docker.nginx.local:5044"]
 
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
@@ -39,16 +36,16 @@ output:
   #    - "https://es01.docker.nginx.local:9200"
   #    - "https://es02.docker.nginx.local:9201"
   #    # - "https://es03.docker.nginx.local:9202"
-  #  protocol: "https"
-  #  username: "${ELASTICSEARCH_USERNAME}"
-  #  password: "${ELASTICSEARCH_PASSWORD}"
-  #  # api_key: "${AGENT_API_KEY}"
-  #  ssl:
-  #    enabled: true
-  #    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #    # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-  #    # verification_mode: none
-  #    verification_mode: certificate
+  #   protocol: "https"
+  #   username: "${ELASTICSEARCH_USERNAME}"
+  #   password: "${ELASTICSEARCH_PASSWORD}"
+  #   # api_key: "${AGENT_API_KEY}"
+  #   ssl:
+  #     enabled: true
+  #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #     # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+  #     # verification_mode: none
+  #     verification_mode: certificate
 
 setup:      
   ilm.overwrite: true
@@ -60,7 +57,7 @@ setup:
     hosts: 
       - "https://es01.docker.nginx.local:9200"
       - "https://es02.docker.nginx.local:9201"
-      # - "https://es03.docker.nginx.local:9202"
+      #- "https://es03.docker.nginx.local:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

@@ -2,12 +2,12 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-nginx.html
 
 - module: nginx
-  #metricsets:
+  # metricsets:
   #  - stubstatus
   period: 10s
 
   # Nginx hosts
-  hosts: ["https://docker.nginx.local", "https://wiki.docker.nginx.local", "https://docker.wordpress.local", "https://docker.tomcat.local"]
+  hosts: ["https://docker.nginx.local", "https://wiki.docker.nginx.local", "https://docker.wordpress.local", "https://docker.tomcat.local:8443"]
 
   # Path to server status. Default nginx_status
   #server_status_path: "nginx_status"

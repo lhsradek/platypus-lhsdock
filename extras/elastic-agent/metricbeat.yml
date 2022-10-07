@@ -25,7 +25,7 @@ output:
   elasticsearch:
     hosts: 
       - "https://es01.docker.nginx.local:9200"
-      # - "https://es02.docker.nginx.local:9201"
+      - "https://es02.docker.nginx.local:9201"
       # - "https://es03.docker.nginx.local:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
@@ -52,7 +52,7 @@ setup:
     hosts: 
       - "https://es01.docker.nginx.local:9200"
       - "https://es02.docker.nginx.local:9201"
-      - "https://es03.docker.nginx.local:9202"
+      #- "https://es03.docker.nginx.local:9202"
     # api_key: ${AGENT_API_KEY}
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"

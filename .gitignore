@@ -9,6 +9,4 @@ extras/dokuwiki/config/dokuwiki/data/attic/
 extras/dokuwiki/config/dokuwiki/data/index/
 extras/dokuwiki/config/dokuwiki/data/media/
 extras/dokuwiki/config/dokuwiki/data/meta/
-application/html/downloads/elastic-agent-8.4.2-amd64.deb
-application/html/downloads/elastic-agent-8.4.2-linux-x86_64.tar.gz
-application/html/downloads/elastic-agent-8.4.2-x86_64.rpm
+application/html/downloads/elastic-agent-*

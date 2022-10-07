@@ -1,6 +1,6 @@
 FROM nginx:alpine
 LABEL org.opencontainers.image.authors="radek.kadner@gmail.com"
-LABEL description="https://hub.docker.com/repository/docker/lhsradek/lhsdock"
+LABEL description="https://github.com/lhsradek/platypus-lhsdock, https://hub.docker.com/repository/docker/lhsradek/lhsdock"
 RUN mkdir /root/bin /root/bin/alpine
 ADD --chown=44 /etc/ssl/openssl.cnf /etc/ssl
 ADD --chown=44 /root/bin/readme.txt /root/bin

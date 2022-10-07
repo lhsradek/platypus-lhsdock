@@ -44,8 +44,8 @@
 #   # Default is false
 #   exponential: false
 #
-#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.2-amd64.deb
-#sudo dpkg -i elastic-agent-8.4.2-amd64.deb
+#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.3-amd64.deb
+#sudo dpkg -i elastic-agent-8.4.3-amd64.deb
 #sudo elastic-agent enroll \
 #  --fleet-server-es=https://es01:9200 \
 #  --fleet-server-service-token=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NjQ2NjkzNTYzOTQ6c19HMDN5V2dTWlNGSmhRdEtpeUdnQQ \
@@ -54,9 +54,9 @@
 #sudo systemctl start elastic-agent
 #
 #
-#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.2-linux-x86_64.tar.gz
-#tar xzvf elastic-agent-8.4.2-linux-x86_64.tar.gz
-#cd elastic-agent-8.4.2-linux-x86_64
+#curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.3-linux-x86_64.tar.gz
+#tar xzvf elastic-agent-8.4.3-linux-x86_64.tar.gz
+#cd elastic-agent-8.4.3-linux-x86_64
 #sudo ./elastic-agent install --url=https://localhost:8220 \
 #  --fleet-server-es=https://es01:9200 \
 #  --fleet-server-service-token=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2NjQ2Njk4NjQ0NjM6WUw0a0lqYmtSb3lrbFpsT051TGQ3QQ \
@@ -80,8 +80,6 @@ inputs:
       - metricset: filesystem
         data_stream.dataset: system.filesystem
 
-id: fleet-server-policy
-revision: 6
 outputs:
   default:
     type: elasticsearch
@@ -101,147 +99,3 @@ outputs:
       # key: ${FLEET_SERVER_CERT_KEY}
       # verification_mode: certificate
       verification_mode: none
-output_permissions:
-  default:
-    _elastic_agent_monitoring:
-      indices:
-        - names:
-            - metrics-elastic_agent.endpoint_security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.endpoint_security-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.filebeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.heartbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.packetbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.metricbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.filebeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent.apm_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.fleet_server-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.auditbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - logs-elastic_agent-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.osquerybeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-        - names:
-            - metrics-elastic_agent.cloudbeat-default
-          privileges:
-            - auto_configure
-            - create_doc
-    _elastic_agent_checks:
-      cluster:
-        - monitor
-agent:
-  download:
-    source_uri: 'https://artifacts.elastic.co/downloads/'
-  monitoring:
-    enabled: true
-    use_output: default
-    namespace: default
-    logs: true
-    metrics: true
-inputs:
-  - id: fleet-server-fleet_server-355ad670-3f44-5a97-acbe-0ed8fa655332
-    name: fleet_server-1
-    revision: 2
-    type: fleet-server
-    use_output: default
-    meta:
-      package:
-        name: fleet_server
-        version: 1.2.0
-    data_stream:
-      namespace: default
-    server:
-      port: 8220
-      host: fleet.nginx.local
-fleet:
-  hosts:
-    - 'https://fleet.nginx.local:8220'

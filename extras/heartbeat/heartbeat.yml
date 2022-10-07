@@ -5,7 +5,7 @@ http.port: 5069
 http.host: "0.0.0.0"
 #http.host: "heart.nginx.local"
 
-xpack.monitoring.enabled: true
+xpack. monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -35,7 +35,7 @@ heartbeat.monitors:
     - http://cerebro.nginx.local:9000
     - https://es01.docker.nginx.local:9200
     - https://es02.docker.nginx.local:9201
-    - https://es03.docker.nginx.local:9202
+    #- https://es03.docker.nginx.local:9202
     - https://docker.nginx.local:443/downloads
     - http://eps.nginx.local:3002
     - https://fleet.nginx.local:8220
@@ -68,7 +68,7 @@ heartbeat.monitors:
     - cerebro.docker.nginx.local
     - es01.docker.nginx.local
     - es02.docker.nginx.local
-    - es03.docker.nginx.local
+    #- es03.docker.nginx.local
     - file.nginx.local
     - fleet.nginx.local
     - heart.nginx.local

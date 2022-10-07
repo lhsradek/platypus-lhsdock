@@ -30,8 +30,8 @@ output:
      # The Logstash hosts.
      hosts: ["logstash.docker.nginx.local:5055"]
      # username: "logstash_writer"
-     username: "${ELASTICSEARCH_USERNAME}"
-     password: "${ELASTICSEARCH_PASSWORD}"
+     # username: "${ELASTICSEARCH_USERNAME}"
+     # password: "${ELASTICSEARCH_PASSWORD}"
 
   # for /filebeat -e setup --dashboards:
   # elasticsearch:

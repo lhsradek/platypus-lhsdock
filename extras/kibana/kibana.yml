@@ -8,11 +8,10 @@ monitoring:
         enabled: false
     ccs:
       enabled: false
+  kibana:
+    collection.enabled: false
 
 xpack:
-  monitoring:
-    kibana:
-      collection.enabled: false
   reporting:
     kibanaServer:
       hostname: "kibana"
@@ -25,8 +24,8 @@ xpack:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
     # poll_interval: 4000
-    max_workers: 2
-  # apm.serviceMapEnabled: false
+    max_workers: 3
+  apm.serviceMapEnabled: false
   fleet:
     agents:
       fleet_server:
@@ -35,7 +34,7 @@ xpack:
       elasticsearch:
         hosts: 
           - "https://es01.docker.nginx.local:9200"
-          #- "https://es02.docker.nginx.local:9201"
+          - "https://es02.docker.nginx.local:9201"
           #- "https://es03.docker.nginx.local:9202"
 
     # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
@@ -163,13 +162,27 @@ xpack:
             package:
               name: nginx
       
+      - name: Osquery Logs 1
+        description: Osquery Logs
+        id: osquery-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: osquery-1
+            description: osquery
+            id: osquery
+            package:
+              name: osquery
+  
       - name: PostgreSQL policy 1
         description: PostgreSQL policy
         id: postgresql-policy-1
         namespace: default
         monitoring_enabled:
           - logs
-          # - metrics
+          - metrics
         package_policies:
           - name: postgresql-1
             description: postgresql
@@ -182,7 +195,7 @@ xpack:
         id: redis-policy-1
         namespace: default
         monitoring_enabled:
-          # - logs
+          - logs
           - metrics
         package_policies:
           - name: redis-1
@@ -211,7 +224,7 @@ xpack:
         namespace: default
         monitoring_enabled:
           - logs
-          # - metrics
+          - metrics
         package_policies:
           - name: traefik-1
             description: traefik
@@ -219,20 +232,6 @@ xpack:
             package:
               name: traefik
       
-      - name: Osquery Logs 1
-        description: Osquery Logs
-        id: osquery-1
-        namespace: default
-        monitoring_enabled:
-          # - logs
-          - metrics
-        package_policies:
-          - name: osquery-1
-            description: osquery
-            id: osquery
-            package:
-              name: osquery
-  
 server:
   host: "0.0.0.0"
   shutdownTimeout: "5s"
@@ -246,12 +245,12 @@ elasticsearch:
   hosts: 
     - "https://es01.docker.nginx.local:9200"
     - "https://es02.docker.nginx.local:9201"
-    - "https://es03.docker.nginx.local:9202"
+    #- "https://es03.docker.nginx.local:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
-  requestTimeout: 60000
+  requestTimeout: 120000
 
-enterpriseSearch.host: "http://eps.nginx.local:3002"
+# enterpriseSearch.host: "http://eps.nginx.local:3002"
 
 logging:
   appenders:
@@ -260,25 +259,26 @@ logging:
       fileName: /usr/share/kibana/logs/kibana.json
       layout:
         type: json
-    #file:
-    #  type: file
-    #  fileName: /usr/share/kibana/logs/kibana.log
-    #  layout:
-    #     type: pattern
-    #     pattern: "[%date][%level][%name] %message"
+    file:
+      type: file
+      fileName: /usr/share/kibana/logs/kibana.log
+      layout:
+         type: pattern
+         pattern: "[%date][%level][%logger] %message"
+         # pattern: "[%date][%level][%logger][%meta] %message"
   root:
-    appenders: [default, json-file]
+    appenders: [default, file]
     level: info
   loggers:
     - name: plugins
-      appenders: [default, json-file]
+      appenders: [default, file]
       level: info
     - name: optimize
-      appenders: [default, json-file]
+      appenders: [default, file]
       level: info
     - name: telemetry
-      appenders: [default, json-file]
+      appenders: [default, file]
       level: info
     - name: metrics.ops
-      appenders: [default, json-file]
+      appenders: [default, file]
       level: info
