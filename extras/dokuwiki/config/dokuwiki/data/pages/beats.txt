@@ -3,21 +3,23 @@
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 ===== Filebeat * =====
 
-[[Filebeat]]
+Filebeat, together with [[logstash]], processes the file logs that [[kibana]] displays.
 
 {{kibana08.png?300x100}}
 
 ===== Heartbeat * =====
 
-[[Heartbeat]]
+Heartbeat monitors systems. It used icmp, tcp or http ping, https ping collects certificates.
 
 {{kibana04.png?300x100}}
 
 ===== Metricbeat * =====
 
-[[Metricbeat]]
+Metricbeat handles the metrics.
 
 {{kibana01.png?300x100}}
+
+{{kibana03.png?300x100}}
 
 {{kibana09.png?300x100}}
 
