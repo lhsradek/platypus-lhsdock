@@ -5,13 +5,21 @@
 
 [[Filebeat]]
 
+{{kibana08.png?300x100}}
+
 ===== Heartbeat * =====
 
 [[Heartbeat]]
 
+{{kibana04.png?300x100}}
+
 ===== Metricbeat * =====
 
 [[Metricbeat]]
+
+{{kibana01.png?300x100}}
+
+{{kibana09.png?300x100}}
 
 ==== ... and others for example: ====
 

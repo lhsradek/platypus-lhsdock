@@ -1151,6 +1151,7 @@ services:
       - ./png/kibana06.png:/config/dokuwiki/data/media/kibana06.png
       - ./png/kibana07.png:/config/dokuwiki/data/media/kibana07.png
       - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
+      - ./png/kibana09.png:/config/dokuwiki/data/media/kibana09.png
       - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
       - ./logs/dokuwiki:/config/log
     labels:

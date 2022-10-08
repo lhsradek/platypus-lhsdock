@@ -110,7 +110,10 @@ $isEs02 = @$index->isSocket("es02.".$parent.".nginx.local", 9201);
 $isEs03 = false; // @$index->isSocket("es03.".$parent.".nginx.local", 9202);
 $isApm =  @$index->isSocket("apm.nginx.local", 8200);
 $isApm5066 =  @$index->isSocket("apm.nginx.local", 5066);
+$isFile =  @$index->isSocket("file.nginx.local", 5068);
 $isFleet =  @$index->isSocket("fleet.nginx.local", 8220);
+$isHeart =  @$index->isSocket("heart.nginx.local", 5069);
+$isMetric =  @$index->isSocket("metric.nginx.local", 5067);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".nginx.local");
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
@@ -159,14 +162,16 @@ if ($printEnv) {
         <p>
           <ul>
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
-            <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local:5601\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
-            <?php if($isCerebro) { ?><li><?php print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local")?></a></li><?php } ?>
-            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200/?pretty\" target=\"_blank\">es01.".$parent.".nginx.local")?></a>:<small>9200</small></li><?php } ?>
-            <?php if($isEs02) { ?><li><?php print("<a href=\"https://es02.".$parent.".nginx.local:9201/?pretty\" target=\"_blank\">es02.".$parent.".nginx.local")?></a>:<small>9201</small></li><?php } ?>
-            <?php if($isEs03) { ?><li><?php print("<a href=\"https://es03.".$parent.".nginx.local:9202/?pretty\" target=\"_blank\">es03.".$parent.".nginx.local")?>:<small>9202</small></a></li><?php } ?>
-            <?php if($isApm) { ?><li><?php print("<a href=\"https://apm.nginx.local/?pretty\" target=\"_blank\">apm.nginx.local")?></a>:<small>8200</small></li><?php } ?>
-            <?php if($isApm5066) { ?><li><?php print("<a href=\"https://apm.nginx.local/5066?pretty\" target=\"_blank\">apm.nginx.local")?></a>:<small>5066</small></li><?php } ?>
-            <?php if($isFleet) { ?><li><?php print("<a href=\"https://fleet.nginx.loca?pretty\" target=\"_blank\">fleet.nginx.local")?></a>:<small>8220</small></li><?php } ?>
+            <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local:5601\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a><small>:5061 <a href="https://wiki.docker.nginx.local/doku.php?id=kibana" target="_blank">Kibana</a></small></li><?php } ?>
+            <?php if($isCerebro) { ?><li><?php print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local")?></a> <small><a href="https://wiki.docker.nginx.local/doku.php?id=cerebro" target="_blank">Cerebro</a></small></li><?php } ?>
+            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200/?pretty\" target=\"_blank\">es01.".$parent.".nginx.local")?></a><small>:9200 <a href="https://wiki.docker.nginx.local/doku.php?id=elasticsearch" target="_blank">Elasticsearch</a> 01</small></li><?php } ?>
+            <?php if($isEs02) { ?><li><?php print("<a href=\"https://es02.".$parent.".nginx.local:9201/?pretty\" target=\"_blank\">es02.".$parent.".nginx.local")?></a><small>:9201 <a href="https://wiki.docker.nginx.local/doku.php?id=elasticsearch" target="_blank">Elasticsearch</a> 02</small></li><?php } ?>
+            <?php if($isEs03) { ?><li><?php print("<a href=\"https://es03.".$parent.".nginx.local:9202/?pretty\" target=\"_blank\">es03.".$parent.".nginx.local")?></a><small>:9202 <a href="https://wiki.docker.nginx.local/doku.php?id=elasticsearch" target="_blank">Elasticsearch</a> 03</small></a></li><?php } ?>
+            <?php if($isApm) { ?><li><?php print("<a href=\"https://apm.nginx.local/?pretty\" target=\"_blank\">apm.nginx.local")?></a><small>:8200</small><?php if($isApm5066) { ?><?php print(" <a href=\"https://apm.nginx.local/5066?pretty\" target=\"_blank\">apm.nginx.local")?></a><small>:5066</small><?php } ?> <small><a href="https://wiki.docker.nginx.local/doku.php?id=apm-server" target="_blank">APM Server</a></small></li><?php } ?>
+            <?php if($isFile) { ?><li><?php print("<a href=\"https://file.nginx.local?pretty\" target=\"_blank\">file.nginx.local")?></a><small>:8068 <a href="https://wiki.docker.nginx.local/doku.php?id=beats" target="_blank">Filebeat</a></small></li><?php } ?>
+            <?php if($isFleet) { ?><li><?php print("<a href=\"https://fleet.nginx.local?pretty\" target=\"_blank\">fleet.nginx.local")?></a><small>:8220 <a href="https://wiki.docker.nginx.local/doku.php?id=fleet-server" target="_blank">Fleet Server</a></small></li><?php } ?>
+            <?php if($isHeart) { ?><li><?php print("<a href=\"https://heart.nginx.local?pretty\" target=\"_blank\">heart.nginx.local")?></a><small>:5069 <a href="https://wiki.docker.nginx.local/doku.php?id=beats" target="_blank">Heartbeat</a></small></li><?php } ?>
+            <?php if($isMetric) { ?><li><?php print("<a href=\"https://metric.nginx.local?pretty\" target=\"_blank\">metric.nginx.local")?></a><small>:5067 <a href="https://wiki.docker.nginx.local/doku.php?id=beats" target="_blank">Metricbeat</a></small></li><?php } ?>
             <?php if($isWiki) { ?><li><?php print("<a href=\"https://wiki.".$parent.".nginx.local".$port."\" target=\"_blank\">wiki.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>

@@ -53,3 +53,7 @@ Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-ser
 ==== Observability - Logs - Stream ====
 
 {{kibana08.png?600x200}}
+
+==== Observability - Overview ====
+
+{{kibana09.png?600x200}}
