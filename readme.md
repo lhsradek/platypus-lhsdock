@@ -9,6 +9,8 @@ create .env file
 
 ```# cp .env.dist .env```
 
+See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx
+
 #### run lhsdock
 ```# bin/start```
 
