@@ -9,5 +9,6 @@ extras/dokuwiki/config/dokuwiki/data/attic/
 extras/dokuwiki/config/dokuwiki/data/index/
 extras/dokuwiki/config/dokuwiki/data/media/
 extras/dokuwiki/config/dokuwiki/data/meta/
+extras/nginx/htpasswd
 application/html/downloads/elastic-agent-*
 application/html/downloads/elastic-apm-agent-*
