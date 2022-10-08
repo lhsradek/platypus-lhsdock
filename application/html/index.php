@@ -161,12 +161,12 @@ if ($printEnv) {
             <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
             <?php if($isKibana) { ?><li><?php print("<a href=\"https://kibana.".$parent.".nginx.local:5601\" target=\"_blank\">kibana.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isCerebro) { ?><li><?php print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local")?></a></li><?php } ?>
-            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200\" target=\"_blank\">es01.".$parent.".nginx.local")?></a>:<small>9200</small></li><?php } ?>
-            <?php if($isEs02) { ?><li><?php print("<a href=\"https://es02.".$parent.".nginx.local:9201\" target=\"_blank\">es02.".$parent.".nginx.local")?></a>:<small>9201</small></li><?php } ?>
-            <?php if($isEs03) { ?><li><?php print("<a href=\"https://es03.".$parent.".nginx.local:9202\" target=\"_blank\">es03.".$parent.".nginx.local")?>:<small>9202</small></a></li><?php } ?>
-            <?php if($isApm) { ?><li><?php print("<a href=\"https://apm.nginx.local\" target=\"_blank\">apm.nginx.local")?></a>:<small>8200</small></li><?php } ?>
-            <?php if($isApm5066) { ?><li><?php print("<a href=\"https://apm.nginx.local/5066\" target=\"_blank\">apm.nginx.local")?></a>:<small>5066</small></li><?php } ?>
-            <?php if($isFleet) { ?><li><?php print("<a href=\"https://fleet.nginx.local\" target=\"_blank\">fleet.nginx.local")?></a>:<small>8220</small></li><?php } ?>
+            <?php if($isEs01) { ?><li><?php print("<a href=\"https://es01.".$parent.".nginx.local:9200/?pretty\" target=\"_blank\">es01.".$parent.".nginx.local")?></a>:<small>9200</small></li><?php } ?>
+            <?php if($isEs02) { ?><li><?php print("<a href=\"https://es02.".$parent.".nginx.local:9201/?pretty\" target=\"_blank\">es02.".$parent.".nginx.local")?></a>:<small>9201</small></li><?php } ?>
+            <?php if($isEs03) { ?><li><?php print("<a href=\"https://es03.".$parent.".nginx.local:9202/?pretty\" target=\"_blank\">es03.".$parent.".nginx.local")?>:<small>9202</small></a></li><?php } ?>
+            <?php if($isApm) { ?><li><?php print("<a href=\"https://apm.nginx.local/?pretty\" target=\"_blank\">apm.nginx.local")?></a>:<small>8200</small></li><?php } ?>
+            <?php if($isApm5066) { ?><li><?php print("<a href=\"https://apm.nginx.local/5066?pretty\" target=\"_blank\">apm.nginx.local")?></a>:<small>5066</small></li><?php } ?>
+            <?php if($isFleet) { ?><li><?php print("<a href=\"https://fleet.nginx.loca?pretty\" target=\"_blank\">fleet.nginx.local")?></a>:<small>8220</small></li><?php } ?>
             <?php if($isWiki) { ?><li><?php print("<a href=\"https://wiki.".$parent.".nginx.local".$port."\" target=\"_blank\">wiki.".$parent.".nginx.local")?></a></li><?php } ?>
             <?php if($isWp) { ?><li><?php print("<a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local")?></a></li><?php } ?>
 	    <?php if($isWpa) { ?><li><?php print("<a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local")?></a></li><?php } ?>
