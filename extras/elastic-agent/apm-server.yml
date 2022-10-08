@@ -3,9 +3,9 @@
 ################################ APM Server ################################
 
 apm-server:
-  host: "unix:///var/run/docker.sock"
+  #host: "unix:///var/run/docker.sock"
   #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
-  #host: "0.0.0.0"
+  host: "0.0.0.0"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:
@@ -186,9 +186,9 @@ apm-server:
         # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
         # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
         hosts:
-          - "https://es01.docker.nginx.local:9200"
-          - "https://es02.docker.nginx.local:9201"
-          # - "https://es03.docker.nginx.local:9202"
+          - "https://es01.${APP_HOST}.${APP_NET}:9200"
+          - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          # - "https://es03.${APP_HOST}.${APP_NET}:9202"
 
         # Protocol - either `http` (default) or `https`.
         protocol: "https"
@@ -223,7 +223,7 @@ apm-server:
     # Scheme and port can be left out and will be set to the default (`http` and `5601`).
     # In case you specify an additional path, the scheme is required: `http://localhost:5601/path`.
     # IPv6 addresses should always be defined as: `https://[2001:db8::1]:5601`.
-    host: "https://kibana.docker.nginx.local:5601"
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     # Optional protocol and basic auth credentials.
     protocol: "https"
     # api_key: "${AGENT_API_KEY}"
@@ -327,9 +327,9 @@ output.elasticsearch:
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   hosts: 
-    - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
-    # - "https://es03.docker.nginx.local:9202"
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
 
   # Protocol - either `http` (default) or `https`.
   protocol: "https"
@@ -475,7 +475,7 @@ output.elasticsearch:
   #enabled: true
 
   # The Logstash hosts.
-  #hosts: ["logstash.docker.nginx.local:5044"]
+  #hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
   #protocol: "https"
   #username: "${ELASTICSEARCH_USERNAME}"
   #password: "${ELASTICSEARCH_PASSWORD}"
@@ -883,10 +883,10 @@ output.elasticsearch:
 # append ?pretty to the URL.
 
 # Defines if the HTTP endpoint is enabled.
-#http.enabled: true
+http.enabled: true
 
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-#http.host: "0.0.0.0"
+http.host: "0.0.0.0"
 
 # Port on which the HTTP endpoint will bind. Default is 5066.
 http.port: 5076
@@ -898,8 +898,6 @@ http.port: 5076
 # reporting is disabled by default.
 
 xpack.monitoring.enabled: false
-#
-# Set to true to enable the monitoring reporter.
 monitoring:
   enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
@@ -909,25 +907,25 @@ monitoring:
 # Any setting that is not set is automatically inherited from the Elasticsearch
 # output configuration. This means that if you have the Elasticsearch output configured,
 # you can simply uncomment the following line.
-monitoring.elasticsearch:
+#monitoring.elasticsearch:
 
   # Authentication credentials - either API key or username/password.
   #api_key: "id:api_key"
   #api_key: "${AGENT_API_KEY}"
-  username: "apm_system"
-  password: "${ELASTICSEARCH_PASSWORD}"
+  #username: "apm_system"
+  #password: "${ELASTICSEARCH_PASSWORD}"
 
   # Array of hosts to connect to.
   # Scheme and port can be left out and will be set to the default (`http` and `9200`).
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  hosts: 
-    - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
-    # - "https://es03.docker.nginx.local:9202"
+  #hosts: 
+  #  - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #  - "https://es02.${APP_HOST}.${APP_NET}:9201"
+  #  # - "https://es03.${APP_HOST}.${APP_NET}:9202"
 
   # Protocol - either `http` (default) or `https`.
-  protocol: "https"
+  #protocol: "https"
 
   # Set gzip compression level.
   #compression_level: 0
@@ -968,7 +966,7 @@ monitoring.elasticsearch:
   #timeout: 90
 
   # Enable custom SSL settings. Set to false to ignore custom SSL settings for secure communication.
-  ssl.enabled: true
+  #ssl.enabled: true
 
   # Optional SSL configuration options. SSL is off by default, change the `protocol` option if you want to enable `https`.
   #
@@ -994,8 +992,8 @@ monitoring.elasticsearch:
   #ssl.supported_protocols: [TLSv1.0, TLSv1.1, TLSv1.2]
 
   # List of root certificates for HTTPS server verifications.
-  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.verification_mode: "certificate"
+  #ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #ssl.verification_mode: "certificate"
   #ssl.verification_mode: "none"
   # Certificate for SSL client authentication.
   #ssl.certificate: "${APM_SERVER_CERT}"

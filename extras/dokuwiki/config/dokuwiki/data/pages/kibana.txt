@@ -9,11 +9,11 @@
 
 GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
-**Kibana** directs agents. Agents by agent policies directs [[Beats|beats]] or [[Apm Server|apm server]].
+**Kibana** directs agents. Agents by agent policies directs [[beats|beats]] or [[apm-server|APM Server]].
 
 ===== Add agent =====
 
-Add agent to configured [[Elastic-Agent|elastic agent]] with runnnig [[Fleet Server|fleet server]] and [[APMt Server|APM server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
+Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-server|Fleet Server]] and [[apm-server|APM Server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
 
 <code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
 <code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>

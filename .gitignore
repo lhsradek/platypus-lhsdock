@@ -10,3 +10,4 @@ extras/dokuwiki/config/dokuwiki/data/index/
 extras/dokuwiki/config/dokuwiki/data/media/
 extras/dokuwiki/config/dokuwiki/data/meta/
 application/html/downloads/elastic-agent-*
+application/html/downloads/elastic-apm-agent-*

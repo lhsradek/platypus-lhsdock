@@ -21,6 +21,20 @@ processors:
   - add_cloud_metadata: ~
   - add_kubernetes_metadata: ~
 
+inputs:
+  - type: system/metrics
+    data_stream.namespace: default
+    use_output: default
+    streams:
+      - metricset: cpu
+        data_stream.dataset: system.cpu
+      - metricset: memory
+        data_stream.dataset: system.memory
+      - metricset: network
+        data_stream.dataset: system.network
+      - metricset: filesystem
+        data_stream.dataset: system.filesystem
+
 output:
   # for provisioning:
   # logstash:
@@ -32,9 +46,9 @@ output:
   # for /metricbeat -e setup --dashboards:
   elasticsearch:
     hosts: 
-      - "https://es01.docker.nginx.local:9200"
-      - "https://es02.docker.nginx.local:9201"
-      #- "https://es03.docker.nginx.local:9202"
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      #- "https://es03.${APP_HOST}.${APP_NET}:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -58,9 +72,9 @@ setup:
   #  # source.enabled: false
   elasticsearch:
     hosts: 
-      - "https://es01.docker.nginx.local:9200"
-      - "https://es02.docker.nginx.local:9201"
-      #- "https://es03.docker.nginx.local:9202"
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      #- "https://es03.${APP_HOST}.${APP_NET}:9202"
     # api_key: ${AGENT_API_KEY}
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
@@ -71,7 +85,7 @@ setup:
       verification_mode: certificate
       # verification_mode: none
   kibana:
-    host: "https://kibana.docker.nginx.local:5601"
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     # api_key: ${AGENT_API_KEY}
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -83,4 +97,4 @@ setup:
   apm:
     enabled: true
     service_name: "lhs"
-    server_url: "http://apm.nginx.local:8200"
+    server_url: "http://apm.${APP_NET}:8200"

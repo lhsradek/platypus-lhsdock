@@ -11,6 +11,7 @@ monitoring:
   kibana:
     collection.enabled: false
 
+
 xpack:
   reporting:
     kibanaServer:
@@ -20,6 +21,8 @@ xpack:
     encryptionKey: 8de551ca1432f0dcf3ad2908472562b1
   security:
     encryptionKey: 363792db7b8cf9581c6cbdddbb8ff95f
+    session:
+      idleTimeout: 24h
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
@@ -234,7 +237,8 @@ xpack:
       
 server:
   host: "0.0.0.0"
-  shutdownTimeout: "5s"
+  shutdownTimeout: "120s"
+  socketTimeout: "180000"
   publicBaseUrl: "https://kibana.docker.nginx.local:5601"
   ssl:
     enabled: true
@@ -254,18 +258,18 @@ enterpriseSearch.host: "http://eps.nginx.local:3002"
 
 logging:
   appenders:
-    json-file:
-      type: file
-      fileName: /usr/share/kibana/logs/kibana.json
-      layout:
-        type: json
+    # json-file:
     file:
       type: file
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
-         type: pattern
-         pattern: "[%date][%level][%logger] %message"
-         # pattern: "[%date][%level][%logger][%meta] %message"
+        type: json
+    # file:
+    #  type: file
+    #  fileName: /usr/share/kibana/logs/kibana.log
+    #  layout:
+    #     type: pattern
+    #     pattern: "[%date] [%level] [%logger] [%meta] %message"
   root:
     appenders: [default, file]
     level: info

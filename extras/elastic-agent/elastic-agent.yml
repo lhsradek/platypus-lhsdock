@@ -5,6 +5,11 @@
 # fleet:
 #   enabled: true
 
+xpack.monitoring.enabled: true
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
 # agent.download:
 #   # source of the artifacts, requires elastic like structure and naming of the binaries
 #   # e.g /windows-x86.zip
@@ -84,9 +89,9 @@ outputs:
   default:
     type: elasticsearch
     hosts:
-      - 'https://es01.docker.nginx.local:9200'
-      # - 'https://es02.docker.nginx.local:9201'
-      # - 'https://es03.docker.nginx.local:9202'
+      - 'https://es01.${APP_HOST}.${APP_NET}:9200'
+      # - 'https://es02.${APP_HOST}.${APP_NET}:9201'
+      # - 'https://es03.${APP_HOST}.${APP_NET}:9202'
     username: ${FLEET_SERVER_ELASTICSEARCH_USERNAME}
     # username: fleet-server
     password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}

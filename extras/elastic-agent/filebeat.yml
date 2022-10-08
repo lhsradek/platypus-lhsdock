@@ -28,7 +28,7 @@ output:
      # Boolean flag to enable or disable the output module.
      enabled: true
      # The Logstash hosts.
-     hosts: ["logstash.docker.nginx.local:5055"]
+     hosts: ["logstash.${APP_HOST}.${APP_NET}:5055"]
      # username: "logstash_writer"
      # username: "${ELASTICSEARCH_USERNAME}"
      # password: "${ELASTICSEARCH_PASSWORD}"
@@ -36,9 +36,9 @@ output:
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
   #   hosts: 
-  #    - "https://es01.docker.nginx.local:9200"
-  #    - "https://es02.docker.nginx.local:9201"
-  #    # - "https://es03.docker.nginx.local:9202"
+  #    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+  #    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   #  protocol: "https"
   #  username: "${ELASTICSEARCH_USERNAME}"
   #  password: "${ELASTICSEARCH_PASSWORD}"
@@ -58,9 +58,9 @@ setup:
     source.enabled: false
   elasticsearch:
     hosts: 
-      - "https://es01.docker.nginx.local:9200"
-      - "https://es02.docker.nginx.local:9201"
-      # - "https://es03.docker.nginx.local:9202"
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -72,7 +72,7 @@ setup:
       # verification_mode: none
       verification_mode: certificate
   kibana:
-    host: "https://kibana.docker.nginx.local:5601"
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "https"
@@ -86,4 +86,4 @@ setup:
     enabled: true
     service_name: "lhs"
     protocol: "http"
-    server_url: "http://apm.nginx.local:8200"
+    server_url: "http://apm.${APP_NET}:8200"
