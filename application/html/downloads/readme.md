@@ -8,3 +8,7 @@ with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 In this folder there are programs that are linked from dokuwiki. For example here
 
 https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/dokuwiki/config/dokuwiki/data/pages/elastic-agent.txt
+
+Because they are too large, their versioning is prohibited here
+
+https://github.com/lhsradek/platypus-lhsdock/blob/main/.gitignore
