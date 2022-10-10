@@ -355,7 +355,6 @@ services:
       - intnet
     ports:
       - ${APM_PORT}:8200
-      # - 5066:5066
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -419,11 +418,6 @@ services:
       - intnet
     ports:
       - ${FLEET_PORT}:8220
-      # - 5075:5075 # fleet-server
-      # - 5076:5076 # apm-server
-      # - 5077:5077 # metricbeat
-      # - 5078:5078 # filebeat
-      # - 5079:5079 # heartbeat
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${INT_NETWORK}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
@@ -527,8 +521,6 @@ services:
       - default
       # local network:
       - intnet
-    # ports:
-    #   - 5067:5067
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -582,8 +574,6 @@ services:
     networks:
     # local network:
       - intnet
-    # ports:
-    #   - 5068:5068
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /:/hostfs:ro
@@ -644,8 +634,6 @@ services:
     networks:
     # local network:
       - intnet
-    # ports:
-    #   - 5069:5069
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
@@ -745,7 +733,6 @@ services:
     #  - 9000:9000
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
-      # - /var/run/docker.sock:/var/run/docker.sock
       - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
       - ./logs/cerebro:/opt/cerebro/logs:rw
@@ -1123,7 +1110,6 @@ services:
       # local network:
       - intnet
     ports:
-    # - 80:80
       - 4443:443
     volumes:
       # if http
@@ -1205,9 +1191,6 @@ services:
       - default
       # local network:
       - intnet
-    # ports:
-    #  - 88:80
-    #  - 843:443 #optional
     environment:
       - PUID=1000
       - PGID=1000
