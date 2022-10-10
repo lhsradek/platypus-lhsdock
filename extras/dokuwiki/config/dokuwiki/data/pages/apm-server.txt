@@ -1,6 +1,10 @@
 ====== APM Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
+
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]
+
 [[https://apm.nginx.local?pretty|apm.nginx.local:8200]]
 
 [[https://apm.nginx.local/5066?pretty|apm.nginx.local:5066]]

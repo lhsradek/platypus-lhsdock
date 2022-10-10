@@ -9,7 +9,9 @@ create .env file
 
 ```# cp .env.dist .env```
 
-See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx
+See:
+* https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx
+* https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
 
 #### run lhsdock
 ```# bin/start```

@@ -3,6 +3,9 @@
 
 Elastic Agent contains [[beats]], [[fleet-server|Fleet Server]] and [[apm-server|APM Server]].
 
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
+
+
 GET [[https://es01.docker.nginx.local:9200/.ds-logs-elastic_agent*/_search?pretty&q=response=50|.ds-logs-elastic_agent*/_search?q=response=50]]
 
 ===== Debian =====

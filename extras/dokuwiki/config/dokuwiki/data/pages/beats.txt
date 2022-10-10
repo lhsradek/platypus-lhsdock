@@ -6,9 +6,13 @@ GET [[https://es01.docker.nginx.local:9200/.monitoring-beats-*?pretty|.monitorin
 
 GET [[https://es01.docker.nginx.local:9200/.ds-.monitoring-beats-*?pretty|.ds-.monitoring-beats-*]]
 
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
+
 ===== Filebeat * =====
 
 Filebeat, together with [[logstash]], processes the file logs that [[kibana]] displays.
+
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/filebeat|configuration]]
 
 GET [[https://file.nginx.local/?pretty|file.nginx.local]]
 
@@ -22,6 +26,8 @@ GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*?pretty|.ds-filebeat-*]
 
 Heartbeat monitors systems. It used icmp, tcp or http ping, https ping collects certificates.
 
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/heartbeat|configuration]]
+
 GET [[https://heart.nginx.local/?pretty|heart.nginx.local]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
@@ -31,6 +37,8 @@ GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-
 ===== Metricbeat * =====
 
 Metricbeat handles the metrics.
+
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/metricbeat|configuration]]
 
 GET [[https://metric.nginx.local/?pretty|metric.nginx.local]]
 

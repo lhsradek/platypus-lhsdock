@@ -4,7 +4,7 @@
 - module: beat
   xpack.enabled: true
   period: 10s
-  hosts: ["apm.nginx.local:5066", "metric.nginx.local:5067", "file.nginx.local:5068", "heart.nginx.local:5069"]
+  hosts: ["lhsdock-apm:5066", "lhsdock-metric:5066", "lhsdock-file:5066", "lhsdock-heart:5066"]
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"
   # ssl:

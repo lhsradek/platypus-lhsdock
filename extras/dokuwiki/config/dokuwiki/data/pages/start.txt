@@ -11,6 +11,10 @@
 
  - [[Cerebro]]
 
+ - [[Elastic-agent]]
+
+ - [[Beats]]
+
 ==== setup lhsdock ====
 create .env file
 <code bash># cp .env.dist .env</code>

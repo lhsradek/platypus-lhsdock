@@ -5,6 +5,8 @@
 
 [[https://kibana.docker.nginx.local:5601]]
 
+[[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/|configuratios]]
+
 ===== Important url: =====
 
 GET [[https://kibana.docker.nginx.local:5601/status|status]]
