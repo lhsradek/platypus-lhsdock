@@ -3,8 +3,8 @@
 # Xms represents the initial size of total heap space
 # Xmx represents the maximum size of total heap space
 
--Xms1g 
--Xmx1g
+#-Xms1g 
+#-Xmx1g
 # by lhs:
 # <code>
 # @Value("#{'${LOGSTASH_JAVA_OPT}'.split('\\s{1,}')}")
@@ -12,8 +12,8 @@
 # javaOpt.forEach(key->{ key; }};
 # </code>
 # ${${LOGSTASH_JAVA_OPT}.split('\\s{1,}').forEach(key->{ key; }}
-#-Xms512m
-#-Xmx512m
+-Xms512m
+-Xmx512m
 
 ################################################################
 ## Expert settings
