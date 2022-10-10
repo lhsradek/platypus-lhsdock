@@ -90,7 +90,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
 | logstash                                              | 8.4.3      | 735MB            |
 | docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | * 
+| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | * for Elastic Synthetics
 | docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
 | docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
 | docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |

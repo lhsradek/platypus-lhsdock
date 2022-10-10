@@ -3,7 +3,7 @@
 #####################################################
 
 # Java options for JVM tuning (used for app-server and CLI commands)
-export JAVA_OPTS=${JAVA_OPTS:-"-Xms1g -Xmx1g"}
+export JAVA_OPTS=${JAVA_OPTS:-"-Xms512m -Xmx512m"}
 
 # Additional Java options for the application server
 export APP_SERVER_JAVA_OPTS="${APP_SERVER_JAVA_OPTS:-}"

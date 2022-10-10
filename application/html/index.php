@@ -160,7 +160,7 @@ if ($printEnv) {
         <h2>Links</h2>
         <p>
           <ul>
-            <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a></li>
+	    <li><?php print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local")?></a><?php if($isWiki) { ?> <small><a href="https://wiki.docker.nginx.local/doku.php?id=traefik" target="_blank">Traefik</a></small><img src="dokuwiki.png" width="10" height="10"></li><?php } ?></li>
 	    <?php if($isKibana || $isWiki) { ?><li><?php if($isKibana) { print("<a href=\"https://kibana.".$parent.".nginx.local:5601\" target=\"_blank\">kibana.".$parent.".nginx.local</a> "); } if($isWiki) { ?><small><a href="https://wiki.docker.nginx.local/doku.php?id=kibana" target="_blank">Kibana</a></small><img src="dokuwiki.png" width="10" height="10"></li><?php } } ?>
             <?php if($isCerebro|| $isWiki) { ?><li><?php if($isCerebro) { print("<a href=\"https://cerebro.".$parent.".nginx.local".$port."\" target=\"_blank\">cerebro.".$parent.".nginx.local</a> "); } if($isWiki) { ?><small><a href="https://wiki.docker.nginx.local/doku.php?id=cerebro" target="_blank">Cerebro</a></small><img src="dokuwiki.png" width="10" height="10"></li><?php } } ?>
             <?php if($isEs01 || $isWiki) { ?><li><?php if($isEs01) { print("<a href=\"https://es01.".$parent.".nginx.local:9200/?pretty\" target=\"_blank\">es01.".$parent.".nginx.local</a> "); } if($isWiki) { ?><small><a href="https://wiki.docker.nginx.local/doku.php?id=elasticsearch" target="_blank">Elasticsearch</a></small><img src="dokuwiki.png" width="10" height="10"></li><?php } } ?>

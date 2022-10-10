@@ -386,12 +386,24 @@ services:
 #
 # === Elastic Agent as fleet server ===
 #
+# So that kibana doesn't complain that I have to make it :-) Elastic-agent is suitable for external systems.
+# I don't want to lose metrics and logs on the main server because the agent won't connect.
+#
   fleet:
     depends_on:
       es02:
         condition: service_healthy
     depends_on:
       kibana:
+        condition: service_healthy
+    depends_on:
+      metricbeat:
+        condition: service_healthy
+    depends_on:
+      filebeat:
+        condition: service_healthy
+    depends_on:
+      heartbeat:
         condition: service_healthy
     depends_on:
       apm:

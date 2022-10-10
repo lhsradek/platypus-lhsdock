@@ -95,7 +95,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
 | logstash                                              | 8.4.3      | 735MB            |
 | docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           |  *  |
+| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | for Elastic Synthetics |
 | docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
 | docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
 | docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
@@ -104,7 +104,8 @@ Creating lhsdock-eps      ... done
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
 
 
-With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] script:
+With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] for certificates,
+which I don't use much anymore ;-) the Elastic Certificate Tool is used by webservice 'setup'.
 
 <code bash># perl /root/bin/platypus.pl</code>
 
