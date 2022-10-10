@@ -259,17 +259,16 @@ enterpriseSearch.host: "http://eps.${APP_NET}:3002"
 logging:
   appenders:
     # json-file:
+    #   type: json-file
+    #   fileName: /usr/share/kibana/logs/kibana.json
+    #   layout:
+    #     type: json
     file:
       type: file
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
-        type: json
-    # file:
-    #  type: file
-    #  fileName: /usr/share/kibana/logs/kibana.log
-    #  layout:
-    #     type: pattern
-    #     pattern: "[%date] [%level] [%logger] [%meta] %message"
+        type: pattern
+        pattern: "[%date] [%level] [%logger] [%meta] %message"
   root:
     appenders: [default, file]
     level: info

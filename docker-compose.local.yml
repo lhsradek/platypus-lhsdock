@@ -354,8 +354,8 @@ services:
     # local network:
       - intnet
     ports:
-      - 5066:5066
       - ${APM_PORT}:8200
+      # - 5066:5066
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -407,10 +407,11 @@ services:
       - intnet
     ports:
       - ${FLEET_PORT}:8220
-      - 5076:5076
-      - 5077:5077
-      - 5078:5078
-      - 5079:5079
+      # - 5075:5075 # fleet-server
+      # - 5076:5076 # apm-server
+      # - 5077:5077 # metricbeat
+      # - 5078:5078 # filebeat
+      # - 5079:5079 # heartbeat
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${INT_NETWORK}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
@@ -422,6 +423,7 @@ services:
       - ./certs:/usr/share/elastic-agent/certs
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
       - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
+      - ./extras/elastic-agent/fleet-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/fleet-server-${STACK_VERSION}-linux-x86_64/fleet-server.yml
       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
       - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
       - ./extras/elastic-agent/heartbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/heartbeat.yml
@@ -459,6 +461,7 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
+      # - ELASTICSEARCH_SERVICE_TOKEN=${ELASTICSEARCH_SERVICE_TOKEN}
       - FLEET_ENROLL=0
       - FLEET_SERVER_ENABLE=1
       - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
@@ -483,10 +486,10 @@ services:
       - STV=${STV}
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-      # test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/1.1 200 OK'"]
+      # test: ["CMD-SHELL", "curl -s --cacert certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/2 404'"]
       interval: 30s
       timeout: 60s
-      retries: 600
+      retries: 60
      
 #
 # === Metricbeat ===
@@ -508,10 +511,12 @@ services:
     hostname: "metric.${INT_NETWORK}"
     user: root
     networks:
+      # for all the World 
+      - default
       # local network:
       - intnet
-    ports:
-      - 5067:5067
+    # ports:
+    #   - 5067:5067
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -539,7 +544,7 @@ services:
       - "traefik.enable=false"
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5067 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 20s
       timeout: 10s
       retries: 50
@@ -565,10 +570,11 @@ services:
     networks:
     # local network:
       - intnet
-    ports:
-      - 5068:5068
+    # ports:
+    #   - 5068:5068
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/file/logs:/usr/share/filebeat/logs
@@ -606,7 +612,7 @@ services:
       - "traefik.enable=false"
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5068 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -624,12 +630,10 @@ services:
     container_name: "${APP_ID}-heart"
     hostname: "heart.${INT_NETWORK}"
     networks:
-      # for test all the world
-      - default
     # local network:
       - intnet
-    ports:
-      - 5069:5069
+    # ports:
+    #   - 5069:5069
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
@@ -653,7 +657,7 @@ services:
       - "traefik.enable=false"
     healthcheck:
       # test: "heartbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://heart.${INT_NETWORK}:5069 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://heart.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500

@@ -1,7 +1,7 @@
 ###################### Filebeat Configuration #######################
 
 http.enabled: true
-http.port: 5078
+http.port: 5066
 http.host: "0.0.0.0"
 #http.host: "file.nginx.local"
 

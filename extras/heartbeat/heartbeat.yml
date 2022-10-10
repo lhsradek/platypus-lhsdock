@@ -1,7 +1,7 @@
 ###################### Heartbeat Configuration #######################
 
 http.enabled: true
-http.port: 5069
+http.port: 5066
 http.host: "0.0.0.0"
 #http.host: "heart.nginx.local"
 
@@ -36,33 +36,31 @@ heartbeat.monitors:
     - https://es01.${APP_HOST}.${APP_NET}:9200
     - https://es02.${APP_HOST}.${APP_NET}:9201
     #- https://es03.${APP_HOST}.${APP_NET}:9202
-    - https://${APP_HOST}.${APP_NET}:443/downloads
+    - https://${APP_HOST}.${APP_NET}:443/downloads/
     - http://eps.${APP_NET}:3002
     - https://kibana.${APP_HOST}.${APP_NET}:5601
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=start&do=index
-    - https://${APP_HOST}.${APP_NET}
     # - https://fleet.${APP_NET}:8220
     # tomcat
     #- https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
     #- https://${APP_HOST}.tomcat.local/tombola-javadoc
     #- https://ad.${APP_HOST}.tomcat.local
-    - https://tombola.www.tomcat.local/tomcat.jsp
-    - https://www.tomcat.local/tombola-javadoc
-    - https://ad.www.tomcat.local
+    #- https://tombola.www.tomcat.local/tomcat.jsp
+    #- https://www.tomcat.local/tombola-javadoc/
+    #- https://ad.www.tomcat.local
     # wordpress
     #- https://${APP_HOST}.wordpress.local
     #- https://pma.${APP_HOST}.wordpress.local
-    - https://www.wordpress.local
-    - https://pma.www.wordpress.local
+    #- https://www.wordpress.local
+    #- https://pma.www.wordpress.local
     # intranet
     - https://lhs.intranet.local:443/downloads/
-    - https://mamka.intranet.local/downloads
+    #- https://mamka.intranet.local:443/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
     verification_mode: "none"
 
 - type: tcp
-
   schedule: '0 * * * * * *'
   id: tcp-service
   name: TCP Service
@@ -70,15 +68,18 @@ heartbeat.monitors:
   service.name: heartbeat-tcp
   hosts:
     - apm.${APP_NET}:5066
-    - metric.${APP_NET}:5067
-    - file.${APP_NET}:5068
-    - heart.${APP_NET}:5069
-    #- fleet.${APP_NET}:5076
-    #- fleet.${APP_NET}:5077
-    #- fleet.${APP_NET}:5078
-    #- fleet.${APP_NET}:5079
+    - apm.${APP_NET}:8200
+    - metric.${APP_NET}:5066
+    - file.${APP_NET}:5066
+    - heart.${APP_NET}:5066
+    #- fleet.${APP_NET}:5066
+    #- fleet.${APP_NET}:5066
+    #- fleet.${APP_NET}:5066
+    #- fleet.${APP_NET}:5066
     #- fleet.${APP_NET}:8200
-    #- fleet.${APP_NET}:8220
+    - fleet.${APP_NET}:8220
+    # - fleet.${APP_NET}:6791
+    - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
     - logstash.${APP_HOST}.${APP_NET}:5055
 
