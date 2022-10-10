@@ -96,7 +96,7 @@ Creating lhsdock-eps      ... done
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
 
-With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl|platypus.pl] for certificates,
+With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl for certificates,
 which I don't use much anymore ;-) the Elastic Certificate Tool is used by webservice 'setup'.
 
 ```# perl /root/bin/platypus.pl```
