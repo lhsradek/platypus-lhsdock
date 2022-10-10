@@ -6,6 +6,8 @@
   #  - status
   period: 10s
   hosts: ["https://kibana.docker.nginx.local:5601"]
-  #basepath: ""
-  #username: "user"
-  #password: "secret"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

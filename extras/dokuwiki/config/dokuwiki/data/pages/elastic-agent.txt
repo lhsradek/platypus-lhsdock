@@ -3,6 +3,8 @@
 
 Elastic Agent contains [[beats]], [[fleet-server|Fleet Server]] and [[apm-server|APM Server]].
 
+GET [[https://es01.docker.nginx.local:9200/.ds-logs-elastic_agent*/_search?pretty&q=response=50|.ds-logs-elastic_agent*/_search?q=response=50]]
+
 ===== Debian =====
 
 [[https://docker.nginx.local/downloads/elastic-agent-8.4.3-amd64.deb|elastic-agent-8.4.3-amd64.deb]]
@@ -22,5 +24,11 @@ Elastic Agent contains [[beats]], [[fleet-server|Fleet Server]] and [[apm-server
 Elastic APM agent can connect to [[APM-Server|APM server]].
 
 [[https://docker.nginx.local/downloads/elastic-apm-agent-1.34.1.jar|elastic-apm-agent-1.34.1.jar]]
+
+GET [[https://es01.docker.nginx.local:9200/.ds-logs-apm*/_search?pretty&q=response=50|.ds-logs-apm*/_search?q=response=50]]
+
+GET [[https://es01.docker.nginx.local:9200/.apm-agent-configuration?pretty|.apm-agent-configuration]]
+
+GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-link]]
 
 -----

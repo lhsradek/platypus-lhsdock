@@ -17,6 +17,7 @@
       - /usr/share/filebeat/elogs/nginx/tombola/access.log
       - /usr/share/filebeat/elogs/nginx/tombola/ad.access.log
       - /usr/share/filebeat/elogs/nginx/tombola/web.access.log
+      - /hostfs/var/log/nging/access.log
   # Error logs
   error:
     enabled: true
@@ -32,6 +33,7 @@
       - /usr/share/filebeat/elogs/nginx/tombola/error.log
       - /usr/share/filebeat/elogs/nginx/tombola/ad.error.log
       - /usr/share/filebeat/elogs/nginx/tombola/web.error.log
+      - /hostfs/var/log/nging/error.log
 
   # Ingress-nginx controller logs. This is disabled by default. It could be used in Kubernetes environments to parse ingress-nginx logs
   ingress_controller:

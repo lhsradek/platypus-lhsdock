@@ -5,7 +5,7 @@ http.port: 5069
 http.host: "0.0.0.0"
 #http.host: "heart.nginx.local"
 
-xpack. monitoring.enabled: true
+xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -38,18 +38,22 @@ heartbeat.monitors:
     #- https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}:443/downloads
     - http://eps.${APP_NET}:3002
-    - https://fleet.${APP_NET}:8220
     - https://kibana.${APP_HOST}.${APP_NET}:5601
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=start&do=index
     - https://${APP_HOST}.${APP_NET}
+    # - https://fleet.${APP_NET}:8220
     # tomcat
-    - https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
-    - https://${APP_HOST}.tomcat.local/tombola-javadoc
-    #- https://${APP_HOST}.tomcat.local/manager
-    - https://ad.${APP_HOST}.tomcat.local
+    #- https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
+    #- https://${APP_HOST}.tomcat.local/tombola-javadoc
+    #- https://ad.${APP_HOST}.tomcat.local
+    - https://tombola.www.tomcat.local/tomcat.jsp
+    - https://www.tomcat.local/tombola-javadoc
+    - https://ad.www.tomcat.local
     # wordpress
-    - https://${APP_HOST}.wordpress.local
-    - https://pma.${APP_HOST}.wordpress.local
+    #- https://${APP_HOST}.wordpress.local
+    #- https://pma.${APP_HOST}.wordpress.local
+    - https://www.wordpress.local
+    - https://pma.www.wordpress.local
     # intranet
     - https://lhs.intranet.local:443/downloads/
     - https://mamka.intranet.local/downloads
@@ -58,6 +62,7 @@ heartbeat.monitors:
     verification_mode: "none"
 
 - type: tcp
+
   schedule: '0 * * * * * *'
   id: tcp-service
   name: TCP Service
@@ -68,12 +73,12 @@ heartbeat.monitors:
     - metric.${APP_NET}:5067
     - file.${APP_NET}:5068
     - heart.${APP_NET}:5069
-    - fleet.${APP_NET}:5076
-    - fleet.${APP_NET}:5077
-    - fleet.${APP_NET}:5078
-    - fleet.${APP_NET}:5079
-    - fleet.${APP_NET}:8200
-    - fleet.${APP_NET}:8220
+    #- fleet.${APP_NET}:5076
+    #- fleet.${APP_NET}:5077
+    #- fleet.${APP_NET}:5078
+    #- fleet.${APP_NET}:5079
+    #- fleet.${APP_NET}:8200
+    #- fleet.${APP_NET}:8220
     - logstash.${APP_HOST}.${APP_NET}:5044
     - logstash.${APP_HOST}.${APP_NET}:5055
 
@@ -90,7 +95,7 @@ heartbeat.monitors:
     - cerebro.${APP_HOST}.${APP_NET}
     - es01.${APP_HOST}.${APP_NET}
     - es02.${APP_HOST}.${APP_NET}
-    # - es03.${APP_HOST}.${APP_NET}
+    #- es03.${APP_HOST}.${APP_NET}
     - file.${APP_NET}
     - fleet.${APP_NET}
     - heart.${APP_NET}
@@ -118,20 +123,27 @@ processors:
   - add_kubernetes_metadata: ~
 
 output:
+  # logstash:
+  #   # Boolean flag to enable or disable the output module.
+  #   enabled: true
+  #   # The Logstash hosts.
+  #   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+
   elasticsearch:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
       - "https://es02.${APP_HOST}.${APP_NET}:9201"
       # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    protocol: "https"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      verification_mode: "certificate"
       # verification_mode: "none"
-
+      verification_mode: "certificate"
+   
 setup:
   ilm.overwrite: true
   kibana:

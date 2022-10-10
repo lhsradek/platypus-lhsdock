@@ -33,12 +33,12 @@ xpack:
     agents:
       fleet_server:
         hosts:
-          - "https://fleet.nginx.local:8220"
+          - "https://fleet.${APP_NET}:8220"
       elasticsearch:
         hosts: 
-          - "https://es01.docker.nginx.local:9200"
-          - "https://es02.docker.nginx.local:9201"
-          #- "https://es03.docker.nginx.local:9202"
+          - "https://es01.${APP_HOST}.${APP_NET}:9200"
+          - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          #- "https://es03.${APP_HOST}.${APP_NET}:9202"
 
     # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
     packages:
@@ -239,7 +239,7 @@ server:
   host: "0.0.0.0"
   shutdownTimeout: "120s"
   socketTimeout: "180000"
-  publicBaseUrl: "https://kibana.docker.nginx.local:5601"
+  publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}:5601"
   ssl:
     enabled: true
     certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
@@ -247,14 +247,14 @@ server:
 
 elasticsearch:
   hosts: 
-    - "https://es01.docker.nginx.local:9200"
-    - "https://es02.docker.nginx.local:9201"
-    #- "https://es03.docker.nginx.local:9202"
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    #- "https://es03.${APP_HOST}.${APP_NET}:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   requestTimeout: 120000
 
-enterpriseSearch.host: "http://eps.nginx.local:3002"
+enterpriseSearch.host: "http://eps.${APP_NET}:3002"
 
 logging:
   appenders:

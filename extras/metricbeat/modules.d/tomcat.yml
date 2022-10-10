@@ -4,7 +4,7 @@
 - module: tomcat
   metricsets: ['threading', 'cache', 'memory', 'requests']
   period: 10s
-  hosts: ['https://docker.tomcat.local']
+  hosts: ['https://tombola.www.tomcat.local']
   protocol: "https"
   path: "/jolokia/?ignoreErrors=true&canonicalNaming=false"
   username: "jolokia"

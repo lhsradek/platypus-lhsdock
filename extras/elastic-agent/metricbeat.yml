@@ -3,6 +3,7 @@
 http.enabled: true
 http.port: 5077
 http.host: "0.0.0.0"
+#http.host: /usr/share/elastic-agent/state/data/tmp/elastic-agent.sock
 #http.host: "metric.nginx.local"
 
 xpack.monitoring.enabled: true

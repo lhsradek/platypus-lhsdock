@@ -377,7 +377,8 @@ services:
     labels:
       - "traefik.enable=false"
     healthcheck:
-      test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
+      # test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://apm.${INT_NETWORK}:8200 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -406,6 +407,10 @@ services:
       - intnet
     ports:
       - ${FLEET_PORT}:8220
+      - 5076:5076
+      - 5077:5077
+      - 5078:5078
+      - 5079:5079
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${INT_NETWORK}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
@@ -425,9 +430,22 @@ services:
       - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
+      - ./logs/apm:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/apm-server
       - ./logs/es01:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es01
       - ./logs/es02:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es02
       - ./logs/es03:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es03
+      - ./logs/dokuwiki:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki
+      - ./logs/eps:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/eps
+      - ./logs/file/logs:/usr/share/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/file/logs
+      - ./logs/file/filebeat:/usr/share/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/file/data/registry/filebeat
+      - ./logs/heart:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/heart
+      - ./logs/kibana:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana
+      - ./logs/nginx:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default
+      - ./logs/metric:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/metric
+      - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql
+      - /root/tombola/logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
+      - /root/tombola/logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
+      - /root/platypus-box/logs/traefik:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik
       - fleet:/usr/share/elastic-agent
     environment:
       - APP_ID=${APP_ID}
@@ -464,8 +482,8 @@ services:
       - STACK_VERSION=${STACK_VERSION}
       - STV=${STV}
     healthcheck:
-      test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-      # test: ["CMD-SHELL", "curl -I http://fleet.${INT_NETWORK}:5068 | grep -q 'HTTP/1.1 200 OK'"]
+      # test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 30s
       timeout: 60s
       retries: 600
@@ -514,12 +532,14 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
+      - EPS_PASSWORD=${EPS_PASSWORD}
       - METRICBEAT_SERVER_CERT=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.crt
       - METRICBEAT_SERVER_CERT_KEY=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.key
     labels:
       - "traefik.enable=false"
     healthcheck:
-      test: "metricbeat test output | grep 'talk to server... OK'"
+      # test: "metricbeat test output | grep 'talk to server... OK'"
+      test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5067 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 20s
       timeout: 10s
       retries: 50
@@ -549,9 +569,6 @@ services:
       - 5068:5068
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/file/logs:/usr/share/filebeat/logs
@@ -588,7 +605,8 @@ services:
     labels:
       - "traefik.enable=false"
     healthcheck:
-      test: "filebeat test output | grep 'talk to server... OK'"
+      # test: "filebeat test output | grep 'talk to server... OK'"
+      test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5068 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -634,7 +652,8 @@ services:
     labels:
       - "traefik.enable=false"
     healthcheck:
-      test: "heartbeat test output | grep 'talk to server... OK'"
+      # test: "heartbeat test output | grep 'talk to server... OK'"
+      test: ["CMD-SHELL", "curl -s -I http://heart.${INT_NETWORK}:5069 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
@@ -767,9 +786,15 @@ services:
           "  - name: ${APP_HOST}.traefik.local\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.traefik.local\n"\
+          "  - name: www.traefik.local\n"\
+          "    dns:\n"\
+          "      - www.traefik.local\n"\
           "  - name: ${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.${INT_NETWORK}\n"\
+          "  - name: www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - www.${INT_NETWORK}\n"\
           "  - name: apm.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - apm.${INT_NETWORK}\n"\
@@ -815,42 +840,81 @@ services:
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.tomcat.local\n"\
+          "  - name: www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - www.tomcat.local\n"\
           "  - name: tombola.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - tombola.${APP_HOST}.tomcat.local\n"\
+          "  - name: tombola.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - tombola.www.tomcat.local\n"\
           "  - name: ad.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - ad.${APP_HOST}.tomcat.local\n"\
+          "  - name: ad.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - ad.www.tomcat.local\n"\
           "  - name: db.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - db.${APP_HOST}.tomcat.local\n"\
+          "  - name: db.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - db.www.tomcat.local\n"\
           "  - name: rc.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - rc.${APP_HOST}.tomcat.local\n"\
+          "  - name: rc.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - rc.www.tomcat.local\n"\
           "  - name: redis.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - redis.${APP_HOST}.tomcat.local\n"\
+          "  - name: redis.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - redis.www.tomcat.local\n"\
           "  - name: ${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.wordpress.local\n"\
+          "  - name: www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - www.wordpress.local\n"\
           "  - name: wp.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - wp.${APP_HOST}.wordpress.local\n"\
+          "  - name: wp.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - wp.www.wordpress.local\n"\
           "  - name: wpa.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - wpa.${APP_HOST}.wordpress.local\n"\
+          "  - name: wpa.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - wpa.www.wordpress.local\n"\
           "  - name: pma.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - pma.${APP_HOST}.wordpress.local\n"\
+          "  - name: pma.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - pma.www.wordpress.local\n"\
           "  - name: db.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - db.${APP_HOST}.wordpress.local\n"\
+          "  - name: db.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - db.www.wordpress.local\n"\
           "  - name: rc.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - rc.${APP_HOST}.wordpress.local\n"\
+          "  - name: rc.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - rc.www.wordpress.local\n"\
           "  - name: redis.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - redis.${APP_HOST}.wordpress.local\n"\
+          "  - name: redis.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - redis.www.wordpress.local\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then
             bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;

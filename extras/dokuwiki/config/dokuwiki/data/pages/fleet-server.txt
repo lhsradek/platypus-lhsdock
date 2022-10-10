@@ -1,7 +1,7 @@
 ====== Fleet Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
-[[https://fleet.nginx.local|fleet.nginx.local:8220]]
+[[https://fleet.nginx.local?pretty|fleet.nginx.local:8220]]
 
 [[https://www.elastic.co/guide/en/fleet/current/index.html]]
 

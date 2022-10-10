@@ -5,7 +5,7 @@
 
 GET [[https://es01.docker.nginx.local:9200/logstash-*/_search?pretty|logstash-*/_search]]
 
-GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-8.4.2-2022.10.03-000001/_search?pretty&q=response=50|.ds-filebeat-8.4.2-2022.10.03-000001/_search?q=response=50]]
+GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*/_search?pretty&q=response=50|.ds-filebeat-*/_search?q=response=50]]
 
 -----
 

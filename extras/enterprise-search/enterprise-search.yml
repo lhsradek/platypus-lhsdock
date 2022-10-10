@@ -1,16 +1,16 @@
 # Default Enterprisesearch configuration for docker target
 
 allow_es_settings_modification: true
-# connector_uuid: 3NEUUoMBjfs4SXvOO5Sq
-# api_key: Nk5FVVVvTUJqZnM0U1h2T2FaVkU6M1ZVbVR5bjZSV3FwYS1jemJpZHNuUQ==
+# connector_uuid: 3NEU [censored demo] UoMBjfs4SXvOO5Sq
+# api_key: Nk5FVVVvTUJq [censored demo] wYS1jemJpZHNuUQ==
 
 ent_search:
   listen_host: "0.0.0.0"
   listen_port: 3002
-  external_url: "http://eps.nginx.local:3002"
+  external_url: "http://eps.${APP_NET}:3002"
 
 elasticsearch:
-  host: "https://es01.docker.nginx.local:9200"
+  host: "https://es01.${APP_HOST}.${APP_NET}:9200"
   username: '${ELASTIC_USERNAME}'
   password: '${ELASTIC_PASSWORD}'
   ssl:
@@ -19,13 +19,13 @@ elasticsearch:
 
 kibana:
   # startup_retry.fail_after: 12000
-  host: "https://kibana.docker.nginx.local:5601"
-  external_url: "https://kibana.docker.nginx.local:5601"
+  host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+  external_url: "https://kibana.${APP_HOST}.${APP_NET}:5601"
 
 apm:
   enabled: true
   service_name: "enterprise-search"
-  server_url: "http://apm.nginx.local:8200"
+  server_url: "http://apm.${APP_NET}:8200"
 
 secret_management.encryption_keys: [d24d3d10193be6ec7f75e6957a0f6322fa45faaa1c21dfc5d24edc32a7b1c888]
 secret_session_key: "5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58"
@@ -33,4 +33,3 @@ audit_log_directory: "/var/log/enterprise-search"
 filebeat_log_directory: "/var/log/enterprise-search"
 log_directory: "/var/log/enterprise-search"
 metricbeat_log_directory: "/var/log/enterprise-search"
-

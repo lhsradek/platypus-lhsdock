@@ -5,7 +5,7 @@ http.port: 5068
 http.host: "0.0.0.0"
 #http.host: "file.nginx.local"
 
-xpack.monitoring. enabled: true
+xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -16,8 +16,7 @@ filebeat.config:
     reload.enabled: false
 
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
+  - add_host_metadata: ~
   - add_kubernetes_metadata: ~
   - add_docker_metadata: ~
   - add_cloud_metadata: ~
@@ -57,7 +56,7 @@ setup:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
       - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      - "https://es02.${APP_HOST}.${APP_NET}:9202"
+      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
