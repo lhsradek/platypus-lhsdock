@@ -482,8 +482,8 @@ services:
       - STACK_VERSION=${STACK_VERSION}
       - STV=${STV}
     healthcheck:
-      # test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
+      # test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 30s
       timeout: 60s
       retries: 600
