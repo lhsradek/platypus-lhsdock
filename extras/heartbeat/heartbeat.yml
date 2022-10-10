@@ -73,10 +73,6 @@ heartbeat.monitors:
     - file.${APP_NET}:5066
     - heart.${APP_NET}:5066
     #- fleet.${APP_NET}:5066
-    #- fleet.${APP_NET}:5066
-    #- fleet.${APP_NET}:5066
-    #- fleet.${APP_NET}:5066
-    #- fleet.${APP_NET}:8200
     - fleet.${APP_NET}:8220
     # - fleet.${APP_NET}:6791
     - kibana.${APP_HOST}.${APP_NET}:5601
