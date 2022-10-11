@@ -90,7 +90,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
 | logstash                                              | 8.4.3      | 735MB            |
 | docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | Elastic Synthetics
+| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)
 | docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
 | docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
 | docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
@@ -98,7 +98,7 @@ Creating lhsdock-eps      ... done
 | lmenezes/cerebro                                      | 0.9.4      | 284MB            |
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
 
-With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl for certificates,
+With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
 which I don't use much anymore ;-) the Elastic Certificate Tool is used by webservice 'setup'.
 
 ```# perl /root/bin/platypus.pl```
