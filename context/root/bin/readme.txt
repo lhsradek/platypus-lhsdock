@@ -83,14 +83,14 @@ Creating lhsdock-eps      ... done
 | REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
 | ----------------------------------------------------- | ---------- | ---------------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB           | lhsradek/lhsdock
-| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine
+| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB     | nginx:alpine
 | php                                                   | fpm-alpine | 73.4MB           |
 | docker.elastic.co/elasticsearch/elasticsearch         | 8.4.3      | 1.26GB           |
 | docker.elastic.co/kibana/kibana                       | 8.4.3      | 800MB            |
 | docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
 | logstash                                              | 8.4.3      | 735MB            |
 | docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | * for Elastic Synthetics
+| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | Elastic Synthetics
 | docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
 | docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
 | docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
