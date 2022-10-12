@@ -3,10 +3,10 @@
 #####################################################
 
 # Java options for JVM tuning (used for app-server and CLI commands)
-export JAVA_OPTS=${JAVA_OPTS:-"-Xms1G -Xmx1G"}
+export JAVA_OPTS=${JAVA_OPTS}
 
 # Additional Java options for the application server
-export APP_SERVER_JAVA_OPTS="${APP_SERVER_JAVA_OPTS:-}"
+export APP_SERVER_JAVA_OPTS=${APP_SERVER_JAVA_OPTS}
 
 #------------------------------------------------------------------------------
 # Enable Java GC logging (see below for the default configuration)

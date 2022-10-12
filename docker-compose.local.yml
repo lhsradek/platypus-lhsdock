@@ -1205,9 +1205,6 @@ services:
     depends_on:
       setup:
         condition: service_healthy
-    depends_on:
-      apm:
-        condition: service_healthy
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
     restart: ${DOCKER_RESTART_POLICY}
