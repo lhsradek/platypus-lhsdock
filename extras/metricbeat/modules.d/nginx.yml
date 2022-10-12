@@ -7,8 +7,8 @@
   period: 10s
 
   # Nginx hosts
-  # hosts: ["https://docker.nginx.local", "https://wiki.docker.nginx.local", "https://www.tomcat.local", "https://www.wordpress.local"]
-  hosts: ["https://docker.nginx.local", "https://wiki.docker.nginx.local"]
+  # hosts: ["http://docker.nginx.local", "http://wiki.docker.nginx.local", "http://www.tomcat.local", "http://www.wordpress.local"]
+  hosts: ["http://docker.nginx.local", "http://wiki.docker.nginx.local"]
 
   # Path to server status. Default nginx_status
   #server_status_path: "nginx_status"

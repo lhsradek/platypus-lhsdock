@@ -45,14 +45,14 @@ heartbeat.monitors:
     #- https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
     #- https://${APP_HOST}.tomcat.local/tombola-javadoc
     #- https://ad.${APP_HOST}.tomcat.local
-    - https://tombola.www.tomcat.local/tomcat.jsp
-    - https://www.tomcat.local/tombola-javadoc/
-    - https://ad.www.tomcat.local
+    #- https://tombola.www.tomcat.local/tomcat.jsp
+    #- https://www.tomcat.local/tombola-javadoc/
+    #- https://ad.www.tomcat.local
     # wordpress
     #- https://${APP_HOST}.wordpress.local
     #- https://pma.${APP_HOST}.wordpress.local
-    - https://www.wordpress.local
-    - https://pma.www.wordpress.local
+    #- https://www.wordpress.local
+    #- https://pma.www.wordpress.local
     # intranet
     - https://lhs.intranet.local:443/downloads/
     - https://mamka.intranet.local:443/downloads/
@@ -77,7 +77,7 @@ heartbeat.monitors:
     # - fleet.${APP_NET}:6791
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
-    - logstash.${APP_HOST}.${APP_NET}:5055
+    #- logstash.${APP_HOST}.${APP_NET}:5055
 
 - type: icmp
   schedule: '0 * * * * * *'
@@ -120,12 +120,6 @@ processors:
   - add_kubernetes_metadata: ~
 
 output:
-  # logstash:
-  #   # Boolean flag to enable or disable the output module.
-  #   enabled: true
-  #   # The Logstash hosts.
-  #   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
-
   elasticsearch:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
@@ -156,7 +150,8 @@ setup:
 
   apm:
     enabled: true
-    service_name: "lhs"
+    service_name: 
+      - "lhs"
     server_url: "http://apm.${APP_NET}:8200"
   #   username: '${ELASTICSEARCH_USERNAME}'
   #   password: '${ELASTICSEARCH_PASSWORD}'

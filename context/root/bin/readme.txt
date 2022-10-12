@@ -90,7 +90,7 @@ Creating lhsdock-eps      ... done
 | docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
 | logstash                                              | 8.4.3      | 735MB            |
 | docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics) | 8.4.3      | 3.67GB           |
 | docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
 | docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
 | docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
@@ -99,7 +99,7 @@ Creating lhsdock-eps      ... done
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
 
 With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
-which I don't use much anymore ;-) the Elastic Certificate Tool is used by webservice 'setup'.
+which I don't use much anymore, the Elastic Certificate Tool is used by webservice 'setup'.
 
 ```# perl /root/bin/platypus.pl```
 
@@ -115,9 +115,9 @@ which I don't use much anymore ;-) the Elastic Certificate Tool is used by webse
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | <code>es03.www.nginx.local</code>      |
 | kibana               | 5601/tcp               | lhsdock-kibana   | <code>kibana.www.nginx.local</code>    |
 | apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm      | <code>apm.nginx.local</code>           | *
-| metricbeat           | 5067/tcp               | lhsdock-metric   | <code>metric.nginx.local</code>        | * 
-| filebeat             | 5068/tcp               | lhsdock-file     | <code>file.nginx.local</code>          | *
-| heartbeat            | 5069/tcp               | lhsdock-heart    | <code>heart.nginx.local</code>         | *
+| metricbeat           | 5066/tcp               | lhsdock-metric   | <code>metric.nginx.local</code>        | * 
+| filebeat             | 5066/tcp               | lhsdock-file     | <code>file.nginx.local</code>          | *
+| heartbeat            | 5066/tcp               | lhsdock-heart    | <code>heart.nginx.local</code>         | *
 | enterprise-search    | 3002/tcp               | lhsdock-eps      | <code>eps.nginx.local</code>           | *
 | elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | <code>fleet.nginx.local</code>         | *
 | logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | <code>logstash.nginx.local</code>      | *

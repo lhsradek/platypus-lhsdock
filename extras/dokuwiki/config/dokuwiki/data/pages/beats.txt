@@ -2,47 +2,68 @@
 
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
+
 GET [[https://es01.docker.nginx.local:9200/.monitoring-beats-*?pretty|.monitoring-beats-*]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-.monitoring-beats-*?pretty|.ds-.monitoring-beats-*]]
 
-[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
-
 ===== Filebeat * =====
 
-Filebeat, together with [[logstash]], processes the file logs that [[kibana]] displays.
+===== Filebeat processes the file logs =====
+
+Filebeat, together with [[logstash]], processes the file logs for [[elasticsearch|elastic]] that [[kibana]] displays
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/filebeat|configuration]]
 
 GET [[https://file.nginx.local/?pretty|file.nginx.local]]
 
+GET [[https://file.nginx.local/state?pretty|file.nginx.local/state]]
+
+GET [[https://file.nginx.local/stats?pretty|file.nginx.local/stats]]
+
 GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*/_search?pretty&q=response=50|.ds-filebeat-*/_search?q=response=50]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*?pretty|.ds-filebeat-*]]
+
+===== Kibana displays the logs =====
 
 {{kibana08.png?300x100}}
 
 ===== Heartbeat * =====
 
-Heartbeat monitors systems. It used icmp, tcp or http ping, https ping collects certificates.
+==== Heartbeat monitors systems. It used icmp, tcp or http(s) pings ====
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/heartbeat|configuration]]
 
 GET [[https://heart.nginx.local/?pretty|heart.nginx.local]]
 
+GET [[https://heart.nginx.local/state?pretty|heart.nginx.local/state]]
+
+GET [[https://heart.nginx.local/stats?pretty|heart.nginx.local/stats]]
+
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
 {{kibana04.png?300x100}}
 
+==== Https pings collects certificates ====
+
+{{kibana05.png?300x100}}
+
 ===== Metricbeat * =====
 
-Metricbeat handles the metrics.
+==== Metricbeat handles the metrics ====
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/metricbeat|configuration]]
 
 GET [[https://metric.nginx.local/?pretty|metric.nginx.local]]
 
+GET [[https://metric.nginx.local/state?pretty|metric.nginx.local/state]]
+
+GET [[https://metric.nginx.local/stats?pretty|metric.nginx.local/stats]]
+
 GET [[https://es01.docker.nginx.local:9200/.ds-metricbeat-*/_search?pretty&q=response=50|.ds-metricbeat-*/_search?q=response=50]]
+
 
 {{kibana01.png?300x100}}
 
@@ -50,7 +71,7 @@ GET [[https://es01.docker.nginx.local:9200/.ds-metricbeat-*/_search?pretty&q=res
 
 {{kibana09.png?300x100}}
 
-==== ... and others for example: ====
+===== ... and others for example: =====
 
 ==== Packetbeat ====
 

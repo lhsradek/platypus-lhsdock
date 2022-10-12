@@ -2,8 +2,8 @@
 
 http.enabled: false
 http.port: 5066:x
-http.host: "0.0.0.0"
-#http.host: "heart.nginx.local"
+#http.host: "0.0.0.0"
+http.host: "heart.fleet.nginx.local"
 
 xpack.monitoring.enabled: false
 monitoring:

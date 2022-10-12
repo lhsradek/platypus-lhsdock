@@ -2,10 +2,10 @@
 # Beats is configured under Fleet, you can define most settings
 # from the Kibana UI. You can update this file to configure the settings that
 # are not supported by Fleet.
-fleet:
-  enabled: true
+# fleet:
+#   enabled: true
 
-xpack.monitoring.enabled: true
+xpack.monitoring.enabled: false
 monitoring:
   enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
@@ -100,7 +100,7 @@ outputs:
       enabled: true
       certificate_authorities:
         - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
-      # certificate: ${FLEET_SERVER_CERT}
-      # key: ${FLEET_SERVER_CERT_KEY}
+      certificate: ${FLEET_SERVER_CERT}
+      key: ${FLEET_SERVER_CERT_KEY}
       verification_mode: certificate
       # verification_mode: none

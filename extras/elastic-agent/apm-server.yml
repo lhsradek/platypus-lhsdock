@@ -8,9 +8,8 @@ apm-server:
   #host: "0.0.0.0"
  
 http.enabled: false
-http.port: 5066:x
-http.host: "0.0.0.0"
-#http.host: "heart.nginx.local"
+http.port: 5066
+http.host: "apm.fleet.nginx.local"
 
 xpack.monitoring.enabled: false
 monitoring:

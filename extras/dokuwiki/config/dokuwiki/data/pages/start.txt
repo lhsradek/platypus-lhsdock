@@ -86,26 +86,26 @@ Creating lhsdock-eps      ... done
 
 -----
 
-^ REPOSITORY                                            ^  TAG       ^ SIZE             ^ OPTIONAL ^
-| nginx:alpine                                          | latest     | 23.5MB           | lhsradek/lhsdock |
-| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB ;-) | nginx:alpine |
-| php                                                   | fpm-alpine | 73.4MB           |
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.3      | 1.26GB           |
-| docker.elastic.co/kibana/kibana                       | 8.4.3      | 800MB            |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
-| logstash                                              | 8.4.3      | 735MB            |
-| docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete        | 8.4.3      | 3.67GB           | for Elastic Synthetics |
-| docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
-| docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
-| docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
-| docker.elastic.co/beats/filebeat                      | 8.4.3      | 406MB            |
-| lmenezes/cerebro                                      | 0.9.4      | 284MB            |
-| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
+^ REPOSITORY                                            ^  TAG       ^ SIZE        ^ OPTIONAL ^
+| nginx:alpine                                          | latest     | 23.5MB      | lhsradek/lhsdock |
+| lhsradek/lhsdock                                      | v3         | 25 - 63.5MB | nginx:alpine |
+| php                                                   | fpm-alpine | 73.4MB      |
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.3      | 1.26GB      |
+| docker.elastic.co/kibana/kibana                       | 8.4.3      | 800MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB      |
+| logstash                                              | 8.4.3      | 735MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.4.3      | 3.67GB      |
+| docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB      |
+| docker.elastic.co/beats/filebeat                      | 8.4.3      | 406MB       |
+| lmenezes/cerebro                                      | 0.9.4      | 284MB       |
+| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
 
 
 With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] for certificates,
-which I don't use much anymore ;-) the Elastic Certificate Tool is used by webservice 'setup'.
+which I don't use much anymore, the Elastic Certificate Tool is used by webservice 'setup'.
 
 <code bash># perl /root/bin/platypus.pl</code>
 
@@ -120,9 +120,9 @@ which I don't use much anymore ;-) the Elastic Certificate Tool is used by webse
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03     | <code>es03.www.nginx.local</code>      |  *  |
 | kibana               | 5601/tcp               | lhsdock-kibana   | <code>kibana.www.nginx.local</code>    |
 | apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm      | <code>apm.nginx.local</code>           |  *  |
-| metricbeat           | 5067/tcp               | lhsdock-metric   | <code>metric.nginx.local</code>        |  *  |
-| filebeat             | 5068/tcp               | lhsdock-file     | <code>file.nginx.local</code>          |  *  |
-| heartbeat            | 5069/tcp               | lhsdock-heart    | <code>heart.nginx.local</code>         |  *  |
+| metricbeat           | 5066/tcp               | lhsdock-metric   | <code>metric.nginx.local</code>        |  *  |
+| filebeat             | 5066/tcp               | lhsdock-file     | <code>file.nginx.local</code>          |  *  |
+| heartbeat            | 5066/tcp               | lhsdock-heart    | <code>heart.nginx.local</code>         |  *  |
 | enterprise-search    | 3002/tcp               | lhsdock-eps      | <code>eps.nginx.local</code>           |  *  |
 | elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet    | <code>fleet.nginx.local</code>         |  *  |
 | logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash | <code>logstash.nginx.local</code>      |  *  |

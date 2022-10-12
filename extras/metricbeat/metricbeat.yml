@@ -42,7 +42,7 @@ output:
   #   enabled: true
   #   # The Logstash hosts.
   #   hosts: ["logstash.docker.nginx.local:5044"]
-
+   
   # for /metricbeat -e setup --dashboards:
   elasticsearch:
     hosts: 
@@ -96,5 +96,6 @@ setup:
       # verification_mode: none
   apm:
     enabled: true
-    service_name: "lhs"
+    service_name: 
+      - "lhs"
     server_url: "http://apm.${APP_NET}:8200"

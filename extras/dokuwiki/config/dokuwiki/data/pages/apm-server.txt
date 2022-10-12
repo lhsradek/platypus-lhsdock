@@ -5,9 +5,11 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]
 
-[[https://apm.nginx.local?pretty|apm.nginx.local:8200]]
+[[https://apm.nginx.local?pretty|apm.nginx.local]]
 
-[[https://apm.nginx.local/5066?pretty|apm.nginx.local:5066]]
+[[https://apm.nginx.local/state?pretty|apm.nginx.local/state]]
+
+[[https://apm.nginx.local/stats?pretty|apm.nginx.local/stats]]
 
 [[https://www.elastic.co/guide/en/apm/server/current/overview.html]]
 
