@@ -516,8 +516,6 @@ services:
         condition: service_healthy
       es02:
         condition: service_healthy
-      logstash:
-        condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
@@ -596,8 +594,6 @@ services:
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-      - "JAVA_OPTS=${EPS_JAVA_OPTS}"
-      - "APP_SERVER_JAVA_OPTS=${EPS_JAVA_OPTS}"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"

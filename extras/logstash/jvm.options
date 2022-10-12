@@ -6,12 +6,6 @@
 #-Xms1g 
 #-Xmx1g
 # by lhs:
-# <code>
-# @Value("#{'${LOGSTASH_JAVA_OPT}'.split('\\s{1,}')}")
-# private List<String> javaOpt;
-# javaOpt.forEach(key->{ key; }};
-# </code>
-# ${${LOGSTASH_JAVA_OPT}.split('\\s{1,}').forEach(key->{ key; }}
 -Xms512m
 -Xmx512m
 
