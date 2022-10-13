@@ -5,7 +5,7 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
 
-[[https://fleet.nginx.local?pretty|fleet.nginx.local:8220]]
+GET [[https://fleet.nginx.local?pretty|fleet.nginx.local:8220]]
 
 [[https://www.elastic.co/guide/en/fleet/current/index.html]]
 
