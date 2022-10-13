@@ -103,37 +103,37 @@ RUN rm -f /root/bin/apm-agent-php_1.6.1_all.apk
 
 <code bash>
 [root@docker ~]# dnf -y install https://docker.nginx.local/downloads/apm-agent-php-1.6.1-1.noarch.rpm --setopt sslverify=0
-Poslední kontrola metadat: před 0:52:20, Čt 13. října 2022, 15:42:29.
-apm-agent-php-1.6.1-1.noarch.rpm                                                                           2.9 MB/s | 1.0 MB     00:00    
-Závislosti vyřešeny.
+Last metadata expiration check: 1:31:50 ago on Thu Oct 13 15:42:29 2022.
+apm-agent-php-1.6.1-1.noarch.rpm                                                                            58 MB/s | 1.0 MB     00:00    
+Dependencies resolved.
 ===========================================================================================================================================
- Balíček                             Architektura                 Verze                           Repozitář                        Velikost
+ Package                             Architecture                 Version                         Repository                          Size
 ===========================================================================================================================================
-Instalování:
+Installing:
  apm-agent-php                       noarch                       1.6.1-1                         @commandline                       1.0 M
 
-Shrnutí transakce
+Transaction Summary
 ===========================================================================================================================================
-Instalovat  1 balíček
+Install  1 Package
 
-Celková velikost: 1.0 M
-Velikost po nainstalování: 4.5 M
-Stahování balíčků:
-Spouští se kontrola transakce
-Kontrola transakce byla úspěšná
-Probíhá test transakce
-Test transakce byl úspěšný.
-Transakce probíhá
-  Příprava        :                                                                                                                    1/1 
-  Instalování     : apm-agent-php-1.6.1-1.noarch                                                                                       1/1 
-  Probíhá skriplet: apm-agent-php-1.6.1-1.noarch                                                                                       1/1 
+Total size: 1.0 M
+Installed size: 4.5 M
+Downloading Packages:
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                   1/1 
+  Installing       : apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
+  Running scriptlet: apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
 Installing Elastic PHP agent
-  Ověřuje se      : apm-agent-php-1.6.1-1.noarch                                                                                       1/1 
+  Verifying        : apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
 
-Nainstalováno:
+Installed:
   apm-agent-php-1.6.1-1.noarch                                                                                                             
 
-Hotovo!
+Complete!
 </code>
 
 -----
