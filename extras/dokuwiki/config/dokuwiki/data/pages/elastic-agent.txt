@@ -64,6 +64,7 @@ With this part in [[https://github.com/lhsradek/platypus-lhsdock/blob/main/docke
       - ELASTIC_APM_SECRET_TOKEN=${ELASTIC_APM_SECRET_TOKEN}
       - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
+      - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
     volumes:
       - ./application/html:/var/www/html:ro
 </code>
