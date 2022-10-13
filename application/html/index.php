@@ -36,8 +36,8 @@ class IndexController {
 	public function isSocket(String $serverName, int $port) {
 		$ret = false;
 		$transaction = ElasticApm::beginCurrentTransaction(
-    			'isSocket',
-    			'IndexController'
+    			'IndexController::isSocket',
+    			'php::fsockopen'
 		);
 		try {
 			set_time_limit(1);
@@ -55,8 +55,8 @@ class IndexController {
 	public function isUrl(String $url) {
 		$ret = true;
 		$transaction = ElasticApm::beginCurrentTransaction(
-    			'isUrl',
-    			'IndexController'
+    			'IndexController::isUrl',
+    			'php::get_headers'
 		);
 		try {
 			stream_context_set_default( [
