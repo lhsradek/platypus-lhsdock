@@ -1018,13 +1018,13 @@ services:
     depends_on:
       apm:
         condition: service_healthy
+    # Alpine Linux
     # lhsradek/lhsdock has openssl, perl and the program platypus.pl for certificates,
     # which I don't use much anymore, 'cause the Elastic Certificate Tool is used by webservice 'setup'.
     # build:
     #  context: ./context
     #  dockerfile: Dockerfile 
     # image: lhsradek/lhsdock:v3
-    # Alpine Linux
     image: nginx:alpine
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-web"

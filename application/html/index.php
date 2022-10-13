@@ -232,7 +232,7 @@ if ($printEnv) {
 		}
 	}
 	if($isWiki) {
-		print("<li><span><a href=\"https://wiki.".$parent.".".$net.$port."\" target=\"_blank\">wiki.".$parent.".".$net."</a><br/><img src=\"dokuwiki.png\" width=\"24\" height=\"24\"></span></li>");
+		print("<li><a href=\"https://wiki.".$parent.".".$net.$port."\" target=\"_blank\">wiki.".$parent.".".$net."</a><img src=\"dokuwiki.png\" width=\"12\" height=\"12\"></li>");
 	}
 	if($isWp) {
 		print("<li><a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local</a></li>");

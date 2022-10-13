@@ -21,12 +21,6 @@ processors:
   - add_docker_metadata: ~
   - add_cloud_metadata: ~
 
-output.console:
-  enabled: false
-  codec.json:
-    pretty: false
-    escape_html: false
-
 output:
   # for provisioning:
   logstash:

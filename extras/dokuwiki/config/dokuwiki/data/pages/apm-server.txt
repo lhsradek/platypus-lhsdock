@@ -1,6 +1,8 @@
 ====== APM Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
+APM server is for [[elastic-agent#elastic_apm_agent|apm agents]].
+
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]

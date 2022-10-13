@@ -27,8 +27,6 @@ apm-server:
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
         ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-        ssl.verification_mode: "certificate"
-        # Certificate for SSL client authentication.
         ssl.certificate: "${APM_SERVER_CERT}"
         ssl.key: "${APM_SERVER_CERT_KEY}"
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
@@ -43,7 +41,6 @@ apm-server:
     # username: "apm_system"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    # Enable custom SSL settings. Set to false to ignore custom SSL settings for secure communication.
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     ssl.verification_mode: "certificate"
@@ -52,17 +49,7 @@ apm-server:
 
 #================================ Outputs =================================
 
-output.console:
-  # Boolean flag to enable or disable the output module.
-  enabled: false
-
-  # Configure JSON encoding.
-  codec.json:
-    # Pretty-print JSON event.
-    pretty: false
-
-    # Configure escaping HTML symbols in strings.
-    escape_html: false
+#output.console:
       
 #-------------------------- Elasticsearch output --------------------------
 output.elasticsearch:
