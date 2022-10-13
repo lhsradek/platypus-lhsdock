@@ -40,6 +40,10 @@ heartbeat.monitors:
     - http://eps.${APP_NET}:3002
     - https://kibana.${APP_HOST}.${APP_NET}:5601
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=start&do=index
+    - http://apm.${APP_NET}:5066
+    - http://metric.${APP_NET}:5066
+    - http://file.${APP_NET}:5066
+    - http://heart.${APP_NET}:5066
     # - https://fleet.${APP_NET}:8220
     # tomcat
     #- https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
@@ -78,6 +82,8 @@ heartbeat.monitors:
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
     #- logstash.${APP_HOST}.${APP_NET}:5055
+  username: '${ELASTICSEARCH_USERNAME}'
+  password: '${ELASTICSEARCH_PASSWORD}'
 
 - type: icmp
   schedule: '0 * * * * * *'
@@ -93,12 +99,12 @@ heartbeat.monitors:
     - es01.${APP_HOST}.${APP_NET}
     - es02.${APP_HOST}.${APP_NET}
     # - es03.${APP_HOST}.${APP_NET}
-    - file.${APP_NET}
+    # - file.${APP_NET}
     # - fleet.${APP_NET}
-    - heart.${APP_NET}
+    # - heart.${APP_NET}
     - kibana.${APP_HOST}.${APP_NET}
     - logstash.${APP_HOST}.${APP_NET}
-    - metric.${APP_NET}
+    # - metric.${APP_NET}
     - weblhs-php.${APP_NET}
     - wiki.${APP_HOST}.${APP_NET}
     - lhs.intranet.local
