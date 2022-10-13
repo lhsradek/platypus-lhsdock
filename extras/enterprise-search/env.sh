@@ -6,12 +6,12 @@
 export JAVA_OPTS=${JAVA_OPTS:-"-Xms512m -Xmx512m"}
 
 # Additional Java options for the application server
-export APP_SERVER_JAVA_OPTS="${APP_SERVER_JAVA_OPTS:-"-Xms512m -Xmx512m"}"
+export APP_SERVER_JAVA_OPTS=${APP_SERVER_JAVA_OPTS:-"-Xms512m -Xmx512m"}
 
 #------------------------------------------------------------------------------
 # Enable Java GC logging (see below for the default configuration)
-export JAVA_GC_LOGGING=true
-#export JAVA_GC_LOGGING=false # by lhs
+#export JAVA_GC_LOGGING=true
+export JAVA_GC_LOGGING=false # by lhs
 
 # Example Environment variables for further logging configuration:
 
