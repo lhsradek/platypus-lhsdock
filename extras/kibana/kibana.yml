@@ -255,13 +255,13 @@ elasticsearch:
 
 enterpriseSearch.host: "http://eps.${APP_NET}:3002"
 
+# json-file:
+#   type: json-file
+#   fileName: /usr/share/kibana/logs/kibana.json
+#   layout:
+#     type: json
 logging:
   appenders:
-    # json-file:
-    #   type: json-file
-    #   fileName: /usr/share/kibana/logs/kibana.json
-    #   layout:
-    #     type: json
     file:
       type: file
       fileName: /usr/share/kibana/logs/kibana.log

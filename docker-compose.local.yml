@@ -153,7 +153,7 @@ services:
       interval: 10s
       timeout: 60s
       retries: 500
-
+ 
 #
 #   Start with two elasticsearch, the third can be easily added after installation 
 #
@@ -343,19 +343,14 @@ services:
     depends_on:
       es02:
         condition: service_healthy
-    depends_on:
-      kibana:
-        condition: service_healthy
-    depends_on:
-      metricbeat:
-        condition: service_healthy
-        condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-apm"
     hostname: "apm.${INT_NETWORK}"
     networks:
+    # for traefik:
+      - default
     # local network:
       - intnet
     # ports:
@@ -379,7 +374,13 @@ services:
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.apm-public.rule=Host(`apm.${INT_NETWORK}`)"
+      - "traefik.http.routers.apm-public.entrypoints=https"
+      - "traefik.http.routers.apm-public.tls=true"
+      - "traefik.http.services.apm-platypus-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.apm-platypus-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       test: ["CMD-SHELL", "curl -s -I http://apm.${INT_NETWORK}:8200 | grep -q 'HTTP/1.1 200 OK'"]
@@ -392,10 +393,13 @@ services:
 #
   metricbeat:
     depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
       es02:
         condition: service_healthy
     depends_on:
-      logstash:
+      apm:
         condition: service_healthy
     depends_on:
       kibana:
@@ -407,6 +411,8 @@ services:
     hostname: "metric.${INT_NETWORK}"
     user: root
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     volumes:
@@ -433,7 +439,13 @@ services:
       - METRICBEAT_SERVER_CERT=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.crt
       - METRICBEAT_SERVER_CERT_KEY=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.key
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.metric-public.rule=Host(`metric.${INT_NETWORK}`)"
+      - "traefik.http.routers.metric-public.entrypoints=https"
+      - "traefik.http.routers.metric-public.tls=true"
+      - "traefik.http.services.metric-platypus-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.metric-platypus-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
@@ -446,13 +458,10 @@ services:
 #
   filebeat:
     depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
       es02:
-        condition: service_healthy
-    depends_on:
-      logstash:
-        condition: service_healthy
-    depends_on:
-      kibana:
         condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
@@ -460,6 +469,8 @@ services:
     container_name: "${APP_ID}-file"
     hostname: "file.${INT_NETWORK}"
     networks:
+    # for traefik:
+      - default
     # local network:
       - intnet
     volumes:
@@ -468,14 +479,13 @@ services:
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/file/logs:/usr/share/filebeat/logs
-      - ./logs/file/filebeat:/usr/share/filebeat/data/registry/filebeat
+      - ./logs/file/registry:/usr/share/filebeat/data/registry
       - ./logs/apm:/usr/share/filebeat/elogs/apm-server
       - ./logs/dokuwiki:/usr/share/filebeat/elogs/nginx/dokuwiki
       - ./logs/es01:/usr/share/filebeat/elogs/es01
       - ./logs/es02:/usr/share/filebeat/elogs/es02
       - ./logs/es03:/usr/share/filebeat/elogs/es03
       - ./logs/eps:/usr/share/filebeat/elogs/eps
-      - ./logs/fleet:/usr/share/filebeat/elogs/fleet
       - ./logs/heart:/usr/share/filebeat/elogs/heart
       - ./logs/kibana:/usr/share/filebeat/elogs/kibana
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
@@ -499,7 +509,13 @@ services:
       - FILEBEAT_SERVER_CERT=/usr/share/filebeat/certs/file.${INT_NETWORK}/file.${INT_NETWORK}.crt
       - FILEBEAT_SERVER_CERT_KEY=/usr/share/filebeat/certs/file.${INT_NETWORK}/file.${INT_NETWORK}.key
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.file-public.rule=Host(`file.${INT_NETWORK}`)"
+      - "traefik.http.routers.file-public.entrypoints=https"
+      - "traefik.http.routers.file-public.tls=true"
+      - "traefik.http.services.file-platypus-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.file-platypus-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
@@ -546,14 +562,20 @@ services:
       - HEARTBEAT_SERVER_CERT=/usr/share/heartbeatt/certs/heart.${INT_NETWORK}/heart.${INT_NETWORK}.crt
       - HEARTBEAT_SERVER_CERT_KEY=/usr/share/heartbeat/certs/heart.${INT_NETWORK}/heart.${INT_NETWORK}.key
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.heart-public.rule=Host(`heart.${INT_NETWORK}`)"
+      - "traefik.http.routers.heart-public.entrypoints=https"
+      - "traefik.http.routers.heart-public.tls=true"
+      - "traefik.http.services.heart-platypus-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.heart-platypus-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "heartbeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://heart.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
-
+ 
 #   
 # === Enterprisesearch ===
 #
@@ -573,6 +595,8 @@ services:
     container_name: "${APP_ID}-eps"
     hostname: "eps.${INT_NETWORK}"
     networks:
+    # for traefik:
+      - default
     # local network:
       - intnet
     # ports:
@@ -609,112 +633,6 @@ services:
       timeout: 10s
       retries: 500
    
-#
-# === Elastic Agent as fleet server ===
-#
-# So that kibana doesn't complain that I have to make it :-) Elastic-agent is suitable for external systems.
-# I don't want to lose metrics and logs on the main server because the agent won't connect.
-#
-  fleet:
-    depends_on:
-      es02:
-        condition: service_healthy
-    depends_on:
-      kibana:
-        condition: service_healthy
-    depends_on:
-      eps:
-        condition: service_healthy
-    # Ubuntu - fleet
-    image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
-    # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
-    restart: ${DOCKER_RESTART_POLICY}
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    # ports:
-    #  - ${FLEET_PORT}:8220
-    container_name: "${APP_ID}-fleet"
-    hostname: "fleet.${INT_NETWORK}"
-    user: root # note, synthetic browser monitors require this set to `elastic-agent`
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
-      - ./certs:/usr/share/elastic-agent/certs
-      - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
-      - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
-      - ./extras/elastic-agent/fleet-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/fleet-server-${STACK_VERSION}-linux-x86_64/fleet-server.yml
-      - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
-      - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
-      - ./extras/elastic-agent/heartbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/heartbeat.yml
-      - ./logs/fleet/elastic-agent:/usr/share/elastic-agent/state/data/logs
-      - ./logs/fleet/apm-server:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/apm:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/apm-server
-      - ./logs/es01:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es01
-      - ./logs/es02:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es02
-      - ./logs/es03:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es03
-      - ./logs/dokuwiki:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki
-      - ./logs/eps:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/eps
-      - ./logs/file/logs:/usr/share/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/file/logs
-      - ./logs/file/filebeat:/usr/share/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/file/data/registry/filebeat
-      - ./logs/heart:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/heart
-      - ./logs/kibana:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana
-      - ./logs/nginx:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default
-      - ./logs/metric:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/metric
-      - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql
-      - /root/tombola/logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
-      - /root/tombola/logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
-      - /root/platypus-box/logs/traefik:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik
-      - fleet:/usr/share/elastic-agent
-    environment:
-      - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
-      - APP_NET=${INT_NETWORK}
-      - APM_SERVER_CERT=/usr/share/apm-server/certs/apm.fleet.${INT_NETWORK}/apm.fleet.${INT_NETWORK}.crt
-      - APM_SERVER_CERT_KEY=/usr/share/apm-server/certs/apm.fleet.${INT_NETWORK}/apm.fleet.${INT_NETWORK}.key
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
-      # - ELASTICSEARCH_SERVICE_TOKEN=${ELASTICSEARCH_SERVICE_TOKEN}
-      - FLEET_ENROLL=0
-      - FLEET_SERVER_ENABLE=1
-      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-      - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
-      - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
-      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-      - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
-      - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-      - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/fleet.${INT_NETWORK}/fleet.${INT_NETWORK}.crt
-      - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/fleet.${INT_NETWORK}/fleet.${INT_NETWORK}.key
-      - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
-      - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
-      # - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
-      - FLEET_URL=https://fleet.${INT_NETWORK}:8220
-      - KIBANA_FLEET_USERNAME=elastic
-      - KIBANA_FLEET_PASSWORD=${APM_PASSWORD}
-      - KIBANA_FLEET_HOST=https://kibana.${APP_HOST}.${INT_NETWORK}:5601
-      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-      - KIBANA_FLEET_SETUP=1
-      - KIBANA_FLEET_REQUESTTIMEOUT=1200000
-      - STACK_VERSION=${STACK_VERSION}
-      - STV=${STV}
-    healthcheck:
-      test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-      # test: ["CMD-SHELL", "curl -s --cacert certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/2 404'"]
-      interval: 30s
-      timeout: 60s
-      retries: 60
-     
 #
 # setup makes certs and change passwords
 #
@@ -786,9 +704,6 @@ services:
           "  - name: fleet.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - fleet.${INT_NETWORK}\n"\
-          "  - name: apm.fleet.${INT_NETWORK}\n"\
-          "    dns:\n"\
-          "      - apm.fleet.${INT_NETWORK}\n"\
           "  - name: heart.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - heart.${INT_NETWORK}\n"\
@@ -916,17 +831,17 @@ services:
         #   }
         # </code>
         #
-        echo "Setting apm_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting apm_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         # echo "Setting fleet-server password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/fleet-server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         # 
-        echo "Setting beats_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        echo "Setting remote_monitoring_user password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        echo "Setting logstash_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting beats_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting remote_monitoring_user password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting logstash_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
         # echo "Setting logstash_writer password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
@@ -1095,13 +1010,10 @@ services:
       - "traefik.http.routers.cerebro-public.tls=true"
       - "traefik.http.services.cerebro-platypus-${APP_ID}.loadbalancer.server.port=9000"
       - "traefik.http.services.cerebro-platypus-${APP_ID}.loadbalancer.server.scheme=http"
-
+ 
   weblhs:
     depends_on:
       setup:
-        condition: service_healthy
-    depends_on:
-      apm:
         condition: service_healthy
     depends_on:
       apm:
@@ -1146,7 +1058,6 @@ services:
       - logstash:/root/bin/volume/logstash:ro
       - kibana:/root/bin/volume/kibana:ro
       - apm:/root/bin/volume/apm:ro
-      - fleet:/root/bin/volume/fleet:ro
       - filebeat:/root/bin/volume/file:ro
       - heartbeat:/root/bin/volume/heart:ro
       - metricbeat:/root/bin/volume/metric:ro
@@ -1164,13 +1075,8 @@ services:
       - "traefik.http.routers.weblhs-public.rule=Host(`${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.weblhs-public.entrypoints=https"
       - "traefik.http.routers.weblhs-public.tls=true"
-      # if http
-      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=80"
-      # - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=http"
-      # else https
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=443"
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
-      # fi
     healthcheck:
       test: "curl -s -I http://${APP_HOST}.${INT_NETWORK}/nginx_status | grep -q 'HTTP/1.1 200 OK'"
       interval: 30s
@@ -1178,9 +1084,15 @@ services:
       retries: 50
 
   weblhs-php:
+    depends_on:
+      setup:
+        condition: service_healthy
+    depends_on:
+      apm:
+        condition: service_healthy
     # Alpine Linux
-    image: php:fpm-alpine
-    # image: lhsradek/fpm:v1
+    # image: php:fpm-alpine
+    image: lhsradek/fpm:v1
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${INT_NETWORK}"
@@ -1193,6 +1105,12 @@ services:
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTIC_APM_ENVIRONMENT=${STAGE}
+      - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
+      - ELASTIC_APM_LOG_LEVEL_STDERR=info
+      - ELASTIC_APM_SECRET_TOKEN=${ELASTIC_APM_SECRET_TOKEN}
+      - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
+      - ELASTIC_APM_SERVICE_NAME=${APP_ID}
     volumes:
       - ./application/html:/var/www/html:ro
 
@@ -1226,6 +1144,7 @@ services:
       - ./png/cerebro01.png:/config/dokuwiki/data/media/cerebro01.png
       - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
       - ./png/cerebro03.png:/config/dokuwiki/data/media/cerebro03.png
+      - ./png/elastic-apm-php.png:/config/dokuwiki/data/media/elastic-apm-php.png
       - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
       - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
       - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
@@ -1235,6 +1154,7 @@ services:
       - ./png/kibana07.png:/config/dokuwiki/data/media/kibana07.png
       - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
       - ./png/kibana09.png:/config/dokuwiki/data/media/kibana09.png
+      - ./png/kibana10.png:/config/dokuwiki/data/media/kibana10.png
       - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png
@@ -1268,9 +1188,6 @@ volumes:
   filebeat:
     external: true
     name: "${APP_ID}-file"
-  fleet:
-    external: true
-    name: "${APP_ID}-fleet"
   kibana:
     external: true
     name: "${APP_ID}-kibana"

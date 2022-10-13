@@ -40,8 +40,8 @@ apm-server:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     protocol: "https"
     # api_key: "${AGENT_API_KEY}"
-    # username: "${ELASTICSEARCH_USERNAME}"
-    username: "apm_system"
+    # username: "apm_system"
+    username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     # Enable custom SSL settings. Set to false to ignore custom SSL settings for secure communication.
     ssl.enabled: true

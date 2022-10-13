@@ -96,6 +96,5 @@ setup:
       # verification_mode: none
   apm:
     enabled: true
-    service_name: 
-      - "lhs"
+    # service_name: "${APP_ID}"
     server_url: "http://apm.${APP_NET}:8200"

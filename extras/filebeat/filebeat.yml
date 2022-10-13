@@ -21,6 +21,12 @@ processors:
   - add_docker_metadata: ~
   - add_cloud_metadata: ~
 
+output.console:
+  enabled: false
+  codec.json:
+    pretty: false
+    escape_html: false
+
 output:
   # for provisioning:
   logstash:
@@ -50,36 +56,35 @@ setup:
     index.number_of_shards: 1
     #index.codec: best_compression
     source.enabled: false
-  # elasticsearch:
-  #   hosts: 
-  #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  #     - "https://es02.${APP_HOST}.${APP_NET}:9201"
-  #     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-  #   protocol: "https"
-  #   username: "${ELASTICSEARCH_USERNAME}"
-  #   password: "${ELASTICSEARCH_PASSWORD}"
-  #   # api_key: "${AGENT_API_KEY}"
-  #   ssl:
-  #     enabled: true
-  #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #     # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-  #     # verification_mode: none
-  #     verification_mode: certificate
-  # 
-  # kibana:
-  #   host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-  #   username: '${ELASTICSEARCH_USERNAME}'
-  #   password: '${ELASTICSEARCH_PASSWORD}'
-  #   protocol: "https"
-  #   # api_key: ${AGENT_API_KEY}
-  #   ssl:
-  #     enabled: true
-  #     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-  #     # verification_mode: none
-  #     verification_mode: certificate
+  elasticsearch:
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    protocol: "https"
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    # api_key: "${AGENT_API_KEY}"
+    ssl:
+      enabled: true
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+      # verification_mode: none
+      verification_mode: certificate
+  
+  kibana:
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    protocol: "https"
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      # verification_mode: none
+      verification_mode: certificate
   apm:
     enabled: true
-    service_name: 
-      - "lhs"
+    # service_name: "${APP_ID}"
     protocol: "http"
     server_url: "http://apm.${APP_NET}:8200"

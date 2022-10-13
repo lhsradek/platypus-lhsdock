@@ -6,6 +6,6 @@
     - stats
     - state
   period: 10s
-  hosts: ["http://localhost:5066"]
+  hosts: ["http://apm.${APP_NET}:5066"]
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"

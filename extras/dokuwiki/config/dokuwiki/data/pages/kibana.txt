@@ -61,3 +61,9 @@ Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-ser
 ==== Observability - Overview ====
 
 {{kibana09.png?600x200}}
+
+==== Observability - APM - Services ====
+
+{{kibana10.png?600x200}}
+
+Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]

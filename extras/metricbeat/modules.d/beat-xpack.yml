@@ -4,7 +4,7 @@
 - module: beat
   xpack.enabled: true
   period: 10s
-  hosts: ["${APP_ID}-apm:5066", "${APP_ID}-metric:5066", "${APP_ID}-file:5066", "${APP_ID}-heart:5066"]
+  hosts: ["apm.${APP_NET}:5066", "metric.${APP_NET}:5066", "file.${APP_NET}:5066", "heart.${APP_NET}:5066"]
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"
   # ssl:

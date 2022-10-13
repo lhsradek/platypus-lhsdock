@@ -31,6 +31,7 @@ class IndexController {
 
 	public function isSocket(String $serverName, int $port) {
 		$ret = false;
+		set_time_limit(1);
 		$fp = fsockopen($serverName, $port, $errno, $errstr, 1);
 		if ($fp) {
 			fclose($fp);
@@ -135,7 +136,7 @@ if ($printEnv) {
     <a href="mailto:radek.kadner@gmail.com"><img src="mail.png"/></a></span></h1>
   <div class="content">
     <div class="content-middle">
-      <h5><span><?php print($clusterName." ".$clusterUuid); ?></span></h5>
+      <h5><span><?php print($clusterName." (".$clusterUuid.")"); ?></span></h5>
 <?php if ($printEnv) { ?>
       <h2>Environment</h2>
 <code>
@@ -233,7 +234,7 @@ if ($printEnv) {
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\">".$parent.".nginx.local - phpinfo")?></a></li>
+            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".nginx.local - phpinfo")?></a></li>
             <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
