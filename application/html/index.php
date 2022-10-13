@@ -24,6 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --!>
 <?php
+
+use Elastic\Apm\ElasticApm;
+use Elastic\Apm\TransactionInterface;
+
 $printEnv = false;
 #  $printEnv = true;
 
@@ -31,26 +35,42 @@ class IndexController {
 
 	public function isSocket(String $serverName, int $port) {
 		$ret = false;
-		set_time_limit(1);
-		$fp = fsockopen($serverName, $port, $errno, $errstr, 1);
-		if ($fp) {
-			fclose($fp);
-			$ret = true;
+		$transaction = ElasticApm::beginCurrentTransaction(
+    			'isSocket',
+    			'IndexController'
+		);
+		try {
+			set_time_limit(1);
+			$fp = fsockopen($serverName, $port, $errno, $errstr, 1);
+			if ($fp) {
+				fclose($fp);
+				$ret = true;
+			}
+		} finally {
+		    $transaction->end();
 		}
 		return $ret;
 	}
 
 	public function isUrl(String $url) {
 		$ret = true;
-		stream_context_set_default( [
-    			'ssl' => [
-        			'verify_peer' => false,
+		$transaction = ElasticApm::beginCurrentTransaction(
+    			'isUrl',
+    			'IndexController'
+		);
+		try {
+			stream_context_set_default( [
+    				'ssl' => [
+       				'verify_peer' => false,
         			'verify_peer_name' => false,
-    			],
-		]);
-		$file_headers = get_headers($url);
-		if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
-    			$ret = false;
+    				],
+			]);
+			$file_headers = get_headers($url);
+			if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+    				$ret = false;
+			}
+		} finally {
+		    $transaction->end();
 		}
 		return $ret;
 	}
