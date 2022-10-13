@@ -11,7 +11,7 @@
 
  - [[Cerebro]]
 
- - [[Elastic-agent]]
+ - [[Elastic-agent|Elastic agent]]
 
  - [[Beats]]
 
