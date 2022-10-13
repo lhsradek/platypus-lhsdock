@@ -5,11 +5,21 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]
 
-[[https://apm.nginx.local?pretty|apm.nginx.local]]
+GET [[https://apm.nginx.local?pretty|apm.nginx.local]]
 
-[[https://apm.nginx.local/state?pretty|apm.nginx.local/state]]
+GET [[https://apm.nginx.local/state?pretty|apm.nginx.local/state]]
 
-[[https://apm.nginx.local/stats?pretty|apm.nginx.local/stats]]
+GET [[https://apm.nginx.local/stats?pretty|apm.nginx.local/stats]]
+
+-----
+
+GET [[https://es01.docker.nginx.local:9200/.ds-logs-apm*/_search?pretty&q=response=50|.ds-logs-apm*/_search?q=response=50]]
+
+GET [[https://es01.docker.nginx.local:9200/.apm-agent-configuration?pretty|.apm-agent-configuration]]
+
+GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-link]]
+
+-----
 
 [[https://www.elastic.co/guide/en/apm/server/current/overview.html]]
 

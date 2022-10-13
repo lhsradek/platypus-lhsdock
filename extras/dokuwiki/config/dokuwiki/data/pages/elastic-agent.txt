@@ -101,11 +101,3 @@ RUN rm -f /root/bin/apm-agent-php_1.6.1_all.apk
 [[https://docker.nginx.local/downloads/apm-agent-php-1.6.1-1.noarch.rpm|apm-agent-php-1.6.1-1.noarch.rpm]]
 
 -----
-
-GET [[https://es01.docker.nginx.local:9200/.ds-logs-apm*/_search?pretty&q=response=50|.ds-logs-apm*/_search?q=response=50]]
-
-GET [[https://es01.docker.nginx.local:9200/.apm-agent-configuration?pretty|.apm-agent-configuration]]
-
-GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-link]]
-
------

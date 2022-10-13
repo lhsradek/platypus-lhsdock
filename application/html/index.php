@@ -104,7 +104,6 @@ class IndexController {
 		}
 		return $ret;
 	}
-
 }
 
 $index = new IndexController();
