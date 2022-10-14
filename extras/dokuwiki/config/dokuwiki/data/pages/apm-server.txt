@@ -21,6 +21,18 @@ GET [[https://es01.docker.nginx.local:9200/.apm-agent-configuration?pretty|.apm-
 
 GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-link]]
 
+=== Kibana - Observability - APM - Services ===
+
+{{kibana10.png?600x200}}
+
+=== Kibana - Observability - APM - Services - docker-wordpress99 - Overview ===
+
+{{kibana11.png?600x200}}
+
+=== Kibana - Observability - APM - Trases ===
+
+{{kibana12.png?600x200}}
+
 -----
 
 [[https://www.elastic.co/guide/en/apm/server/current/overview.html]]

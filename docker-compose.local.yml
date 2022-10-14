@@ -353,8 +353,8 @@ services:
       - default
     # local network:
       - intnet
-    # ports:
-    #  - ${APM_PORT}:8200
+    ports:
+      - ${APM_PORT}:8200
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -1078,7 +1078,7 @@ services:
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.port=443"
       - "traefik.http.services.weblhs-platypus-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
-      test: "curl -s -I http://${APP_HOST}.${INT_NETWORK}/nginx_status | grep -q 'HTTP/1.1 200 OK'"
+      test: "curl -s --cacert /etc/ssl/private/ca.crt -I https://docker.nginx.local/downloads | grep -q 'HTTP/2 301'"
       interval: 30s
       timeout: 2s
       retries: 50
@@ -1157,6 +1157,8 @@ services:
       - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
       - ./png/kibana09.png:/config/dokuwiki/data/media/kibana09.png
       - ./png/kibana10.png:/config/dokuwiki/data/media/kibana10.png
+      - ./png/kibana11.png:/config/dokuwiki/data/media/kibana11.png
+      - ./png/kibana12.png:/config/dokuwiki/data/media/kibana12.png
       - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png

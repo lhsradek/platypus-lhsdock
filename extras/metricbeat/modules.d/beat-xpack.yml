@@ -4,8 +4,10 @@
 - module: beat
   xpack.enabled: true
   period: 10s
-  hosts: ["apm.${APP_NET}:5066", "metric.${APP_NET}:5066", "file.${APP_NET}:5066", "heart.${APP_NET}:5066"]
-  username: "beats_system"
+  #hosts: ["apm.${APP_NET}:5066", "metric.${APP_NET}:5066", "file.${APP_NET}:5066", "heart.${APP_NET}:5066"]
+  hosts: ["metric.${APP_NET}:5066", "file.${APP_NET}:5066", "heart.${APP_NET}:5066"]
+  #username: "beats_system"
+  username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   # ssl:
   #  enabled: true

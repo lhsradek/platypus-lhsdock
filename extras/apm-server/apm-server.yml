@@ -90,7 +90,7 @@ http.port: 5066
 
 xpack.monitoring.enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 monitoring.elasticsearch:

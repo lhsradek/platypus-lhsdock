@@ -28,7 +28,8 @@ heartbeat.monitors:
   username: '${ELASTICSEARCH_USERNAME}'
   password: '${ELASTICSEARCH_PASSWORD}'
   # api_key: ${AGENT_API_KEY}
-  check.response.status: [200, 301, 302]
+  # check.response.status: [200, 301, 302]
+  check.response.status: [200]
   hosts:
     # ELK
     - http://apm.${APP_NET}:8200
@@ -37,8 +38,7 @@ heartbeat.monitors:
     - https://es02.${APP_HOST}.${APP_NET}:9201
     #- https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}:443/downloads/
-    - http://eps.${APP_NET}:3002
-    - https://kibana.${APP_HOST}.${APP_NET}:5601
+    - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=start&do=index
     - http://apm.${APP_NET}:5066
     - http://metric.${APP_NET}:5066
@@ -49,20 +49,21 @@ heartbeat.monitors:
     #- https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
     #- https://${APP_HOST}.tomcat.local/tombola-javadoc
     #- https://ad.${APP_HOST}.tomcat.local
-    #- https://tombola.www.tomcat.local/tomcat.jsp
-    #- https://www.tomcat.local/tombola-javadoc/
-    #- https://ad.www.tomcat.local
+    - https://tombola.www.tomcat.local/tomcat.jsp
+    - https://www.tomcat.local/tombola-javadoc/
+    - https://ad.www.tomcat.local
     # wordpress
-    #- https://${APP_HOST}.wordpress.local
-    #- https://pma.${APP_HOST}.wordpress.local
-    #- https://www.wordpress.local
-    #- https://pma.www.wordpress.local
+    - https://${APP_HOST}.wordpress.local
+    - https://pma.${APP_HOST}.wordpress.local
+    - https://www.wordpress.local
+    - https://pma.www.wordpress.local
     # intranet
     - https://lhs.intranet.local:443/downloads/
     - https://mamka.intranet.local:443/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-    verification_mode: "none"
+    # verification_mode: "none"
+    verification_mode: "certificate"
 
 - type: tcp
   schedule: '0 * * * * * *'
@@ -76,9 +77,7 @@ heartbeat.monitors:
     - metric.${APP_NET}:5066
     - file.${APP_NET}:5066
     - heart.${APP_NET}:5066
-    # - fleet.${APP_NET}:5066
-    # - fleet.${APP_NET}:8220
-    # - fleet.${APP_NET}:6791
+    - eps.${APP_NET}:3002
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
     #- logstash.${APP_HOST}.${APP_NET}:5055

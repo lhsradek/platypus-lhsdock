@@ -79,8 +79,9 @@ You can see in:
 
 {{kibana10.png?600x200}}
 
-See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.**isSocket** and IndexController.**isUrl**.
+See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.**isSocket** and IndexController.**isUrl**. This usage will automatically add trases **IndexController::isSocket** and **IndexController::isUrl**.
 
+{{kibana12.png?600x200}}
 
 ==== Deb ====
 
@@ -90,12 +91,14 @@ See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.
 
 [[https://docker.nginx.local/downloads/apm-agent-php_1.6.1_all.apk|apm-agent-php_1.6.1_all.apk]]
 
-Web is [[https://hub.docker.com/_/nginx|alpine nginx]] with [[https://hub.docker.com/_/php|fpm-alpine]] and [[https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile|lhsradek/fpm:v1]] with:
+Web is [[https://hub.docker.com/_/nginx|alpine nginx]] with [[https://hub.docker.com/_/php|fpm-alpine]] and [[https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile|lhsradek/fpm:v1 Dockerfile]] with:
 <code>
 ADD --chown=55 /root/bin/apm-agent-php_1.6.1_all.apk /root/bin/apm-agent-php_1.6.1_all.apk
 RUN apk add --allow-untrusted --no-cache /root/bin/apm-agent-php_1.6.1_all.apk
 RUN rm -f /root/bin/apm-agent-php_1.6.1_all.apk
 </code>
+
+[[https://hub.docker.com/repository/docker/lhsradek/fpm|lhsradek/fpm:v1]] is used so in service 'webwp-php' in [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/docker-compose.local.yml|platypus-wordpress-mysql]]
 
 ==== RPM ====
 
