@@ -113,12 +113,12 @@ $net = @$_SERVER['APP_NET'];
 $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-$isApm =  @$index->isSocket("lhsdock-apm", 8200);
 $isKibana = @$index->isSocket("lhsdock-kibana", 5601);
 $isCerebro = @$index->isSocket("lhsdock-cerebro", 9000);
 $isEs01 = @$index->isSocket("lhsdock-es01", 9200);
 $isEs02 = @$index->isSocket("lhsdock-es02", 9201);
 $isEs03 = false; // @$index->isSocket("lhsdock-es03", 9202);
+$isApm =  @$index->isSocket("lhsdock-apm", 5066);
 $isFile =  @$index->isSocket("lhsdock-file", 5066);
 $isHeart =  @$index->isSocket("lhsdock-heart", 5066);
 $isMetric =  @$index->isSocket("lhsdock-metric", 5066);
@@ -201,7 +201,7 @@ if ($printEnv) {
 		print("<li><a href=\"https://es03.".$parent.".".$net.":9202/?pretty\" target=\"_blank\">es03.".$parent.".".$net."</a></li>");
 	}
 	if($isApm || $isWiki) { ?><li><?php
-		if($isApm && $isKibana) {
+		if($isApm) {
 			print("<a href=\"https://apm.".$net."/?pretty\" target=\"_blank\">apm.".$net."</a> ");
 		} if($isWiki) {
 			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=apm-server\" target=\"_blank\">APM Server</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");

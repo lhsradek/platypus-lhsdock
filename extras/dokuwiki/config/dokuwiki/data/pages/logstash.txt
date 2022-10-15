@@ -1,6 +1,8 @@
 ====== Logstash ======
-
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]]L[[Kibana|K]]
+
+https://www.elastic.co/guide/en/logstash/current/index.html
+
 ===== Important urls: =====
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/logstash/|configuratios]]

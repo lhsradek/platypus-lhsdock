@@ -1,6 +1,8 @@
 ====== Kibana ======
-
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]]K
+
+https://www.elastic.co/guide/en/kibana/master/get-started.html
+
 ==== Kibana is on url: ====
 
 [[https://kibana.docker.nginx.local:5601]]

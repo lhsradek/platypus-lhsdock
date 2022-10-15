@@ -1,6 +1,9 @@
 ====== Elasticksearch ======
 
 [[start|platypus-lhsdock]] with E[[Logstash|L]][[Kibana|K]]
+
+https://www.elastic.co/guide/en/elasticsearch/reference/master/docker.html
+
 ===== Elastic is on url: =====
 
 [[https://es01.docker.nginx.local:9200]]
