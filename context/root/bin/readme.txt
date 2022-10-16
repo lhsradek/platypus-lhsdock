@@ -78,25 +78,26 @@ Creating lhsdock-eps      ... done
 #### stop lhsdock
 ```# bin/stop```
 
------
 
-| REPOSITORY                                            |  TAG       | SIZE             | OPTIONAL
-| ----------------------------------------------------- | ---------- | ---------------- | ----------------
-| nginx:alpine                                          | latest     | 23.5MB           | lhsradek/lhsdock
-| lhsradek/lhsdock                                      | v3         | 25 .. 63.5MB     | nginx:alpine
-| php                                                   | fpm-alpine | 73.4MB           |
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.3      | 1.26GB           |
-| docker.elastic.co/kibana/kibana                       | 8.4.3      | 800MB            |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB           |
-| logstash                                              | 8.4.3      | 735MB            |
-| docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB           | 
-| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics) | 8.4.3      | 3.67GB           |
-| docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB            |
-| docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB            |
-| docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB           |
-| docker.elastic.co/beats/filebeat                      | 8.4.3      | 406MB            |
-| lmenezes/cerebro                                      | 0.9.4      | 284MB            |
-| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB            |
+#### Reposirories
+
+| REPOSITORY                                            |  TAG       | SIZE        | OPTIONAL
+| ----------------------------------------------------- | ---------- | ----------- | ----------------
+| nginx:alpine                                          | latest     | 23.5MB      | lhsradek/lhsdock
+| lhsradek/lhsdock                                      | v3         | 25 - 63.5MB | nginx:alpine
+| php                                                   | fpm-alpine | 73.4MB     |
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.4.3      | 1.26GB     |
+| docker.elastic.co/kibana/kibana                       | 8.4.3      | 800MB      |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.4.3      | 1.45GB     |
+| logstash                                              | 8.4.3      | 735MB      |
+| docker.elastic.co/beats/elastic-agent                 | 8.4.3      | 2.16GB     | 
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics) | 8.4.3      | 3.67GB      |
+| docker.elastic.co/apm/apm-server                      | 8.4.3      | 230MB      |
+| docker.elastic.co/beats/metricbeat                    | 8.4.3      | 496MB      |
+| docker.elastic.co/beats/heartbeat                     | 8.4.3      | 2.09GB     |
+| docker.elastic.co/beats/filebeat                      | 8.4.3      | 406MB      |
+| lmenezes/cerebro                                      | 0.9.4      | 284MB      |
+| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB      |
 
 With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
 which I don't use much anymore, the Elastic Certificate Tool is used by webservice 'setup'.

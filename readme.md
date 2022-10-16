@@ -78,7 +78,8 @@ Creating lhsdock-eps      ... done
 #### stop lhsdock
 ```# bin/stop```
 
------
+
+#### Reposirories
 
 | REPOSITORY                                            |  TAG       | SIZE        | OPTIONAL
 | ----------------------------------------------------- | ---------- | ----------- | ----------------

@@ -155,7 +155,7 @@ if ($printEnv) {
     <a href="mailto:radek.kadner@gmail.com"><img src="mail.png"/></a></span></h1>
   <div class="content">
     <div class="content-middle">
-      <p><small><?php print($clusterName." - ".$clusterUuid); ?></small></p><?php if ($printEnv) { ?>
+      <p><small><?php print($clusterName." ".$clusterUuid); ?></small></p><?php if ($printEnv) { ?>
       <h2>Environment</h2>
 <code><?php print($env); ?></code>
 <?php

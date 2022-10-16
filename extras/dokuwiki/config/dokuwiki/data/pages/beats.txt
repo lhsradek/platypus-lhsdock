@@ -26,6 +26,7 @@ GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*?pretty|.ds-filebeat-*]
 
 ===== Kibana displays the logs =====
 
+=== Kibana - Observability - Logs - Stream ===
 {{kibana08.png?300x100}}
 
 ===== Heartbeat * =====
@@ -42,10 +43,12 @@ GET [[https://heart.nginx.local/stats?pretty|heart.nginx.local/stats]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
+=== Kibana - Observability - Infrastructure - Uptime - Monitors ===
 {{kibana04.png?300x100}}
 
 ==== Https pings collects certificates ====
 
+=== Kibana - Observability - Infrastructure - Uptime - Certificates ===
 {{kibana05.png?300x100}}
 
 ===== Metricbeat * =====
@@ -62,11 +65,13 @@ GET [[https://metric.nginx.local/stats?pretty|metric.nginx.local/stats]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-metricbeat-*/_search?pretty&q=response=50|.ds-metricbeat-*/_search?q=response=50]]
 
-
+=== Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
 {{kibana01.png?300x100}}
 
+=== Kibana - Observability - Infrastructure - Inventory - Docker Containers ===
 {{kibana03.png?300x100}}
 
+=== Kibana - Observability - Overview ===
 {{kibana09.png?300x100}}
 
 ===== ... and others for example: =====

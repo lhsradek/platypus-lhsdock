@@ -15,14 +15,7 @@ GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-.monitoring-kibana-*?pretty|.ds-.monitoring-kibana-*]]
 
-**Kibana** directs agents. Agents by agent policies directs [[beats|beats]] or [[apm-server|APM Server]].
-
-===== Add agent =====
-
-Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-server|Fleet Server]] and [[apm-server|APM Server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
-
-<code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
-<code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>
+**Kibana** directs agents. Agents by agent policies directs [[fleet-server|Fleet Server]].
 
 -----
 
@@ -68,9 +61,12 @@ Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-ser
 
 {{kibana10.png?600x200}}
 
+Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
+
 === Observability - APM - Services - docker-wordpress99 - Overview ===
 
 {{kibana11.png?600x200}}
 
+=== Observability - APM - Dependences ===
 
-Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
+{{kibana13.png?600x200}}

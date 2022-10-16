@@ -14,23 +14,23 @@ apm-server:
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
   rum:
-    enabled: true
-    output:
-      elasticsearch:
-        hosts:
-          - "https://es01.${APP_HOST}.${APP_NET}:9200"
-          - "https://es02.${APP_HOST}.${APP_NET}:9201"
-          # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-        protocol: "https"
-        #api_key: "id:api_key"
-        #api_key: "${AGENT_API_KEY}"
-        username: "${ELASTICSEARCH_USERNAME}"
-        password: "${ELASTICSEARCH_PASSWORD}"
-        ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-        ssl.certificate: "${APM_SERVER_CERT}"
-        ssl.key: "${APM_SERVER_CERT_KEY}"
-      # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
-      index_pattern: "apm-*-sourcemap*"
+    enabled: false
+    # output:
+    #   elasticsearch:
+    #     hosts:
+    #       - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    #       - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    #       # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    #     protocol: "https"
+    #     #api_key: "id:api_key"
+    #     #api_key: "${AGENT_API_KEY}"
+    #     username: "${ELASTICSEARCH_USERNAME}"
+    #     password: "${ELASTICSEARCH_PASSWORD}"
+    #     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    #     ssl.certificate: "${APM_SERVER_CERT}"
+    #     ssl.key: "${APM_SERVER_CERT_KEY}"
+    #   # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
+    #   index_pattern: "apm-*-sourcemap*"
 
   #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
@@ -57,7 +57,7 @@ output.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
     - "https://es02.${APP_HOST}.${APP_NET}:9201"
-  ##  - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   protocol: "https"
   # api_key: "id:api_key"
   # api_key: "${AGENT_API_KEY}"
@@ -101,6 +101,7 @@ monitoring.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
     - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   protocol: "https"
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

@@ -33,6 +33,10 @@ GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-l
 
 {{kibana12.png?600x200}}
 
+=== Kibana - Observability - APM - Dependences ===
+
+{{kibana13.png?600x200}}
+
 -----
 
 [[https://www.elastic.co/guide/en/apm/server/current/overview.html]]

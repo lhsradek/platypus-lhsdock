@@ -5,8 +5,40 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
 
-GET [[https://fleet.nginx.local?pretty|fleet.nginx.local:8220]]
+GET [[https://fleet.wordpress.local?pretty|fleet.wordpress.local:8220]]
+
+GET [[https://fleet.tomcat.local?pretty|fleet.tomcat.local:8220]]
 
 [[https://www.elastic.co/guide/en/fleet/current/index.html]]
+
+===== Kibana manages Fleet Server =====
+
+Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]
+
+<code yaml>
+  fleet:
+    agents:
+      fleet_server:
+        hosts:
+          - "https://fleet.wordpress.local:8220"
+          - "https://fleet.tomcat.local:8220"
+      elasticsearch:
+        hosts: 
+          - "https://es01.${APP_HOST}.${APP_NET}:9200"
+          - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+</code>
+
+sets the fleet in kibana
+
+=== Kibana - Fleet - Settings ===
+{{fleet01.png?600x200}}
+
+===== Add agent =====
+
+Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-server|Fleet Server]] and [[apm-server|APM Server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
+
+<code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
+<code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>
 
 -----
