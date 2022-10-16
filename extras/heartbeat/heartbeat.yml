@@ -48,18 +48,18 @@ heartbeat.monitors:
     # - https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
     # - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     # - https://ad.${APP_HOST}.tomcat.local
-    # - https://tombola.www.tomcat.local/tomcat.jsp
-    # - https://www.tomcat.local/tombola-javadoc/
-    # - https://ad.www.tomcat.local
+    - https://tombola.www.tomcat.local/tomcat.jsp
+    - https://www.tomcat.local/tombola-javadoc/
+    - https://ad.www.tomcat.local
     # wordpress
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
     # - https://fleet.wordpress.local:8220
-    # - https://www.wordpress.local
-    # - https://pma.www.wordpress.local
+    - https://www.wordpress.local
+    - https://pma.www.wordpress.local
     # intranet
     # - https://lhs.intranet.local:443/downloads/
-    # - https://mamka.intranet.local:443/downloads/
+    - https://mamka.intranet.local:443/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
     verification_mode: "none"
@@ -106,8 +106,6 @@ heartbeat.monitors:
     # - metric.${APP_NET}
     - weblhs-php.${APP_NET}
     - wiki.${APP_HOST}.${APP_NET}
-    - lhs.intranet.local
-    - mamka.intranet.local
 
 heartbeat.scheduler:
   limit: 2
