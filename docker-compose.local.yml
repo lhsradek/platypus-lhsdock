@@ -466,12 +466,12 @@ services:
 # === Filebeat ===
 #
   filebeat:
-    # depends_on:
-    #   es01:
-    #     condition: service_healthy
-    # depends_on:
-    #   es02:
-    #     condition: service_healthy
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
     depends_on:
       logstash:
         condition: service_healthy
