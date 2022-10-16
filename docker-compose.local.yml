@@ -861,7 +861,6 @@ services:
     # Ubuntu - elasticsearch
     # see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/docker.html
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-setup"
     hostname: "setup.${INT_NETWORK}"
     networks:
