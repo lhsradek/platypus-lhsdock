@@ -788,7 +788,7 @@ services:
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
     volumes:
-      - ./extras/etc/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
+      - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
       - ./application/html:/var/www/html:ro
       - ./logs/nginx/php-error.log:/var/log/error.log
       - ./logs/nginx/php-access.log:/var/log/access.log
