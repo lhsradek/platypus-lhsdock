@@ -14,7 +14,7 @@ apm-server:
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
   rum:
-    enabled: false
+    enabled: true
     output:
       elasticsearch:
         hosts:
@@ -23,14 +23,13 @@ apm-server:
           # - "https://es03.${APP_HOST}.${APP_NET}:9202"
         protocol: "https"
         #api_key: "id:api_key"
-        #api_key: "${AGENT_API_KEY}"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
         ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
         ssl.certificate: "${APM_SERVER_CERT}"
         ssl.key: "${APM_SERVER_CERT_KEY}"
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
-      index_pattern: "apm-*-sourcemap*"
+      # index_pattern: "apm-*-sourcemap*"
 
   #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
