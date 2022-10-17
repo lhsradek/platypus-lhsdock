@@ -259,7 +259,7 @@ services:
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
+      # - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
       - logstash:/usr/share/logstash
     environment:
       - APP_ID=${APP_ID}
@@ -386,7 +386,7 @@ services:
       - "traefik.http.routers.apm-public.rule=Host(`apm.${INT_NETWORK}`)"
       - "traefik.http.routers.apm-public.entrypoints=https"
       - "traefik.http.routers.apm-public.tls=true"
-      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.port=8200"
+      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.port=5066"
       - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.scheme=http"
       - "traefik.http.services.apm-${APP_ID}.loadbalancer.healthcheck.hostname=apm.${INT_NETWORK}"
     healthcheck:
@@ -400,15 +400,12 @@ services:
 # === Metricbeat ===
 #
   metricbeat:
-    # depends_on:
-    #   es01:
-    #     condition: service_healthy
-    # depends_on:
-    #   es02:
-    #     condition: service_healthy
-    # depends_on:
-    #   apm:
-    #     condition: service_healthy
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
     depends_on:
        kibana:
          condition: service_healthy
@@ -502,9 +499,9 @@ services:
       - ./logs/kibana:/usr/share/filebeat/elogs/kibana
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
       - ./logs/metric:/usr/share/filebeat/elogs/metric
-      - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql
-      - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/elogs/nginx/tombola
-      - /root/tombola/logs/tombola-tomcat/:/usr/share/filebeat/elogs/tomcat/tombola
+      # - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql
+      # - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/elogs/nginx/tombola
+      # - /root/tombola/logs/tombola-tomcat/:/usr/share/filebeat/elogs/tomcat/tombola
       - /root/platypus-box/logs/traefik:/usr/share/filebeat/elogs/traefik
       - filebeat:/usr/share/filebeat
     environment:
@@ -595,8 +592,12 @@ services:
 # === Enterprisesearch ===
 #
   eps:
+    # depens on kibana only by setup
+    # depends_on:
+    #   kibana:
+    #     condition: service_healthy
     depends_on:
-      kibana:
+      es01:
         condition: service_healthy
     depends_on:
       apm:
@@ -678,8 +679,8 @@ services:
       - BASIC_AUTH_USER=elastic
       - BASIC_AUTH_PWD=${ELASTIC_PASSWORD}
       - CERTIFICATEAUTHORITY=/opt/cerebro/conf/certs/ca/ca.crt
-      - CEREBRO_SERVER_CERT=/opt/cerebro/conf/certs/cerebro.${APP_HOST}.${INT_NETWORK}/cerebro.${APP_HOST}.${INT_NETWORK}.crt
-      - CEREBRO_SERVER_CERT_KEY=/opt/cerebro/conf/certs/cerebro.${APP_HOST}.${INT_NETWORK}/cerebro.${APP_HOST}.${INT_NETWORK}.key
+      - CEREBRO_SERVER_CERT=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.crt
+      - CEREBRO_SERVER_CERT_KEY=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.key
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -689,7 +690,7 @@ services:
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.port=9000"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.scheme=http"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.healthcheck.hostname=cerebro.${APP_HOST}.${INT_NETWORK}"
- 
+  
   weblhs:
     depends_on:
       setup:
@@ -712,6 +713,11 @@ services:
       - intnet
     ports:
       - 4443:443
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - TZ=${TIME_ZONE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # if http
@@ -760,7 +766,7 @@ services:
       interval: 30s
       timeout: 2s
       retries: 50
-
+ 
   weblhs-php:
     depends_on:
       setup:
@@ -787,6 +793,7 @@ services:
       - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
+      - TZ=${TIME_ZONE}
     volumes:
       - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
       - ./application/html:/var/www/html:ro
@@ -796,7 +803,7 @@ services:
   weblhs-wiki:
     # Alpine Linux
     depends_on:
-      setup:
+      weblhs:
         condition: service_healthy
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
@@ -809,10 +816,10 @@ services:
       # local network:
       - intnet
     environment:
+      - DOKUWIKI_PASSWORD=${ELASTIC_PASSWORD}
       - PUID=1000
       - PGID=1000
       - TZ=${TIME_ZONE}
-      - DOKUWIKI_PASSWORD=${APM_PASSWORD}
     volumes:
       # The first mount add bash and ping to nginx:alpine
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
@@ -1058,17 +1065,17 @@ services:
         #   }
         # </code>
         #
-        # echo "Setting apm_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        echo "Setting apm_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         # echo "Setting fleet-server password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/fleet-server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         # 
-        # echo "Setting beats_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # echo "Setting remote_monitoring_user password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # echo "Setting logstash_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        echo "Setting beats_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        echo "Setting remote_monitoring_user password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        echo "Setting logstash_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
         # echo "Setting logstash_writer password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;

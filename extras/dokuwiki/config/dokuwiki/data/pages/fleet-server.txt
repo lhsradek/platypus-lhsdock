@@ -5,11 +5,13 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
 
+[[https://www.elastic.co/guide/en/fleet/current/index.html|Fleet and Elastic Agent Guide]]
+
+[[https://www.elastic.co/guide/en/fleet/current/fleet-settings.html|Fleet UI settings]]
+
 GET [[https://fleet.wordpress.local?pretty|fleet.wordpress.local:8220]]
 
 GET [[https://fleet.tomcat.local?pretty|fleet.tomcat.local:8220]]
-
-[[https://www.elastic.co/guide/en/fleet/current/index.html]]
 
 ===== Kibana manages Fleet Server =====
 
@@ -39,6 +41,7 @@ sets the fleet in kibana
 Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-server|Fleet Server]] and [[apm-server|APM Server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
 
 <code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
-<code bash>#@[fleet] ./elastic-agent enroll -i --url=https://fleet:8220 --enrollment-token=Y1kySWhJTUJ0dW5QSzNpWmNLRmw6WjNEZGxTWHBRcGlRdFFBdHZoR2VQdw==</code>
+<code bash>#@[fleet] ./elastic-agent enroll --fleet-server-es=https://es01.docker.nginx.local:9200 -i --url=https://fleet.wordpress.local:8220 --fleet-server-service-token=[CENSORED] --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key
+</code>
 
 -----

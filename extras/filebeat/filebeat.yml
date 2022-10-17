@@ -37,13 +37,10 @@ output:
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
-  #   # api_key: "${AGENT_API_KEY}"
   #   ssl:
   #     enabled: true
   #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #     # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-  #     # verification_mode: none
-  #     verification_mode: certificate
+  #     verification_mode: "certificate"
 
 setup:      
   ilm.overwrite: true
@@ -59,27 +56,23 @@ setup:
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    # api_key: "${AGENT_API_KEY}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-      # verification_mode: none
-      verification_mode: certificate
+      verification_mode: "certificate"
   
   kibana:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "https"
-    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      # verification_mode: none
-      verification_mode: certificate
+      verification_mode: "certificate"
   apm:
     enabled: true
-    # service_name: "${APP_ID}"
+    service_name: "${APP_ID}"
     protocol: "http"
     server_url: "http://apm.${APP_NET}:8200"

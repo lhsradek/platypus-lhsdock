@@ -7,8 +7,8 @@
   #  - process
   period: 10s
   hosts: 
-    - "https://${APP_HOST}.${APP_NET}"
-    - "https://wiki.${APP_HOST}.${APP_NET}"
+    - "https://${APP_HOST}.${APP_NET}:443"
+    - "https://wiki.${APP_HOST}.${APP_NET}:443"
   status_path: "/status"
   #username: "user"
   #password: "secret"

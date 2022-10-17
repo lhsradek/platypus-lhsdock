@@ -33,7 +33,7 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.wordpress.local:8220"
-          - "https://fleet.tomcat.local:8220"
+          # - "https://fleet.tomcat.local:8220"
       elasticsearch:
         hosts: 
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
@@ -42,8 +42,6 @@ xpack:
 
     # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
     packages:
-      - name: fleet_server
-        version: latest
       - name: system
         version: latest
       - name: apm 
@@ -67,21 +65,10 @@ xpack:
       - name: traefik
         version: latest
 
-    agentPolicies:
-      - name: Fleet Server policy
-        description: Fleet Server policy
-        id: fleet-server-policy
-        namespace: default
-        package_policies:
-          - name: fleet_server-1
-            description: fleet_server
-            package:
-              name: fleet_server
-
+    agentPolicies:          
       - name: Agent policy 1
         description: Agent policy
         id: agent-policy-1
-        is_managed: false
         namespace: default
         monitoring_enabled:
           - logs
@@ -126,7 +113,7 @@ xpack:
         id: docker-policy-1
         namespace: default
         monitoring_enabled:
-          # - logs
+          - logs
           - metrics
         package_policies:
           - name: docker-1
@@ -141,7 +128,7 @@ xpack:
         namespace: default
         monitoring_enabled:
           - logs
-          # - metrics
+          - metrics
         package_policies:
           - name: mysql-1
             description: mysql

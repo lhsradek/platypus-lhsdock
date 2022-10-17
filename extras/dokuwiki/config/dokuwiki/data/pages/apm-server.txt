@@ -1,7 +1,15 @@
-====== APM Server ======
+====== Application Performance Monitoring (APM) Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
-https://www.elastic.co/guide/en/kibana/master/xpack-apm.html
+[[https://www.elastic.co/guide/en/apm/index.html|APM]]
+
+[[https://www.elastic.co/guide/en/apm/guide/current/apm-overview.html|Free and open application performance monitoring]]
+
+[[https://www.elastic.co/guide/en/observability/current/apm.html|Observability APM]]
+
+[[https://www.elastic.co/guide/en/kibana/current/xpack-apm.html|Kibana APM]]
+
+[[https://github.com/elastic/apm-server|APM on github]]
 
 APM server is for [[elastic-agent#elastic_apm_agent|apm agents]].
 
@@ -36,11 +44,5 @@ GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-l
 === Kibana - Observability - APM - Dependences ===
 
 {{kibana13.png?600x200}}
-
------
-
-[[https://www.elastic.co/guide/en/apm/server/current/overview.html]]
-
-[[https://github.com/elastic/apm-server]]
 
 -----
