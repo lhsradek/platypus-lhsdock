@@ -59,7 +59,7 @@ class IndexController {
     			'php::get_headers'
 		);
 		try {
-			stream_context_set_default( [
+			stream_context_set_default([
     				'ssl' => [
        				'verify_peer' => false,
         			'verify_peer_name' => false,
@@ -104,15 +104,23 @@ class IndexController {
 		}
 		return $ret;
 	}
+
+	public function printWiki(String $id) {
+		$parent = @$_SERVER['APP_HOST'];
+		$net = @$_SERVER['APP_NET'];
+		$nid = str_replace("#", "-", $id);
+		print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=".$id."\" target=\"_blank\">".ucfirst($nid)."</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></br>");
+	}
 }
 
 $index = new IndexController();
 $port = $index->getPort();
-$parent = @$_SERVER['APP_HOST'];;
+$parent = @$_SERVER['APP_HOST'];
 $net = @$_SERVER['APP_NET'];
 $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
+$isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
 $isKibana = @$index->isSocket("lhsdock-kibana", 5601);
 $isCerebro = @$index->isSocket("lhsdock-cerebro", 9000);
 $isEs01 = @$index->isSocket("lhsdock-es01", 9200);
@@ -167,91 +175,94 @@ if ($printEnv) {
         <h2>Links</h2>
         <p>
           <ul>
-	    <li><?php
-	print("<a href=\"https://".$parent.".traefik.local".$port."\" target=\"_blank\">".$parent.".traefik.local</a>");
-	if($isWiki) {
-		print(" <small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=traefik\" target=\"_blank\">Traefik</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-	} ?></li> <?php
-	if($isKibana || $isWiki) { ?><li><?php
-		if($isKibana) {
-			print("<a href=\"https://kibana.".$parent.".".$net.":5601\" target=\"_blank\">kibana.".$parent.".".$net."</a> ");
-		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=kibana\" target=\"_blank\">Kibana</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+	    <?php
+        if($isTraefik || $isWiki) { ?><li><?php
+		if($isTraefik) { ?>
+<a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a> 
+		<?php }
+		if($isWiki) {
+			$index->printWiki("traefik");
+		} ?></li><?php
 	}
-	if($isCerebro|| $isWiki) {
-		?><li><?php
-		if($isCerebro) {
-			print("<a href=\"https://cerebro.".$parent.".".$net.$port."\" target=\"_blank\">cerebro.".$parent.".".$net."</a> ");
+	if($isKibana || $isWiki) { ?><li><?php
+		if($isKibana) { ?>
+<a href="https://kibana.<?php print($parent.".".$net); ?>:5601" target="_blank">kibana.<?php print($parent.".".$net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=cerebro\" target=\"_blank\">Cerebro</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("kibana");
+		} ?></li><?php
+	}
+	if($isCerebro|| $isWiki) { ?><li><?php
+		if($isCerebro) { ?>
+<a href="https://cerebro.<?php print($parent.".".$net.$port); ?>" target="_blank">cerebro.<?php print($parent.".".$net); ?></a> <?php
+		} if($isWiki) {
+			$index->printWiki("cerebro");
+		} ?></li><?php
 	}
 	if($isEs01 || $isWiki) { ?><li><?php
-		if($isEs01) {
-			print("<a href=\"https://es01.".$parent.".".$net.":9200/?pretty\" target=\"_blank\">es01.".$parent.".".$net."</a> ");
+		if($isEs01) { ?>
+<a href="https://es01.<?php print($parent.".".$net.$port); ?>:9200/?pretty" target="_blank">es01.<?php print($parent.".".$net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=elasticsearch\" target=\"_blank\">Elasticsearch</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("elasticsearch");
+		} ?></li><?php
 	}
-	if($isEs02) {
-		print("<li><a href=\"https://es02.".$parent.".".$net.":9201/?pretty\" target=\"_blank\">es02.".$parent.".".$net."</a></li>");
+	if($isEs02) { ?>
+<li><a href="https://es02.<?php print($parent.".".$net.$port); ?>:9201/?pretty" target="_blank">es02.<?php print($parent.".".$net); ?></a></li> <?php
 	}
-	if($isEs03) {
-		print("<li><a href=\"https://es03.".$parent.".".$net.":9202/?pretty\" target=\"_blank\">es03.".$parent.".".$net."</a></li>");
+	if($isEs03) { ?>
+<li><a href="https://es03.<?php print($parent.".".$net.$port); ?>:9202/?pretty" target="_blank">es03.<?php print($parent.".".$net); ?></a></li> <?php
 	}
 	if($isApm || $isWiki) { ?><li><?php
-		if($isApm) {
-			print("<a href=\"https://apm.".$net."/?pretty\" target=\"_blank\">apm.".$net."</a> ");
+		if($isApm) { ?>
+<a href="https://apm.<?php print($net); ?>/?pretty" target="_blank">apm.<?php print($net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=apm-server\" target=\"_blank\">APM Server</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("apm-server");
+		} ?></li><?php
 	}
 	if($isFile || $isWiki) { ?><li><?php
-		if($isFile && $isKibana) {
-			print("<a href=\"https://file.".$net."?pretty\" target=\"_blank\">file.".$net."</a> ");
+		if($isFile) { ?>
+<a href="https://file.<?php print($net); ?>/?pretty" target="_blank">file.<?php print($net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=beats#filebeat\" target=\"_blank\">Filebeat</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("beats#filebeat");
+		} ?></li><?php
 	}
 	if($isHeart || $isWiki) { ?><li><?php
-		if($isHeart && $isKibana) {
-			print("<a href=\"https://heart.".$net."?pretty\" target=\"_blank\">heart.".$net."</a> ");
+		if($isHeart) { ?>
+<a href="https://heart.<?php print($net); ?>/?pretty" target="_blank">heart.<?php print($net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=beats#heartbeat\" target=\"_blank\">Heartbeat</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("beats#heartbeat");
+		} ?></li><?php
 	}
 	if($isMetric || $isWiki) { ?><li><?php
-		if($isMetric && $isKibana) {
-			print("<a href=\"https://metric.".$net."?pretty\" target=\"_blank\">metric.".$net."</a> ");
+		if($isMetric) { ?>
+<a href="https://metric.<?php print($net); ?>/?pretty" target="_blank">metric.<?php print($net); ?></a> <?php
 		} if($isWiki) {
-			print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=beats#metricbeat\" target=\"_blank\">Metricbeat</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></li>");
-		}
+			$index->printWiki("beats#metricbeat");
+		} ?></li><?php
 	}
-	if($isWiki) {
-		print("<li><a href=\"https://wiki.".$parent.".".$net.$port."\" target=\"_blank\">wiki.".$parent.".".$net."</a><img src=\"dokuwiki.png\" width=\"12\" height=\"12\"></li>");
+	if($isWiki) { ?>
+<li><a href="https://wiki.<?php print($parent.".".$net.$port); ?>" target="_blank">wiki.<?php print($parent.".".$net); ?></a><img src="dokuwiki.png" width="12" height="12"></li><?php
 	}
-	if($isWp) {
-		print("<li><a href=\"https://".$parent.".wordpress.local".$port."\" target=\"_blank\">".$parent.".wordpress.local</a></li>");
+	if($isWp) { ?>
+<li><a href="https://<?php print($parent); ?>.wordpress.local" target="_blank"><?php print($parent); ?>.wordpress.local</a></li><?php
 	}
-	if($isWpa) {
-		print("<li><a href=\"https://wpa.".$parent.".wordpress.local\" target=\"_blank\">wpa.".$parent.".wordpress.local</a></li>");
+	if($isWpa) { ?>
+<li><a href="https://wpa.<?php print($parent); ?>.wordpress.local" target="_blank">pwa.<?php print($parent); ?>.wordpress.local</a></li><?php
 	}
-	if($isPma) {
-		print("<li><a href=\"https://pma.".$parent.".wordpress.local".$port."\" target=\"_blank\">pma.".$parent.".wordpress.local</a></li>");
+	if($isPma) { ?>
+<li><a href="https://pma.<?php print($parent); ?>.wordpress.local" target="_blank">pma.<?php print($parent); ?>.wordpress.local</a></li><?php
 	}
-	if($isRc) {
-		print("<li><a href=\"https://rc.".$parent.".wordpress.local".$port."\" target=\"_blank\">rc.".$parent.".wordpress.local</a></li>");
+	if($isRc) { ?>
+<li><a href="https://rc.<?php print($parent); ?>.wordpress.local" target="_blank">rc.<?php print($parent); ?>.wordpress.local</a></li><?php
 	} ?>
           </ul>
-          </p>
+        </p>
 
         <h2>Nginx</h2>
         <h5>HTTP and reverse proxy server</h5>
         <p>
           <ul>
-            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/phpinfo.php\" target=\"_blank\">".$parent.".nginx.local - phpinfo")?></a></li>
-            <li><?php print("<a href=\"https://".$parent.".nginx.local".$port."/downloads/\">".$parent.".nginx.local - downloads")?></a></li>
+            <li><a href="https://<?php print($parent); ?>.nginx.local<?php print($port); ?>/phpinfo.php" target="_blank"><?php print($parent); ?>.nginx.local - phpinfo</a></li>
+            <li><a href="https://<?php print($parent); ?>.nginx.local<?php print($port); ?>/downloads/" target="_blank"><?php print($parent); ?>.nginx.local - downloads</a></li>
             <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         </p>
@@ -273,7 +284,7 @@ if ($printEnv) {
           <ul>
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org</a></li>
               <li><a href="https://docs.docker.com/compose/" target="_blank">docker.com</a></li>
-              <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.4/docker.html" target="_blank">elastic.co</a></li>
+              <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html" target="_blank">elastic.co</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org</a></li>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
 	  </ul>
