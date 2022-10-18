@@ -15,12 +15,6 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
-processors:
-  - add_host_metadata: ~
-  - add_kubernetes_metadata: ~
-  - add_docker_metadata: ~
-  - add_cloud_metadata: ~
-
 output:
   # for provisioning:
   logstash:
@@ -73,6 +67,5 @@ setup:
       verification_mode: "certificate"
   apm:
     enabled: true
-    service_name: "${APP_ID}"
     protocol: "http"
     server_url: "http://apm.${APP_NET}:8200"

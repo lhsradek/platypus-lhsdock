@@ -150,7 +150,4 @@ setup:
 
   apm:
     enabled: true
-    service_name: "${APP_ID}"
     server_url: "http://apm.${APP_NET}:8200"
-  #   username: '${ELASTICSEARCH_USERNAME}'
-  #   password: '${ELASTICSEARCH_PASSWORD}'

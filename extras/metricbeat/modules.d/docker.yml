@@ -2,16 +2,16 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-docker.html
 
 - module: docker
-  # metricsets:
-  #  - container
-  #  - cpu
-  #  - diskio
-  #  - event
-  #  - healthcheck
-  #  - info
-  #  - memory
-  #  - network
-  #  - network_summary
+  metricsets:
+   - container
+   - cpu
+   - diskio
+   - event
+   - healthcheck
+   - info
+   - memory
+   - network
+   - network_summary
   period: 10s
   hosts: ["unix:///var/run/docker.sock"]
 
@@ -28,5 +28,3 @@
   #ssl:
   #  enabled: true
   #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #  certificate: "/usr/share/metricbeat/certs/metric/metric.crt"
-  #  key: "/usr/share/metricbeat/certs/metric/metric.key"

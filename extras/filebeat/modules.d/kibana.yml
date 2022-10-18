@@ -2,6 +2,7 @@
 # Docs: https://www.elastic.co/guide/en/beats/filebeat/8.4/filebeat-module-kibana.html
 
 - module: kibana
+
   # Server logs
   log:
     enabled: true
@@ -9,7 +10,6 @@
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     var.paths:
-    # - /usr/share/filebeat/elogs/kibana/kibana.json
       - /usr/share/filebeat/elogs/kibana/kibana.log
       - /usr/share/filebeat/elogs/eps/app-server.log
       - /usr/share/filebeat/elogs/eps/worker.log

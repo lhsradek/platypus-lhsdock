@@ -78,5 +78,4 @@ setup:
       verification_mode: "certificate"
   apm:
     enabled: true
-    service_name: "${APP_ID}"
     server_url: "http://apm.${APP_NET}:8200"

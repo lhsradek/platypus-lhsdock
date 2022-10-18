@@ -793,6 +793,8 @@ services:
       - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
+      - PUID=1000
+      - PGID=1000
       - TZ=${TIME_ZONE}
     volumes:
       - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
