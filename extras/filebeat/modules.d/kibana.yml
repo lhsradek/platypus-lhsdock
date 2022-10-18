@@ -11,8 +11,6 @@
     # Filebeat will choose the paths depending on your OS.
     var.paths:
       - /usr/share/filebeat/elogs/kibana/kibana.log
-      - /usr/share/filebeat/elogs/eps/app-server.log
-      - /usr/share/filebeat/elogs/eps/worker.log
 
   # Audit logs
   audit:

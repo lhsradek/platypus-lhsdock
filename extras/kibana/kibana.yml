@@ -235,6 +235,7 @@ logging:
       layout:
         type: pattern
         pattern: "[%date] [%level] [%logger] [%meta] %message"
+
   root:
     appenders: [default, file]
     level: info
