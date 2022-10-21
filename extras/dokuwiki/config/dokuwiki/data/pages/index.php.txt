@@ -106,12 +106,18 @@ class IndexController {
 		return $ret;
 	}
 
-	public function printWiki(String $id) {
-		$parent = @$_SERVER['APP_HOST'];
-		$net = @$_SERVER['APP_NET'];
-		$nid = str_replace("#", "-", $id);
-		print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=".$id."\" target=\"_blank\">".ucfirst($nid)."</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></br>");
-	}
+        public function printWiki(String $id) {
+                $parent = @$_SERVER['APP_HOST'];
+                $net = @$_SERVER['APP_NET'];
+                $arr = preg_split("/#/", $id);
+                if (count($arr) == 2) {
+                        $nid = ucfirst($arr[1]);
+                } else {
+                        $nid = ucfirst($arr[0]);
+                }
+                print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=".$id."\" target=\"_blank\">".$nid."</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></br>");
+        }
+
 }
 
 $index = new IndexController();
@@ -122,21 +128,22 @@ $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 $isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
-$isKibana = @$index->isSocket("lhsdock-kibana", 5601);
-$isCerebro = @$index->isSocket("lhsdock-cerebro", 9000);
-$isEs01 = @$index->isSocket("lhsdock-es01", 9200);
-$isEs02 = @$index->isSocket("lhsdock-es02", 9201);
-$isEs03 = false; // @$index->isSocket("lhsdock-es03", 9202);
-$isApm =  @$index->isSocket("lhsdock-apm", 5066);
-$isFile =  @$index->isSocket("lhsdock-file", 5066);
-$isHeart =  @$index->isSocket("lhsdock-heart", 5066);
-$isMetric =  @$index->isSocket("lhsdock-metric", 5066);
+$isKibana = @$index->isSocket("kibana.".$parent.".".$net, 5601);
+$isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
+$isEs01 = @$index->isSocket("es01.".$parent.".".$net, 9200);
+$isEs02 = @$index->isSocket("es02.".$parent.".".$net, 9201);
+$isEs03 = @$index->isSocket("es03.".$parent.".".$net, 9202);
+$isApm =  @$index->isSocket("apm.".$net, 5066);
+$isFile =  @$index->isSocket("file.".$net, 5066);
+$isHeart =  @$index->isSocket("heart.".$net, 5066);
+$isMetric =  @$index->isSocket("metric.".$net, 5066);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".".$net);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
 $isRc = @$index->isUrl("https://rc.".$parent.".wordpress.local");
 $isTomcat = @$index->isUrl("https://".$parent.".tomcat.local/manager/");
+
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {

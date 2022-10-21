@@ -1,7 +1,9 @@
 ====== Kibana ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]]K
 
-https://www.elastic.co/guide/en/kibana/master/get-started.html
+[[https://www.elastic.co/guide/en/kibana/current/get-started.html|Get Started]]
+
+[[https://www.elastic.co/guide/en/kibana/current/docker.html|Install with Docker]]
 
 ==== Kibana is on url: ====
 
@@ -70,3 +72,7 @@ Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
 === Observability - APM - Dependences ===
 
 {{kibana13.png?600x200}}
+
+=== Observability - Integrations - Installed integrations ===
+
+{{kibana14.png?600x200}}

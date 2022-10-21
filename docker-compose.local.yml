@@ -7,6 +7,9 @@ networks:
   intnet:
     external: false
     name: ${INT_NETWORK}
+  wordpressnet:
+    external: true
+    name: wordpress.local
 
 services:
 
@@ -27,6 +30,8 @@ services:
       - default
       # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     ports:
       - ${ES_PORT}:9200
       - 9300:9300
@@ -98,6 +103,8 @@ services:
       - default
       # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     ports:
       - 9201:9201
       - 9301:9301
@@ -174,6 +181,8 @@ services:
 #       - default
 #       # local network:
 #       - intnet
+#       # wordpress network:
+#       - wordpressnet
 #     ports:
 #       - 9202:9202
 #       - 9302:9302
@@ -248,6 +257,8 @@ services:
       - default
       # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     ports:
       - ${LOGSTASH_PORT}:5044
       # - 5055:5055
@@ -259,6 +270,7 @@ services:
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./extras/logstash/elastic-agent-pipeline.conf:/usr/share/logstash/pipeline/elastic-agent-pipeline.conf:ro
       # - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
       - logstash:/usr/share/logstash
     environment:
@@ -270,8 +282,9 @@ services:
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca/ca.crt
-      - LOGSTASH_SERVER_CERT=/usr/share/logstash/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
-      - LOGSTASH_SERVER_CERT_KEY=/usr/share/logstash/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
+      - LOGSTASH_SERVER_CERT=/usr/share/logstash/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/logstash/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
+      - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
     labels:
       - "traefik.enable=false"
     healthcheck:
@@ -298,6 +311,8 @@ services:
       - default
       # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     ports:
       - ${KIBANA_PORT}:5601
     container_name: "${APP_ID}-kibana"
@@ -310,7 +325,7 @@ services:
       - ./extras/kibana/node.options:/usr/share/kibana/config/node.options:ro
       - kibana:/usr/share/kibana
     environment:
-      - SERVERNAME=kibana
+      - SERVERNAME=kibana.${APP_HOST}.${INT_NETWORK}
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
       - APP_NET=${INT_NETWORK}
@@ -359,6 +374,8 @@ services:
       - default
     # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     # ports:
     #   - ${APM_PORT}:8200
     #   - 5066:5066
@@ -407,9 +424,9 @@ services:
       es02:
         condition: service_healthy
     depends_on:
-       kibana:
-         condition: service_healthy
-    # Ubuntu - enterprisesearch
+      kibana:
+        condition: service_healthy
+    # Ubuntu - metricbeat
     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-metric"
@@ -424,7 +441,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
+      # - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./logs/metric:/usr/share/metricbeat/logs
@@ -472,7 +489,7 @@ services:
     depends_on:
       logstash:
         condition: service_healthy
-    # Ubuntu - enterprisesearch
+    # Ubuntu - filebeat
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-file"
@@ -484,11 +501,11 @@ services:
       - intnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /:/hostfs:ro
+      # - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/file/logs:/usr/share/filebeat/logs
-      - ./logs/file/registry:/usr/share/filebeat/data/registry
+      # - ./logs/file/registry:/usr/share/filebeat/data/registry
       - ./logs/apm:/usr/share/filebeat/elogs/apm-server
       - ./logs/dokuwiki:/usr/share/filebeat/elogs/nginx/dokuwiki
       - ./logs/es01:/usr/share/filebeat/elogs/es01
@@ -543,7 +560,7 @@ services:
     depends_on:
       es02:
         condition: service_healthy
-    # Ubuntu - enterprisesearch
+    # Ubuntu - heartbeat
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-heart"
@@ -551,8 +568,10 @@ services:
     networks:
       # for all the World 
       - default
-    # local network:
+      # local network:
       - intnet
+      # wordpress network:
+      - wordpressnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
@@ -592,12 +611,8 @@ services:
 # === Enterprisesearch ===
 #
   eps:
-    # depens on kibana only by setup
-    # depends_on:
-    #   kibana:
-    #     condition: service_healthy
     depends_on:
-      es01:
+      kibana:
         condition: service_healthy
     depends_on:
       apm:
@@ -617,8 +632,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/enterprise-search/config/certs:ro
-      - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml
-      - ./extras/enterprise-search/env.sh:/usr/share/enterprise-search/config/env.sh
+      - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
+      - ./extras/enterprise-search/env.sh:/usr/share/enterprise-search/config/env.sh:ro
       - ./logs/eps:/var/log/enterprise-search:rw
       - epsdata:/usr/share/enterprise-search
     environment:
@@ -629,18 +644,9 @@ services:
       - CLUSTER_UUID=${CLUSTER_UUID}
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.eps-public.rule=Host(`eps.${INT_NETWORK}`)"
-      - "traefik.http.routers.eps-public.entrypoints=https"
-      - "traefik.http.routers.eps-public.tls=true"
-      - "traefik.http.routers.eps-public.middlewares=es01-${APP_ID}@docker"
-      - "traefik.http.services.eps-${APP_ID}.loadbalancer.server.port=3002"
-      - "traefik.http.services.eps-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.services.eps-${APP_ID}.loadbalancer.healthcheck.hostname=eps.${INT_NETWORK}"
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://eps.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
@@ -699,8 +705,8 @@ services:
     # lhsradek/lhsdock has openssl, perl and the program platypus.pl for certificates,
     # which I don't use much anymore, 'cause the Elastic Certificate Tool is used by webservice 'setup'.
     # build:
-    #  context: ./context
-    #  dockerfile: Dockerfile 
+    #   context: ./context
+    #   dockerfile: Dockerfile 
     # image: lhsradek/lhsdock:v3
     image: nginx:alpine
     restart: ${DOCKER_RESTART_POLICY}
@@ -736,7 +742,7 @@ services:
       - ./logs/nginx:/var/log/nginx
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
-      #- esdata03:/root/bin/volume/es03:ro
+      # - esdata03:/root/bin/volume/es03:ro
       - logstash:/root/bin/volume/logstash:ro
       - kibana:/root/bin/volume/kibana:ro
       - apm:/root/bin/volume/apm:ro
@@ -834,6 +840,9 @@ services:
       - ./png/cerebro03.png:/config/dokuwiki/data/media/cerebro03.png
       - ./png/elastic-apm-php.png:/config/dokuwiki/data/media/elastic-apm-php.png
       - ./png/fleet01.png:/config/dokuwiki/data/media/fleet01.png
+      - ./png/fleet02.png:/config/dokuwiki/data/media/fleet02.png
+      - ./png/fleet03.png:/config/dokuwiki/data/media/fleet03.png
+      - ./png/fleet04.png:/config/dokuwiki/data/media/fleet04.png
       - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
       - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
       - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
@@ -847,6 +856,7 @@ services:
       - ./png/kibana11.png:/config/dokuwiki/data/media/kibana11.png
       - ./png/kibana12.png:/config/dokuwiki/data/media/kibana12.png
       - ./png/kibana13.png:/config/dokuwiki/data/media/kibana13.png
+      - ./png/kibana14.png:/config/dokuwiki/data/media/kibana14.png
       - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png

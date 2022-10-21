@@ -27,189 +27,258 @@ xpack:
   task_manager:
     # poll_interval: 4000
     max_workers: 3
-  # apm.serviceMapEnabled: false
+  apm.serviceMapEnabled: false
   fleet:
     agents:
       fleet_server:
         hosts:
+          - "https://fleet.nginx.local:8220"
           - "https://fleet.wordpress.local:8220"
-          # - "https://fleet.tomcat.local:8220"
+          - "https://fleet.tomcat.local:8220"
       elasticsearch:
         hosts: 
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
           - "https://es02.${APP_HOST}.${APP_NET}:9201"
           # - "https://es03.${APP_HOST}.${APP_NET}:9202"
 
-    # https://www.elastic.co/guide/en/fleet/8.4/create-a-policy-no-ui.html
+    # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
+      - name: fleet_server
+        version: latest
       - name: system
         version: latest
-      - name: apm 
+      - name: elastic_agent
+        version: latest
+      - name: apm
         version: latest
       - name: docker
-        version: latest
-      - name: elastic_agent
         version: latest
       - name: mysql
         version: latest
       - name: nginx
         version: latest
+      - name: osquery
+        version: latest
       - name: postgresql
         version: latest
       - name: redis
-        version: latest
-      - name: synthetics
         version: latest
       - name: tomcat
         version: latest
       - name: traefik
         version: latest
+      - name: linux
+        version: latest
+      - name: logstash
+        version: latest
+      - name: spring_boot
+        version: latest
+      - name: synthetics
+        version: latest
 
     agentPolicies:          
-      - name: Agent policy 1
-        description: Agent policy
-        id: agent-policy-1
+      - name: Fleet Server Nginx policy 13
+        description: Fleet Server Wordpress policy
+        id: fleet-server-nginx-policy-13
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: system-1
-            description: system
-            id: default-system
+          - name: fleet_server_nginx-9
+            description: fleet_server
             package:
-              name: system
-      
-      - name: Elastic Synthetics 1
-        description: Elastic Synthetics
-        id: elastic-synthetics-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: synthetics-1
-            description: synthetics
-            id: synthetics
+              name: fleet_server
+          - name: elastic_agent_nginx-9
+            description: elastic_agent
+            id: elastic_agent_nginx
             package:
-              name: synthetics
-      
-      - name: APM policy 1
-        description: APM policy
-        id: apm-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: apm-1
-            description: apm
-            id: apm
+              name: elastic_agent
+          - name: apm_nginx-9
+            description: apm_nginx
+            id: apm_nginx
             package:
               name: apm
-      
-      - name: Docker policy 1
-        description: Docker policy
-        id: docker-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: docker-1
+          - name: system_nginx-9
+            description: system
+            id: system_nginx
+            package:
+              name: system
+              # url: "https://${APP_HOST}.${APP_NET}:8443"
+              # hosts: 
+              #  - "${APP_HOST}.${APP_NET}:8443"
+          - name: docker_nginx-9
             description: docker
-            id: docker
+            id: docker_nginx
             package:
               name: docker
-      
-      - name: MySQL policy 1
-        description: MySQL policy
-        id: mysql-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: mysql-1
-            description: mysql
-            id: mysql
+          - name: linux_nginx-9
+            description: linux
+            id: linux_nginx
             package:
-              name: mysql
-      
-      - name: Nginx policy 1
-        description: Nginx policy
-        id: nginx-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: nginx-1
-            description: nginx
-            id: nginx
+              name: linux
+          - name: nginx_nginx-9
+            description: nginx_nginx
+            id: nginx_nginx
             package:
               name: nginx
-      
-      - name: PostgreSQL policy 1
-        description: PostgreSQL policy
-        id: postgresql-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: postgresql-1
-            description: postgresql
-            id: postgresql
+          - name: wiki_nginx-9
+            description: wiki_nginx
+            id: wiki_nginx
             package:
-              name: postgresql
-      
-      - name: Redis policy 1
-        description: Redis policy
-        id: redis-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: redis-1
-            description: redis
-            id: redis
+              name: nginx
+          - name: logstash_nginx-9
+            description: logstash_nginx
+            id: logstash_nginx
             package:
-              name: redis
-      
-      - name: Tomcat policy 1
-        description: Tomcat policy
-        id: tomcat-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: tomcat-1
-            description: tomcat
-            id: tomcat
+              name: logstash
+          - name: osquery_nginx-9
+            description: osquery_nginx
+            id: osquery_nginx
             package:
-              name: tomcat
-      
-      - name: Traefik policy 1
-        description: Traefik policy
-        id: traefik-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: traefik-1
-            description: traefik
-            id: traefik
+              name: osquery
+          - name: traefik_nginx-9
+            description: traefik_nginx
+            id: traefik_nginx
             package:
               name: traefik
+             
+      - name: Fleet Server Wordpress policy 11
+        description: Fleet Server Wordpress policy
+        id: fleet-server-wordpress-policy-11
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: fleet_server_wordpress-11
+            description: fleet_server
+            package:
+              name: fleet_server
+          - name: elastic_agent_wordpress-11
+            description: elastic_agent
+            id: elastic_agent_wordpress
+            package:
+              name: elastic_agent
+          - name: apm_wordpress-11
+            description: apm_wordpress
+            id: apm_wordpress
+            package:
+              name: apm
+          - name: system_wordpress-11
+            description: system
+            id: system_wordpress
+            package:
+              name: system
+          - name: docker_wordpress-11
+            description: docker
+            id: docker_wordpress
+            package:
+              name: docker
+          - name: linux_wordpress-11
+            description: linux
+            id: linux_wordpress
+            package:
+              name: linux
+          - name: nginx_wordpress-11
+            description: nginx_wordpress
+            id: nginx_wordpress
+            package:
+              name: nginx
+              # hosts: 
+              #   - "${APP_HOST}.wordpress.local:8443"
+          - name: mysql_wordpress-11
+            description: mysql_wordpress
+            id: mysql_wordpress
+            package:
+              name: mysql
+          - name: osquery_wordpress-11
+            description: osquery_wordpress
+            id: osquery_wordpress
+            package:
+              name: osquery
+          - name: redis_wordpress-11
+            description: redis_wordpress
+            id: redis_wordpress
+            package:
+              name: redis
+             
+      - name: Fleet Server Tomcat policy 9
+        description: Fleet Server Tomcat policy
+        id: fleet-server-tomcat-policy-9
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: fleet_server_tomcat-9
+            description: fleet_server
+            package:
+              name: fleet_server
+          - name: elastic_agent_tomcat-9
+            description: elastic_agent
+            id: elastic_agent_tomcat
+            package:
+              name: elastic_agent
+          - name: apm_tomcat-9
+            description: apm_tomcat
+            id: apm_tomcat
+            package:
+              name: apm
+          - name: system_tomcat-9
+            description: system
+            id: system_tomcat
+            package:
+              name: system
+          - name: docker_tomcat-9
+            description: docker
+            id: docker_tomcat
+            package:
+              name: docker
+          - name: linux_tomcat-9
+            description: linux
+            id: linux_tomcat
+            package:
+              name: linux
+          - name: nginx_tomcat-9
+            description: nginx_tomcat
+            id: nginx_tomcat
+            package:
+              name: nginx
+              # hosts: 
+              #   - "https://${APP_HOST}.tomcat.local:8443"
+          - name: postgresql-tomcat-9
+            description: postgresql-tomcat
+            id: postgresql-tomcat
+            package:
+              name: postgresql
+          - name: osquery_tomcat-9
+            description: osquery_tomcat
+            id: osquery_tomcat
+            package:
+              name: osquery
+          - name: redis_tomcat-9
+            description: redis_tomcat
+            id: redis_tomcat
+            package:
+              name: redis
+          - name: tomcat_tomcat-9
+            description: tomcat_tomcat
+            id: tomcat_tomcat
+            package:
+              name: tomcat
+          # - name: spring-boot_tomcat-9
+          #  description: spring_boot
+          #  id: spring_boot_tomcat
+          #  # metrics.hosts:
+          #  # - "https://tombola.docker.tomcat.local/tombola:8443"
+          #  package:
+          #    name: spring_boot
       
 server:
   host: "0.0.0.0"
-  shutdownTimeout: "120s"
-  socketTimeout: "180000"
+  shutdownTimeout: "5s"
+  socketTimeout: "240000"
   publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}:5601"
   ssl:
     enabled: true
@@ -223,9 +292,11 @@ elasticsearch:
     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
-  requestTimeout: 120000
+  requestTimeout: 240000
 
-enterpriseSearch.host: "http://eps.${APP_NET}:3002"
+enterpriseSearch:
+  host: "http://eps.${APP_NET}:3002"
+  accessCheckTimeout: 15000
 
 logging:
   appenders:
@@ -235,7 +306,6 @@ logging:
       layout:
         type: pattern
         pattern: "[%date] [%level] [%logger] [%meta] %message"
-
   root:
     appenders: [default, file]
     level: info

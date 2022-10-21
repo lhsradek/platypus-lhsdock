@@ -13,6 +13,10 @@
 
  - [[Elastic-agent|Elastic agent]]
 
+ - [[Apm-server|Apm Server]]
+
+ - [[Fleet-server|Fleet Server]]
+
  - [[Beats]]
 
 ==== setup lhsdock ====

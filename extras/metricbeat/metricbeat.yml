@@ -21,6 +21,8 @@ processors:
   - add_cloud_metadata: ~
   - add_kubernetes_metadata: ~
 
+hostPid: true
+
 inputs:
   - type: system/metrics
     data_stream.namespace: default

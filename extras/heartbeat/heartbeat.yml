@@ -54,7 +54,6 @@ heartbeat.monitors:
     # wordpress
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
-    # - https://fleet.wordpress.local:8220
     - https://www.wordpress.local
     - https://pma.www.wordpress.local
     # intranet
@@ -81,6 +80,7 @@ heartbeat.monitors:
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
     #- logstash.${APP_HOST}.${APP_NET}:5055
+    - fleet.wordpress.cz:8220
   username: '${ELASTICSEARCH_USERNAME}'
   password: '${ELASTICSEARCH_PASSWORD}'
 
@@ -106,6 +106,7 @@ heartbeat.monitors:
     # - metric.${APP_NET}
     - weblhs-php.${APP_NET}
     - wiki.${APP_HOST}.${APP_NET}
+    - fleet.wordpress.cz
 
 heartbeat.scheduler:
   limit: 2

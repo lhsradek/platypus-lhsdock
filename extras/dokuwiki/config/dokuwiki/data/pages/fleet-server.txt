@@ -18,17 +18,16 @@ GET [[https://fleet.tomcat.local?pretty|fleet.tomcat.local:8220]]
 Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]
 
 <code yaml>
-  fleet:
-    agents:
-      fleet_server:
-        hosts:
-          - "https://fleet.wordpress.local:8220"
-          - "https://fleet.tomcat.local:8220"
-      elasticsearch:
-        hosts: 
-          - "https://es01.${APP_HOST}.${APP_NET}:9200"
-          - "https://es02.${APP_HOST}.${APP_NET}:9201"
-          # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+fleet:
+  agents:
+    fleet_server:
+      hosts:
+        - "https://fleet.wordpress.local:8220"
+        - "https://fleet.tomcat.local:8220"
+    elasticsearch:
+      hosts: 
+        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+        - "https://es02.${APP_HOST}.${APP_NET}:9201"
 </code>
 
 sets the fleet in kibana
@@ -38,10 +37,116 @@ sets the fleet in kibana
 
 ===== Add agent =====
 
-Add agent to configured [[elastic-agent|Elastic Agent]] with runnnig [[fleet-server|Fleet Server]] and [[apm-server|APM Server]] to existing and configured policy (in kibana.yml) and integration by enrollment token on Debian likes distributions:
+Add Fleet Server www.wordpress.local on Debian likes distributions:
 
-<code bash># docker exec -it -u:0 lhsdock-fleet bash</code>
-<code bash>#@[fleet] ./elastic-agent enroll --fleet-server-es=https://es01.docker.nginx.local:9200 -i --url=https://fleet.wordpress.local:8220 --fleet-server-service-token=[CENSORED] --fleet-server-policy=fleet-server-policy --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key
+<code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
+<code bash>#@[fleet] ./elastic-agent enroll --url=https://fleet.wordpress.local:8220 --fleet-server-es=https://es01.docker.nginx.local:9200 --fleet-server-service-token=[Service token] --fleet-server-policy=fleet-server-wordpress-policy-9 --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01.docker.nginx.local.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key 
+This will replace your current settings. Do you want to continue? [Y/n]:y
 </code>
+
+Add existing and configured policy (in kibana.yml) and integration to [[elastic-agent|Elastic Agent]] with runnnig Fleet Server by enrollment token on Debian likes distributions:
+<code bash>#@[fleet] ./elastic-agent enroll --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --url=https://fleet.wordpress.local:8220 --enrollment-token=[Enrollment token]
+This will replace your current settings. Do you want to continue? [Y/n]:y
+</code>
+
+Or environments variables in file [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/.env.dist|.env]]
+<code ini>
+FLEET_ENROLLMENT_TOKEN=[Enrollment token]
+FLEET_SERVER_POLICY_ID=fleet-server-wordpress-policy-9
+FLEET_SERVER_SERVICE_TOKEN=[Service token]
+</code>
+
+
+<code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
+<code bash>#@[fleet] ./elastic-agent status
+Status: HEALTHY
+Message: (no message)
+Applications:
+  * filebeat_monitoring    (HEALTHY)
+                           Running
+  * metricbeat_monitoring  (HEALTHY)
+                           Running
+  * metricbeat             (HEALTHY)
+                           Running
+  * apm-server             (HEALTHY)
+                           Running
+  * filebeat               (HEALTHY)
+                           Running
+  * fleet-server           (HEALTHY)
+                           Running on policy with Fleet Server integration: fleet-server-wordpress-policy-9
+</code>
+
+=== Kibana - Observability - Fleet - Agents ===
+
+{{fleet02.png?600x200}}
+
+<code yaml>
+xpack.fleet.agentPolicies:
+  - name: Fleet Server Wordpress policy 9
+    description: Fleet Server Wordpress policy
+    id: fleet-server-wordpress-policy-9
+    namespace: default
+    monitoring_enabled:
+      - logs
+      - metrics
+    package_policies:
+      - name: fleet_server_wordpress-9
+        description: fleet_server
+        package:
+          name: fleet_server
+      - name: elastic_agent_wordpress-9
+        description: elastic_agent
+        id: elastic_agent_wordpress
+        package:
+          name: elastic_agent
+      - name: apm_wordpress-9
+        description: apm_wordpress
+        id: apm_wordpress
+        package:
+          name: apm
+      - name: system_wordpress-9
+        description: system
+        id: system_wordpress
+        package:
+          name: system
+      - name: docker_wordpress-9
+        description: docker
+        id: docker_wordpress
+        package:
+          name: docker
+      - name: linux_wordpress-9
+        description: linux
+        id: linux_wordpress
+        package:
+          name: linux
+      - name: nginx_wordpress-9
+        description: nginx_wordpress
+        id: nginx_wordpress
+        package:
+          name: nginx
+      - name: mysql_wordpress-9
+        description: mysql_wordpress
+        id: mysql_wordpress
+        package:
+          name: mysql
+      - name: osquery_wordpress-9
+        description: osquery_wordpress
+        id: osquery_wordpress
+        package:
+          name: osquery
+      - name: redis_wordpress-9
+        description: redis_wordpress
+        id: redis_wordpress
+        package:
+          name: redis
+</code>
+
+=== Kibana - Observability - Fleet - Agents - fleet.wordpress.local ===
+
+{{fleet03.png?600x200}}
+
+=== Kibana - Observability - Fleet - Agent policies - Fleet server Tomcat policy 8 ===
+
+{{fleet04.png?600x200}}
 
 -----
