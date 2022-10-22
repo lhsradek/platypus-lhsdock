@@ -3,10 +3,13 @@
 
 Elastic Agent contains [[beats]], [[fleet-server|Fleet Server]] and [[apm-server|APM Server]].
 
+[[https://github.com/elastic/elastic-agent|Elastic Agent on GitHub]]
+
+===== Configuration ====
+
+[[fleet-server#add_agent|Configuration in Kibana]]
+
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
-
-https://github.com/elastic/elastic-agent
-
 
 GET [[https://es01.docker.nginx.local:9200/.ds-logs-elastic_agent*/_search?pretty&q=response=50|.ds-logs-elastic_agent*/_search?q=response=50]]
 
@@ -98,10 +101,10 @@ See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.
 [[https://docker.nginx.local/downloads/apm-agent-php_1.6.1_all.apk|apm-agent-php_1.6.1_all.apk]]
 
 Web is [[https://hub.docker.com/_/nginx|alpine nginx]] with [[https://hub.docker.com/_/php|fpm-alpine]] and [[https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile|lhsradek/fpm:v1 Dockerfile]] with:
-<code>
-ADD --chown=55 /root/bin/apm-agent-php_1.6.1_all.apk /root/bin/apm-agent-php_1.6.1_all.apk
-RUN apk add --allow-untrusted --no-cache /root/bin/apm-agent-php_1.6.1_all.apk
-RUN rm -f /root/bin/apm-agent-php_1.6.1_all.apk
+<code bash>
+ADD --chown=44 /root/bin/apm-agent-php_*.apk /root/bin/apm-agent-php_*.apk
+RUN apk add --allow-untrusted --no-cache /root/bin/apm-agent-php_*.apk
+RUN rm -f /root/bin/apm-agent-php_*.apk
 </code>
 
 [[https://hub.docker.com/repository/docker/lhsradek/fpm|lhsradek/fpm:v1]] is used so in service 'webwp-php' in [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/docker-compose.local.yml|platypus-wordpress-mysql]]

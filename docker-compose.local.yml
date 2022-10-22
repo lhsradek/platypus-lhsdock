@@ -7,9 +7,6 @@ networks:
   intnet:
     external: false
     name: ${INT_NETWORK}
-  wordpressnet:
-    external: true
-    name: wordpress.local
 
 services:
 
@@ -30,8 +27,6 @@ services:
       - default
       # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     ports:
       - ${ES_PORT}:9200
       - 9300:9300
@@ -103,8 +98,6 @@ services:
       - default
       # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     ports:
       - 9201:9201
       - 9301:9301
@@ -181,8 +174,6 @@ services:
 #       - default
 #       # local network:
 #       - intnet
-#       # wordpress network:
-#       - wordpressnet
 #     ports:
 #       - 9202:9202
 #       - 9302:9302
@@ -257,8 +248,6 @@ services:
       - default
       # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     ports:
       - ${LOGSTASH_PORT}:5044
       # - 5055:5055
@@ -311,8 +300,6 @@ services:
       - default
       # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     ports:
       - ${KIBANA_PORT}:5601
     container_name: "${APP_ID}-kibana"
@@ -374,8 +361,6 @@ services:
       - default
     # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     # ports:
     #   - ${APM_PORT}:8200
     #   - 5066:5066
@@ -441,7 +426,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
-      # - /:/hostfs:ro
+      - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./logs/metric:/usr/share/metricbeat/logs
@@ -458,8 +443,6 @@ services:
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
       - EPS_PASSWORD=${EPS_PASSWORD}
-      - METRICBEAT_SERVER_CERT=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.crt
-      - METRICBEAT_SERVER_CERT_KEY=/usr/share/metricbeat/certs/metric.${INT_NETWORK}/metric.${INT_NETWORK}.key
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -532,8 +515,6 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
-      - FILEBEAT_SERVER_CERT=/usr/share/filebeat/certs/file.${INT_NETWORK}/file.${INT_NETWORK}.crt
-      - FILEBEAT_SERVER_CERT_KEY=/usr/share/filebeat/certs/file.${INT_NETWORK}/file.${INT_NETWORK}.key
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -570,8 +551,6 @@ services:
       - default
       # local network:
       - intnet
-      # wordpress network:
-      - wordpressnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
@@ -589,8 +568,6 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
-      - HEARTBEAT_SERVER_CERT=/usr/share/heartbeatt/certs/heart.${INT_NETWORK}/heart.${INT_NETWORK}.crt
-      - HEARTBEAT_SERVER_CERT_KEY=/usr/share/heartbeat/certs/heart.${INT_NETWORK}/heart.${INT_NETWORK}.key
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -784,6 +761,8 @@ services:
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${INT_NETWORK}"
     networks:
+      # for elastic and traefik in application/html/index.php
+      - default
       # local network:
       - intnet
     environment:
@@ -941,9 +920,9 @@ services:
           "  - name: file.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - file.${INT_NETWORK}\n"\
-          "  - name: fleet.${INT_NETWORK}\n"\
+          "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
-          "      - fleet.${INT_NETWORK}\n"\
+          "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: heart.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - heart.${INT_NETWORK}\n"\
@@ -983,21 +962,12 @@ services:
           "  - name: db.www.tomcat.local\n"\
           "    dns:\n"\
           "      - db.www.tomcat.local\n"\
-          "  - name: rc.${APP_HOST}.tomcat.local\n"\
+          "  - name: fleet.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
-          "      - rc.${APP_HOST}.tomcat.local\n"\
-          "  - name: rc.www.tomcat.local\n"\
+          "      - fleet.${APP_HOST}.tomcat.local\n"\
+          "  - name: fleet.www.tomcat.local\n"\
           "    dns:\n"\
-          "      - rc.www.tomcat.local\n"\
-          "  - name: redis.${APP_HOST}.tomcat.local\n"\
-          "    dns:\n"\
-          "      - redis.${APP_HOST}.tomcat.local\n"\
-          "  - name: redis.www.tomcat.local\n"\
-          "    dns:\n"\
-          "      - redis.www.tomcat.local\n"\
-          "  - name: fleet.tomcat.local\n"\
-          "    dns:\n"\
-          "      - fleet.tomcat.local\n"\
+          "      - fleet.www.tomcat.local\n"\
           "  - name: ${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - ${APP_HOST}.wordpress.local\n"\
@@ -1028,21 +998,12 @@ services:
           "  - name: db.www.wordpress.local\n"\
           "    dns:\n"\
           "      - db.www.wordpress.local\n"\
-          "  - name: rc.${APP_HOST}.wordpress.local\n"\
+          "  - name: fleet.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
-          "      - rc.${APP_HOST}.wordpress.local\n"\
-          "  - name: rc.www.wordpress.local\n"\
+          "      - fleet.${APP_HOST}.wordpress.local\n"\
+          "  - name: fleet.www.wordpress.local\n"\
           "    dns:\n"\
-          "      - rc.www.wordpress.local\n"\
-          "  - name: redis.${APP_HOST}.wordpress.local\n"\
-          "    dns:\n"\
-          "      - redis.${APP_HOST}.wordpress.local\n"\
-          "  - name: redis.www.wordpress.local\n"\
-          "    dns:\n"\
-          "      - redis.www.wordpress.local\n"\
-          "  - name: fleet.wordpress.local\n"\
-          "    dns:\n"\
-          "      - fleet.wordpress.local\n"\
+          "      - fleet.www.wordpress.local\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then
             bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
@@ -1143,24 +1104,15 @@ services:
 # ├── es03.docker.nginx.local
 # │   ├── es03.docker.nginx.local.crt
 # │   └── es03.docker.nginx.local.key
-# ├── file.nginx.local
-# │   ├── file.nginx.local.crt
-# │   └── file.nginx.local.key
 # ├── fleet.nginx.local
 # │   ├── fleet.nginx.local.crt
 # │   └── fleet.nginx.local.key
-# ├── heart.nginx.local
-# │   ├── heart.nginx.local.crt
-# │   └── heart.nginx.local.key
 # ├── kibana.docker.nginx.local
 # │   ├── kibana.docker.nginx.local.crt
 # │   └── kibana.docker.nginx.local.key
 # ├── logstash.docker.nginx.local
 # │   ├── logstash.docker.nginx.local.crt
 # │   └── logstash.docker.nginx.local.key
-# ├── metric.nginx.local
-# │   ├── metric.nginx.local.crt
-# │   └── metric.nginx.local.key
 # ├── wiki.docker.nginx.local
 # │   ├── wiki.docker.nginx.local.crt
 # │   └── wiki.docker.nginx.local.key
@@ -1173,15 +1125,6 @@ services:
 # ├── ad.docker.tomcat.local
 # │   ├── ad.docker.tomcat.local.crt
 # │   └── ad.docker.tomcat.local.key
-# ├── db.docker.tomcat.local
-# │   ├── db.docker.tomcat.local.crt
-# │   └── db.docker.tomcat.local.key
-# ├── rc.docker.tomcat.local
-# │   ├── rc.docker.tomcat.local.crt
-# │   └── rc.docker.tomcat.local.key
-# ├── redis.docker.tomcat.local
-# │   ├── redis.docker.tomcat.local.crt
-# │   └── redis.docker.tomcat.local.key
 # ├── tombola.docker.tomcat.local
 # │   ├── tombola.docker.tomcat.local.crt
 # │   └── tombola.docker.tomcat.local.key
@@ -1197,12 +1140,6 @@ services:
 # ├── pma.docker.wordpress.local
 # │   ├── pma.docker.wordpress.local.crt
 # │   └── pma.docker.wordpress.local.key
-# ├── rc.docker.wordpress.local
-# │   ├── rc.docker.wordpress.local.crt
-# │   └── rc.docker.wordpress.local.key
-# ├── redis.docker.wordpress.local
-# │   ├── redis.docker.wordpress.local.crt
-# │   └── redis.docker.wordpress.local.key
 # ├── wpa.docker.wordpress.local
 # │   ├── wpa.docker.wordpress.local.crt
 # │   └── wpa.docker.wordpress.local.key
@@ -1238,7 +1175,7 @@ volumes:
     name: "${APP_ID}-kibana"
   logstash:
     external: true
-    name: "${APP_ID}-log"
+    name: "${APP_ID}-logstash"
   heartbeat:
    external: true
    name: "${APP_ID}-heart"

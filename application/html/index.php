@@ -125,7 +125,7 @@ $net = @$_SERVER['APP_NET'];
 $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-$isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
+$isTraefik = @$index->isUrl("http://platypus-box_traefik_1.platypus-local");
 $isKibana = @$index->isSocket("kibana.".$parent.".".$net, 5601);
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = @$index->isSocket("es01.".$parent.".".$net, 9200);
@@ -184,8 +184,7 @@ if ($printEnv) {
         if($isTraefik || $isWiki) { ?><li><?php
 		if($isTraefik) { ?>
 <a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a> 
-		<?php }
-		if($isWiki) {
+		<?php } if($isWiki) {
 			$index->printWiki("traefik");
 		} ?></li><?php
 	}
