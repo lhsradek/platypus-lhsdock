@@ -34,8 +34,9 @@ apm-server:
 #============================= Instrumentation =============================
 instrumentation:
   enabled: true
-  environment: "development"
+  environment: "${STAGE}"
   hosts:
+    - http://apm.nginx.local:8200
     - http://apm.wordpress.local:8200
     - http://apm.tomcat.local:8200
   profiling:

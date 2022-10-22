@@ -21,16 +21,32 @@ heartbeat.config.monitors:
 heartbeat.monitors:
 - type: http
   schedule: '0 * * * * * *'
+  id: http-traefik-service
+  name: HTTP Service
+  data_stream.namespace: default
+  service.name: heartbeat-http
+  check.response.status: [302]
+  hosts:
+    # traefik
+    - https://${APP_HOST}.traefik.local:443
+    - https://www.traefik.local:443
+  ssl:
+    certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+    verification_mode: "none"
+    # verification_mode: "certificate"
+
+- type: http
+  schedule: '0 * * * * * *'
   id: http-fleet-service
   name: HTTP Service
   data_stream.namespace: default
   service.name: heartbeat-http
-  username: '${ELASTICSEARCH_USERNAME}'
-  password: '${ELASTICSEARCH_PASSWORD}'
   check.response.status: [404]
   hosts:
     # wordpress
     - https://fleet.${APP_HOST}.wordpress.local:8220
+    # tomcat
+    - https://fleet.${APP_HOST}.tomcat.local:8220
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
     verification_mode: "none"
@@ -45,7 +61,6 @@ heartbeat.monitors:
   username: '${ELASTICSEARCH_USERNAME}'
   password: '${ELASTICSEARCH_PASSWORD}'
   # api_key: ${AGENT_API_KEY}
-  # check.response.status: [200, 301, 302]
   check.response.status: [200]
   hosts:
     # ELK
@@ -56,15 +71,15 @@ heartbeat.monitors:
     # - https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}:443/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
-    - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=start&do=index
+    - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
     - http://apm.${APP_NET}:5066
     - http://metric.${APP_NET}:5066
     - http://file.${APP_NET}:5066
     - http://heart.${APP_NET}:5066
     # tomcat
-    # - https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
-    # - https://${APP_HOST}.tomcat.local/tombola-javadoc/
-    # - https://ad.${APP_HOST}.tomcat.local
+    - https://tombola.${APP_HOST}.tomcat.local:8443/tomcat.jsp
+    - https://${APP_HOST}.tomcat.local/tombola-javadoc/
+    - https://ad.${APP_HOST}.tomcat.local
     - https://tombola.www.tomcat.local/tomcat.jsp
     - https://www.tomcat.local/tombola-javadoc/
     - https://ad.www.tomcat.local
@@ -72,10 +87,10 @@ heartbeat.monitors:
     - http://apm.wordpress.local:8200
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
-    - https://www.wordpress.local
-    - https://pma.www.wordpress.local
+    # - https://www.wordpress.local
+    # - https://pma.www.wordpress.local
     # intranet
-    # - https://lhs.intranet.local:443/downloads/
+    - https://lhs.intranet.local:443/downloads/
     - https://mamka.intranet.local:443/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
@@ -89,7 +104,7 @@ heartbeat.monitors:
   data_stream.namespace: default
   service.name: heartbeat-tcp
   hosts:
-    - platypus-box_traefik_1.platypus-local:80
+    # - platypus-box_traefik_1.platypus-local-dev-network:80
     - apm.${APP_NET}:5066
     - apm.${APP_NET}:8200
     - metric.${APP_NET}:5066
@@ -100,10 +115,8 @@ heartbeat.monitors:
     - logstash.${APP_HOST}.${APP_NET}:5044
     #- logstash.${APP_HOST}.${APP_NET}:5055
     # wordpress
-    - apm.wordpress.local:8200
-    - fleet.${APP_HOST}.wordpress.local:8220
-  username: '${ELASTICSEARCH_USERNAME}'
-  password: '${ELASTICSEARCH_PASSWORD}'
+    # - apm.wordpress.local:8200
+    # - fleet.${APP_HOST}.wordpress.local:8220
 
 - type: icmp
   schedule: '0 * * * * * *'
@@ -113,18 +126,18 @@ heartbeat.monitors:
   service.name: heartbeat-icmp
   hosts:
     - ${APP_HOST}.${APP_NET}
-    - apm.${APP_NET}
-    - cerebro.${APP_HOST}.${APP_NET}
-    - es01.${APP_HOST}.${APP_NET}
-    - es02.${APP_HOST}.${APP_NET}
+    # - apm.${APP_NET}
+    # - cerebro.${APP_HOST}.${APP_NET}
+    # - es01.${APP_HOST}.${APP_NET}
+    # - es02.${APP_HOST}.${APP_NET}
     # - es03.${APP_HOST}.${APP_NET}
     # - file.${APP_NET}
     # - heart.${APP_NET}
-    - kibana.${APP_HOST}.${APP_NET}
-    - logstash.${APP_HOST}.${APP_NET}
+    # - kibana.${APP_HOST}.${APP_NET}
+    # - logstash.${APP_HOST}.${APP_NET}
     # - metric.${APP_NET}
     - weblhs-php.${APP_NET}
-    - wiki.${APP_HOST}.${APP_NET}
+    # - wiki.${APP_HOST}.${APP_NET}
 
 heartbeat.scheduler:
   limit: 2

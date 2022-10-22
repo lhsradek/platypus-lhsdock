@@ -78,29 +78,29 @@ xpack:
         version: latest
 
     agentPolicies:          
-      - name: Fleet Server Nginx policy 2
+      - name: Fleet Server Nginx policy 3
         description: Fleet Server Nginx policy
-        id: fleet-server-nginx-policy-2
+        id: fleet-server-nginx-policy-3
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_nginx-2
+          - name: fleet_server_nginx-3
             description: fleet_server
             package:
               name: fleet_server
-          - name: elastic_agent_nginx-2
+          - name: elastic_agent_nginx-3
             description: elastic_agent
             id: elastic_agent_nginx
             package:
               name: elastic_agent
-          - name: apm_nginx-2
+          - name: apm_nginx-3
             description: apm_nginx
             id: apm_nginx
             package:
               name: apm
-          - name: system_nginx-2
+          - name: system_nginx-3
             description: system
             id: system_nginx
             package:
@@ -108,37 +108,37 @@ xpack:
               # url: "https://${APP_HOST}.${APP_NET}:8443"
               # hosts: 
               #  - "${APP_HOST}.${APP_NET}:8443"
-          - name: docker_nginx-2
+          - name: docker_nginx-3
             description: docker
             id: docker_nginx
             package:
               name: docker
-          - name: linux_nginx-2
+          - name: linux_nginx-3
             description: linux
             id: linux_nginx
             package:
               name: linux
-          - name: nginx_nginx-2
+          - name: nginx_nginx-3
             description: nginx_nginx
             id: nginx_nginx
             package:
               name: nginx
-          - name: wiki_nginx-2
+          - name: wiki_nginx-3
             description: wiki_nginx
             id: wiki_nginx
             package:
               name: nginx
-          - name: logstash_nginx-2
+          - name: logstash_nginx-3
             description: logstash_nginx
             id: logstash_nginx
             package:
               name: logstash
-          - name: osquery_nginx-2
+          - name: osquery_nginx-3
             description: osquery_nginx
             id: osquery_nginx
             package:
               name: osquery
-          - name: traefik_nginx-2
+          - name: traefik_nginx-3
             description: traefik_nginx
             id: traefik_nginx
             package:

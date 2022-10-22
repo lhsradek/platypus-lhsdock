@@ -31,6 +31,7 @@ services:
       - ${ES_PORT}:9200
       - 9300:9300
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch
@@ -102,6 +103,7 @@ services:
       - 9201:9201
       - 9301:9301
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
@@ -178,6 +180,7 @@ services:
 #       - 9202:9202
 #       - 9302:9302
 #     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
 #       - ./certs:/usr/share/elasticsearch/config/certs
 #       - ./logs/es03:/usr/share/elasticsearch/logs
 #       - esdata03:/usr/share/elasticsearch
@@ -382,6 +385,7 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
+      - STAGE=${STAGE}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -484,7 +488,9 @@ services:
       - intnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # - /:/hostfs:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/file/logs:/usr/share/filebeat/logs
@@ -735,6 +741,7 @@ services:
       - wordpressredis99:/root/bin/volume/wordpress-redis-99:ro
       - wordpressfleet99:/root/bin/volume/wordpress-fleet-99:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
+      - tombolafleet:/root/bin/volume/tombola-fleet:ro
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
@@ -774,7 +781,8 @@ services:
       - ELASTIC_APM_ENVIRONMENT=${STAGE}
       - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
       - ELASTIC_APM_LOG_LEVEL_STDERR=info
-      - ELASTIC_APM_SECRET_TOKEN=${ELASTIC_APM_SECRET_TOKEN}
+      - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
+      # - ELASTIC_APM_SECRET_TOKEN=${ELASTIC_APM_SECRET_TOKEN}
       - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
@@ -782,6 +790,7 @@ services:
       - PGID=1000
       - TZ=${TIME_ZONE}
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
       - ./application/html:/var/www/html:ro
       - ./logs/nginx/php-error.log:/var/log/error.log
@@ -808,6 +817,7 @@ services:
       - PGID=1000
       - TZ=${TIME_ZONE}
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       # The first mount add bash and ping to nginx:alpine
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
       - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
@@ -1206,3 +1216,6 @@ volumes:
   tomboladb:
     external: true
     name: tombola-db
+  tombolafleet:
+    external: true
+    name: tombola-fleet

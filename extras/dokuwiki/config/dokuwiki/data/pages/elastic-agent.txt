@@ -45,9 +45,11 @@ Elastic APM agent can connect to [[APM-Server|APM server]].
 
 [[https://github.com/elastic/apm-agent-php|Elastic APM agent php]]
 
-https://www.elastic.co/guide/en/apm/agent/php/current/intro.html
+[[https://www.elastic.co/guide/en/apm/agent/php/current/intro.html|APM intro]]
 
-https://www.elastic.co/guide/en/apm/agent/php/current/configuration-reference.html
+[[https://www.elastic.co/guide/en/apm/agent/go/current/configuration.html|Configuration GO]]
+
+[[https://www.elastic.co/guide/en/apm/agent/php/current/configuration-reference.html|Configuration reference]]
 
 With this part in [[https://github.com/lhsradek/platypus-lhsdock/blob/main/docker-compose.local.yml|docker-compose.yml]]:
 <code yaml>
