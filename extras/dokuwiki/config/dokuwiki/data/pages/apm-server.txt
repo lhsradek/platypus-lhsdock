@@ -15,19 +15,23 @@ APM server is for [[elastic-agent#elastic_apm_agent|apm agents]].
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]
 
+=== from APM Server ===
+
 GET [[https://apm.nginx.local?pretty|apm.nginx.local]]
 
 GET [[https://apm.nginx.local/state?pretty|apm.nginx.local/state]]
 
 GET [[https://apm.nginx.local/stats?pretty|apm.nginx.local/stats]]
 
------
+=== from Elasticsearch ===
 
 GET [[https://es01.docker.nginx.local:9200/.ds-logs-apm*/_search?pretty&q=response=50|.ds-logs-apm*/_search?q=response=50]]
 
 GET [[https://es01.docker.nginx.local:9200/.apm-agent-configuration?pretty|.apm-agent-configuration]]
 
 GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-link]]
+
+-----
 
 === Kibana - Observability - APM - Services ===
 
