@@ -6,7 +6,7 @@
 export JAVA_OPTS=${JAVA_OPTS:-"-Xms256m -Xmx256m"}
 
 # Additional Java options for the application server
-export APP_SERVER_JAVA_OPTS=${APP_SERVER_JAVA_OPTS:-"-Xms512m -Xmx512m"}
+export APP_SERVER_JAVA_OPTS=${APP_SERVER_JAVA_OPTS:-"-Xms400m -Xmx400m"}
 
 #------------------------------------------------------------------------------
 # Enable Java GC logging (see below for the default configuration)
