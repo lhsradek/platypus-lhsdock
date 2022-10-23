@@ -33,9 +33,9 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.www.wordpress.local:8220"
-          - "https://fleet.docker.wordpress.local:8220"
+          - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
-          - "https://fleet.docker.tomcat.local:8220"
+          - "https://fleet.${APP_HOST}.tomcat.local:8220"
       elasticsearch:
         hosts: 
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
