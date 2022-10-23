@@ -82,6 +82,8 @@ Applications:
 
 {{fleet02.png?600x200}}
 
+From [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana.yml]]:
+
 <code yaml>
 xpack.fleet.agentPolicies:
   - name: Fleet Server Wordpress policy 9
