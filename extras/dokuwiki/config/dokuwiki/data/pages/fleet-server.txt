@@ -151,4 +151,12 @@ xpack.fleet.agentPolicies:
 
 {{fleet04.png?600x200}}
 
+==== wordpress.local ====
+
+[[https://github.com/lhsradek/platypus-wordpress-mysql/tree/main/extras/elastic-agent|Fleet Server for wordpress.local]]
+
+==== tomcat.local ====
+
+[[https://github.com/lhsradek/tombola/tree/main/extras/elastic-agent|Fleet Server for tomcat.local]]
+
 -----
