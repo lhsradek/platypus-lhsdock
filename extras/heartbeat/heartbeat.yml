@@ -77,8 +77,6 @@ heartbeat.monitors:
     - http://file.${APP_NET}:5066
     - http://heart.${APP_NET}:5066
     # tomcat
-    - https://tombola.${APP_HOST}.tomcat.local:443/tomcat.jsp
-    - https://tombola.${APP_HOST}.tomcat.local:443/tombola/actuator/health
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     - https://ad.${APP_HOST}.tomcat.local
     - https://tombola.www.tomcat.local/tomcat.jsp
