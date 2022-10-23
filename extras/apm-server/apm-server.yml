@@ -47,21 +47,20 @@ apm-server:
     # ssl.key: "${APM_SERVER_CERT_KEY}"
 
 #============================= Instrumentation =============================
-#instrumentation:
-#  enabled: true
-#  environment: "${STAGE}"
-#  hosts:
-#    - http://apm.nginx.local:8200
-#    - http://apm.wordpress.local:8200
-#    - http://apm.tomcat.local:8200
-#  profiling:
-#    cpu:
-#      enabled: true
-#      interval: 60s
-#      duration: 10s
-#    heap:
-#      enabled: true
-#      interval: 60s
+# instrumentation:
+#   enabled: true
+#   environment: "${STAGE}"
+#   hosts:
+#     - http://apm.wordpress.local:8200
+#     - http://apm.tomcat.local:8200
+#   profiling:
+#     cpu:
+#       enabled: true
+#       interval: 60s
+#       duration: 10s
+#     heap:
+#       enabled: true
+#       interval: 60s
 
 #================================ Outputs =================================
 

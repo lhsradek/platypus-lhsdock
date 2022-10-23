@@ -45,8 +45,10 @@ heartbeat.monitors:
   hosts:
     # wordpress
     - https://fleet.${APP_HOST}.wordpress.local:8220
+    - https://fleet.www.wordpress.local:8220
     # tomcat
     - https://fleet.${APP_HOST}.tomcat.local:8220
+    - https://fleet.www.tomcat.local:8220
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
     verification_mode: "none"
@@ -68,7 +70,7 @@ heartbeat.monitors:
     - http://cerebro.${APP_HOST}.${APP_NET}:9000
     - https://es01.${APP_HOST}.${APP_NET}:9200
     - https://es02.${APP_HOST}.${APP_NET}:9201
-    # - https://es03.${APP_HOST}.${APP_NET}:9202
+    - https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}:443/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
