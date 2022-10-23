@@ -3,7 +3,7 @@
 with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
-[![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm) in [platypus-lhsfpm](https://github.com/lhsradek/platypus-lhsfpm)
+[![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm) from [platypus-lhsfpm](https://github.com/lhsradek/platypus-lhsfpm)
 
 #### setup
 create .env file
