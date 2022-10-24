@@ -66,7 +66,6 @@ heartbeat.monitors:
     - https://www.tomcat.local/tombola-javadoc/
     - https://ad.www.tomcat.local
     # wordpress
-    - http://apm.wordpress.local:8200
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
     # - https://www.wordpress.local
