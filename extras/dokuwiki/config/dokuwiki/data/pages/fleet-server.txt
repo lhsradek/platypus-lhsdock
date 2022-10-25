@@ -25,7 +25,6 @@ fleet:
     elasticsearch:
       hosts: 
         - "https://es01.${APP_HOST}.${APP_NET}:9200"
-        - "https://es02.${APP_HOST}.${APP_NET}:9201"
 </code>
 
 sets the fleet in kibana
@@ -38,7 +37,7 @@ sets the fleet in kibana
 Add Fleet Server www.wordpress.local on Debian likes distributions:
 
 <code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
-<code bash>#@[fleet] ./elastic-agent enroll --url=https://fleet.wordpress.local:8220 --fleet-server-es=https://es01.docker.nginx.local:9200 --fleet-server-service-token=[Service token] --fleet-server-policy=fleet-server-wordpress-policy-9 --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01.docker.nginx.local.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key 
+<code bash>#@[fleet] ./elastic-agent enroll --url=https://fleet.docker.wordpress.local:8220 --fleet-server-service-token=[Service token] --fleet-server-policy=fleet-server-wordpress-policy-9 --fleet-server-es=https://es01.docker.nginx.local:9200 --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01.docker.nginx.local.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key 
 This will replace your current settings. Do you want to continue? [Y/n]:y
 </code>
 
