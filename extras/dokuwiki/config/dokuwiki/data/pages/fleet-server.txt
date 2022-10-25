@@ -9,10 +9,6 @@
 
 [[https://www.elastic.co/guide/en/fleet/current/fleet-settings.html|Fleet UI settings]]
 
-GET [[https://fleet.wordpress.local?pretty|fleet.wordpress.local:8220]]
-
-GET [[https://fleet.tomcat.local?pretty|fleet.tomcat.local:8220]]
-
 ===== Kibana manages Fleet Server =====
 
 Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]

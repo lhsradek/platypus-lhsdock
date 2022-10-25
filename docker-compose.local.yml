@@ -727,7 +727,7 @@ services:
       - ./logs/nginx:/var/log/nginx
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
-      # - esdata03:/root/bin/volume/es03:ro
+      - esdata03:/root/bin/volume/es03:ro
       - logstash:/root/bin/volume/logstash:ro
       - kibana:/root/bin/volume/kibana:ro
       - apm:/root/bin/volume/apm:ro
@@ -901,121 +901,160 @@ services:
           "instances:\n"\
           "  - name: ${APP_HOST}.traefik.local\n"\
           "    dns:\n"\
+          "      - traefik\n"\
           "      - ${APP_HOST}.traefik.local\n"\
           "  - name: www.traefik.local\n"\
           "    dns:\n"\
+          "      - traefik\n"\
           "      - www.traefik.local\n"\
           "  - name: ${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - ${APP_HOST}\n"\
           "      - ${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: www.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - www\n"\
           "      - www.${INT_NETWORK}\n"\
           "  - name: apm.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - apm\n"\
           "      - apm.${INT_NETWORK}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - cerebro\n"\
           "      - cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - es01\n"\
           "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - es02\n"\
           "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - es03\n"\
           "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: eps.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - eps\n"\
           "      - eps.${INT_NETWORK}\n"\
           "  - name: file.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - file\n"\
           "      - file.${INT_NETWORK}\n"\
           "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: heart.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - heart\n"\
           "      - heart.${INT_NETWORK}\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - kibana\n"\
           "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - logstash\n"\
           "      - logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: metric.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - metric\n"\
           "      - metric.${INT_NETWORK}\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
+          "      - wiki\n"\
           "      - wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
+          "      - ${APP_HOST}\n"\
           "      - ${APP_HOST}.tomcat.local\n"\
           "  - name: www.tomcat.local\n"\
           "    dns:\n"\
+          "      - www\n"\
           "      - www.tomcat.local\n"\
           "  - name: tombola.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
+          "      - tombola\n"\
           "      - tombola.${APP_HOST}.tomcat.local\n"\
           "  - name: tombola.www.tomcat.local\n"\
           "    dns:\n"\
+          "      - tombola\n"\
           "      - tombola.www.tomcat.local\n"\
           "  - name: ad.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
+          "      - ad\n"\
           "      - ad.${APP_HOST}.tomcat.local\n"\
           "  - name: ad.www.tomcat.local\n"\
           "    dns:\n"\
+          "      - ad\n"\
           "      - ad.www.tomcat.local\n"\
           "  - name: db.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
+          "      - db\n"\
           "      - db.${APP_HOST}.tomcat.local\n"\
           "  - name: db.www.tomcat.local\n"\
           "    dns:\n"\
+          "      - db\n"\
           "      - db.www.tomcat.local\n"\
           "  - name: fleet.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - fleet.${APP_HOST}.tomcat.local\n"\
+          "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "  - name: fleet.www.tomcat.local\n"\
           "    dns:\n"\
           "      - fleet.www.tomcat.local\n"\
+          "      - apm-server.www.tomcat.local\n"\
           "  - name: ${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
+          "      - ${APP_HOST}\n"\
           "      - ${APP_HOST}.wordpress.local\n"\
           "  - name: www.wordpress.local\n"\
           "    dns:\n"\
+          "      - www\n"\
           "      - www.wordpress.local\n"\
           "  - name: wp.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
+          "      - wp\n"\
           "      - wp.${APP_HOST}.wordpress.local\n"\
           "  - name: wp.www.wordpress.local\n"\
           "    dns:\n"\
+          "      - wp\n"\
           "      - wp.www.wordpress.local\n"\
           "  - name: wpa.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
+          "      - wpa\n"\
           "      - wpa.${APP_HOST}.wordpress.local\n"\
           "  - name: wpa.www.wordpress.local\n"\
           "    dns:\n"\
+          "      - wpa\n"\
           "      - wpa.www.wordpress.local\n"\
           "  - name: pma.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
+          "      - pma\n"\
           "      - pma.${APP_HOST}.wordpress.local\n"\
           "  - name: pma.www.wordpress.local\n"\
           "    dns:\n"\
+          "      - pma\n"\
           "      - pma.www.wordpress.local\n"\
           "  - name: db.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
+          "      - db\n"\
           "      - db.${APP_HOST}.wordpress.local\n"\
           "  - name: db.www.wordpress.local\n"\
           "    dns:\n"\
+          "      - db\n"\
           "      - db.www.wordpress.local\n"\
           "  - name: fleet.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - fleet.${APP_HOST}.wordpress.local\n"\
+          "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "  - name: fleet.www.wordpress.local\n"\
           "    dns:\n"\
           "      - fleet.www.wordpress.local\n"\
+          "      - apm-server.www.wordpress.local\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then
             bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
