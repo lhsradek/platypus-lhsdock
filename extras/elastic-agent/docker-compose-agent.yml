@@ -57,10 +57,10 @@
       - ./logs/kibana:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana
       - ./logs/nginx:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default
       - ./logs/metric:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/metric
-      - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql
-      - /root/tombola/logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
-      - /root/tombola/logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
-      - /root/platypus-box/logs/traefik:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik
+      # - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql
+      # - /root/tombola/logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
+      # - /root/tombola/logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
+      # - /root/platypus-box/logs/traefik:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik
       - fleet:/usr/share/elastic-agent
     environment:
       - APP_ID=${APP_ID}

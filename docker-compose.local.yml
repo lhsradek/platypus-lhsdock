@@ -649,7 +649,7 @@ services:
       es02:
         condition: service_healthy
     # Debian - Cerebro
-    image: lmenezes/cerebro:0.9.4
+    image: lmenezes/cerebro:latest
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-cerebro"
     hostname: "cerebro.${APP_HOST}.${INT_NETWORK}"
@@ -730,6 +730,7 @@ services:
       - esdata03:/root/bin/volume/es03:ro
       - logstash:/root/bin/volume/logstash:ro
       - kibana:/root/bin/volume/kibana:ro
+      - fleet:/root/bin/volume/fleet:ro
       - apm:/root/bin/volume/apm:ro
       - filebeat:/root/bin/volume/file:ro
       - heartbeat:/root/bin/volume/heart:ro
@@ -1221,6 +1222,9 @@ volumes:
   filebeat:
     external: true
     name: "${APP_ID}-file"
+  fleet:
+    external: true
+    name: "${APP_ID}-fleet"
   kibana:
     external: true
     name: "${APP_ID}-kibana"
