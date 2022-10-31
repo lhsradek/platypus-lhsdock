@@ -1,8 +1,8 @@
 ###################### Metricbeat Configuration #######################
 
-http.enabled: true
-http.port: 5066
-http.host: "0.0.0.0"
+#http.enabled: true
+#http.port: 5066
+#http.host: "0.0.0.0"
 #http.host: "metric.nginx.local"
 
 xpack.monitoring.enabled: true
@@ -41,8 +41,6 @@ output:
   elasticsearch:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      # - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -59,8 +57,6 @@ setup:
   elasticsearch:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
     # api_key: ${AGENT_API_KEY}
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
@@ -78,6 +74,3 @@ setup:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "certificate"
-  apm:
-    enabled: true
-    server_url: "http://apm.${APP_NET}:8200"

@@ -5,7 +5,7 @@
 apm-server:
   #host: "unix:///var/run/docker.sock"
   #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
-  host: "0.0.0.0"
+  #host: "0.0.0.0"
   #host: "apm.nginx.local"
 
   #---------------------------- APM Server - RUM Real User Monitoring ----------------------------
@@ -19,8 +19,6 @@ apm-server:
       elasticsearch:
         hosts:
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
-          # - "https://es02.${APP_HOST}.${APP_NET}:9201"
-          # - "https://es03.${APP_HOST}.${APP_NET}:9202"
         protocol: "https"
         #api_key: "id:api_key"
         username: "${ELASTICSEARCH_USERNAME}"
@@ -47,19 +45,19 @@ apm-server:
     # ssl.key: "${APM_SERVER_CERT_KEY}"
 
 #============================= Instrumentation =============================
-instrumentation:
-  enabled: true
-  environment: "${STAGE}"
-  hosts:
-    - http://apm.nginx.local:8200
-  profiling:
-    cpu:
-      enabled: true
-      interval: 60s
-      duration: 10s
-    heap:
-      enabled: true
-      interval: 60s
+# instrumentation:
+#   enabled: true
+#   environment: "${STAGE}"
+#   hosts:
+#     - http://apm.nginx.local:8200
+#   profiling:
+#     cpu:
+#       enabled: true
+#       interval: 60s
+#       duration: 10s
+#     heap:
+#       enabled: true
+#       interval: 60s
 
 #================================ Outputs =================================
 
@@ -70,8 +68,6 @@ output.elasticsearch:
   enabled: true
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    # - "https://es02.${APP_HOST}.${APP_NET}:9201"
-    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   protocol: "https"
   #username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -84,10 +80,9 @@ output.elasticsearch:
 
 #=============================== HTTP Endpoint ===============================
 
-http.enabled: true
-http.host: "0.0.0.0"
-#http.host: "apm.nginx.local"
-http.port: 5066
+#http.enabled: true
+#http.host: "0.0.0.0"
+#http.port: 5066
 
 #============================= X-pack Monitoring =============================
 
@@ -102,8 +97,6 @@ monitoring:
 #     password: "${ELASTICSEARCH_PASSWORD}"
 #     hosts: 
 #       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-#       - "https://es02.${APP_HOST}.${APP_NET}:9201"
-#       # - "https://es03.${APP_HOST}.${APP_NET}:9202"
 #     protocol: "https"
 #     ssl.enabled: true
 #     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

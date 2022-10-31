@@ -18,12 +18,6 @@ Filebeat, together with [[logstash]], processes the file logs for [[elasticsearc
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/filebeat|configuration]]
 
-GET [[https://file.nginx.local/?pretty|file.nginx.local]]
-
-GET [[https://file.nginx.local/state?pretty|file.nginx.local/state]]
-
-GET [[https://file.nginx.local/stats?pretty|file.nginx.local/stats]]
-
 GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*/_search?pretty&q=response=50|.ds-filebeat-*/_search?q=response=50]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*?pretty|.ds-filebeat-*]]
@@ -40,12 +34,6 @@ GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*?pretty|.ds-filebeat-*]
 [[https://www.elastic.co/guide/en/beats/heartbeat/current/heartbeat-overview.html|Heartbeat Overview]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/heartbeat|configuration]]
-
-GET [[https://heart.nginx.local/?pretty|heart.nginx.local]]
-
-GET [[https://heart.nginx.local/state?pretty|heart.nginx.local/state]]
-
-GET [[https://heart.nginx.local/stats?pretty|heart.nginx.local/stats]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
@@ -64,12 +52,6 @@ GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-
 [[https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-overview.html|Metricbeat Overview]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/metricbeat|configuration]]
-
-GET [[https://metric.nginx.local/?pretty|metric.nginx.local]]
-
-GET [[https://metric.nginx.local/state?pretty|metric.nginx.local/state]]
-
-GET [[https://metric.nginx.local/stats?pretty|metric.nginx.local/stats]]
 
 GET [[https://es01.docker.nginx.local:9200/.ds-metricbeat-*/_search?pretty&q=response=50|.ds-metricbeat-*/_search?q=response=50]]
 
