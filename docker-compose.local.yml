@@ -32,7 +32,6 @@ services:
       - ${ES_PORT}:9200
       - 9300:9300
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch
@@ -102,7 +101,6 @@ services:
       - 9201:9201
       - 9301:9301
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
@@ -178,7 +176,6 @@ services:
       - 9202:9202
       - 9302:9302
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es03:/usr/share/elasticsearch/logs
       - esdata03:/usr/share/elasticsearch
@@ -253,7 +250,6 @@ services:
       # - 5055:5055
       # - 9600:9600
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/logstash/config/certs
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
@@ -301,7 +297,6 @@ services:
     ports:
       - ${KIBANA_PORT}:5601
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/kibana/config/certs
       - ./logs/kibana:/usr/share/kibana/logs
       - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
@@ -363,7 +358,6 @@ services:
       # local network:
       - intnet
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
       - ./logs/heart:/usr/share/heartbeat/logs
@@ -410,9 +404,8 @@ services:
     #  - ${FLEET_PORT}:8220
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/elastic-agent/certs
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
@@ -483,7 +476,6 @@ services:
       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
-      # test: ["CMD-SHELL", "curl -s --cacert certs/ca/ca.crt -I https://fleet.${INT_NETWORK}:8220 | grep -q 'HTTP/2 404'"]
       interval: 10s
       timeout: 60s
       retries: 60
@@ -509,7 +501,6 @@ services:
     # ports:
     #  - ${ENTERPRISE_SEARCH_PORT}:3002
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/enterprise-search/config/certs:ro
       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
       - ./logs/eps:/var/log/enterprise-search:rw
@@ -561,7 +552,6 @@ services:
     # ports:
     #  - 9000:9000
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/opt/cerebro/conf/certs:ro
       - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
@@ -613,7 +603,6 @@ services:
       - APP_NET=${INT_NETWORK}
       - TZ=${TIME_ZONE}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
       - ./extras/nginx/htpasswd:/etc/nginx/conf.d/htpasswd:ro
       - ./certs/ca/ca.crt:/etc/ssl/private/ca.crt:ro
@@ -686,7 +675,6 @@ services:
       - PGID=1000
       - TZ=${TIME_ZONE}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
       - ./application/html:/var/www/html:ro
       - ./logs/nginx/php-error.log:/var/log/error.log
@@ -711,7 +699,6 @@ services:
       - PGID=1000
       - TZ=${TIME_ZONE}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       # The first mount add bash and ping to nginx:alpine
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
       - ./certs/ca/ca.crt:/config/keys/ca.pem:ro

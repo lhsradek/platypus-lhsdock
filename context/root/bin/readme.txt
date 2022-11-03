@@ -25,55 +25,57 @@ See:
 
 ```
 ================= STOP =================
-Stopping lhsdock-logstash ... done
 Stopping lhsdock-eps      ... done
 Stopping lhsdock-fleet    ... done
-Stopping lhsdock-kibana   ... done
-Stopping lhsdock-es03     ... done
 Stopping lhsdock-cerebro  ... done
+Stopping lhsdock-kibana   ... done
+Stopping lhsdock-logstash ... done
 Stopping lhsdock-es02     ... done
-Stopping lhsdock-es01     ... done
+Stopping lhsdock-wiki     ... done
+Stopping lhsdock-web      ... done
 Stopping lhsdock-php      ... done
-Stopping lhsdock          ... done
-Removing lhsdock-logstash ... done
+Stopping lhsdock-es01     ... done
 Removing lhsdock-eps      ... done
 Removing lhsdock-fleet    ... done
-Removing lhsdock-kibana   ... done
-Removing lhsdock-es03     ... done
 Removing lhsdock-cerebro  ... done
+Removing lhsdock-kibana   ... done
+Removing lhsdock-logstash ... done
 Removing lhsdock-es02     ... done
-Removing lhsdock-es01     ... done
-Removing lhsdock-php      ... done
 Removing lhsdock-wiki     ... done
-Removing lhsdock          ... done
-Network platypus-local is external, skipping
+Removing lhsdock-web      ... done
+Removing lhsdock-php      ... done
+Removing lhsdock-es01     ... done
+Removing lhsdock-setup    ... done
 Removing network nginx.local
+Network traefik.local is external, skipping
 ================= START ================
-Pulling weblhs      ... done
-Pulling weblhs-php  ... done
-Pulling weblhs-wiki ... done
 Pulling setup       ... done
+Pulling weblhs-php  ... done
+Pulling weblhs      ... done
+Pulling weblhs-wiki ... done
 Pulling es01        ... done
 Pulling es02        ... done
-Pulling es03        ... done
-Pulling kibana      ... done
-Pulling fleet       ... done
-Pulling logstash    ... done
-Pulling eps         ... done
 Pulling cerebro     ... done
-Creating network "nginx.local" with the default driver
-Creating lhsdock-php   ... done
+Pulling heartbeat   ... done
+Pulling kibana      ... done
+Pulling logstash    ... done
+Pulling fleet       ... done
+Pulling eps         ... done
+Pulling es03        ... done
+Creating network "nginx.local" with driver "bridge"
 Creating lhsdock-setup ... done
-Creating lhsdock       ... done
-Creating lhsdock-wiki  ... done
+Creating lhsdock-php   ... done
+Creating lhsdock-web   ... done
 Creating lhsdock-es01  ... done
-Creating lhsdock-cerebro ... done
-Creating lhsdock-es02    ... done
-Creating lhsdock-es03    ... done
-Creating lhsdock-kibana  ... done
-Creating lhsdock-fleet   ... done
-Creating lhsdock-logstash ... done
-Creating lhsdock-eps      ... done
+Creating lhsdock-wiki  ... done
+Creating lhsdock-es02  ... done
+Creating lhsdock-kibana    ... done
+Creating lhsdock-es03      ... done
+Creating lhsdock-cerebro   ... done
+Creating lhsdock-logstash  ... done
+Creating lhsdock-heartbeat ... done
+Creating lhsdock-fleet     ... done
+Creating lhsdock-eps       ... done
 ```
 
 #### stop lhsdock
