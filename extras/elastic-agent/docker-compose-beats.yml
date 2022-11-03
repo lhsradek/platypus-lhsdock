@@ -1,15 +1,3 @@
-version: '3.9'
-
-networks:
-  default:
-    external: true
-    name: ${DOCKER_NETWORK}
-  intnet:
-    external: false
-    name: ${INT_NETWORK}
-
-services:
-
 #
 # === APM Server ===
 #
@@ -24,11 +12,11 @@ services:
     image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-apm"
-    hostname: "apm.${INT_NETWORK}"
+    hostname: "apm.${APP_HOST}.${INT_NETWORK}"
     networks:
-    # for traefik:
+      # for All the World
       - default
-    # local network:
+      # local network:
       - intnet
     # ports:
     #   - ${APM_PORT}:8200
@@ -52,22 +40,13 @@ services:
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
       - STAGE=${STAGE}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.apm-public.rule=Host(`apm.${INT_NETWORK}`)"
-      - "traefik.http.routers.apm-public.entrypoints=https"
-      - "traefik.http.routers.apm-public.tls=true"
-      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.port=5066"
-      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.services.apm-${APP_ID}.loadbalancer.healthcheck.hostname=apm.${INT_NETWORK}"
     healthcheck:
       # test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       test: ["CMD-SHELL", "curl -s -I http://apm.${INT_NETWORK}:8200 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
-   
+
 #
 # === Metricbeat ===
 #
@@ -88,8 +67,6 @@ services:
     hostname: "metric.${INT_NETWORK}"
     user: root
     networks:
-      # for traefik:
-      - default
       # local network:
       - intnet
     volumes:
@@ -115,15 +92,6 @@ services:
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
       - EPS_PASSWORD=${EPS_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.metric-public.rule=Host(`metric.${INT_NETWORK}`)"
-      - "traefik.http.routers.metric-public.entrypoints=https"
-      - "traefik.http.routers.metric-public.tls=true"
-      - "traefik.http.services.metric-${APP_ID}.loadbalancer.server.port=5066"
-      - "traefik.http.services.metric-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.services.metric-${APP_ID}.loadbalancer.healthcheck.hostname=metric.${INT_NETWORK}"
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
@@ -150,8 +118,6 @@ services:
     container_name: "${APP_ID}-file"
     hostname: "file.${INT_NETWORK}"
     networks:
-    # for traefik:
-      - default
     # local network:
       - intnet
     volumes:
@@ -189,72 +155,9 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.file-public.rule=Host(`file.${INT_NETWORK}`)"
-      - "traefik.http.routers.file-public.entrypoints=https"
-      - "traefik.http.routers.file-public.tls=true"
-      - "traefik.http.services.file-${APP_ID}.loadbalancer.server.port=5066"
-      - "traefik.http.services.file-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.services.file-${APP_ID}.loadbalancer.healthcheck.hostname=file.${INT_NETWORK}"
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500
-
-#
-# === Heartbeat ===
-#
-  heartbeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    # Ubuntu - heartbeat
-    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-heart"
-    hostname: "heart.${INT_NETWORK}"
-    networks:
-      # for all the World 
-      - default
-      # local network:
-      - intnet
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/heartbeat/certs
-      - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
-      - ./logs/heart:/usr/share/heartbeat/logs
-      - heartbeat:/usr/share/heartbeat
-    environment:
-      - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
-      - APP_NET=${INT_NETWORK}
-      - AGENT_API_KEY=${AGENT_API_KEY}
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.heart-public.rule=Host(`heart.${INT_NETWORK}`)"
-      - "traefik.http.routers.heart-public.entrypoints=https"
-      - "traefik.http.routers.heart-public.tls=true"
-      - "traefik.http.services.heart-${APP_ID}.loadbalancer.server.port=5066"
-      - "traefik.http.services.heart-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.services.heart-${APP_ID}.loadbalancer.healthcheck.hostname=heart.${INT_NETWORK}"
-    healthcheck:
-      # test: "heartbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://heart.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
-      interval: 10s
-      timeout: 60s
-      retries: 500
- 

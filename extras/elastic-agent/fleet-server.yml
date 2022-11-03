@@ -1,8 +1,8 @@
 # Enables the stats endpoint under http://localhost:5601 by default.
 # Additional stats can be found under http://127.0.0.1:5066/stats and http://127.0.0.1:5066/state
-http.enabled: true
-http.host: 0.0.0.0
-http.port: 5066
+#http.enabled: true
+#http.host: 0.0.0.0
+#http.port: 5066
 #http.named_pipe.user:
 #http.named_pipe.security_descriptor:
 
@@ -21,7 +21,7 @@ fleet:
 outputs:
   elasticsearch:
     hosts: 
-      - "https://es01.${APP_ID}.${APP_NET}:9200"
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

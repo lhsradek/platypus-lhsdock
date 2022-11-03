@@ -25,7 +25,7 @@ xpack:
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
-    # poll_interval: 4000
+    poll_interval: 4000
     max_workers: 3
   apm.serviceMapEnabled: false
   fleet:
@@ -37,9 +37,10 @@ xpack:
           - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
-      elasticsearch:
-        hosts: 
-          - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      # no no no !!!
+      # elasticsearch:
+      #   hosts: 
+      #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
@@ -57,8 +58,6 @@ xpack:
         version: latest
       - name: nginx
         version: latest
-      - name: osquery
-        version: latest
       - name: postgresql
         version: latest
       - name: redis
@@ -73,10 +72,9 @@ xpack:
         version: latest
       - name: spring_boot
         version: latest
-      - name: synthetics
-        version: latest
 
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
+    # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
     agentPolicies:          
       - name: Fleet Server policy 1
         description: Fleet Server policy
@@ -86,21 +84,24 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_nginx-1
-            description: fleet_server
-            id: fleet_server_nginx
+          - name: fleet_server-1
             package:
               name: fleet_server
-          - name: elastic_agent_nginx-1
-            description: elastic_agent
-            id: elastic_agent_nginx
+            description: Fleet Server
+            id: fleet_server
+            # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
+            # Advanced options - Custom fleet-server configurations
+            # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
+          - name: elastic_agent-1
             package:
               name: elastic_agent
-          - name: apm_nginx-1
-            description: apm_nginx
-            id: apm_nginx
+            description: Elastic Agent
+            id: elastic_agent
+          - name: apm_tomcat-1
             package:
               name: apm
+            description: Elastic APM
+            id: apm
             inputs:
               - type: apm
                 keep_enabled: true
@@ -109,26 +110,26 @@ xpack:
                     value: "0.0.0.0:8200"
                   - name: url
                     value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
-          - name: system_nginx-1
-            description: system
-            id: system_nginx
-            package:
-              name: system
-          - name: docker_nginx-1
-            description: docker
-            id: docker_nginx
+          - name: docker-1
             package:
               name: docker
-          - name: linux_nginx-1
-            description: linux
-            id: linux_nginx
+            description: Docker Metrics
+            id: docker
+          - name: linux-1
             package:
               name: linux
-          - name: nginx_nginx-1
-            description: nginx_nginx
-            id: nginx_nginx
+            description: Linux Metrics
+            id: linux
+          - name: system-1
+            package:
+              name: system
+            description: System
+            id: system
+          - name: nginx-1
             package:
               name: nginx
+            description: Nginx
+            id: nginx
             # url: "https://${APP_HOST}.${APP_NET}:8443"
             # hosts: 
             #  - "${APP_HOST}.${APP_NET}:8443"
@@ -147,172 +148,91 @@ xpack:
             #         - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-error.log*
             #         - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/error.log*
             #         - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log*
-          - name: logstash_nginx-1
-            description: logstash_nginx
-            id: logstash_nginx
+          - name: logstash-1
             package:
               name: logstash
-          - name: osquery_nginx-1
-            description: osquery_nginx
-            id: osquery_nginx
-            package:
-              name: osquery
-          - name: traefik_nginx-1
-            description: traefik_nginx
-            id: traefik_nginx
+            description: Logstash
+            id: logstash
+          - name: traefik-1
             package:
               name: traefik
+            description: Traefik
+            id: traefik
             # /usr/share/elastic-agent/data/elastic-agent-90167b/install/filebeat-8.4.3-linux-x86_64/elogs/traefik/access.json
              
-      - name: Fleet Server Wordpress policy 1
-        description: Fleet Server Wordpress policy
-        id: fleet-server-wordpress-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: fleet_server_wordpress-1
-            description: fleet_server
-            id: fleet_server_wordpress
-            package:
-              name: fleet_server
-          - name: elastic_agent_wordpress-1
-            description: elastic_agent
-            id: elastic_agent_wordpress
-            package:
-              name: elastic_agent
-          - name: apm_wordpress-1
-            description: apm_wordpress
-            id: apm_wordpress
-            package:
-              name: apm
-            inputs:
-              - type: apm
-                keep_enabled: true
-                vars:
-                  - name: host
-                    value: "0.0.0.0:8200"
-                  - name: url
-                    value: "http://fleet.${APP_HOST}.wordpress.local:8200"
-          - name: system_wordpress-1
-            description: system
-            id: system_wordpress
-            package:
-              name: system
-          - name: docker_wordpress-1
-            description: docker
-            id: docker_wordpress
-            package:
-              name: docker
-          - name: linux_wordpress-1
-            description: linux
-            id: linux_wordpress
-            package:
-              name: linux
-          - name: nginx_wordpress-1
-            description: nginx_wordpress
-            id: nginx_wordpress
-            package:
-              name: nginx
-              # hosts: 
-              #   - "${APP_HOST}.wordpress.local:8443"
-          - name: mysql_wordpress-1
-            description: mysql_wordpress
-            id: mysql_wordpress
-            package:
-              name: mysql
-          - name: osquery_wordpress-1
-            description: osquery_wordpress
-            id: osquery_wordpress
-            package:
-              name: osquery
-          - name: redis_wordpress-1
-            description: redis_wordpress
-            id: redis_wordpress
-            package:
-              name: redis
-             
-      - name: Fleet Server Tomcat policy 1
-        description: Fleet Server Tomcat policy
-        id: fleet-server-tomcat-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: fleet_server_tomcat-1
-            description: fleet_server
-            id: fleet_server_tomcat
-            package:
-              name: fleet_server
-          - name: elastic_agent_tomcat-1
-            description: elastic_agent
-            id: elastic_agent_tomcat
-            package:
-              name: elastic_agent
-          - name: apm_tomcat-1
-            description: apm_tomcat
-            id: apm_tomcat
-            package:
-              name: apm
-            inputs:
-              - type: apm
-                keep_enabled: true
-                vars:
-                  - name: host
-                    value: "0.0.0.0:8200"
-                  - name: url
-                    value: "http://fleet.${APP_HOST}.tomcat.local:8200"
-          - name: system_tomcat-1
-            description: system
-            id: system_tomcat
-            package:
-              name: system
-          - name: docker_tomcat-1
-            description: docker
-            id: docker_tomcat
-            package:
-              name: docker
-          - name: linux_tomcat-1
-            description: linux
-            id: linux_tomcat
-            package:
-              name: linux
-          - name: nginx_tomcat-1
-            description: nginx_tomcat
-            id: nginx_tomcat
-            package:
-              name: nginx
-              # hosts: 
-              #   - "https://${APP_HOST}.tomcat.local:8443"
-          - name: postgresql-tomcat-1
-            description: postgresql-tomcat
-            id: postgresql-tomcat
-            package:
-              name: postgresql
-          - name: osquery_tomcat-1
-            description: osquery_tomcat
-            id: osquery_tomcat
-            package:
-              name: osquery
-          - name: redis_tomcat-1
-            description: redis_tomcat
-            id: redis_tomcat
-            package:
-              name: redis
-          - name: tomcat_tomcat-1
-            description: tomcat_tomcat
-            id: tomcat_tomcat
-            package:
-              name: tomcat
-          # - name: spring-boot_tomcat-1
-          #  description: spring_boot
-          #  id: spring_boot_tomcat
-          #  # metrics.hosts:
-          #  # - "https://tombola.docker.tomcat.local/tombola:8443"
-          #  package:
-          #    name: spring_boot
+#       - name: Fleet Server Wordpress policy 1
+#         description: Fleet Server Wordpress policy
+#         id: fleet-server-wordpress-policy-1
+#         namespace: default
+#         monitoring_enabled:
+#           - logs
+#           - metrics
+#         package_policies:
+#           - name: fleet_server_wordpress-1
+#             description: Fleet Server
+#             id: fleet_server_wordpress
+#             package:
+#               name: fleet_server
+#           - name: elastic_agent_wordpress-1
+#             description: Elastic Agent
+#             id: elastic_agent_wordpress
+#             package:
+#               name: elastic_agent
+#           - name: apm_wordpress-1
+#             description: Elastic APM
+#             id: apm_wordpress
+#             package:
+#               name: apm
+#             inputs:
+#               - type: apm
+#                 keep_enabled: true
+#                 vars:
+#                   - name: host
+#                     value: "0.0.0.0:8200"
+#                   - name: url
+#                     value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+#           - name: system_wordpress-1
+#             description: System Integration
+#             id: system_wordpress
+#             package:
+#               name: system
+              
+#       - name: Fleet Server Tomcat policy 1
+#         description: Fleet Server Tomcat policy
+#         id: fleet-server-tomcat-policy-1
+#         namespace: default
+#         monitoring_enabled:
+#           - logs
+#           - metrics
+#         package_policies:
+#           - name: fleet_server_tomcat-1
+#             description: Fleet Server
+#             id: fleet_server_tomcat
+#             package:
+#               name: fleet_server
+#           - name: elastic_agent_tomcat-1
+#             description: Elastic Agent
+#             id: elastic_agent_tomcat
+#             package:
+#               name: elastic_agent
+#           - name: apm_tomcat-1
+#             description: Elastic APM
+#             id: apm_tomcat
+#             package:
+#               name: apm
+#             inputs:
+#               - type: apm
+#                 keep_enabled: true
+#                 vars:
+#                   - name: host
+#                     value: "0.0.0.0:8200"
+#                   - name: url
+#                     value: "http://fleet.${APP_HOST}.tomcat.local:8200"
+#           - name: system_tomcat-1
+#             description: System Integration
+#             id: system_tomcat
+#             package:
+#               name: system
       
 server:
   host: "0.0.0.0"
@@ -333,7 +253,7 @@ elasticsearch:
 
 enterpriseSearch:
   host: "http://eps.${APP_NET}:3002"
-  accessCheckTimeout: 15000
+  accessCheckTimeout: 30000
 
 logging:
   appenders:

@@ -1,9 +1,8 @@
 ###################### Heartbeat Configuration #######################
 
-#http.enabled: true
-#http.port: 5066
-#http.host: "0.0.0.0"
-#http.host: "heart.nginx.local"
+http.enabled: true
+http.port: 5066
+http.host: "0.0.0.0"
 
 xpack.monitoring.enabled: true
 monitoring:
@@ -16,7 +15,7 @@ heartbeat.config.monitors:
   # If enabled, heartbeat will periodically check the config.monitors path for changes
   reload.enabled: false
   # How often to check for changes
-  reload.period: 15s
+  reload.period: 5s
 
 heartbeat.monitors:
 - type: http
@@ -50,13 +49,13 @@ heartbeat.monitors:
     - http://cerebro.${APP_HOST}.${APP_NET}:9000
     - https://es01.${APP_HOST}.${APP_NET}:9200
     - https://es02.${APP_HOST}.${APP_NET}:9201
-    - https://es03.${APP_HOST}.${APP_NET}:9202
+    # - https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}:443/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
-    - http://apm.${APP_NET}:5066
-    - http://metric.${APP_NET}:5066
-    - http://file.${APP_NET}:5066
+    - http://apm.${APP_HOST}.${APP_NET}:5066
+    # - http://metric.${APP_NET}:5066
+    # - http://file.${APP_NET}:5066
     - http://heart.${APP_NET}:5066
     # tomcat
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
@@ -85,10 +84,10 @@ heartbeat.monitors:
   service.name: heartbeat-tcp
   hosts:
     # - platypus-box_traefik_1.platypus-local-dev-network:80
-    - apm.${APP_NET}:5066
-    - apm.${APP_NET}:8200
-    - metric.${APP_NET}:5066
-    - file.${APP_NET}:5066
+    - apm.${APP_HOST}.${APP_NET}:5066
+    - apm.${APP_HOST}.${APP_NET}:8200
+    # - metric.${APP_NET}:5066
+    # - file.${APP_NET}:5066
     - heart.${APP_NET}:5066
     - eps.${APP_NET}:3002
     - kibana.${APP_HOST}.${APP_NET}:5601
@@ -106,7 +105,7 @@ heartbeat.monitors:
   service.name: heartbeat-icmp
   hosts:
     - ${APP_HOST}.${APP_NET}
-    # - apm.${APP_NET}
+    # - apm.${APP_HOST}.${APP_NET}
     # - cerebro.${APP_HOST}.${APP_NET}
     # - es01.${APP_HOST}.${APP_NET}
     # - es02.${APP_HOST}.${APP_NET}
@@ -141,7 +140,6 @@ output:
     protocol: "https"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
-    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
