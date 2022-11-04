@@ -4,7 +4,7 @@
 - module: kibana
   xpack.enabled: true
   period: 10s
-  hosts: ["https://kibana.docker.nginx.local:5601"]
+  hosts: ["https://kibana.${APP_HOST}.${APP_NET}:5601"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:

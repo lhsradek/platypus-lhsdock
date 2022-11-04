@@ -4,9 +4,7 @@
 
 - pipeline.id: main
   path.config: "/usr/share/logstash/pipeline/logstash.conf"
-# - pipeline.id: elastic-agent-pipeline
-#   path.config: "/usr/share/logstash/pipeline/elastic-agent-pipeline.conf"
-#   # pipeline.workers: 2 # 2 is default
+#  pipeline.workers: 2 # 2 is default
 # - pipeline.id: gc-pipeline
 #   path.config: "/usr/share/logstash/pipeline/gc.conf"
 #   # pipeline.workers: 2 # 2 is default
