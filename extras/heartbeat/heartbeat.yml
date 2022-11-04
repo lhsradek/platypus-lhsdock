@@ -35,7 +35,7 @@ heartbeat.monitors:
     # verification_mode: "certificate"
 
 - type: http
-  schedule: '0 * * * * * *'
+  schedule: '*/20 * * * * * *'
   id: http-service
   name: HTTP Service
   data_stream.namespace: default
@@ -53,7 +53,7 @@ heartbeat.monitors:
     - https://${APP_HOST}.${APP_NET}:443/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
-    - http://apm.${APP_HOST}.${APP_NET}:5066
+    # - http://apm.${APP_HOST}.${APP_NET}:5066
     # - http://metric.${APP_NET}:5066
     # - http://file.${APP_NET}:5066
     - http://heart.${APP_NET}:5066
@@ -77,15 +77,16 @@ heartbeat.monitors:
     # verification_mode: "certificate"
 
 - type: tcp
-  schedule: '0 * * * * * *'
+  schedule: '*/20 * * * * * *'
   id: tcp-service
   name: TCP Service
   data_stream.namespace: default
   service.name: heartbeat-tcp
   hosts:
     # - platypus-box_traefik_1.platypus-local-dev-network:80
-    - apm.${APP_HOST}.${APP_NET}:5066
-    - apm.${APP_HOST}.${APP_NET}:8200
+    - fleet.${APP_HOST}.${APP_NET}:8200
+    # - apm.${APP_HOST}.${APP_NET}:5066
+    # - apm.${APP_HOST}.${APP_NET}:8200
     # - metric.${APP_NET}:5066
     # - file.${APP_NET}:5066
     - heart.${APP_NET}:5066
@@ -98,7 +99,7 @@ heartbeat.monitors:
     # - fleet.${APP_HOST}.wordpress.local:8220
 
 - type: icmp
-  schedule: '0 * * * * * *'
+  schedule: '*/20 * * * * * *'
   id: icmp-service
   name: ICMP Service
   data_stream.namespace: default

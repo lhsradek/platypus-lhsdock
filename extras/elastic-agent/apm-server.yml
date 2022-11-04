@@ -290,10 +290,8 @@ output.elasticsearch:
 #---------------------------- Logstash output -----------------------------
 #output.logstash:
   # Boolean flag to enable or disable the output module.
-  #enabled: false
-
-  # The Logstash hosts.
-  #hosts: ["localhost:5044"]
+  #enabled: true
+  #hosts: ["logstash.docker.nginx.local:5044"]
 
   # Number of workers per Logstash host.
   #worker: 1
