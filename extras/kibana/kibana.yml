@@ -173,7 +173,7 @@ xpack:
               name: traefik
             description: Traefik
             id: traefik-1
-            # /usr/share/elastic-agent/data/elastic-agent-90167b/install/filebeat-8.4.3-linux-x86_64/elogs/traefik/access.json
+            # /usr/share/elastic-agent/data/elastic-agent-9da6ba/install/filebeat-8.5.0-linux-x86_64/elogs/traefik/access.json
              
 #       - name: Fleet Server Wordpress policy 1
 #         description: Fleet Server Wordpress policy
