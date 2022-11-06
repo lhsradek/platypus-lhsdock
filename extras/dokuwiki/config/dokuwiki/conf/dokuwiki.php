@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is DokuWiki's Main Configuration file
  *

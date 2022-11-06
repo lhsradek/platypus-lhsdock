@@ -39,7 +39,8 @@ xpack:
           - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
-      elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # add to Advanced YAML configuration:
       # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
