@@ -5,7 +5,9 @@ monitoring:
     enabled: true
     container:
       elasticsearch:
-        enabled: false
+        enabled: true
+      logstash:
+        enabled: true
     ccs:
       enabled: false
   kibana:
@@ -37,7 +39,8 @@ xpack:
           - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
-        # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      #elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
@@ -101,6 +104,7 @@ xpack:
             id: apm-1
             inputs:
               - type: apm
+                keep_enabled: true
                 vars:
                   - name: host
                     value: "0.0.0.0:8200"
@@ -111,196 +115,368 @@ xpack:
               name: docker
             description: Docker Metrics
             id: docker-1
+            inputs:
+              - type: docker/metrics
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: docker.memory
+                    enabled: false
           - name: system-1
             package:
               name: system
             description: System
             id: system-1
             inputs:
-              - type: system/logs
-                keep_enabled: true
-                vars:
-                  - name: auth.paths
-                    value:
-                      - /hostfs/var/log/auth.log
-                      - /hostfs/var/log/secure
-                  - name: syslog.paths
-                    value:
-                      - /hostfs/var/log/messages
-                      - /hostfs/var/log/syslog
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: system.syslog
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/messages
+                          - /hostfs/var/log/syslog
+                  - data_stream:
+                      dataset: system.auth
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/auth.log
+                          - /hostfs/var/log/secure
               - type: system/metrics
-                keep_enabled: true
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
+              - type: winlog
+                enabled: false
           - name: nginx-1
             package:
               name: nginx
             description: Nginx
             id: nginx-1
             inputs:
-              - type: nginx/logs
-                keep_enabled: true
-                vars:
-                  - name: nginx-access.paths
-                    value:
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/access.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-access.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/access.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/access.log
-                  - name: nginx-error.paths
-                    value:
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/error.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-error.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/error.log
-                      - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: nginx.access
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/access.log
+                  - data_stream:
+                      dataset: nginx.error
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log
               - type: nginx/metrics
+                enabled: true
                 vars:
                   - name: hosts
                     value:
-                      - http://${APP_HOST}.${APP_NET}:80 
-                      - http://wiki.${APP_HOST}.${APP_NET}:80 
-          - name: logstash-1
-            package:
-              name: logstash
-            description: Logstash
-            id: logstash-1
+                      - http://${APP_HOST}.${APP_NET} 
+                      - http://wiki.${APP_HOST}.${APP_NET} 
           - name: traefik-1
             package:
               name: traefik
             description: Traefik
             id: traefik-1
-            # /usr/share/elastic-agent/data/elastic-agent-9da6ba/install/filebeat-8.5.0-linux-x86_64/elogs/traefik/access.json
+            inputs:
+              - type: logfile
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: traefik.access
+                    keep_enabled: true
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/access.json
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
+              - type: traefik/metrics
+                enabled: false
+          - name: logstash-1
+            package:
+              name: logstash
+            description: Logstash
+            id: logstash-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: logstash/metrics
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - http://logstash.${APP_HOST}.${APP_NET}:9600 
              
-#       - name: Fleet Server Wordpress policy 1
-#         description: Fleet Server Wordpress policy
-#         id: fleet-server-wordpress-policy-1
-#         namespace: default
-#         monitoring_enabled:
-#           - logs
-#           - metrics
-#         package_policies:
-#           - name: fleet_server_wordpress-1
-#             description: Fleet Server
-#             id: fleet_server_wordpress-1
-#             package:
-#               name: fleet_server
-#           - name: elastic_agent_wordpress-1
-#             description: Elastic Agent
-#             id: elastic_agent_wordpress-1
-#             package:
-#               name: elastic_agent
-#           - name: apm_wordpress-1
-#             description: Elastic APM
-#             id: apm_wordpress-1
-#             package:
-#               name: apm
-#             inputs:
-#               - type: apm
-#                 vars:
-#                   - name: host
-#                     value: "0.0.0.0:8200"
-#                   - name: url
-#                     value: "http://fleet.${APP_HOST}.wordpress.local:8200"
-#           - name: system_wordpress-1
-#             description: System Integration
-#             id: system_wordpress-1
-#             package:
-#               name: system
-#             inputs:
-#               - type: system/logs
-#                 vars:
-#                   - name: auth.paths
-#                     value:
-#                       - /hostfs/var/log/auth.log
-#                       - /hostfs/var/log/secure
-#                   - name: syslog.paths
-#                     value:
-#                       - /hostfs/var/log/messages
-#                       - /hostfs/var/log/syslog
-#               - type: system/metrics
-#                 keep_enabled: true
-#                 vars:
-#                   - name: system.hostfs
-#                     value: /hostfs
-#           - name: nginx_wordpress-1
-#             package:
-#               name: nginx
-#             description: Nginx
-#             id: nginx_wordpress-1
-#             inputs:
-#               - type: nginx/logs
-#                 vars:
-#                   - name: nginx-access.paths
-#                     value:
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/access.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-access.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.access.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.access.log
-#                   - name: nginx-error.paths
-#                     value:
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/error.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-error.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.error.log
-#                       - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.error.log
-#               - type: nginx/metrics
-#                 vars:
-#                   - name: hosts
-#                     value:
-#                       - http://${APP_HOST}.wordpress.local:80 
+      - name: Fleet Server Wordpress policy 1
+        description: Fleet Server Wordpress policy
+        id: fleet-server-wordpress-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: fleet_server_wordpress-1
+            description: Fleet Server
+            id: fleet_server_wordpress-1
+            package:
+              name: fleet_server
+          - name: elastic_agent_wordpress-1
+            description: Elastic Agent
+            id: elastic_agent_wordpress-1
+            package:
+              name: elastic_agent
+          - name: apm_wordpress-1
+            description: Elastic APM
+            id: apm_wordpress-1
+            package:
+              name: apm
+            inputs:
+              - type: apm
+                keep_enabled: true
+                vars:
+                  - name: host
+                    value: "0.0.0.0:8200"
+                  - name: url
+                    value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+          - name: system_wordpress-1
+            description: System Integration
+            id: system_wordpress-1
+            package:
+              name: system
+            inputs:
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: system.syslog
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/messages
+                          - /hostfs/var/log/syslog
+                  - data_stream:
+                      dataset: system.auth
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/auth.log
+                          - /hostfs/var/log/secure
+              - type: system/metrics
+                enabled: true
+                vars:
+                  - name: system.hostfs
+                    value: /hostfs
+                streams:
+                  - data_stream:
+                      dataset: system.core
+                    enabled: true
+                    vars:
+                      - name: period
+                        value: 10s
+              - type: winlog
+                enabled: false
+          - name: nginx_wordpress-1
+            package:
+              name: nginx
+            description: Nginx
+            id: nginx_wordpress-1
+            inputs:
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: nginx.access
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.access.log
+                  - data_stream:
+                      dataset: nginx.error
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.error.log
+              - type: nginx/metrics
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - http://${APP_HOST}.wordpress.local 
+          - name: mysql_wordpress-1
+            package:
+              name: mysql
+            description: Mysql
+            id: mysql_wordpress-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: mysql/metrics
+                enabled: false
+          - name: redis_wordpress-1
+            package:
+              name: redis
+            description: Redis
+            id: redis_wordpress-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: redis
+                enabled: false
+              - type: redis/metrics
+                enabled: false
               
-#       - name: Fleet Server Tomcat policy 1
-#         description: Fleet Server Tomcat policy
-#         id: fleet-server-tomcat-policy-1
-#         namespace: default
-#         monitoring_enabled:
-#           - logs
-#           - metrics
-#         package_policies:
-#           - name: fleet_server_tomcat-1
-#             description: Fleet Server
-#             id: fleet_server_tomcat-1
-#             package:
-#               name: fleet_server
-#           - name: elastic_agent_tomcat-1
-#             description: Elastic Agent
-#             id: elastic_agent_tomcat-1
-#             package:
-#               name: elastic_agent
-#           - name: apm_tomcat-1
-#             description: Elastic APM
-#             id: apm_tomcat-1
-#             package:
-#               name: apm
-#             inputs:
-#               - type: apm
-#                 keep_enabled: true
-#                 vars:
-#                   - name: host
-#                     value: "0.0.0.0:8200"
-#                   - name: url
-#                     value: "http://fleet.${APP_HOST}.tomcat.local:8200"
-#           - name: system_tomcat-1
-#             description: System Integration
-#             id: system_tomcat-1
-#             package:
-#               name: system
-#             inputs:
-#               - type: system/logs
-#                 vars:
-#                   - name: auth.paths
-#                     value:
-#                       - /hostfs/var/log/auth.log
-#                       - /hostfs/var/log/secure
-#                   - name: syslog.paths
-#                     value:
-#                       - /hostfs/var/log/messages
-#                       - /hostfs/var/log/syslog
-#               - type: system/metrics
-#                 keep_enabled: true
-#                 vars:
-#                   - name: system.hostfs
-#                     value: /hostfs
+      - name: Fleet Server Tomcat policy 1
+        description: Fleet Server Tomcat policy
+        id: fleet-server-tomcat-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: fleet_server_tomcat-1
+            description: Fleet Server
+            id: fleet_server_tomcat-1
+            package:
+              name: fleet_server
+          - name: elastic_agent_tomcat-1
+            description: Elastic Agent
+            id: elastic_agent_tomcat-1
+            package:
+              name: elastic_agent
+          - name: apm_tomcat-1
+            description: Elastic APM
+            id: apm_tomcat-1
+            package:
+              name: apm
+            inputs:
+              - type: apm
+                keep_enabled: true
+                vars:
+                  - name: host
+                    value: "0.0.0.0:8200"
+                  - name: url
+                    value: "http://fleet.${APP_HOST}.tomcat.local:8200"
+          - name: system_tomcat-1
+            description: System Integration
+            id: system_tomcat-1
+            package:
+              name: system
+            inputs:
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: system.syslog
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/messages
+                          - /hostfs/var/log/syslog
+                  - data_stream:
+                      dataset: system.auth
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /hostfs/var/log/auth.log
+                          - /hostfs/var/log/secure
+              - type: system/metrics
+                enabled: true
+                vars:
+                  - name: system.hostfs
+                    value: /hostfs
+              - type: winlog
+                enabled: false
+          - name: nginx_tomcat-1
+            package:
+              name: nginx
+            description: Nginx
+            id: nginx_tomcat-1
+            inputs:
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: nginx.access
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.access.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.access.log
+                  - data_stream:
+                      dataset: nginx.error
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.error.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.error.log
+              - type: nginx/metrics
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - http://${APP_HOST}.tomcat.local
+          - name: postgresql_tomcat-1
+            package:
+              name: postgresql
+            description: Postgresql
+            id: postgresql_tomcat-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: postgresql/metrics
+                enabled: false
+          - name: tomcat_tomcat-1
+            package:
+              name: tomcat
+            description: Tomcat
+            id: tomcat_tomcat-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: tcp
+                enabled: false
+              - type: udp
+                enabled: false
+              - type: tomcat/metrics
+                enabled: false
+          - name: redis_tomcat-1
+            package:
+              name: redis
+            description: Redis
+            id: redis_tomcat-1
+            inputs:
+              - type: logfile
+                enabled: false
+              - type: redis
+                enabled: false
+              - type: redis/metrics
+                enabled: false
       
 server:
   host: "0.0.0.0"

@@ -47,6 +47,7 @@ then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
+mkdir -p logs logs/nginx logs/dokuwiki logs/dokuwiki/php
 touch logs/nginx/php-access.log
 touch logs/nginx/php-error.log
 touch logs/dokuwiki/php/access.log

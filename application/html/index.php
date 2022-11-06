@@ -131,6 +131,7 @@ $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = @$index->isSocket("es01.".$parent.".".$net, 9200);
 $isEs02 = @$index->isSocket("es02.".$parent.".".$net, 9201);
 $isEs03 = false; // @$index->isSocket("es03.".$parent.".".$net, 9202);
+$isHeart = @$index->isSocket("heartbeat.".$net, 5066);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".".$net);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
@@ -210,6 +211,13 @@ if ($printEnv) {
 	}
 	if($isEs03) { ?>
 <li><a href="https://es03.<?php print($parent.".".$net.$port); ?>:9202/?pretty" target="_blank">es03.<?php print($parent.".".$net); ?></a></li> <?php
+	}
+	if($isHeart || $isWiki) { ?><li><?php
+		if($isHeart) { ?>
+<a href="https://heartbeat.<?php print($net.$port); ?>:443/?pretty" target="_blank">heartbeat.<?php print($net); ?></a> <?php
+		} if($isWiki) {
+			$index->printWiki("beats#heartbeat");
+		} ?></li><?php
 	}
 	if($isWiki) { ?>
 <li><a href="https://wiki.<?php print($parent.".".$net.$port); ?>" target="_blank">wiki.<?php print($parent.".".$net); ?></a><img src="dokuwiki.png" width="12" height="12"></li><?php

@@ -2,9 +2,5 @@
 # For more information on multiple pipelines, see the documentation:
 #   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
 
-- pipeline.id: main
+- pipeline.id: elastic-agent-pipeline
   path.config: "/usr/share/logstash/pipeline/logstash.conf"
-#  pipeline.workers: 2 # 2 is default
-# - pipeline.id: gc-pipeline
-#   path.config: "/usr/share/logstash/pipeline/gc.conf"
-#   # pipeline.workers: 2 # 2 is default
