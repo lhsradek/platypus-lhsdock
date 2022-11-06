@@ -69,6 +69,8 @@ xpack:
         version: latest
       - name: linux
         version: latest
+      - name: log
+        version: latest
       - name: logstash
         version: latest
       - name: spring_boot
@@ -207,6 +209,23 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
+          - name: log-1
+            package:
+              name: log
+            description: Log
+            id: log-1
+            inputs:
+              - type: logfile
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: generic
+                    keep_enabled: true
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
           - name: logstash-1
             package:
               name: logstash

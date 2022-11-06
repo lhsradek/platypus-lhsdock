@@ -5,7 +5,7 @@
   metricsets: ["health", "stats"]
   enabled: true
   period: 10s
-  hosts: ["http://eps.nginx.local:3002"]
+  hosts: ["http://eps.${APP_NET}:3002"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   # username: "admin"

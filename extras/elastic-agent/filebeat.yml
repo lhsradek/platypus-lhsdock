@@ -12,9 +12,9 @@
 
 # ============================== Filebeat inputs ===============================
 
-xpack.monitoring.enabled: true
+xpack.monitoring.enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 filebeat.inputs:
@@ -162,26 +162,26 @@ setup.elasticsearch:
 # Configure what output to use when sending the data collected by the beat.
 
 # ---------------------------- Elasticsearch Output ----------------------------
-#output.elasticsearch:
+output.elasticsearch:
   # Array of hosts to connect to.
-  #hosts: 
-  #- "https://es01.${APP_HOST}.${APP_NET}:9200"
-  #protocol: "https"
+  hosts: 
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  protocol: "https"
   ##api_key: "id:api_key"
-  #username: "${ELASTICSEARCH_USERNAME}"
-  #password: "${ELASTICSEARCH_PASSWORD}"
-  #ssl:
-  #  enabled: true
-  #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #  verification_mode: "certificate"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    verification_mode: "certificate"
 
 # ------------------------------ Logstash Output -------------------------------
-output.logstash:
-  enabled: true
+#output.logstash:
+  #enabled: true
   # The Logstash hosts
-  hosts:
-    -  "logstash.${APP_HOST}.${APP_NET}:5044"
-    # - "logstash.${APP_HOST}.${APP_NET}:5055"
+  #hosts:
+  #  -  "logstash.${APP_HOST}.${APP_NET}:5044"
+  #  # - "logstash.${APP_HOST}.${APP_NET}:5055"
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications

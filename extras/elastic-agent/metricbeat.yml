@@ -9,9 +9,9 @@
 
 # =========================== Modules configuration ============================
 
-xpack.monitoring.enabled: true
+xpack.monitoring.enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 metricbeat.config.modules:

@@ -357,6 +357,7 @@ services:
       # local network:
       - intnet
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
       - heartbeat:/usr/share/heartbeat
@@ -410,7 +411,7 @@ services:
     #  - ${FLEET_PORT}:8220
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/elastic-agent/certs

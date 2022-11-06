@@ -710,9 +710,9 @@ output.elasticsearch:
 # cluster.  This requires x-pack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
-xpack.monitoring.enabled: true
+xpack.monitoring.enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 # Set to true to enable the monitoring reporter.
