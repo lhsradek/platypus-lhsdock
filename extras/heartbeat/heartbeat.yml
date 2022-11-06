@@ -56,7 +56,7 @@ heartbeat.monitors:
     # - http://apm.${APP_HOST}.${APP_NET}:5066
     # - http://metric.${APP_NET}:5066
     # - http://file.${APP_NET}:5066
-    - http://heart.${APP_NET}:5066
+    - http://heartbeat.${APP_NET}:5066
     # tomcat
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     - https://ad.${APP_HOST}.tomcat.local
@@ -89,7 +89,7 @@ heartbeat.monitors:
     # - apm.${APP_HOST}.${APP_NET}:8200
     # - metric.${APP_NET}:5066
     # - file.${APP_NET}:5066
-    - heart.${APP_NET}:5066
+    - heartbeat.${APP_NET}:5066
     - eps.${APP_NET}:3002
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
@@ -112,7 +112,7 @@ heartbeat.monitors:
     # - es02.${APP_HOST}.${APP_NET}
     # - es03.${APP_HOST}.${APP_NET}
     # - file.${APP_NET}
-    # - heart.${APP_NET}
+    # - heartbeat.${APP_NET}
     # - kibana.${APP_HOST}.${APP_NET}
     # - logstash.${APP_HOST}.${APP_NET}
     # - metric.${APP_NET}

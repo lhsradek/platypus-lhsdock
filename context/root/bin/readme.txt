@@ -28,6 +28,7 @@ Stopping lhsdock-fleet    ... done
 Stopping lhsdock-cerebro  ... done
 Stopping lhsdock-kibana   ... done
 Stopping lhsdock-logstash ... done
+Stopping lhsdock-es03     ... done
 Stopping lhsdock-es02     ... done
 Stopping lhsdock-wiki     ... done
 Stopping lhsdock-web      ... done
@@ -38,6 +39,7 @@ Removing lhsdock-fleet    ... done
 Removing lhsdock-cerebro  ... done
 Removing lhsdock-kibana   ... done
 Removing lhsdock-logstash ... done
+Removing lhsdock-es03     ... done
 Removing lhsdock-es02     ... done
 Removing lhsdock-wiki     ... done
 Removing lhsdock-web      ... done
