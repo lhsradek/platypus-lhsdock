@@ -27,7 +27,7 @@ xpack:
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
-    poll_interval: 4000
+    poll_interval: 60000
     max_workers: 3
   apm.serviceMapEnabled: false
   fleet:
@@ -209,23 +209,6 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
-          - name: log-1
-            package:
-              name: log
-            description: Log
-            id: log-1
-            inputs:
-              - type: logfile
-                enabled: true
-                streams:
-                  - data_stream:
-                      dataset: generic
-                    keep_enabled: true
-                    enabled: true
-                    vars:
-                      - name: paths
-                        value:
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
           - name: logstash-1
             package:
               name: logstash
@@ -240,6 +223,22 @@ xpack:
                   - name: hosts
                     value:
                       - http://logstash.${APP_HOST}.${APP_NET}:9600 
+          - name: log-1
+            package:
+              name: log
+            description: Custom Logs
+            id: log-1
+            inputs:
+              - type: logfile
+                streams:
+                  - data_stream:
+                      dataset: log.log
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
+                      - name: data_stream.dataset
+                        value: kibana.log
              
       - name: Fleet Server Wordpress policy 1
         description: Fleet Server Wordpress policy

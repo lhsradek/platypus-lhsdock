@@ -82,7 +82,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 500
- 
+  
   es02:
     depends_on:
       es01:
@@ -151,7 +151,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 500
- 
+  
 #
 #   Start with two elasticsearch, the third can be easily added after installation. Three nodes are a robust solution.
 #   Similar to how robust people tend to be slow, it takes a long time to restart three nodes and to go from red to green.
@@ -250,6 +250,7 @@ services:
       - ${LOGSTASH_PORT}:5044
       # - 9600:9600
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
@@ -352,7 +353,7 @@ services:
     container_name: "${APP_ID}-heartbeat"
     hostname: "heartbeat.${INT_NETWORK}"
     networks:
-      # for All the World
+      # for traefik:
       - default
       # local network:
       - intnet
@@ -536,7 +537,7 @@ services:
       retries: 500
    
 #
-# Status and configurations of docker-cloud without using Kibana - Web console for REST.
+# Status and configurations of docker-cloud without using Kibana and Web console for REST.
 #
   cerebro:
     depends_on:

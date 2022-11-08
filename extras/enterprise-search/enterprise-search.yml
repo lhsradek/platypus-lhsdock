@@ -28,6 +28,8 @@ apm:
   service_name: "enterprise-search"
   server_url: "http://fleet.${APP_HOST}.${APP_NET}:8200"
 
+monitoring.reporting_enabled: true
+
 secret_management.encryption_keys: [d24d3d10193be6ec7f75e6957a0f6322fa45faaa1c21dfc5d24edc32a7b1c888]
 secret_session_key: "5cedaa47a9211c4002cf94671c091061cf46a613a338dc90950066ca277f86ba3ee75a1510504b1c90d097125d0d5f435a3c1596f8f082390342f58"
 audit_log_directory: "/var/log/enterprise-search"
