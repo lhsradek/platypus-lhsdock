@@ -71,8 +71,8 @@ heartbeat.monitors:
     - https://mamka.intranet.local/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-    # verification_mode: "none"
-    verification_mode: "certificate"
+    verification_mode: "none"
+    # verification_mode: "certificate"
 
 - type: tcp
   schedule: '*/30 * * * * * *'
