@@ -7,13 +7,5 @@
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/logstash/|configuratios]]
 
-GET [[https://es01.docker.nginx.local:9200/logstash-*/_search?pretty|logstash-*/_search]]
-
-GET [[https://es01.docker.nginx.local:9200/.ds-filebeat-*/_search?pretty&q=response=50|.ds-filebeat-*/_search?q=response=50]]
-
------
-
-For advanced settings with JSON body, for other methods (POST, PUT, DELETE ..) use [[Cerebro]] or [[https://en.wikipedia.org/wiki/CURL|curl]].
-
 -----
 
