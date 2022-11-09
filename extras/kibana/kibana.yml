@@ -41,7 +41,7 @@ xpack:
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
       # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
       # add to Advanced YAML configuration:
-      # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
+      # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
@@ -270,6 +270,7 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
+                    # value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
                     value: "http://fleet.${APP_HOST}.wordpress.local:8200"
           - name: system_wordpress-1
             description: System Integration
@@ -396,7 +397,8 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://fleet.${APP_HOST}.tomcat.local:8200"
+                    value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+                    # value: "http://fleet.${APP_HOST}.tomcat.local:8200"
           - name: system_tomcat-1
             description: System Integration
             id: system_tomcat-1

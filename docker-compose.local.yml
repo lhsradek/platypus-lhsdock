@@ -156,75 +156,75 @@ services:
 #   Start with two elasticsearch, the third can be easily added after installation. Three nodes are a robust solution.
 #   Similar to how robust people tend to be slow, it takes a long time to restart three nodes and to go from red to green.
 #
-#   es03:
-#     depends_on:
-#       es01:
-#         condition: service_healthy
-#     depends_on:
-#       es02:
-#         condition: service_healthy
-#     # Ubuntu - elasticsearch
-#     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-#     restart: ${DOCKER_RESTART_POLICY}
-#     container_name: "${APP_ID}-es03"
-#     hostname: "es03.${APP_HOST}.${INT_NETWORK}"
-#     networks:
-#       # for traefik:
-#       - default
-#       # local network:
-#       - intnet
-#     ports:
-#       - 9202:9202
-#       - 9302:9302
-#     volumes:
-#       - ./certs:/usr/share/elasticsearch/config/certs
-#       - ./logs/es03:/usr/share/elasticsearch/logs
-#       - esdata03:/usr/share/elasticsearch
-#     environment:
-#       - node.name=es03
-#       - http.port=9202
-#       - transport.port=9302
-#       - node.roles=[master, data, ingest, ml, remote_cluster_client]
-#       - cluster.name=${CLUSTER_NAME}
-#       - cluster.initial_master_nodes=es01,es02,es03
-#       - discovery.seed_hosts=es01:9300,es02:9301
-#       - bootstrap.memory_lock=true
-#       - xpack.security.enabled=true
-#       - xpack.security.authc.api_key.enabled=true        
-#       - xpack.security.http.ssl.enabled=true
-#       - xpack.security.http.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
-#       - xpack.security.http.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
-#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.http.ssl.verification_mode=certificate
-#       - xpack.security.transport.ssl.enabled=true
-#       - xpack.security.transport.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
-#       - xpack.security.transport.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
-#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.transport.ssl.verification_mode=certificate
-#       - xpack.license.self_generated.type=${LICENSE}
-#       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-#       - ES_JAVA_OPTS=${ES03_JAVA_OPTS}
-#     # Traefik redirects the stray query directly to elastic. It is nice that the running service can be seen in traffic
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.docker.network=${DOCKER_NETWORK}"
-#       - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
-#       - "traefik.http.routers.es03-public.entrypoints=https"
-#       - "traefik.http.routers.es03-public.tls=true"
-#       - "traefik.http.routers.es03-public.middlewares=es03-${APP_ID}@docker"
-#       - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.scheme=https"
-#       - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.port=9202"
-#       - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=9202"
-#       - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
-#     ulimits:
-#       memlock:
-#         soft: -1
-#         hard: -1
-#     healthcheck:
-#       test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://es03.${APP_HOST}.${INT_NETWORK}:9202 | grep -q 'missing authentication credentials'" ]
-#       interval: 5s
-#       timeout: 5s
-#       retries: 500
+  es03:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
+    # Ubuntu - elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-es03"
+    hostname: "es03.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    ports:
+      - 9202:9202
+      - 9302:9302
+    volumes:
+      - ./certs:/usr/share/elasticsearch/config/certs
+      - ./logs/es03:/usr/share/elasticsearch/logs
+      - esdata03:/usr/share/elasticsearch
+    environment:
+      - node.name=es03
+      - http.port=9202
+      - transport.port=9302
+      - node.roles=[master, data, ingest, ml, remote_cluster_client]
+      - cluster.name=${CLUSTER_NAME}
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01:9300,es02:9301
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.authc.api_key.enabled=true        
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
+      - xpack.security.http.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
+      - xpack.security.transport.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ES_JAVA_OPTS=${ES03_JAVA_OPTS}
+    # Traefik redirects the stray query directly to elastic. It is nice that the running service can be seen in traffic
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.es03-public.entrypoints=https"
+      - "traefik.http.routers.es03-public.tls=true"
+      - "traefik.http.routers.es03-public.middlewares=es03-${APP_ID}@docker"
+      - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.port=9202"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=9202"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt https://es03.${APP_HOST}.${INT_NETWORK}:9202 | grep -q 'missing authentication credentials'" ]
+      interval: 5s
+      timeout: 5s
+      retries: 500
   
 #
 # === L - Logstash ===
@@ -737,6 +737,7 @@ services:
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png
       - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
+      - ./png/traefik02.png:/config/dokuwiki/data/media/traefik02.png
       - ./png/wiki.png:/config/dokuwiki/data/media/wiki.png
       - ./logs/dokuwiki:/config/log
     labels:

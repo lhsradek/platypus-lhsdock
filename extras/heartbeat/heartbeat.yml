@@ -51,21 +51,19 @@ heartbeat.monitors:
     - https://${APP_HOST}.${APP_NET}/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
-    # - http://apm.${APP_HOST}.${APP_NET}:5066
-    # - http://metric.${APP_NET}:5066
-    # - http://file.${APP_NET}:5066
     - http://heartbeat.${APP_NET}:5066
     # tomcat
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
+    - https://tombola.${APP_HOST}.tomcat.local/tomcat.jsp
     - https://ad.${APP_HOST}.tomcat.local
-    - https://tombola.www.tomcat.local/tomcat.jsp
     - https://www.tomcat.local/tombola-javadoc/
+    - https://tombola.www.tomcat.local/tomcat.jsp
     - https://ad.www.tomcat.local
     # wordpress
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
-    # - https://www.wordpress.local
-    # - https://pma.www.wordpress.local
+    - https://www.wordpress.local
+    - https://pma.www.wordpress.local
     # intranet
     - https://lhs.intranet.local/downloads/
     - https://mamka.intranet.local/downloads/
@@ -83,18 +81,10 @@ heartbeat.monitors:
   hosts:
     # - platypus-box_traefik_1.platypus-local-dev-network:80
     - fleet.${APP_HOST}.${APP_NET}:8200
-    # - apm.${APP_HOST}.${APP_NET}:5066
-    # - apm.${APP_HOST}.${APP_NET}:8200
-    # - metric.${APP_NET}:5066
-    # - file.${APP_NET}:5066
     - heartbeat.${APP_NET}:5066
     - eps.${APP_NET}:3002
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044
-    #- logstash.${APP_HOST}.${APP_NET}:5055
-    # wordpress
-    # - apm.wordpress.local:8200
-    # - fleet.${APP_HOST}.wordpress.local:8220
 
 - type: icmp
   schedule: '*/30 * * * * * *'
@@ -104,17 +94,16 @@ heartbeat.monitors:
   service.name: heartbeat-icmp
   hosts:
     - ${APP_HOST}.${APP_NET}
+    - weblhs-php.${APP_NET}
+    - mamka.intranet.local
     # - apm.${APP_HOST}.${APP_NET}
     # - cerebro.${APP_HOST}.${APP_NET}
     # - es01.${APP_HOST}.${APP_NET}
     # - es02.${APP_HOST}.${APP_NET}
     # - es03.${APP_HOST}.${APP_NET}
-    # - file.${APP_NET}
     # - heartbeat.${APP_NET}
     # - kibana.${APP_HOST}.${APP_NET}
     # - logstash.${APP_HOST}.${APP_NET}
-    # - metric.${APP_NET}
-    - weblhs-php.${APP_NET}
     # - wiki.${APP_HOST}.${APP_NET}
 
 heartbeat.scheduler:
@@ -126,11 +115,20 @@ heartbeat.jobs:
     limit: 2    
 
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
   - add_docker_metadata: ~
   - add_cloud_metadata: ~
   - add_kubernetes_metadata: ~
+  # https://www.elastic.co/guide/en/beats/heartbeat/current/add-observer-metadata.html
+  - add_observer_metadata:
+      cache.ttl: 5m
+      geo:
+        name: KnO
+        location: 50.3871, -13.17379
+        continent_name: Europe
+        country_iso_code: CZE
+        region_name: Czech Republic
+        region_iso_code: CZ-422
+        city_name: Klášterec nad Ohří
 
 output:
   elasticsearch:
