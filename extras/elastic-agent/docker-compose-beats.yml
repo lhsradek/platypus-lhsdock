@@ -63,8 +63,8 @@
     # Ubuntu - metricbeat
     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-metric"
-    hostname: "metric.${INT_NETWORK}"
+    container_name: "${APP_ID}-metricbeat"
+    hostname: "metricbeat.${INT_NETWORK}"
     user: root
     networks:
       # local network:
@@ -94,7 +94,7 @@
       - EPS_PASSWORD=${EPS_PASSWORD}
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://metric.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 20s
       timeout: 10s
       retries: 50
@@ -115,8 +115,8 @@
     # Ubuntu - filebeat
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-file"
-    hostname: "file.${INT_NETWORK}"
+    container_name: "${APP_ID}-filebeat"
+    hostname: "filebeat.${INT_NETWORK}"
     networks:
     # local network:
       - intnet
@@ -138,7 +138,7 @@
       - ./logs/heart:/usr/share/filebeat/elogs/heart
       - ./logs/kibana:/usr/share/filebeat/elogs/kibana
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
-      - ./logs/metric:/usr/share/filebeat/elogs/metric
+      - ./logs/metricbeat:/usr/share/filebeat/elogs/metricbeat
       # - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql
       # - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/elogs/nginx/tombola
       # - /root/tombola/logs/tombola-tomcat/:/usr/share/filebeat/elogs/tomcat/tombola
@@ -157,7 +157,7 @@
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://file.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://filebeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500

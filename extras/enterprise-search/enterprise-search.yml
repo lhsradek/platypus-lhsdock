@@ -22,6 +22,7 @@ kibana:
   host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
   external_url: "https://kibana.${APP_HOST}.${APP_NET}:5601"
 
+# https://www.elastic.co/guide/en/enterprise-search/current/configuration.html#configuration-settings-apm-instrumentation   
 apm:
   enabled: true
   environment: 'test'
