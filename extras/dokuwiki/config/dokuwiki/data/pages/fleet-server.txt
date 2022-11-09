@@ -30,7 +30,7 @@ fleet:
 sets the fleet in kibana
 
 === Kibana - Fleet - Settings ===
-{{fleet01.png?600x200}}
+{{fleet01.png?600x432}}
 
 ===== Add agent =====
 
@@ -75,7 +75,7 @@ Applications:
 
 === Kibana - Observability - Fleet - Agents ===
 
-{{fleet02.png?600x200}}
+{{fleet02.png?600x420}}
 
 From [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana.yml]]:
 
@@ -142,11 +142,11 @@ xpack.fleet.agentPolicies:
 
 === Kibana - Observability - Fleet - Agents - fleet.wordpress.local ===
 
-{{fleet03.png?600x200}}
+{{fleet03.png?600x434}}
 
 === Kibana - Observability - Fleet - Agent policies - Fleet server Tomcat policy 1 ===
 
-{{fleet04.png?600x200}}
+{{fleet04.png?600x434}}
 
 ==== wordpress.local ====
 

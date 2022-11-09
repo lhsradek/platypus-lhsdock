@@ -84,15 +84,15 @@ You can see in:
 
 === phpInfo(); ===
 
-{{elastic-apm-php.png?300x300}}
+{{elastic-apm-php.png?400x431}}
 
 === Kibana - Observability - APM - Services ===
 
-{{kibana10.png?600x200}}
+{{kibana10.png?600x434}}
 
 See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.**isSocket** and IndexController.**isUrl**. This usage will automatically add trases **IndexController::isSocket** and **IndexController::isUrl**.
 
-{{kibana12.png?600x200}}
+{{kibana12.png?600x434}}
 
 ==== Deb ====
 

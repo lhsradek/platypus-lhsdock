@@ -23,54 +23,54 @@ GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
 === Observability - Infrastructure - Inventory - metric.nginx.local ===
 
-{{kibana01.png?600x200}}
+{{kibana01.png?600x436}}
 
 === Observability - Infrastructure - Inventory - Host - metric.nginx.local ===
 
-{{kibana02.png?600x200}}
+{{kibana02.png?600x432}}
 
 === Observability - Infrastructure - Inventory - Docker Containers ===
 
-{{kibana03.png?600x200}}
+{{kibana03.png?600x432}}
 
 === Observability - Infrastructure - Uptime - Monitors ===
 
-{{kibana04.png?600x200}}
+{{kibana04.png?600x436}}
 
 === Observability - Infrastructure - Uptime - Certificates ===
 
-{{kibana05.png?600x200}}
+{{kibana05.png?600x431}}
 
 === Observability - Monitor the Stack ===
 
-{{kibana06.png?600x200}}
+{{kibana06.png?600x436}}
 
 === Stack Management - Rules - docker ===
 
-{{kibana07.png?600x200}}
+{{kibana07.png?600x434}}
 
 === Observability - Logs - Stream ===
 
-{{kibana08.png?600x200}}
+{{kibana08.png?600x434}}
 
 === Observability - Overview ===
 
-{{kibana09.png?600x200}}
+{{kibana09.png?600x434}}
 
 === Observability - APM - Services ===
 
-{{kibana10.png?600x200}}
+{{kibana10.png?600x434}}
 
 Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
 
 === Observability - APM - Services - docker-wordpress99 - Overview ===
 
-{{kibana11.png?600x200}}
+{{kibana11.png?600x434}}
 
 === Observability - APM - Dependences ===
 
-{{kibana13.png?600x200}}
+{{kibana13.png?600x434}}
 
 === Observability - Integrations - Installed integrations ===
 
-{{kibana14.png?600x200}}
+{{kibana14.png?600x434}}

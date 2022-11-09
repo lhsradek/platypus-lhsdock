@@ -5,8 +5,8 @@
 
 Cerebro is installed on url [[https://cerebro.docker.nginx.local]] 
 
-{{cerebro01.png?600x200}}
+{{cerebro01.png?600x344}}
 
-{{cerebro02.png?600x200}}
+{{cerebro02.png?600x270}}
 
-{{cerebro03.png?600x200}}
+{{cerebro03.png?600x435}}
