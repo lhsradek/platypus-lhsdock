@@ -480,10 +480,10 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
       - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.fleet-public.entrypoints=http"
-      - "traefik.http.routers.fleet-public.tls=false"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8200"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=http"
+      - "traefik.http.routers.fleet-public.entrypoints=https"
+      - "traefik.http.routers.fleet-public.tls=true"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 5s
