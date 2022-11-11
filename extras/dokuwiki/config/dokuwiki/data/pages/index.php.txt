@@ -30,7 +30,7 @@ use Elastic\Apm\ElasticApm;
 use Elastic\Apm\TransactionInterface;
 
 $printEnv = false;
-#  $printEnv = true;
+# $printEnv = true;
 
 class IndexController {
 
@@ -67,7 +67,7 @@ class IndexController {
     				],
 			]);
 			$file_headers = get_headers($url);
-			if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+			if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.1 502 Bad Gateway') {
     				$ret = false;
 			}
 		} finally {
@@ -106,18 +106,17 @@ class IndexController {
 		return $ret;
 	}
 
-        public function printWiki(String $id) {
-                $parent = @$_SERVER['APP_HOST'];
-                $net = @$_SERVER['APP_NET'];
+	public function printWiki(String $id) {
+		$parent = @$_SERVER['APP_HOST'];
+		$net = @$_SERVER['APP_NET'];
                 $arr = preg_split("/#/", $id);
-                if (count($arr) == 2) {
-                        $nid = ucfirst($arr[1]);
-                } else {
-                        $nid = ucfirst($arr[0]);
-                }
-                print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=".$id."\" target=\"_blank\">".$nid."</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></br>");
-        }
-
+		if (count($arr) == 2) {
+			$nid = ucfirst($arr[1]);
+		} else {
+			$nid = ucfirst($arr[0]);
+		}
+		print("<small><a href=\"https://wiki.".$parent.".".$net."/doku.php?id=".$id."\" target=\"_blank\">".$nid."</a></small><img src=\"dokuwiki.png\" width=\"8\" height=\"8\"></br>");
+	}
 }
 
 $index = new IndexController();
@@ -132,18 +131,14 @@ $isKibana = @$index->isSocket("kibana.".$parent.".".$net, 5601);
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = @$index->isSocket("es01.".$parent.".".$net, 9200);
 $isEs02 = @$index->isSocket("es02.".$parent.".".$net, 9201);
-$isEs03 = @$index->isSocket("es03.".$parent.".".$net, 9202);
-$isApm =  @$index->isSocket("apm.".$net, 5066);
-$isFile =  @$index->isSocket("file.".$net, 5066);
-$isHeart =  @$index->isSocket("heart.".$net, 5066);
-$isMetric =  @$index->isSocket("metric.".$net, 5066);
+$isEs03 = false; // @$index->isSocket("es03.".$parent.".".$net, 9202);
+$isHeart = @$index->isSocket("heartbeat.".$net, 5066);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".".$net);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
 $isRc = @$index->isUrl("https://rc.".$parent.".wordpress.local");
 $isTomcat = @$index->isUrl("https://".$parent.".tomcat.local/manager/");
-
 $env = "";
 if ($printEnv) {
 	foreach($index->getServerEnv() as $key => $val) {
@@ -172,7 +167,6 @@ if ($printEnv) {
   <div class="content">
     <div class="content-middle">
       <p><small><?php print($clusterName." ".$clusterUuid); ?></small></p><?php if ($printEnv) { ?>
-    </div>
 
     <div class="content-columns">
       <div class="content-column-left">
@@ -184,8 +178,7 @@ if ($printEnv) {
         if($isTraefik || $isWiki) { ?><li><?php
 		if($isTraefik) { ?>
 <a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a> 
-		<?php }
-		if($isWiki) {
+		<?php } if($isWiki) {
 			$index->printWiki("traefik");
 		} ?></li><?php
 	}
@@ -216,32 +209,11 @@ if ($printEnv) {
 	if($isEs03) { ?>
 <li><a href="https://es03.<?php print($parent.".".$net.$port); ?>:9202/?pretty" target="_blank">es03.<?php print($parent.".".$net); ?></a></li> <?php
 	}
-	if($isApm || $isWiki) { ?><li><?php
-		if($isApm) { ?>
-<a href="https://apm.<?php print($net); ?>/?pretty" target="_blank">apm.<?php print($net); ?></a> <?php
-		} if($isWiki) {
-			$index->printWiki("apm-server");
-		} ?></li><?php
-	}
-	if($isFile || $isWiki) { ?><li><?php
-		if($isFile) { ?>
-<a href="https://file.<?php print($net); ?>/?pretty" target="_blank">file.<?php print($net); ?></a> <?php
-		} if($isWiki) {
-			$index->printWiki("beats#filebeat");
-		} ?></li><?php
-	}
 	if($isHeart || $isWiki) { ?><li><?php
 		if($isHeart) { ?>
-<a href="https://heart.<?php print($net); ?>/?pretty" target="_blank">heart.<?php print($net); ?></a> <?php
+<a href="https://heartbeat.<?php print($net.$port); ?>:443/?pretty" target="_blank">heartbeat.<?php print($net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("beats#heartbeat");
-		} ?></li><?php
-	}
-	if($isMetric || $isWiki) { ?><li><?php
-		if($isMetric) { ?>
-<a href="https://metric.<?php print($net); ?>/?pretty" target="_blank">metric.<?php print($net); ?></a> <?php
-		} if($isWiki) {
-			$index->printWiki("beats#metricbeat");
 		} ?></li><?php
 	}
 	if($isWiki) { ?>

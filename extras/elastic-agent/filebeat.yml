@@ -121,7 +121,7 @@ setup.kibana:
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
   host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-  # api_key: ${AGENT_API_KEY}
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
@@ -135,6 +135,7 @@ setup.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
@@ -166,7 +167,7 @@ output.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
-  ##api_key: "id:api_key"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:

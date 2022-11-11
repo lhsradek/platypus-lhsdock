@@ -265,7 +265,8 @@ services:
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
-      - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
+      - LOGSTASH_KEYSTORE_PASS=${ENCRYPTION_KEYS}
+      # - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
       - LS_JAVA_OPTS=${LS_JAVA_OPTS}
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://logstash.${APP_HOST}.${INT_NETWORK}:9600 | grep -q 'HTTP/1.1 200 OK'"]
@@ -397,8 +398,8 @@ services:
       logstash:
         condition: service_healthy
     # Ubuntu - fleet
-    # image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
-    image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION}
+    # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION}
+    image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${APP_HOST}.${INT_NETWORK}"
@@ -420,6 +421,7 @@ services:
       - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
       - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
+      # - ./extras/elastic-agent/fleet-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/fleet-server-${STACK_VERSION}-linux-x86_64/fleet-server.yml
       - ./logs/fleet:/usr/share/elastic-agent/state/data/logs
       - ./logs/fleet/apm-server:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
@@ -437,6 +439,7 @@ services:
     # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
     # https://www.elastic.co/guide/en/fleet/current/elastic-agent-container.html
     environment:
+      - AGENT_API_KEY=${AGENT_API_KEY}
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
       - APP_NET=${INT_NETWORK}
@@ -477,16 +480,16 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
       - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.fleet-public.entrypoints=https"
-      - "traefik.http.routers.fleet-public.tls=true"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.fleet-public.entrypoints=http"
+      - "traefik.http.routers.fleet-public.tls=false"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8200"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 5s
       timeout: 5s
       retries: 200
-     
+   
 #   
 # === Enterprisesearch ===
 #
@@ -1106,6 +1109,7 @@ services:
         # echo "Setting logstash_system password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
+        # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
         # echo "Setting logstash_writer password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #

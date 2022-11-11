@@ -1,13 +1,20 @@
 input {
   elastic_agent {
     port => 5044
+    # ssl => true
+    # ssl_certificate_authorities => ["${ELASTIC_SSL_CERTIFICATEAUTHORITY}"]
+    # ssl_certificate => "${LOGSTASH_SERVER_CERT}"
+    # ssl_key => "${LOGSTASH_SERVER_CERT_KEY}"
+    # ssl_verify_mode => "force_peer"
   }
 }
 
 output {
   elasticsearch {
     hosts => ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    # data_stream => "true"
     index => "%{[@metadata][target_index]}"
+    # ssl => true
     cacert =>  ["${ELASTIC_SSL_CERTIFICATEAUTHORITY}"]
     user => "${ELASTIC_USERNAME}"
     password => "${ELASTIC_PASSWORD}"

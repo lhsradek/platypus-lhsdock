@@ -25,6 +25,27 @@ metricbeat.config.modules:
 
 setup.ilm.overwrite: true
 
+#==========================  Modules configuration =============================
+# metricbeat.modules:
+
+#-------------------------------- Kibana Module --------------------------------
+# - module: kibana
+#   metricsets: ["status"]
+#   period: 10s
+#   hosts: ["https://kibana.${APP_HOST}.${APP_NET}:5601"]
+#   # api_key: "${AGENT_API_KEY}"
+#   username: "${ELASTICSEARCH_USERNAME}"
+#   password: "${ELASTICSEARCH_PASSWORD}"
+#   ssl:
+#     enabled: true
+#     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#   basepath: ""
+#   enabled: true
+
+  # Set to true to send data collected by module to X-Pack
+  # Monitoring instead of metricbeat-* indices.
+  #xpack.enabled: false
+
 # ======================= Elasticsearch template setting =======================
 
 setup.template.settings:
@@ -63,8 +84,8 @@ setup.template.settings:
 setup.elasticsearch:
   hosts:
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  # api_key: ${AGENT_API_KEY}
   protocol: "https"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
@@ -78,7 +99,7 @@ setup.kibana:
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
   host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-  # api_key: ${AGENT_API_KEY}
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
@@ -114,7 +135,7 @@ output:
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
     protocol: "https"
     # Authentication credentials - either API key or username/password.
-    #api_key: "id:api_key"
+    # api_key: "${AGENT_API_KEY}"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:

@@ -54,10 +54,10 @@ heartbeat.monitors:
     - http://heartbeat.${APP_NET}:5066
     # tomcat
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
-    - https://tombola.${APP_HOST}.tomcat.local/tomcat.jsp
+    - https://${APP_HOST}.tomcat.local/tomcat.jsp
     - https://ad.${APP_HOST}.tomcat.local
     - https://www.tomcat.local/tombola-javadoc/
-    - https://tombola.www.tomcat.local/tomcat.jsp
+    - https://www.tomcat.local/tomcat.jsp
     - https://ad.www.tomcat.local
     # wordpress
     - https://${APP_HOST}.wordpress.local
@@ -134,6 +134,7 @@ output:
   elasticsearch:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      # - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'

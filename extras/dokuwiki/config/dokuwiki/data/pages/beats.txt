@@ -21,7 +21,7 @@ Filebeat, together with [[logstash]], processes the file logs for [[elasticsearc
 ===== Kibana displays the logs =====
 
 === Kibana - Observability - Logs - Stream ===
-{{kibana08.png?300x100}}
+{{kibana08.png?600x432}}
 
 ===== Heartbeat * =====
 
@@ -40,12 +40,12 @@ GET [[https://heartbeat.nginx.local/stats?pretty|heartbeat.nginx.local/stats]]
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
 === Kibana - Observability - Infrastructure - Uptime - Monitors ===
-{{kibana04.png?300x100}}
+{{kibana04.png?600x432}}
 
 ==== Https pings collects certificates ====
 
 === Kibana - Observability - Infrastructure - Uptime - Certificates ===
-{{kibana05.png?300x100}}
+{{kibana05.png?600x432}}
 
 ===== Metricbeat * =====
 
@@ -56,13 +56,13 @@ GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/metricbeat|configuration]]
 
 === Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
-{{kibana01.png?300x100}}
+{{kibana01.png?600x432}}
 
 === Kibana - Observability - Infrastructure - Inventory - Docker Containers ===
-{{kibana03.png?300x100}}
+{{kibana03.png?600x432}}
 
 === Kibana - Observability - Overview ===
-{{kibana09.png?300x100}}
+{{kibana09.png?600x432}}
 
 ===== ... and others for example: =====
 

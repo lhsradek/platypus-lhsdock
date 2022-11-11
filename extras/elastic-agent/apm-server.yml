@@ -127,8 +127,8 @@ apm-server:
   # Enable Real User Monitoring (RUM) Support. By default RUM is disabled.
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
-  #rum:
-    #enabled: false
+  rum:
+    enabled: true
 
     #-- General RUM settings
 
@@ -137,11 +137,11 @@ apm-server:
     # An origin is made of a protocol scheme, host and port, without the url path.
     # Allowed origins in this setting can have * to match anything (eg.: http://*.example.com)
     # If an item in the list is a single '*', everything will be allowed.
-    #allow_origins: ['*']
+    allow_origins: ['*']
 
     # A list of Access-Control-Allow-Headers to allow RUM requests, in addition to "Content-Type",
     # "Content-Encoding", and "Accept"
-    #allow_headers: []
+    allow_headers: []
 
     # Custom HTTP headers to add to RUM responses, e.g. for security policy compliance.
     #response_headers:
@@ -207,7 +207,6 @@ apm-server:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     protocol: "https"
     # api_key: "${AGENT_API_KEY}"
-    # username: "apm_system"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl.enabled: true
@@ -267,7 +266,7 @@ output.elasticsearch:
   hosts:
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
-  #username: "apm_system"
+  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl.enabled: true

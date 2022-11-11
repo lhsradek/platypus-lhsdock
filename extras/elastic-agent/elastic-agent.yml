@@ -9,6 +9,25 @@ monitoring:
   enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
+# https://www.elastic.co/guide/en/fleet/current/elastic-agent-monitoring-configuration.html
+agent.monitoring:
+  # enabled turns on monitoring of running processes
+  enabled: true
+  # enables log monitoring
+  logs: true
+  # enables metrics monitoring
+  metrics: true
+  # exposes /debug/pprof/ endpoints for Elastic Agent and Beats
+  # enable these endpoints if the monitoring endpoint is set to localhost
+  pprof.enabled: false
+  # specifies output to be used
+  use_output: monitoring
+  http:
+    # exposes a /buffer endpoint that holds a history of recent metrics
+    buffer.enabled: false
+
+agent.logging.to_stderr: true
+
 # agent.download:
 #   # source of the artifacts, requires elastic like structure and naming of the binaries
 #   # e.g /windows-x86.zip
@@ -67,9 +86,9 @@ outputs:
     type: elasticsearch
     hosts:
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    # api_key: "${AGENT_API_KEY}"
     username: "${FLEET_SERVER_ELASTICSEARCH_USERNAME}"
     password: "${FLEET_SERVER_ELASTICSEARCH_PASSWORD}"
-    # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
       certificate_authorities:

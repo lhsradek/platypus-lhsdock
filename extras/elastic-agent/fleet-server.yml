@@ -23,6 +23,7 @@ outputs:
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
     protocol: "https"
+    #api_key: "${AGENT_API_KEY}"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     #service_token: '${ELASTICSEARCH_SERVICE_TOKEN}'

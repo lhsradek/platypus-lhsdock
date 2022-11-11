@@ -1,37 +1,71 @@
 # Kibana configuration for docker target
 
+server:
+  host: "0.0.0.0"
+  shutdownTimeout: "5s"
+  socketTimeout: "240000"
+  publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+  ssl:
+    enabled: true
+    certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
+    key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
+      
 monitoring:
   ui:
     enabled: true
     container:
-      elasticsearch:
-        enabled: true
-      logstash:
-        enabled: true
-    ccs:
-      enabled: false
-  kibana:
-    collection.enabled: false
+      elasticsearch.enabled: true
+      logstash.enabled: true
+    ccs.enabled: false
+    elasticsearch:
+      hosts: 
+        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+        - "https://es02.${APP_HOST}.${APP_NET}:9201"
+        # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+      username: "${ELASTICSEARCH_USERNAME}"
+      password: "${ELASTICSEARCH_PASSWORD}"
+      ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      requestTimeout: 240000
+  # https://www.elastic.co/guide/en/kibana/master/monitoring-settings-kb.html
+  # https://www.elastic.co/guide/en/kibana/master/monitoring-metricbeat.html
+  # https://www.elastic.co/guide/en/kibana/master/monitor-troubleshooting.html
+  kibana.collection.enabled: false
+
+# https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
+elasticsearch:
+  hosts: 
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    # - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  requestTimeout: 240000
+
+enterpriseSearch:
+  host: "http://eps.${APP_NET}:3002"
+  accessCheckTimeout: 60000
 
 xpack:
   reporting:
-    kibanaServer:
-      hostname: "kibana"
-    roles:
-      enabled: false
+    kibanaServer.hostname: "kibana"
+    roles.enabled: false
     encryptionKey: 8de551ca1432f0dcf3ad2908472562b1
   security:
     encryptionKey: 363792db7b8cf9581c6cbdddbb8ff95f
-    session:
-      idleTimeout: 24h
+    session.idleTimeout: 24h
   encryptedSavedObjects:
     encryptionKey: 97aa4816075f95e8d51bac9159574a19
   task_manager:
-    poll_interval: 60000
-    max_workers: 3
+    poll_interval: 180000
+    max_workers: 2
   apm.serviceMapEnabled: false
   fleet:
     agents:
+      # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
+      # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
+      # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
@@ -39,19 +73,21 @@ xpack:
           - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
-      # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-      # add to Advanced YAML configuration:
+      elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs
+      # cp certs/ca/ca.crt cert/ca.crt - This is so that other elastic agents from other projects can have ca.crt in the cert directory
+      # Elasticsearch - Advanced YAML configuration:
       # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
-      - name: fleet_server
-        version: latest
-      - name: system
-        version: latest
       - name: elastic_agent
         version: latest
+      - name: fleet_server
+        version: latest
       - name: apm
+        version: latest
+      - name: system
         version: latest
       - name: docker
         version: latest
@@ -67,44 +103,37 @@ xpack:
         version: latest
       - name: traefik
         version: latest
-      - name: linux
-        version: latest
       - name: log
         version: latest
       - name: logstash
-        version: latest
-      - name: spring_boot
         version: latest
 
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
     agentPolicies:          
-      - name: Fleet Server policy 1
-        description: Fleet Server policy
-        id: fleet-server-policy
+      - name: Agent Nginx policy 1
+        description: Agent Nginx policy
+        id: agent-nginx-policy-1
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server-1
+          - name: fleet_server_nginx-1
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server-1
-            # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
-            # Advanced options - Custom fleet-server configurations
-            # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca/ca.crt"]
-          - name: elastic_agent-1
+            id: fleet_server_nginx-1
+          - name: elastic_agent_nginx-1
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent-1
-          - name: apm-1
+            id: elastic_agent_nginx-1
+          - name: apm_nginx-1
             package:
               name: apm
             description: Elastic APM
-            id: apm-1
+            id: apm_nginx-1
             inputs:
               - type: apm
                 keep_enabled: true
@@ -113,11 +142,11 @@ xpack:
                     value: "0.0.0.0:8200"
                   - name: url
                     value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
-          - name: docker-1
+          - name: docker_nginx-1
             package:
               name: docker
             description: Docker Metrics
-            id: docker-1
+            id: docker_nginx-1
             inputs:
               - type: docker/metrics
                 enabled: true
@@ -125,13 +154,14 @@ xpack:
                   - data_stream:
                       dataset: docker.memory
                     enabled: false
-          - name: system-1
+          - name: system_nginx-1
             package:
               name: system
             description: System
-            id: system-1
+            id: system_nginx-1
             inputs:
               - type: logfile
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -150,17 +180,17 @@ xpack:
                           - /hostfs/var/log/auth.log
                           - /hostfs/var/log/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
               - type: winlog
                 enabled: false
-          - name: nginx-1
+          - name: nginx_nginx-1
             package:
               name: nginx
             description: Nginx
-            id: nginx-1
+            id: nginx_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -187,13 +217,17 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      - http://${APP_HOST}.${APP_NET} 
-                      - http://wiki.${APP_HOST}.${APP_NET} 
-          - name: traefik-1
+                      # to existing servers:
+                      # - http://${APP_HOST}.${APP_NET} 
+                      # - http://wiki.${APP_HOST}.${APP_NET} 
+                      # to services:
+                      - http://weblhs
+                      - http://weblhs-wiki
+          - name: traefik_nginx-1
             package:
               name: traefik
             description: Traefik
-            id: traefik-1
+            id: traefik_nginx-1
             inputs:
               - type: logfile
                 enabled: true
@@ -209,11 +243,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
-          - name: logstash-1
+          - name: logstash_nginx-1
             package:
               name: logstash
             description: Logstash
-            id: logstash-1
+            id: logstash_nginx-1
             inputs:
               - type: logfile
                 enabled: false
@@ -223,11 +257,11 @@ xpack:
                   - name: hosts
                     value:
                       - http://logstash.${APP_HOST}.${APP_NET}:9600 
-          - name: log-1
+          - name: log_nginx-1
             package:
               name: log
             description: Custom Logs
-            id: log-1
+            id: log_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -240,9 +274,9 @@ xpack:
                       - name: data_stream.dataset
                         value: kibana.log
              
-      - name: Fleet Server Wordpress policy 1
-        description: Fleet Server Wordpress policy
-        id: fleet-server-wordpress-policy-1
+      - name: Agent Wordpress policy 1
+        description: Agent Wordpress policy
+        id: agent-wordpress-policy-1
         namespace: default
         monitoring_enabled:
           - logs
@@ -270,8 +304,8 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    # value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
-                    value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+                    value: "http://fleet:8200"
+                    # value: "http://fleet.${APP_HOST}.wordpress.local:8200"
           - name: system_wordpress-1
             description: System Integration
             id: system_wordpress-1
@@ -279,6 +313,7 @@ xpack:
               name: system
             inputs:
               - type: logfile
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -297,7 +332,7 @@ xpack:
                           - /hostfs/var/log/auth.log
                           - /hostfs/var/log/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -343,7 +378,10 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      - http://${APP_HOST}.wordpress.local 
+                      # to existing server:
+                      # - http://${APP_HOST}.wordpress.local 
+                      # to service:
+                      - http://webwp
           - name: mysql_wordpress-1
             package:
               name: mysql
@@ -367,9 +405,9 @@ xpack:
               - type: redis/metrics
                 enabled: false
               
-      - name: Fleet Server Tomcat policy 1
-        description: Fleet Server Tomcat policy
-        id: fleet-server-tomcat-policy-1
+      - name: Agent Tomcat policy 1
+        description: Agent Tomcat policy
+        id: agent-tomcat-policy-1
         namespace: default
         monitoring_enabled:
           - logs
@@ -397,7 +435,7 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+                    value: "http://fleet:8200"
                     # value: "http://fleet.${APP_HOST}.tomcat.local:8200"
           - name: system_tomcat-1
             description: System Integration
@@ -406,6 +444,7 @@ xpack:
               name: system
             inputs:
               - type: logfile
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -424,7 +463,7 @@ xpack:
                           - /hostfs/var/log/auth.log
                           - /hostfs/var/log/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -461,7 +500,10 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      - http://${APP_HOST}.tomcat.local
+                      # to existing server:
+                      # - http://${APP_HOST}.tomcat.local
+                      # to service:
+                      - http://webtombola
           - name: postgresql_tomcat-1
             package:
               name: postgresql
@@ -472,6 +514,7 @@ xpack:
                 enabled: false
               - type: postgresql/metrics
                 enabled: false
+                # postgres://tombola-db:5432/tombola
           - name: tomcat_tomcat-1
             package:
               name: tomcat
@@ -498,28 +541,8 @@ xpack:
                 enabled: false
               - type: redis/metrics
                 enabled: false
-      
-server:
-  host: "0.0.0.0"
-  shutdownTimeout: "5s"
-  socketTimeout: "240000"
-  publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-  ssl:
-    enabled: true
-    certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
-    key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
 
-elasticsearch:
-  hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  username: "${ELASTICSEARCH_USERNAME}"
-  password: "${ELASTICSEARCH_PASSWORD}"
-  requestTimeout: 240000
-
-enterpriseSearch:
-  host: "http://eps.${APP_NET}:3002"
-  accessCheckTimeout: 30000
-
+# https://www.elastic.co/guide/en/kibana/master/logging-configuration.html                  
 logging:
   appenders:
     file:
