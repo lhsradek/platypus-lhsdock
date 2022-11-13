@@ -41,10 +41,8 @@ services:
       - transport.port=9300
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
-      - discovery.seed_hosts=es02:9301
-      # - discovery.seed_hosts=es02:9301,es03:9302
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es02:9301,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true        
@@ -109,10 +107,8 @@ services:
       - transport.port=9301
       - node.roles=[master, data, ingest, ml, remote_cluster_client]
       - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
-      - discovery.seed_hosts=es01:9300
-      # - discovery.seed_hosts=es01:9300,es03:9302
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01:9300,es03:9302
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true        
@@ -222,7 +218,7 @@ services:
 #
   logstash:
     depends_on:
-      es02:
+      es03:
         condition: service_healthy
     # Ubuntu - logstash 
     image: logstash:${STACK_VERSION}
@@ -271,7 +267,7 @@ services:
 #
   kibana:
     depends_on:
-      es02:
+      es03:
         condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
@@ -323,8 +319,8 @@ services:
         hard: -1
     healthcheck:
       test: ["CMD-SHELL", "curl -s --cacert config/certs/ca/ca.crt -I https://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q 'HTTP/1.1 302 Found'"]
-      interval: 5s
-      timeout: 5s
+      interval: 10s
+      timeout: 10s
       retries: 500
 
 #   
@@ -332,7 +328,7 @@ services:
 #     
   heartbeat:
     depends_on:
-      es02:
+      es03:
         condition: service_healthy
     # Ubuntu - heartbeat
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
@@ -358,6 +354,7 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
+      - STAGE=${STAGE}
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://heartbeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 5s
@@ -370,6 +367,9 @@ services:
   fleet:
     depends_on:
       kibana:
+        condition: service_healthy
+    depends_on:
+      logstash:
         condition: service_healthy
     # Ubuntu - fleet
     # image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
@@ -518,7 +518,7 @@ services:
 #
   cerebro:
     depends_on:
-      es02:
+      es03:
         condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:latest
@@ -1053,7 +1053,9 @@ services:
         fi;
         find . -type f -name logstash.pkcs8.key -exec chmod 644 \{\} \;; # logstash
         echo "Waiting for Elasticsearch availability";
-        until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 15; done;
+        until curl -s --cacert config/certs/ca/ca.crt https://es02.${APP_HOST}.${INT_NETWORK}:9201 | grep -q "missing authentication credentials"; do sleep 15; done;
+        curl -s -X GET --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep "cluster_uuid";
         echo "Setting kibana_system password";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #

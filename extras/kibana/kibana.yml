@@ -74,14 +74,15 @@ xpack:
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
       # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-      # https://es01.docker.nginx.local:9200
-      # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs
-      # cp certs/ca/ca.crt cert/ca.crt - This is so that other elastic agents from other projects can have ca.crt in the cert directory
+      # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs or set stright
+      # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
       # Elasticsearch - Advanced YAML configuration:
       # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
       #
+      # cp certs/ca/ca.crt cert/ca.crt - This is so that other elastic agents from other projects can have ca.crt in the cert directory
       # See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
       # Set Make this output the default for agent monitoring.
+      # Specify hosts: logstash.docker.nginx.local:5044
       # to logstash output - Advanced YAML configuration You can optional add:
       # ssl.verification_mode: none
 
@@ -125,29 +126,29 @@ xpack:
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
     agentPolicies:          
-      - name: Agent Nginx policy 4
+      - name: Agent Nginx policy 1
         description: Agent Nginx policy
-        id: agent-nginx-policy-4
+        id: agent-nginx-policy-1
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_nginx-4
+          - name: fleet_server_nginx-1
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server_nginx-4
-          - name: elastic_agent_nginx-4
+            id: fleet_server_nginx-1
+          - name: elastic_agent_nginx-1
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent_nginx-4
-          - name: apm_nginx-4
+            id: elastic_agent_nginx-1
+          - name: apm_nginx-1
             package:
               name: apm
             description: Elastic APM
-            id: apm_nginx-4
+            id: apm_nginx-1
             inputs:
               - type: apm
                 keep_enabled: true
@@ -156,11 +157,11 @@ xpack:
                     value: "0.0.0.0:8200"
                   - name: url
                     value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
-          - name: docker_nginx-4
+          - name: docker_nginx-1
             package:
               name: docker
             description: Docker Metrics
-            id: docker_nginx-4
+            id: docker_nginx-1
             inputs:
               - type: docker/metrics
                 enabled: true
@@ -168,11 +169,11 @@ xpack:
                   - data_stream:
                       dataset: docker.memory
                     enabled: false
-          - name: system_nginx-4
+          - name: system_nginx-1
             package:
               name: system
             description: System
-            id: system_nginx-4
+            id: system_nginx-1
             inputs:
               - type: logfile
                 enabled: true
@@ -200,11 +201,11 @@ xpack:
                     value: /hostfs
               - type: winlog
                 enabled: false
-          - name: nginx_nginx-4
+          - name: nginx_nginx-1
             package:
               name: nginx
             description: Nginx
-            id: nginx_nginx-4
+            id: nginx_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -237,11 +238,11 @@ xpack:
                       # to services:
                       # - http://weblhs
                       # - http://weblhs-wiki
-          - name: traefik_nginx-4
+          - name: traefik_nginx-1
             package:
               name: traefik
             description: Traefik
-            id: traefik_nginx-4
+            id: traefik_nginx-1
             inputs:
               - type: logfile
                 enabled: true
@@ -257,11 +258,11 @@ xpack:
                           # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
-          - name: logstash_nginx-4
+          - name: logstash_nginx-1
             package:
               name: logstash
             description: Logstash
-            id: logstash_nginx-4
+            id: logstash_nginx-1
             inputs:
               - type: logfile
                 enabled: false
@@ -271,11 +272,11 @@ xpack:
                   - name: hosts
                     value:
                       - http://logstash.${APP_HOST}.${APP_NET}:9600 
-          - name: log_nginx-4
+          - name: log_nginx-1
             package:
               name: log
             description: Custom Logs
-            id: log_nginx-4
+            id: log_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -287,11 +288,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
                       - name: data_stream.dataset
                         value: kibana.log
-          - name: osquery_nginx-4
+          - name: osquery_nginx-1
             package:
               name: osquery
             description: Osquery Logs
-            id: osquery_nginx-4
+            id: osquery_nginx-1
             inputs:
               - type: logfile
                 enabled: true
@@ -306,11 +307,11 @@ xpack:
                       - name: tags
                         value:
                           - osquery
-          - name: osquery_manager_nginx-4
+          - name: osquery_manager_nginx-1
             package:
               name: osquery_manager
             description: Osquery Manager
-            id: osquery_manager_nginx-4
+            id: osquery_manager_nginx-1
             inputs:
               - type: osquery
                 enabled: true
@@ -327,11 +328,11 @@ xpack:
                         value: 60s
                       - name: id
                         value: 99f11606-f884-46c7-9ceb-f002126c3514
-          # - name: synthetics_nginx-4
+          # - name: synthetics_nginx-1
           #   package:
           #     name: synthetics
           #   description: Elastic Synthetics
-          #   id: synthetics_nginx-4
+          #   id: synthetics_nginx-1
 
       - name: Agent Wordpress policy 1
         description: Agent Wordpress policy

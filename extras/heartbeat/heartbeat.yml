@@ -24,6 +24,7 @@ heartbeat.monitors:
   data_stream.namespace: default
   service.name: heartbeat-http
   check.response.status: [302]
+  tags: [traefik]
   hosts:
     # traefik
     - https://${APP_HOST}.traefik.local
@@ -42,6 +43,7 @@ heartbeat.monitors:
   password: '${ELASTICSEARCH_PASSWORD}'
   # api_key: ${AGENT_API_KEY}
   check.response.status: [200]
+  tags: [web]
   hosts:
     # ELK
     - http://cerebro.${APP_HOST}.${APP_NET}:9000
@@ -78,6 +80,7 @@ heartbeat.monitors:
   name: TCP Service
   data_stream.namespace: default
   service.name: heartbeat-tcp
+  tags: [tcp]
   hosts:
     # - platypus-box_traefik_1.platypus-local-dev-network:80
     - fleet.${APP_HOST}.${APP_NET}:8200
@@ -92,6 +95,7 @@ heartbeat.monitors:
   name: ICMP Service
   data_stream.namespace: default
   service.name: heartbeat-icmp
+  tags: [icmp]
   hosts:
     - ${APP_HOST}.${APP_NET}
     - weblhs-php.${APP_NET}
@@ -129,6 +133,9 @@ processors:
         region_name: Czech Republic
         region_iso_code: CZ-422
         city_name: Klášterec nad Ohří
+  # - add_tags:
+  #   tags: ["${STAGE}"]
+  #   target: "environment"
 
 output:
   elasticsearch:
