@@ -73,7 +73,7 @@ With this part in [[https://github.com/lhsradek/platypus-lhsdock/blob/main/docke
       - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
       - ELASTIC_APM_LOG_LEVEL_STDERR=info
       - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
-      - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
+      - ELASTIC_APM_SERVER_URL=http://fleet.${APP_HOST}.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
     volumes:

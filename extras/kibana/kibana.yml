@@ -113,33 +113,41 @@ xpack:
         version: latest
       - name: logstash
         version: latest
+      - name: spring_boot
+        version: latest
+      - name: osquery
+        version: latest
+      - name: osquery_manager
+        version: latest
+      # - name: synthetics
+      #   version: latest
 
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
     agentPolicies:          
-      - name: Agent Nginx policy 1
+      - name: Agent Nginx policy 4
         description: Agent Nginx policy
-        id: agent-nginx-policy-1
+        id: agent-nginx-policy-4
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_nginx-1
+          - name: fleet_server_nginx-4
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server_nginx-1
-          - name: elastic_agent_nginx-1
+            id: fleet_server_nginx-4
+          - name: elastic_agent_nginx-4
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent_nginx-1
-          - name: apm_nginx-1
+            id: elastic_agent_nginx-4
+          - name: apm_nginx-4
             package:
               name: apm
             description: Elastic APM
-            id: apm_nginx-1
+            id: apm_nginx-4
             inputs:
               - type: apm
                 keep_enabled: true
@@ -148,11 +156,11 @@ xpack:
                     value: "0.0.0.0:8200"
                   - name: url
                     value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
-          - name: docker_nginx-1
+          - name: docker_nginx-4
             package:
               name: docker
             description: Docker Metrics
-            id: docker_nginx-1
+            id: docker_nginx-4
             inputs:
               - type: docker/metrics
                 enabled: true
@@ -160,11 +168,11 @@ xpack:
                   - data_stream:
                       dataset: docker.memory
                     enabled: false
-          - name: system_nginx-1
+          - name: system_nginx-4
             package:
               name: system
             description: System
-            id: system_nginx-1
+            id: system_nginx-4
             inputs:
               - type: logfile
                 enabled: true
@@ -192,11 +200,11 @@ xpack:
                     value: /hostfs
               - type: winlog
                 enabled: false
-          - name: nginx_nginx-1
+          - name: nginx_nginx-4
             package:
               name: nginx
             description: Nginx
-            id: nginx_nginx-1
+            id: nginx_nginx-4
             inputs:
               - type: logfile
                 streams:
@@ -229,11 +237,11 @@ xpack:
                       # to services:
                       # - http://weblhs
                       # - http://weblhs-wiki
-          - name: traefik_nginx-1
+          - name: traefik_nginx-4
             package:
               name: traefik
             description: Traefik
-            id: traefik_nginx-1
+            id: traefik_nginx-4
             inputs:
               - type: logfile
                 enabled: true
@@ -249,11 +257,11 @@ xpack:
                           # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
-          - name: logstash_nginx-1
+          - name: logstash_nginx-4
             package:
               name: logstash
             description: Logstash
-            id: logstash_nginx-1
+            id: logstash_nginx-4
             inputs:
               - type: logfile
                 enabled: false
@@ -263,11 +271,11 @@ xpack:
                   - name: hosts
                     value:
                       - http://logstash.${APP_HOST}.${APP_NET}:9600 
-          - name: log_nginx-1
+          - name: log_nginx-4
             package:
               name: log
             description: Custom Logs
-            id: log_nginx-1
+            id: log_nginx-4
             inputs:
               - type: logfile
                 streams:
@@ -279,7 +287,52 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
                       - name: data_stream.dataset
                         value: kibana.log
-             
+          - name: osquery_nginx-4
+            package:
+              name: osquery
+            description: Osquery Logs
+            id: osquery_nginx-4
+            inputs:
+              - type: logfile
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: osquery.result
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/osquerybeat-${STACK_VERSION}-linux-x86_64/logs/osqueryd.results.log
+                      - name: tags
+                        value:
+                          - osquery
+          - name: osquery_manager_nginx-4
+            package:
+              name: osquery_manager
+            description: Osquery Manager
+            id: osquery_manager_nginx-4
+            inputs:
+              - type: osquery
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: osquery_manager.result
+                    vars:
+                      - name: query
+                        value: 
+                          - select * from processes;
+                          - select * from memory_info;
+                          - select * from users;
+                      - name: interval
+                        value: 60s
+                      - name: id
+                        value: 99f11606-f884-46c7-9ceb-f002126c3514
+          # - name: synthetics_nginx-4
+          #   package:
+          #     name: synthetics
+          #   description: Elastic Synthetics
+          #   id: synthetics_nginx-4
+
       - name: Agent Wordpress policy 1
         description: Agent Wordpress policy
         id: agent-wordpress-policy-1
@@ -535,6 +588,13 @@ xpack:
                 enabled: false
               - type: tomcat/metrics
                 enabled: false
+          #  - name: spring-boot_tomcat-1
+          #   package:
+          #     name: spring_boot_tomcat-1
+          #   description: Spring Boot
+          #   id: spring_boot_tomcat-1
+          #   metrics.hosts:
+          #     - "https://webtombola-tombola/tombola:8443"
           - name: redis_tomcat-1
             package:
               name: redis
@@ -548,7 +608,7 @@ xpack:
               - type: redis/metrics
                 enabled: false
 
-# https://www.elastic.co/guide/en/kibana/master/logging-configuration.html                  
+# https://www.elastic.co/guide/en/kibana/current/logging-configuration.html
 logging:
   appenders:
     file:
@@ -556,7 +616,8 @@ logging:
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
         type: pattern
-        pattern: "[%date] [%level] [%logger] [%meta] %message"
+        # pattern: "[%date][%level][%logger][%meta] %message"
+        pattern: "[%date][%level][%logger] %message"
   root:
     appenders: [default, file]
     level: info
@@ -567,6 +628,8 @@ logging:
     - name: optimize
       appenders: [default, file]
       level: info
+    - name: server
+      level: fatal
     - name: telemetry
       appenders: [default, file]
       level: info
