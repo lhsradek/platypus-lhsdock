@@ -144,19 +144,12 @@ output:
       verification_mode: "certificate"
 
 # ------------------------------ Logstash Output -------------------------------
-#output.logstash:
-  # The Logstash hosts
-  #hosts: ["localhost:5044"]
 
-  # Optional SSL. By default is off.
-  # List of root certificates for HTTPS server verifications
-  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
-
-  # Certificate for SSL client authentication
-  #ssl.certificate: "/etc/pki/client/cert.pem"
-
-  # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
+# output.logstash:
+#   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+#   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#   ssl.certificate: "${FLEET_SERVER_CERT}"
+#   ssl.key: "${FLEET_SERVER_CERT_KEY}"
 
 # ================================= Processors =================================
 

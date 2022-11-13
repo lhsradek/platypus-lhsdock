@@ -263,8 +263,7 @@ output.elasticsearch:
   # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
   # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
   enabled: true
-  hosts:
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
   protocol: "https"
   # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -287,6 +286,14 @@ output.elasticsearch:
     #escape_html: false
 
 #---------------------------- Logstash output -----------------------------
+
+# output.logstash:
+#   enabled: true
+#   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+#   # ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#   # ssl.certificate: "${FLEET_SERVER_CERT}"
+#   # ssl.key: "${FLEET_SERVER_CERT_KEY}"
+
 #output.logstash:
   # Boolean flag to enable or disable the output module.
   #enabled: true

@@ -2,19 +2,19 @@ http.host: 0.0.0.0
 
 monitoring:
   cluster_uuid: "${CLUSTER_UUID}"
-  # Monitoring is enabled by logstash integration in elastic agent
   enabled: false
-  # Without monitoring in logstash integration in elastic agent used this:
-  # enabled: true
   # elasticsearch:
-  #   hosts:
-  #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #   hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
   #   username: "${ELASTIC_USERNAME}"
   #   password: "${ELASTIC_PASSWORD}"
   #   ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
 
-# https://www.elastic.co/guide/en/logstash/current/keystore.html
+api.ssl.enabled: false
 # https://www.elastic.co/guide/en/logstash/current/ls-security.html
 # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
+#
+# https://www.elastic.co/guide/en/logstash/current/keystore.html
+# bin/logstash-keystore create
 # api.ssl.enabled: true
-# api.ssl.keystore.path: "/usr/share/logstash/config/keystore.jks"
+# api.ssl.keystore.password: "${LOGSTASH_KEYSTORE_PASS}"
+# api.ssl.keystore.path: /usr/share/logstash/config/logstash.keystore

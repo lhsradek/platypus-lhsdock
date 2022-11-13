@@ -12,10 +12,6 @@
 
 # ============================== Filebeat inputs ===============================
 
-monitoring:
-  enabled: true
-  cluster_uuid: "${CLUSTER_UUID}"
-
 filebeat.inputs:
 
 # Each - is an input. Most options can be set at the input level, so
@@ -135,13 +131,11 @@ setup.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
-  # api_key: "${AGENT_API_KEY}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
     verification_mode: "certificate"
 
 # =============================== Elastic Cloud ================================
@@ -162,34 +156,25 @@ setup.elasticsearch:
 # Configure what output to use when sending the data collected by the beat.
 
 # ---------------------------- Elasticsearch Output ----------------------------
-output.elasticsearch:
-  # Array of hosts to connect to.
-  hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  protocol: "https"
-  # api_key: "${AGENT_API_KEY}"
-  username: "${ELASTICSEARCH_USERNAME}"
-  password: "${ELASTICSEARCH_PASSWORD}"
-  ssl:
-    enabled: true
-    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
-
+# output.elasticsearch:
+#   # Array of hosts to connect to.
+#   hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+#   protocol: "https"
+#   # api_key: "${AGENT_API_KEY}"
+#   username: "${ELASTICSEARCH_USERNAME}"
+#   password: "${ELASTICSEARCH_PASSWORD}"
+#   ssl:
+#     enabled: true
+#    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#    verification_mode: "certificate"
+ 
 # ------------------------------ Logstash Output -------------------------------
-#output.logstash:
-  #enabled: true
-  # The Logstash hosts
-  #hosts:
-  #  -  "logstash.${APP_HOST}.${APP_NET}:5044"
-  #  # - "logstash.${APP_HOST}.${APP_NET}:5055"
-
-  # Optional SSL. By default is off.
-  # List of root certificates for HTTPS server verifications
-  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
-  # Certificate for SSL client authentication
-  #ssl.certificate: "/etc/pki/client/cert.pem"
-  # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
+output.logstash:
+  enabled: true
+  hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl.certificate: "${FLEET_SERVER_CERT}"
+  ssl.key: "${FLEET_SERVER_CERT_KEY}"  
 
 # ================================= Processors =================================
 processors:
@@ -203,12 +188,12 @@ processors:
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-#logging.level: debug
+logging.level: debug
 
 # At debug level, you can selectively enable logging only for some components.
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",
 # "publisher", "service".
-#logging.selectors: ["*"]
+logging.selectors: ["*"]
 
 # ============================= X-Pack Monitoring ==============================
 # Filebeat can export internal metrics to a central Elasticsearch monitoring
@@ -223,6 +208,10 @@ processors:
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
+monitoring:
+  enabled: true
+  cluster_uuid: "${CLUSTER_UUID}"
+
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well.
 # Note that the settings should point to your Elasticsearch *monitoring* cluster.
@@ -230,7 +219,16 @@ processors:
 # output configuration, so if you have the Elasticsearch output configured such
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
-#monitoring.elasticsearch:
+monitoring.elasticsearch:
+  hosts: 
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  protocol: "https"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
+  ssl:
+    enabled: true
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    verification_mode: "certificate"
 
 # ============================== Instrumentation ===============================
 

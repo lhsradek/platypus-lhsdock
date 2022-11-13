@@ -18,7 +18,6 @@ elasticsearch:
     certificate_authority: '${ELASTIC_SSL_CERTIFICATEAUTHORITIES}'
 
 kibana:
-  # startup_retry.fail_after: 12000
   host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
   external_url: "https://kibana.${APP_HOST}.${APP_NET}:5601"
 

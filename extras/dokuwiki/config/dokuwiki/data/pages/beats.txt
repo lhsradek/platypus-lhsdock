@@ -31,12 +31,6 @@ Filebeat, together with [[logstash]], processes the file logs for [[elasticsearc
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/heartbeat|configuration]]
 
-GET [[https://heartbeat.nginx.local?pretty|heartbeat.nginx.local]]
-
-GET [[https://heartbeat.nginx.local/state?pretty|heartbeat.nginx.local/state]]
-
-GET [[https://heartbeat.nginx.local/stats?pretty|heartbeat.nginx.local/stats]]
-
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
 === Kibana - Observability - Infrastructure - Uptime - Monitors ===

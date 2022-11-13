@@ -20,8 +20,7 @@ fleet:
 
 outputs:
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     protocol: "https"
     #api_key: "${AGENT_API_KEY}"
     username: "${ELASTICSEARCH_USERNAME}"

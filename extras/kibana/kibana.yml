@@ -73,11 +73,17 @@ xpack:
           - "https://fleet.${APP_HOST}.wordpress.local:8220"
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
-      elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      # https://es01.docker.nginx.local:9200
       # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs
       # cp certs/ca/ca.crt cert/ca.crt - This is so that other elastic agents from other projects can have ca.crt in the cert directory
       # Elasticsearch - Advanced YAML configuration:
       # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
+      #
+      # See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
+      # Set Make this output the default for agent monitoring.
+      # to logstash output - Advanced YAML configuration You can optional add:
+      # ssl.verification_mode: none
 
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
     packages:
@@ -161,7 +167,7 @@ xpack:
             id: system_nginx-1
             inputs:
               - type: logfile
-                enabled: false
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -170,7 +176,7 @@ xpack:
                       - name: paths
                         value:
                           - /hostfs/var/log/messages
-                          - /hostfs/var/log/syslog
+                          # - /hostfs/var/log/syslog
                   - data_stream:
                       dataset: system.auth
                     enabled: true
@@ -218,11 +224,11 @@ xpack:
                   - name: hosts
                     value:
                       # to existing servers:
-                      # - http://${APP_HOST}.${APP_NET} 
-                      # - http://wiki.${APP_HOST}.${APP_NET} 
+                      - http://${APP_HOST}.${APP_NET} 
+                      - http://wiki.${APP_HOST}.${APP_NET} 
                       # to services:
-                      - http://weblhs
-                      - http://weblhs-wiki
+                      # - http://weblhs
+                      # - http://weblhs-wiki
           - name: traefik_nginx-1
             package:
               name: traefik
@@ -240,7 +246,7 @@ xpack:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/access.json
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
           - name: logstash_nginx-1

@@ -8,7 +8,7 @@
 xpack.monitoring.enabled: true
 monitoring:
   enabled: false
-  cluster_uuid: "${CLUSTER_UUID}"
+  # cluster_uuid: "${CLUSTER_UUID}"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
