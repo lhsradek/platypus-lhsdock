@@ -68,13 +68,13 @@ Pulling weblhs      ... done
 Pulling weblhs-wiki ... done
 Pulling es01        ... done
 Pulling es02        ... done
+Pulling es03        ... done
 Pulling cerebro     ... done
 Pulling heartbeat   ... done
 Pulling kibana      ... done
 Pulling logstash    ... done
 Pulling fleet       ... done
 Pulling eps         ... done
-Pulling es03        ... done
 Creating network "nginx.local" with driver "bridge"
 Creating lhsdock-setup ... done
 Creating lhsdock-php   ... done
@@ -82,8 +82,8 @@ Creating lhsdock-web   ... done
 Creating lhsdock-es01  ... done
 Creating lhsdock-wiki  ... done
 Creating lhsdock-es02  ... done
-Creating lhsdock-kibana    ... done
 Creating lhsdock-es03      ... done
+Creating lhsdock-kibana    ... done
 Creating lhsdock-cerebro   ... done
 Creating lhsdock-logstash  ... done
 Creating lhsdock-heartbeat ... done

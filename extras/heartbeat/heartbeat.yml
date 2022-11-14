@@ -49,7 +49,7 @@ heartbeat.monitors:
     - http://cerebro.${APP_HOST}.${APP_NET}:9000
     - https://es01.${APP_HOST}.${APP_NET}:9200
     - https://es02.${APP_HOST}.${APP_NET}:9201
-    - https://es03.${APP_HOST}.${APP_NET}:9202
+    # - https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome

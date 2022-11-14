@@ -57,22 +57,22 @@ Pulling weblhs      ... done
 Pulling weblhs-wiki ... done
 Pulling es01        ... done
 Pulling es02        ... done
+Pulling es03        ... done
 Pulling cerebro     ... done
 Pulling heartbeat   ... done
 Pulling kibana      ... done
 Pulling logstash    ... done
 Pulling fleet       ... done
 Pulling eps         ... done
-Pulling es03        ... done
 Creating network "nginx.local" with driver "bridge"
 Creating lhsdock-setup ... done
 Creating lhsdock-php   ... done
 Creating lhsdock-web   ... done
 Creating lhsdock-es01  ... done
-Creating lhsdock-wiki  ... done
 Creating lhsdock-es02  ... done
-Creating lhsdock-kibana    ... done
 Creating lhsdock-es03      ... done
+Creating lhsdock-wiki  ... done
+Creating lhsdock-kibana    ... done
 Creating lhsdock-cerebro   ... done
 Creating lhsdock-logstash  ... done
 Creating lhsdock-heartbeat ... done
@@ -113,54 +113,96 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 | IMAGES               | PORTS                  | NAMES              | HOSTNAMES                            | OPTIONAL  
 | -------------------- | ---------------------- | ------------------ | ------------------------------------ | --------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock            | <code>www.nginx.local</code>         |
-| php:fpm-alpine       | 9000/tcp               | lhsdock-php        | <code>weblhs-php.nginx.local</code>  | 
-| elasticsearch        |                        | lhsdock-setup      | <code>setup.www.nginx.local</code>   | *
-| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01       | <code>es01.www.nginx.local</code>    |
-| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | <code>es02.www.nginx.local</code>    | 
-| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | <code>es03.www.nginx.local</code>    |
-| kibana               | 5601/tcp               | lhsdock-kibana     | <code>kibana.www.nginx.local</code>  |
-| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm        | <code>apm.nginx.local</code>         | *
-| metricbeat           | 5066/tcp               | lhsdock-metricbeat | <code>metricbeat.nginx.local</code>  | * 
-| filebeat             | 5066/tcp               | lhsdock-filebeat   | <code>filebeat.nginx.local</code>    | *
-| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | <code>heartbeat.nginx.local</code>   | *
-| enterprise-search    | 3002/tcp               | lhsdock-eps        | <code>eps.nginx.local</code>         | *
-| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | <code>fleet.nginx.local</code>       | *
-| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash   | <code>logstash.nginx.local</code>    | *
-| cerebro              | 9000/tcp               | lhsdock-cerebro    | <code>cerebro.www.nginx.local</code> | *
-| dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki       | <code>wiki.www.nginx.local</code>    | *
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock            | ```www.nginx.local```                |
+| php:fpm-alpine       | 9000/tcp               | lhsdock-php        | ```weblhs-php.nginx.local```         | 
+| elasticsearch        |                        | lhsdock-setup      | ```setup.www.nginx.local```          | *
+| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01       | ```es01.www.nginx.local```           |
+| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | ```es02.www.nginx.local```           | 
+| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | ```es03.www.nginx.local```           |
+| kibana               | 5601/tcp               | lhsdock-kibana     | ```kibana.www.nginx.local```         |
+| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm        | ```apm.nginx.local```                | *
+| metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | * 
+| filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.nginx.local```           | *
+| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | *
+| enterprise-search    | 3002/tcp               | lhsdock-eps        | ```eps.nginx.local```                | *
+| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | ```fleet.nginx.local```              | *
+| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash   | ```logstash.nginx.local```           | *
+| cerebro              | 9000/tcp               | lhsdock-cerebro    | ```cerebro.www.nginx.local```        | *
+| dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki       | ```wiki.www.nginx.local```           | *
 
 -----
 
-#### Example of connection for php
+#### Setting Fleet Server
 
-| NETWORK                    | DRIVER | SCOPE
-| -------------------------- | ------ | -----
-| platypus-dev.local         | bridge | local
-| nginx.local                | bridge | local
+```cp certs/ca/ca.crt cert/ca.crt``` This is so that other elastic agents from other projects can have ca.crt in the cert directory
 
+##### Elasticsearch
 
-HOSTNAME='www.nginx.local'
+Elasticsearch - hosts: https://es01.docker.nginx.local:9200
 
-| State       | Local Address:Port | Process 
-| ----------- | ------------------ | ----------------------------
-| LISTEN      |      0.0.0.0:80    | users:(("nginx",pid=1,fd=8))       
-| LISTEN      |   127.0.0.11:36947 |                                    
+Elasticsearch - Advanced YAML configuration:
+```ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]```
 
-HOSTNAME='weblhs-php.nginx.local'
+##### Logstash
 
-| State       | Local Address:Port | Process 
-| ----------- | ------------------ | -------------------------------
-| LISTEN      |   127.0.0.11:45811 |                         
-| LISTEN      |            *:9000  | users:(("php-fpm",pid=1,fd=7))
+See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
+Specify hosts: ```logstash.docker.nginx.local:5044```
 
-| TCP Connections (Source Host:Port)                 |      Packets    |    Bytes  |  Flag   |  Iface        
-| -------------------------------------------------- | --------------- | --------- | ------- | ------
-|┌traefik.platypus-dev.local:36236                   |    =        8   |     2025  |  --A-   |  eth1
-|└www.nginx.local:80                                 |    =       24   |    29881  |  CLOSE  |  eth1
-|┌www.nginx.local:59090                              |    =        5   |     1660  |  CLOSE  |  eth0
-|└weblhs-php.nginx.local:9000                        |    =        5   |     4508  |  CLOSE  |  eth0
+For Server SSL certificate authorities (optional) output from
+
+```cat ./certs/ca/ca.crt```
+
+For Client SSL certificate output from
+
+```cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt```
+
+For Client SSL certificate key output from
+
+```cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key```
+
+To logstash output - Advanced YAML configuration You can optional add:
+
+```ssl.verification_mode: none```
+
+Default for agent integrations interferes with APM, don't change it
+
+Set Make this output the default for agent monitoring.
+
+##### Enrollment token
+
+For this project In .env set FLEET_ENROLLMENT_TOKEN from Enrollment tokens - Agent Nginx policy 1
+
+##### Fleet Server
+
+In Fleet - Agents add a Fleet Server. Select Advanced Agent Nginx policy 1
+as Fleet Server host select ```https://fleet.docker.nginx.local:8220``` and Add host
+
+Generate a service token and copy the token to FLEET_SERVER_SERVICE_TOKEN in .env
+For this policy set ```FLEET_SERVER_POLICY_ID=agent-nginx-policy-1``` in .env
+If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
+and edit the .env and set it.
+
+Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
+everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
+
+##### Cluster uuid
+
+So that Filebeat does not hammer the Standalone Cluster, it is good to have the CLUSTER_UUID set in the .env before the first
+launch of the Fleet Server. Setup writes it on the console.
+
+In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
+
+Restart and see how Fleet Server start and enroll.
+
+##### Heartbeat
+
+Heartbeat is in a separate container, it tests the necessary ones before starting kibana and logstash, because it is sufficient
+with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
+its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
+the police itself
+
+You will find an integrations when you first start kibana and they will have polices set.
 
 -----
 

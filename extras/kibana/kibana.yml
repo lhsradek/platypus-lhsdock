@@ -22,7 +22,7 @@ monitoring:
       hosts: 
         - "https://es01.${APP_HOST}.${APP_NET}:9200"
         - "https://es02.${APP_HOST}.${APP_NET}:9201"
-        - "https://es03.${APP_HOST}.${APP_NET}:9202"
+        # - "https://es03.${APP_HOST}.${APP_NET}:9202"
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -74,19 +74,64 @@ xpack:
           - "https://fleet.www.tomcat.local:8220"
           - "https://fleet.${APP_HOST}.tomcat.local:8220"
       # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-      # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs or set stright
+      # Disable previous line after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
       # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
+      #
       # Elasticsearch - Advanced YAML configuration:
       # ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
       #
       # cp certs/ca/ca.crt cert/ca.crt - This is so that other elastic agents from other projects can have ca.crt in the cert directory
       # See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
-      # Set Make this output the default for agent monitoring.
+      #
       # Specify hosts: logstash.docker.nginx.local:5044
-      # to logstash output - Advanced YAML configuration You can optional add:
+      #
+      # For Server SSL certificate authorities (optional):
+      # cat ./certs/ca/ca.crt
+      #
+      # For Client SSL certificate:
+      # cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt
+      #
+      # For Client SSL certificate key:
+      # cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
+      #
+      # To logstash output - Advanced YAML configuration You can optional add:
       # ssl.verification_mode: none
+      #
+      # Default for agent integrations interferes with APM, don't change it
+      #
+      # Set Make this output the default for agent monitoring.
+      #
+      # For this project In .env set FLEET_ENROLLMENT_TOKEN from Enrollment tokens - Agent Nginx policy 1
+      #
+      # In Fleet - Agents add a Fleet Server. Select Advanced Agent Nginx policy 1
+      # as Fleet Server host select https://fleet.docker.nginx.local:8220 and Add host
+      #
+      # Generate a service token and copy the token to FLEET_SERVER_SERVICE_TOKEN in .env
+      # For this policy set FLEET_SERVER_POLICY_ID=agent-nginx-policy-1 in .env
+      # If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
+      # and edit the .env and set it.
+      #
+      # Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
+      # everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
+      #
+      # So that Filebeat does not hammer the Standalone Cluster, it is good to have the CLUSTER_UUID set in the .env before the first
+      # launch of the Fleet Server. Setup writes it on the console.
+      #
+      # In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
+      # 
+      # Restart and see how Fleet Server start and enroll.
+      #
+      # Heartbeat is in a separate container, it tests the necessary ones before starting kibana and logstash, because it is sufficient
+      # with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
+      # its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
+      # the police itself
+      #
 
+    #
     # https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
+    #
+    # You will find these integrations when you first start kibana and they will have polices set.
+    #
     packages:
       - name: elastic_agent
         version: latest
@@ -120,11 +165,12 @@ xpack:
         version: latest
       - name: osquery_manager
         version: latest
-      # - name: synthetics
-      #   version: latest
+      - name: synthetics
+        version: latest
 
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
+    # https://www.elastic.co/guide/en/kibana/current/osquery.html
     agentPolicies:          
       - name: Agent Nginx policy 1
         description: Agent Nginx policy
@@ -288,52 +334,39 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
                       - name: data_stream.dataset
                         value: kibana.log
-          - name: osquery_nginx-1
+          - name: osquery_logs_nginx-1
             package:
               name: osquery
             description: Osquery Logs
-            id: osquery_nginx-1
+            id: osquery_logs_nginx-1
             inputs:
               - type: logfile
-                enabled: true
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: osquery.result
-                    enabled: true
                     vars:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/osquerybeat-${STACK_VERSION}-linux-x86_64/logs/osqueryd.results.log
                       - name: tags
                         value:
-                          - osquery
+                         - osquery
           - name: osquery_manager_nginx-1
             package:
               name: osquery_manager
             description: Osquery Manager
             id: osquery_manager_nginx-1
-            inputs:
-              - type: osquery
-                enabled: true
-                streams:
-                  - data_stream:
-                      dataset: osquery_manager.result
-                    vars:
-                      - name: query
-                        value: 
-                          - select * from processes;
-                          - select * from memory_info;
-                          - select * from users;
-                      - name: interval
-                        value: 60s
-                      - name: id
-                        value: 99f11606-f884-46c7-9ceb-f002126c3514
-          # - name: synthetics_nginx-1
-          #   package:
-          #     name: synthetics
-          #   description: Elastic Synthetics
-          #   id: synthetics_nginx-1
+          #  - name: synthetics_nginx-1
+          #    package:
+          #      name: synthetics
+          #    description: Elastic Synthetics
+          #    id: synthetics_nginx-1
 
+      #
+      # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql
+      # You can delete it.
+      #
       - name: Agent Wordpress policy 1
         description: Agent Wordpress policy
         id: agent-wordpress-policy-1
@@ -464,7 +497,11 @@ xpack:
                 enabled: false
               - type: redis/metrics
                 enabled: false
-              
+      
+      #        
+      # This policy is for https://github.com/lhsradek/tombola
+      # You can delete it.
+      #
       - name: Agent Tomcat policy 1
         description: Agent Tomcat policy
         id: agent-tomcat-policy-1

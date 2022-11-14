@@ -9,6 +9,82 @@
 
 [[https://www.elastic.co/guide/en/fleet/current/fleet-settings.html|Fleet UI settings]]
 
+
+===== Setting Fleet Server ===== 
+
+<code bash>cp certs/ca/ca.crt cert/ca.crt</code> This is so that other elastic agents from other projects can have ca.crt in the cert directory.
+
+{{fleet01.png?600x432}}
+
+==== Elasticsearch ====
+
+Elasticsearch - hosts: <code>https://es01.docker.nginx.local:9200</code>
+
+Elasticsearch - Advanced YAML configuration:
+<code ini>ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]</code>
+
+==== Logstash ====
+
+See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
+
+Specify hosts: <code>logstash.docker.nginx.local:5044</code>
+
+For Server SSL certificate authorities (optional) output from
+<code bash>
+cat ./certs/ca/ca.crt
+</code>
+
+For Client SSL certificate output from
+<code bash>
+cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt
+</code>
+
+For Client SSL certificate key output from
+<code bash>
+cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
+</code>
+
+To logstash output - Advanced YAML configuration You can optional add:
+<code>ssl.verification_mode: none</code>
+
+Default for agent integrations interferes with APM, don't change it
+
+Set **Make this output the default** for **agent monitoring**.
+
+==== Enrollment token ====
+
+For this project In **.env-** set **FLEET_ENROLLMENT_TOKEN** from Enrollment tokens - **Agent Nginx policy 1**
+
+==== Fleet Server ====
+
+In Fleet - Agents add a Fleet Server select Advanced **Agent Nginx policy 1**
+as Fleet Server host select <code>https://fleet.docker.nginx.local:8220</code> and Add host
+
+Generate a service token and copy the token to **FLEET_SERVER_SERVICE_TOKEN** in **.env**
+For this policy set <code ini>FLEET_SERVER_POLICY_ID=agent-nginx-policy-1</code> in **.env**
+If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
+and edit the **.env** and set it.
+
+Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
+everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
+
+Environments variables for wordpress project in file [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/.env.dist|.env]]
+like this:
+<code ini>
+FLEET_ENROLLMENT_TOKEN=[Enrollment token]
+FLEET_SERVER_POLICY_ID=elastic-agent-wordpress-policy-9
+FLEET_SERVER_SERVICE_TOKEN=[Service token]
+</code>
+
+==== Cluster uuid ====
+
+So that Filebeat does not hammer the Standalone Cluster, it is good to have the **CLUSTER_UUID** set in the **.env** before the first
+launch of the Fleet Server. Setup writes it on the console.
+
+In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume.
+
+Restart and see how Fleet Server start and enroll.
+
 ===== Kibana manages Fleet Server =====
 
 Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]
@@ -30,29 +106,6 @@ fleet:
 sets the fleet in kibana
 
 === Kibana - Fleet - Settings ===
-{{fleet01.png?600x432}}
-
-===== Add agent =====
-
-Add Fleet Server www.wordpress.local on Debian likes distributions:
-
-<code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
-<code bash>#@[fleet] ./elastic-agent enroll --url=https://fleet.docker.wordpress.local:8220 --fleet-server-service-token=[Service token] --fleet-server-policy=elastic-agent-wordpress-policy-9 --fleet-server-es=https://es01.docker.nginx.local:9200 --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --fleet-server-es-ca=/usr/share/elastic-agent/certs/es01.docker.nginx.local.crt --fleet-server-cert=/usr/share/elastic-agent/certs/fleet.wordpress.local.crt --fleet-server-cert-key=/usr/share/elastic-agent/certs/fleet.wordpress.local.key 
-This will replace your current settings. Do you want to continue? [Y/n]:y
-</code>
-
-Add existing and configured policy (in kibana.yml) and integration to [[elastic-agent|Elastic Agent]] with runnnig Fleet Server by enrollment token on Debian likes distributions:
-<code bash>#@[fleet] ./elastic-agent enroll --certificate-authorities=/usr/share/elastic-agent/certs/ca.crt --url=https://fleet.wordpress.local:8220 --enrollment-token=[Enrollment token]
-This will replace your current settings. Do you want to continue? [Y/n]:y
-</code>
-
-Or environments variables in file [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/.env.dist|.env]]
-<code ini>
-FLEET_ENROLLMENT_TOKEN=[Enrollment token]
-FLEET_SERVER_POLICY_ID=elastic-agent-wordpress-policy-9
-FLEET_SERVER_SERVICE_TOKEN=[Service token]
-</code>
-
 
 <code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
 <code bash>#@[fleet] ./elastic-agent status

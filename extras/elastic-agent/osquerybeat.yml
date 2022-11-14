@@ -9,7 +9,7 @@ osquerybeat:
         - id: "99f11606-f884-46c7-9ceb-f002126c3514"
           query: "select * from processes"
           interval: 60
-
+ 
 # ============================== Process Security ==============================
 # Disable seccomp system call filtering on Linux.
 # Otherwise osquerybeat can't fork osqueryd with error: Failed to start osqueryd process: fork/exec ./osqueryd: operation not permitted
@@ -91,19 +91,12 @@ output.elasticsearch:
     verification_mode: "certificate"
 
 # ------------------------------ Logstash Output -------------------------------
-#output.logstash:
-  # The Logstash hosts
-  #hosts: ["localhost:5044"]
 
-  # Optional SSL. By default is off.
-  # List of root certificates for HTTPS server verifications
-  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
-
-  # Certificate for SSL client authentication
-  #ssl.certificate: "/etc/pki/client/cert.pem"
-
-  # Client Certificate Key
-  #ssl.key: "/etc/pki/client/cert.key"
+# output.logstash:
+#   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+#   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#   ssl.certificate: "${FLEET_SERVER_CERT}"
+#   ssl.key: "${FLEET_SERVER_CERT_KEY}"
 
 # ================================= Processors =================================
 
@@ -113,12 +106,11 @@ processors:
   - add_host_metadata: ~
   - add_cloud_metadata: ~
 
-
 # ================================== Logging ===================================
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-logging.level: debug
+#logging.level: debug
 
 # At debug level, you can selectively enable logging only for some components.
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",

@@ -33,6 +33,11 @@ Filebeat, together with [[logstash]], processes the file logs for [[elasticsearc
 
 GET [[https://es01.docker.nginx.local:9200/.ds-heartbeat-*?pretty|.ds-heartbeat-*]]
 
+Heartbeat is in a separate container, it tests the necessary ones before starting kibana and logstash, because it is sufficient
+with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
+its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
+the police itself
+
 === Kibana - Observability - Infrastructure - Uptime - Monitors ===
 {{kibana04.png?600x432}}
 

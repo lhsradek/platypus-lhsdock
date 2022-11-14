@@ -1,0 +1,18 @@
+{
+  "schedule": {
+    "system_info": {
+      "query": "SELECT hostname, cpu_brand, physical_memory FROM system_info;",
+      "interval": 3600
+    }
+  },
+  "decorators": {
+    "load": [
+      "SELECT uuid AS host_uuid FROM system_info;",
+      "SELECT user AS username FROM logged_in_users ORDER BY time DESC LIMIT 1;"
+    ]
+  },
+  "options": {
+    "logger_path": "/usr/share/elastic-agent/data/elastic-agent-9da6ba/install/osquerybeat-8.5.0-linux-x86_64/logs",
+    "disable_logging": "false",
+  }
+}
