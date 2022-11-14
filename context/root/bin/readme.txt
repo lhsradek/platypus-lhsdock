@@ -135,6 +135,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 #### Setting Fleet Server
 
 ```cp certs/ca/ca.crt cert/ca.crt``` This is so that other elastic agents from other projects can have ca.crt in the cert directory
+/usr/share/elastic-agent/certs/ca.crt
 
 ##### Elasticsearch
 
@@ -143,6 +144,7 @@ Elasticsearch - hosts:
 ```https://es01.docker.nginx.local:9200```
 
 Elasticsearch - Advanced YAML configuration:
+
 ```ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]```
 
 ##### Logstash
