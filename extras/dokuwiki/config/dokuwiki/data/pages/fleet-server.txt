@@ -53,7 +53,7 @@ Set **Make this output the default** for **agent monitoring**.
 
 ==== Enrollment token ====
 
-For this project In **.env-** set **FLEET_ENROLLMENT_TOKEN** from Enrollment tokens - **Agent Nginx policy 1**
+For this project in **.env** set **FLEET_ENROLLMENT_TOKEN** from Enrollment tokens - **Agent Nginx policy 1**
 
 ==== Fleet Server ====
 
