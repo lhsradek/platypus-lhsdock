@@ -135,7 +135,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 #### Setting Fleet Server
 
 ```cp certs/ca/ca.crt cert/ca.crt``` This is so that other elastic agents from other projects can have ca.crt in the cert directory
-/usr/share/elastic-agent/certs/ca.crt
+```/usr/share/elastic-agent/certs/ca.crt```
 
 ##### Elasticsearch
 
@@ -177,15 +177,15 @@ Set Make this output the default for agent monitoring.
 
 ##### Enrollment token
 
-For this project In .env set FLEET_ENROLLMENT_TOKEN from Enrollment tokens - Agent Nginx policy 1
+For this project In ```.env``` set ```FLEET_ENROLLMENT_TOKEN``` from Enrollment tokens - Agent Nginx policy 1
 
 ##### Fleet Server
 
 In Fleet - Agents add a Fleet Server. Select Advanced Agent Nginx policy 1
 as Fleet Server host select ```https://fleet.docker.nginx.local:8220``` and Add host
 
-Generate a service token and copy the token to FLEET_SERVER_SERVICE_TOKEN in .env
-For this policy set ```FLEET_SERVER_POLICY_ID=agent-nginx-policy-1``` in .env
+Generate a service token and copy the token to ```FLEET_SERVER_SERVICE_TOKEN``` in ```.env```
+For this policy set ```FLEET_SERVER_POLICY_ID=agent-nginx-policy-1``` in ```.env```
 If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
 and edit the .env and set it.
 
@@ -194,7 +194,7 @@ everything will be created by itself thanks to how the environment variables of 
 
 ##### Cluster uuid
 
-So that Filebeat does not hammer the Standalone Cluster, it is good to have the CLUSTER_UUID set in the .env before the first
+So that Filebeat does not hammer the ```Standalone Cluster```, it is good to have the ```CLUSTER_UUID``` set in the ```.env``` before the first
 launch of the Fleet Server. Setup writes it on the console.
 
 In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
