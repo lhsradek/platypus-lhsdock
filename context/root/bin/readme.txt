@@ -138,7 +138,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 ##### Elasticsearch
 
-Elasticsearch - hosts: https://es01.docker.nginx.local:9200
+Elasticsearch - hosts: ```https://es01.docker.nginx.local:9200```
 
 Elasticsearch - Advanced YAML configuration:
 ```ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]```
