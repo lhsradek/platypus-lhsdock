@@ -34,8 +34,8 @@ if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
   echo "Nothing to do, docker-compose.$RUNENV.yml exists. Remove it first!"
   exit 1;
 else
-  echo "================= MAKE docker-compose.$RUNENV.yml ================="
   echo	
+  echo "================= MAKE docker-compose.$RUNENV.yml ================="
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-elastic.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml

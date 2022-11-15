@@ -1,6 +1,6 @@
 .env
 lhsdock-v3.img
-docker-compose.local.yml
+docker-compose*
 logs/
 certs/
 context/root/bin/demoCA/
