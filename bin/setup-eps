@@ -17,8 +17,7 @@ fi
 
 RUNENV=$1
 
-if [[ -z "$RUNENV" ]]
-then
+if [[ -z "$RUNENV" ]]; then
     RUNENV="local"
 fi
 
