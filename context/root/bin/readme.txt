@@ -218,7 +218,8 @@ If you would make a new police (for example Agent Nginx policy 2) you need to cr
 and edit the .env and set it.
 
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
-everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
+everything will be created by itself thanks to how the environment variables of the Fleet Service are set in
+[docker-compose file](https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-fleet.yml).
 
 See:
 * https://github.com/lhsradek/platypus-lhsdock/blob/main/png/fleet01.png
