@@ -14,12 +14,12 @@ See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/confi
 
 #### run lhsdock
 ```# bin/install```
-```# bin/setup```
-```# bin/setup-fleet``` or ```# bin/setup-eps```
-```# bin/start```
 
-#### exec lhsdock
-```# bin/exec```
+```# bin/setup```
+
+```# bin/setup-fleet``` or ```# bin/setup-eps```
+
+```# bin/start```
 
 #### restart lhsdock
 ```# bin/restart```
