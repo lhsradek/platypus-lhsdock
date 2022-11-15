@@ -320,12 +320,12 @@
         find . -type d -exec chmod 755 \{\} \;; # logstash
         find . -type f -exec chmod 640 \{\} \;;
         find . -type f -name ca.crt -exec chmod 644 \{\} \;; # logstash
-        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;  # cerebro
-        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;  # cerebro
-        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;     # wiki
-        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;     # wiki
-        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;; # logstash
-        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;; # logstash
+        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;  # for cerebro
+        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;  # for cerebro
+        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;     # for wiki
+        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;     # for wiki
+        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;; # for logstash
+        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;; # for logstash
         if [ ! -f /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key ]; then
           openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key
         fi;

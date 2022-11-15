@@ -17,7 +17,14 @@
       # local network:
       - intnet
     ports:
+      # elastic-agent
       - ${LOGSTASH_PORT}:5044
+      # elasticsearch
+      - 5045:5045
+      # nginx
+      - 5046:5046
+      # traefik
+      - 5047:5047
       # - 9600:9600
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -27,6 +34,9 @@
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf:ro
+      - ./extras/logstash/elasticsearch.conf:/usr/share/logstash/pipeline/elasticsearch.conf:ro
+      - ./extras/logstash/traefik.conf:/usr/share/logstash/pipeline/traefik.conf:ro
       - logstash:/usr/share/logstash
     environment:
       - APP_ID=${APP_ID}
