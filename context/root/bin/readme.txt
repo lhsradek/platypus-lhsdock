@@ -220,6 +220,12 @@ and edit the .env and set it.
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
 everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
 
+See:
+* https://github.com/lhsradek/platypus-lhsdock/blob/main/png/fleet01.png
+* https://github.com/lhsradek/platypus-lhsdock/blob/main/png/fleet02.png
+* https://github.com/lhsradek/platypus-lhsdock/blob/main/png/fleet03.png
+* https://github.com/lhsradek/platypus-lhsdock/blob/main/png/fleet04.png
+
 Restart and see how Fleet Server start and enroll.
 
 -----
