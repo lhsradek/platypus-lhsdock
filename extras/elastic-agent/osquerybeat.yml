@@ -3,12 +3,12 @@
 ############################# Osquerybeat ######################################
 
 osquerybeat:
-  inputs:
-    - type: osquery
-      streams:
-        - id: "99f11606-f884-46c7-9ceb-f002126c3514"
-          query: "select * from processes"
-          interval: 60
+#   inputs:
+#     - type: osquery
+#       streams:
+#         - id: "99f11606-f884-46c7-9ceb-f002126c3514"
+#           query: "select * from processes"
+#           interval: 60
  
 # ============================== Process Security ==============================
 # Disable seccomp system call filtering on Linux.
@@ -27,8 +27,8 @@ seccomp.enabled: false
 
 # Optional fields that you can specify to add additional information to the
 # output.
-fields:
-  env: ${STAGE}
+# fields:
+#   env: ${STAGE}
 
 # ================================= Dashboards =================================
 # These settings control loading the sample dashboards to the Kibana index. Loading
@@ -59,7 +59,7 @@ setup.kibana:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # =============================== Elastic Cloud ================================
 
@@ -88,7 +88,7 @@ output.elasticsearch:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # ------------------------------ Logstash Output -------------------------------
 

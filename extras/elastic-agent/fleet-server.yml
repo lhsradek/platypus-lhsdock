@@ -29,4 +29,4 @@ outputs:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"

@@ -211,7 +211,7 @@ apm-server:
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "certificate"
+    ssl.verification_mode: "${VERIFICATION_MODE}"
 
 #================================= General =================================
 
@@ -270,7 +270,7 @@ output.elasticsearch:
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.verification_mode: "certificate"
+  ssl.verification_mode: "${VERIFICATION_MODE}"
 
 #----------------------------- Console output -----------------------------
 #output.console:

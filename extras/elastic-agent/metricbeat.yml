@@ -91,7 +91,7 @@ setup.elasticsearch:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # =================================== Kibana ===================================
 
@@ -105,7 +105,7 @@ setup.kibana:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
   # Kibana Space ID
   # ID of the Kibana Space into which the dashboards should be loaded. By default,
   # the Default Space will be used.
@@ -141,7 +141,7 @@ output:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
 
 # ------------------------------ Logstash Output -------------------------------
 

@@ -40,6 +40,7 @@
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
       - STAGE=${STAGE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}        
     healthcheck:
       # test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       test: ["CMD-SHELL", "curl -s -I http://apm.${INT_NETWORK}:8200 | grep -q 'HTTP/1.1 200 OK'"]
@@ -92,6 +93,7 @@
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
       - EPS_PASSWORD=${EPS_PASSWORD}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}        
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://metricbeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
@@ -155,6 +157,7 @@
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
+      - VERIFICATION_MODE=${VERIFICATION_MODE}        
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://filebeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]

@@ -11,7 +11,7 @@
 
 [[https://github.com/elastic/apm-server|APM on github]]
 
-APM server is for [[elastic-agent#elastic_apm_agent|apm agents]].
+APM server is for [[elastic-agent#elastic_apm_agent|apm agents]]. [[Elastic-agent]] contains the the APM server. 
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/apm-server|configuration]]
 

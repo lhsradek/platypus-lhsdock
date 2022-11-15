@@ -9,21 +9,74 @@
 
 [[https://www.elastic.co/guide/en/fleet/current/fleet-settings.html|Fleet UI settings]]
 
+==== Cluster uuid ====
 
-===== Setting Fleet Server ===== 
+So that [[Beats#filebeat|filebeat]] in [[elastic-agent|elastic agent]] does not beats to a **Standalone Cluster**, it is good to have the **CLUSTER_UUID** set in the **.env** before the first
+launch of the Fleet Server. Setup writes it on the console or is on [[https://es01.docker.nginx.local:9200/?pretty|elasticsearch]].
+
+<code json>
+{
+  "name" : "es01",
+  "cluster_name" : "docker-cluster",
+  "cluster_uuid" : "S_tzwXP9S1-I4I9cIic1dA",
+  "version" : {
+    "number" : "8.5.0",
+    "build_flavor" : "default",
+    "build_type" : "docker",
+    "build_hash" : "c94b4700cda13820dad5aa74fae6db185ca5c304",
+    "build_date" : "2022-10-24T16:54:16.433628434Z",
+    "build_snapshot" : false,
+    "lucene_version" : "9.4.1",
+    "minimum_wire_compatibility_version" : "7.17.0",
+    "minimum_index_compatibility_version" : "7.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+</code>
+
+In env.:
+
+<code ini>
+CLUSTER_UUID=S_tzwXP9S1-I4I9cIic1dA
+</code>
+
+==== Kibana manages Fleet Server ====
+
+Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]
+
+<code yaml>
+fleet:
+  agents:
+    fleet_server:
+      hosts:
+        - "https://fleet.${APP_HOST}.${APP_NET}:8220"
+        - "https://fleet.www.wordpress.local:8220"
+        - "https://fleet.${APP_HOST}.wordpress.local:8220"
+        - "https://fleet.www.tomcat.local:8220"
+        - "https://fleet.${APP_HOST}.tomcat.local:8220"
+    elasticsearch:
+      hosts: 
+        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+</code>
+
+sets the fleet in kibana
+
+==== Copy cert ==== 
 
 <code bash>cp certs/ca/ca.crt cert/ca.crt</code> This is so that other elastic agents from other projects can have ca.crt in the cert directory.
 
-{{fleet01.png?600x432}}
+==== Kibana - Fleet - Settings ====
 
-==== Elasticsearch ====
+=== Setting Fleet Server Outputs === 
 
-Elasticsearch - hosts: <code>https://es01.docker.nginx.local:9200</code>
+== Elasticsearch ==
 
-Elasticsearch - Advanced YAML configuration:
+Specify hosts: <code>https://es01.docker.nginx.local:9200</code>
+
+Advanced YAML configuration:
 <code ini>ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]</code>
 
-==== Logstash ====
+== Logstash ==
 
 See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
@@ -51,22 +104,45 @@ Default for agent integrations interferes with APM, don't change it
 
 Set **Make this output the default** for **agent monitoring**.
 
-==== Enrollment token ====
+{{fleet01.png?600x395}}
+
+==== Kibana - Fleet - Enrollment tokens ====
 
 For this project in **.env** set **FLEET_ENROLLMENT_TOKEN** from Enrollment tokens - **Agent Nginx policy 1**
 
-==== Fleet Server ====
+For example:
 
-In Fleet - Agents add a Fleet Server select Advanced **Agent Nginx policy 1**
-as Fleet Server host select <code>https://fleet.docker.nginx.local:8220</code> and Add host
+<code ini>
+FLEET_ENROLLMENT_TOKEN=alpnaWVJUUI2SGplNGVIMk1yV246dFNlWk1fdGZSVXVENGE2YmRCYXFwUQ==
+FLEET_SERVER_POLICY_ID=agent-nginx-policy-1
+</code>
+
+==== Kibana - Fleet - Agents ====
+
+**Add a Fleet Server** select Advanced. As a policy slect **Agent Nginx policy 1**
+as Fleet Server host select <code>https://fleet.docker.nginx.local:8220</code> and **Add host**
 
 Generate a service token and copy the token to **FLEET_SERVER_SERVICE_TOKEN** in **.env**
-For this policy set <code ini>FLEET_SERVER_POLICY_ID=agent-nginx-policy-1</code> in **.env**
-If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
-and edit the **.env** and set it.
+For this policy set in **.env**
+
+For example:
+
+<code ini>
+FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2Njg0NjgzNzY4Mjc6bjRueHFvSlFSZE9XbXFnWGgyY05rZw
+</code>
 
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
 everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
+
+If you would make a new police (for example Agent Nginx policy 2) you need to create a fleet server with a new police
+and edit the **.env** and set it.
+
+<code ini>
+FLEET_SERVER_POLICY_ID=agent-nginx-policy-2
+</code>
+
+
+-----
 
 Environments variables for wordpress project in file [[https://github.com/lhsradek/platypus-wordpress-mysql/blob/main/.env.dist|.env]]
 like this:
@@ -76,36 +152,9 @@ FLEET_SERVER_POLICY_ID=elastic-agent-wordpress-policy-9
 FLEET_SERVER_SERVICE_TOKEN=[Service token]
 </code>
 
-==== Cluster uuid ====
-
-So that Filebeat does not hammer the Standalone Cluster, it is good to have the **CLUSTER_UUID** set in the **.env** before the first
-launch of the Fleet Server. Setup writes it on the console.
-
 In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume.
 
 Restart and see how Fleet Server start and enroll.
-
-===== Kibana manages Fleet Server =====
-
-Part from [[https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml|kibana config]]
-
-<code yaml>
-fleet:
-  agents:
-    fleet_server:
-      hosts:
-        - "https://fleet.www.wordpress.local:8220"
-        - "https://fleet.${APP_HOST}.wordpress.local:8220"
-        - "https://fleet.www.tomcat.local:8220"
-        - "https://fleet.${APP_HOST}.tomcat.local:8220"
-    elasticsearch:
-      hosts: 
-        - "https://es01.${APP_HOST}.${APP_NET}:9200"
-</code>
-
-sets the fleet in kibana
-
-=== Kibana - Fleet - Settings ===
 
 <code bash># docker exec -it -u:0 wordpress-99-fleet bash</code>
 <code bash>#@[fleet] ./elastic-agent status

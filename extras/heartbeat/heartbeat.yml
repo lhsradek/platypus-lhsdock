@@ -72,7 +72,7 @@ heartbeat.monitors:
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
     verification_mode: "none"
-    # verification_mode: "certificate"
+    # verification_mode: "${VERIFICATION_MODE}"
 
 - type: tcp
   schedule: '*/30 * * * * * *'
@@ -146,7 +146,7 @@ output:
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
    
 setup:
   ilm.overwrite: true
@@ -157,4 +157,4 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"

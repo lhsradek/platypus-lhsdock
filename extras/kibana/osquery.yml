@@ -13,6 +13,6 @@
   },
   "options": {
     "logger_path": "/usr/share/elastic-agent/data/elastic-agent-9da6ba/install/osquerybeat-8.5.0-linux-x86_64/logs",
-    "disable_logging": "false",
+    "disable_logging": "false"
   }
 }

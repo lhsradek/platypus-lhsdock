@@ -123,7 +123,7 @@ setup.kibana:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # =============================== Elastic  ================================
 
@@ -136,7 +136,7 @@ setup.elasticsearch:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # =============================== Elastic Cloud ================================
 
@@ -165,15 +165,17 @@ setup.elasticsearch:
 #   ssl:
 #     enabled: true
 #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#     verification_mode: "certificate"
+#     verification_mode: "${VERIFICATION_MODE}"
  
 # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   enabled: true
   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
-  ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.certificate: "${FLEET_SERVER_CERT}"
-  ssl.key: "${FLEET_SERVER_CERT_KEY}"  
+  ssl:
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    certificate: "${FLEET_SERVER_CERT}"
+    key: "${FLEET_SERVER_CERT_KEY}"  
+    verification_mode: "${VERIFICATION_MODE}"
 
 # ================================= Processors =================================
 processors:
@@ -208,7 +210,7 @@ logging.selectors: ["*"]
 #monitoring.cluster_uuid:
 
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
@@ -227,7 +229,7 @@ monitoring.elasticsearch:
   ssl:
     enabled: true
     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "certificate"
+    verification_mode: "${VERIFICATION_MODE}"
 
 # ============================== Instrumentation ===============================
 

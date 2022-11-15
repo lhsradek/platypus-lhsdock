@@ -123,7 +123,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 | apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm        | ```apm.nginx.local```                | *
 | metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | * 
 | filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.nginx.local```           | *
-| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | *
+| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | 
 | enterprise-search    | 3002/tcp               | lhsdock-eps        | ```eps.nginx.local```                | *
 | elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | ```fleet.nginx.local```              | *
 | logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash   | ```logstash.nginx.local```           | *
@@ -132,10 +132,26 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 -----
 
-#### Setting Fleet Server
+##### Cluster uuid
+
+So that Filebeat does not beats to a ```Standalone Cluster```, it is good to have the ```CLUSTER_UUID``` set in the ```.env``` before the first
+launch of the Fleet Server. Setup writes it on the console.
+
+In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
+
+##### Heartbeat
+
+Heartbeat is in a separate container, it tests the necessary ones before starting kibana and logstash, because it is sufficient
+with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
+its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
+the police itself
+
+You will find an integrations when you first start kibana and they will have polices set.
 
 ```cp certs/ca/ca.crt cert/ca.crt``` This is so that other elastic agents from other projects can have ca.crt in the cert directory
 ```/usr/share/elastic-agent/certs/ca.crt```
+
+#### Setting Fleet Server
 
 ##### Elasticsearch
 
@@ -192,23 +208,7 @@ and edit the .env and set it.
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
 everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
 
-##### Cluster uuid
-
-So that Filebeat does not hammer the ```Standalone Cluster```, it is good to have the ```CLUSTER_UUID``` set in the ```.env``` before the first
-launch of the Fleet Server. Setup writes it on the console.
-
-In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
-
 Restart and see how Fleet Server start and enroll.
-
-##### Heartbeat
-
-Heartbeat is in a separate container, it tests the necessary ones before starting kibana and logstash, because it is sufficient
-with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
-its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
-the police itself
-
-You will find an integrations when you first start kibana and they will have polices set.
 
 -----
 

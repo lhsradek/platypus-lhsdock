@@ -12,9 +12,10 @@ fleet:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      verification_mode: "${VERIFICATION_MODE}"
 
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
 # https://www.elastic.co/guide/en/fleet/current/elastic-agent-monitoring-configuration.html
@@ -103,4 +104,4 @@ outputs:
         - "${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"
       # certificate: "${FLEET_SERVER_CERT}"
       # key: "${FLEET_SERVER_CERT_KEY}"
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
