@@ -48,7 +48,7 @@ the police itself
 
 ===== Metricbeat * =====
 
-The stand-alone Metricbeat is in a separate cointainer too. Metricbeat is intended to be monitored by services that lack police
+The stand-alone Metricbeat is in a separate cointainer too. Metricbeat is intended to be monitored services that lack police
 integration such as Kibana, Elasticsearch and also so that beats in Elastic-agent, Heartbeat or Enterprise Search are not monitored by themselves, which is shown in 'Kibana - Monitor the Stack' in red or the service is completely missing (Kibana). When the integrations are completed and can be set in the agent instead of advice on how to turn on the service in Metricbeat, then a separate Metricbeat will not be
 necessary. In 'Monitor the Stack' is often advised: 'Monitor with another Metricbeat.' That's what this Metricbeat is for.
 
