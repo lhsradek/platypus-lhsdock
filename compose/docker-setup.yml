@@ -343,7 +343,7 @@
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
         curl -s -X GET --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep "cluster_uuid";
         #
-        # create role Stack Management > Roles standalone_agent https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html        
+        # Optional create role Stack Management > Roles standalone_agent https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html It's not a condition, I haven't been doing it lately. Rather, it is a useful guide that may come in handy.
         # <code>
         #   {
         #     "standalone_agent": {
