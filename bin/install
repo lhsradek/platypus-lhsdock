@@ -65,6 +65,8 @@ if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
 else
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-elastic.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-weblhs.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-setup.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo

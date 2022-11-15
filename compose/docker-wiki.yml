@@ -1,42 +1,4 @@
 
-  weblhs-php:
-    depends_on:
-      setup:
-        condition: service_healthy
-    # Alpine Linux
-    # image: php:fpm-alpine
-    image: lhsradek/fpm:v1
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-php"
-    hostname: "weblhs-php.${INT_NETWORK}"
-    networks:
-      # for elastic and traefik in application/html/index.php
-      - default
-      # local network:
-      - intnet
-    environment:
-      - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
-      - APP_NET=${INT_NETWORK}
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTIC_APM_ENVIRONMENT=${STAGE}
-      - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
-      # - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
-      - ELASTIC_APM_SERVER_URL=http://fleet.${APP_HOST}.${INT_NETWORK}:8200
-      - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
-      - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TIME_ZONE}
-      - VERIFICATION_MODE=${VERIFICATION_MODE}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
-      - ./application/html:/var/www/html:ro
-      - ./logs/nginx/php-error.log:/var/log/error.log
-      - ./logs/nginx/php-access.log:/var/log/access.log
- 
   weblhs-wiki:
     # Alpine Linux
     depends_on:

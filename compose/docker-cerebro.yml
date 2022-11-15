@@ -1,0 +1,46 @@
+   
+#
+# Status and configurations of docker-cloud without using Kibana and Web console for REST.
+#
+  cerebro:
+    depends_on:
+      es01:
+        condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
+    # Debian - Cerebro
+    image: lmenezes/cerebro:latest
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-cerebro"
+    hostname: "cerebro.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    # ports:
+    #  - 9000:9000
+    volumes:
+      - ./certs:/opt/cerebro/conf/certs:ro
+      - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
+      - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
+      - ./logs/cerebro:/opt/cerebro/logs:rw
+    environment:
+      - BASIC_AUTH_USER=elastic
+      - BASIC_AUTH_PWD=${ELASTIC_PASSWORD}
+      - CEREBRO_PORT=9000
+      - CLUSTER_NAME=${CLUSTER_NAME}
+      - CERTIFICATEAUTHORITY=/opt/cerebro/conf/certs/ca/ca.crt
+      - CEREBRO_SERVER_CERT=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.crt
+      - CEREBRO_SERVER_CERT_KEY=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.key
+      - ES_URL=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - JAVA_OPTS=${CEREBRO_JAVA_OPTS}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.cerebro-public.rule=Host(`cerebro.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.cerebro-public.entrypoints=https"
+      - "traefik.http.routers.cerebro-public.tls=true"
+      - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.port=9000"
+      - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.scheme=http"
