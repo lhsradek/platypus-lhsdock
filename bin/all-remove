@@ -15,8 +15,10 @@ fi
 if [ -f "$rootPath/docker-compose.$RUNENV.yml" ]; then
   echo "================= STOP ================="
   ${scriptPath}/stop
+  echo
   echo "Nothing to do, docker-compose.$RUNENV.yml exist. Use 'rm docker-compose.$RUNENV.yml' first!"
   echo
+  exit 1;
 else
   echo "================= REMOVE ALL VOLUME ================="
   if (docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
