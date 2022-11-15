@@ -10,15 +10,15 @@ create .env file
 
 ```# cp .env.dist .env```
 
-See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
-
-#### run lhsdock
 ```# bin/install```
 
 ```# bin/setup```
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
+See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
+
+#### run lhsdock
 ```# bin/start```
 
 #### restart lhsdock
