@@ -21,36 +21,11 @@ if [ -f "$rootPath/docker-compose.$RUNENV.yml" ]; then
   exit 1;
 else
   echo "================= REMOVE ALL VOLUME ================="
-  if (docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
+  for NAME in eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
+    echo ${NAME}
+    if (docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
       echo "remove:"
-      docker volume rm lhsdock-eps
-  fi
-  if (docker volume inspect "lhsdock-es01" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-es01
-  fi
-  if (docker volume inspect "lhsdock-es02" >/dev/null 2>&1); then
-      echo "remove:"
-    docker volume rm lhsdock-es02
-  fi
-  if (docker volume inspect "lhsdock-es03" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-es03
-  fi
-  if (docker volume inspect "lhsdock-fleet" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-fleet
-  fi
-  if (docker volume inspect "lhsdock-heartbeat" >/dev/null 2>&1); then
-      echo "remove:"
-    docker volume rm lhsdock-heartbeat
-  fi
-  if (docker volume inspect "lhsdock-kibana" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-kibana
-  fi
-  if (docker volume inspect "lhsdock-logstash" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-logstash
-  fi
+      docker volume rm lhsdock-${NAME}
+    fi
+  done;
 fi

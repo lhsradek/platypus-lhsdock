@@ -156,8 +156,8 @@ xpack:
         version: latest
       - name: osquery
         version: latest
-      # - name: osquery_manager
-      #   version: latest
+      - name: osquery_manager
+        version: latest
       - name: synthetics
         version: latest
       - name: spring_boot
@@ -354,11 +354,11 @@ xpack:
                       - name: tags
                         value:
                           - osquery
-          # - name: osquery_manager_nginx-1
-          #   package:
-          #     name: osquery_manager
-          #   description: Osquery Manager
-          #   id: osquery_manager_nginx-1
+          - name: osquery_manager_nginx-1
+            package:
+              name: osquery_manager
+            description: Osquery Manager
+            id: osquery_manager_nginx-1
 
       #
       # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql

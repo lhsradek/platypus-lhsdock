@@ -23,38 +23,12 @@ then
 fi
 
 echo "================= MAKE VOLUME ================="
-if !(docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create --name lhsdock-eps
-fi
-if !(docker volume inspect "lhsdock-es01" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-es01
-fi
-if !(docker volume inspect "lhsdock-es02" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-es02
-fi
-if !(docker volume inspect "lhsdock-es03" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-es03
-fi
-if !(docker volume inspect "lhsdock-fleet" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-fleet
-fi
-if !(docker volume inspect "lhsdock-heartbeat" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-heartbeat
-fi
-if !(docker volume inspect "lhsdock-kibana" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-kibana
-fi
-if !(docker volume inspect "lhsdock-logstash" >/dev/null 2>&1); then
-    echo "create:"
-    docker volume create lhsdock-logstash
-fi
+for NAME in eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
+    if !(docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
+        echo "create:"
+        docker volume create --name lhsdock-${NAME}
+    fi
+done;
 echo
 echo "================= MAKE docker-compose.$RUNENV.yml ================="
 

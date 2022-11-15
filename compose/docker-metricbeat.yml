@@ -1,0 +1,55 @@
+
+#
+# === Metricbeat ===
+#
+# The stand-alone Metricbeat is intended to be monitored by services that lack police integration such as Kibana, Elasticsearch
+# and also so that beats in Elastic-agent, Heartbeat or Enterprise Search are not monitored by themselves, which is shown in
+# 'Kibana - Monitor the Stack' in red or the service is completely missing (Kibana). When the integrations are completed and can be
+# set in the agent instead of advice on how to turn on the service in Metric beat, then a separate Metricbeat will not be necessary.
+# In 'Monitor the Stack' is often advised: 'Monitor with another Metricbeat.' That's what this Metricbeat is for.
+#
+  metricbeat:
+    depends_on:
+      kibana:
+        condition: service_healthy
+    # Ubuntu - metricbeat
+    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-metricbeat"
+    hostname: "metricbeat.${INT_NETWORK}"
+    user: root
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/usr/share/metricbeat/certs
+      - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+      - ./logs/metricbeat:/usr/share/metricbeat/logs
+      - metricbeat:/usr/share/metricbeat
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
+      - STAGE=${STAGE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}        
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.metricbeat-public.rule=Host(`metricbeat.${INT_NETWORK}`)"
+      - "traefik.http.routers.metricbeat-public.entrypoints=https"
+      - "traefik.http.routers.metricbeat-public.tls=true"
+      - "traefik.http.services.metricbeat-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.metricbeat-${APP_ID}.loadbalancer.server.scheme=http"
+    healthcheck:
+      # test: "metricbeat test output | grep 'talk to server... OK'"
+      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      interval: 10s
+      timeout: 10s
+      retries: 500
+         

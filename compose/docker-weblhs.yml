@@ -45,6 +45,7 @@
       - fleet:/root/bin/volume/fleet:ro
       - heartbeat:/root/bin/volume/heartbeat:ro
       - kibana:/root/bin/volume/kibana:ro
+      - metricbeat:/root/bin/volume/metricbeat:ro
       # It's for my prune volume deletion protection:
       - wordpresswp99:/root/bin/volume/wordpress-wp-99:ro
       - wordpressdb99:/root/bin/volume/wordpress-db-99:ro

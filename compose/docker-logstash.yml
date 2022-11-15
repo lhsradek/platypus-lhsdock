@@ -17,14 +17,15 @@
       # local network:
       - intnet
     ports:
-      # elastic-agent
+      # traefik syslog
+      - 5000:5000
+      # elastic-agent https
       - ${LOGSTASH_PORT}:5044
-      # elasticsearch
+      # elasticsearch gc beat
       - 5045:5045
       # nginx
       - 5046:5046
-      # traefik
-      - 5047:5047
+      # http metrics
       # - 9600:9600
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
