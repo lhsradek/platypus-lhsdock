@@ -158,7 +158,7 @@ integration such as Kibana, Elasticsearch and also so that beats in Elastic-agen
 themselves, which is shown in 'Kibana - Monitor the Stack' in red or the service is completely missing (Kibana). When the integrations are completed and can be set in the agent instead of advice on how to turn on the service in Metricbeat, then a separate Metricbeat will not
 be necessary. In 'Monitor the Stack' is often advised: 'Monitor with another Metricbeat.' That's what this Metricbeat is for.
 
-You will find an integrations when you first start Kibana and they will have polices set. [See settings.](https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml) for Kibana.
+You will find an integrations when you first start Kibana and they will have polices set. [See settings.](https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml)
 
 ```cp certs/ca/ca.crt cert/ca.crt``` This is so that other elastic agents from other projects can have ca.crt in the cert directory
 ```/usr/share/elastic-agent/certs/ca.crt```
