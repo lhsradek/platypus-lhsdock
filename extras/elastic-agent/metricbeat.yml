@@ -148,8 +148,9 @@ output:
 # output.logstash:
 #   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
 #   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#   ssl.certificate: "${FLEET_SERVER_CERT}"
-#   ssl.key: "${FLEET_SERVER_CERT_KEY}"
+#   ssl.certificate: "${LOGSTASH_SERVER_CERT}"
+#   ssl.key: "${LOGSTASH_SERVER_CERT_KEY}"
+#   ssl.verification_mode: "${VERIFICATION_MODE}"
 
 # ================================= Processors =================================
 

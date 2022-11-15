@@ -88,6 +88,8 @@
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
+      - LOGSTASH_SERVER_CERT=/usr/share/elastic-agent/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
       - STACK_VERSION=${STACK_VERSION}
       - STAGE=${STAGE}
       - STV=${STV}
