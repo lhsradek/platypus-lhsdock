@@ -79,7 +79,7 @@
       - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
-      - ./logs/metric:/usr/share/metricbeat/logs
+      - ./logs/metricbeat:/usr/share/metricbeat/logs
       - metricbeat:/usr/share/metricbeat
     environment:
       - AGENT_API_KEY=${AGENT_API_KEY}

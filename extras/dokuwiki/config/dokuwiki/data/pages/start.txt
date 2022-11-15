@@ -107,7 +107,7 @@ Creating lhsdock-eps       ... done
 | docker.elastic.co/beats/elastic-agent                 | 8.5.0      | 2.07GB      | 
 | docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.5.0      | 3.67GB      |
 | docker.elastic.co/apm/apm-server                      | 8.5.0      | 230MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.5.0      | 496MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.5.0      | 466MB       |
 | docker.elastic.co/beats/heartbeat                     | 8.5.0      | 2.1GB       |
 | docker.elastic.co/beats/filebeat                      | 8.5.0      | 406MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
