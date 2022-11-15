@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 read_var() {
-    VAR=$(grep "$1" "$2" | xargs)
+    VAR=$(grep -m 1 "$1" "$2" | xargs)
     IFS="=" read -ra VAR <<< "$VAR"
     echo "${VAR[1]}"
 }
@@ -11,8 +11,7 @@ DOCKER_NETWORK=$(read_var DOCKER_NETWORK .env)
 scriptPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 rootPath="$(dirname "${scriptPath}")"
 
-if [[ ! -f "$rootPath/.env" ]]
-then
+if [[ ! -f "$rootPath/.env" ]]; then
     echo "ERROR: File .env not found";
     echo;
     exit 1;
@@ -25,15 +24,18 @@ then
     RUNENV="local"
 fi
 
-if [[ ! -f "$rootPath/docker-compose.$RUNENV.yml" ]]
-then
+if [[ ! -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
     echo "ERROR: File docker-compose.$RUNENV.yml not found.";
     echo;
     exit 1;
 fi
 
-if !(docker network inspect "${DOCKER_NETWORK}" >/dev/null 2>&1)
-then
+if !(docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
+  echo "Volume don't exists. First start 'bin/install' !"
+  exit 1
+fi  
+
+if !(docker network inspect "${DOCKER_NETWORK}" >/dev/null 2>&1); then
     echo "ERROR: Docker network ${DOCKER_NETWORK} is not running. Start it first."
     exit 1;
 fi
@@ -42,16 +44,17 @@ ARGS="-f $rootPath/docker-compose.$RUNENV.yml"
 # ARGS="-f $rootPath/docker-compose.$RUNENV.yml --verbose"
 # ARGS="-f $rootPath/docker-compose.$RUNENV.yml --verbose --log-level=DEBUG"
 
-if [[ -f "$rootPath/docker-compose.extras.yml" ]]
-then
+if [[ -f "$rootPath/docker-compose.extras.yml" ]]; then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-mkdir -p logs logs/nginx logs/dokuwiki logs/dokuwiki/php
+mkdir -p logs logs/es01 logs/es02 logs/es03 logs/eps logs/kibana logs/fleet logs/cerebro logs/nginx logs/nginx logs/dokuwiki logs/dokuwiki/php
 touch logs/nginx/php-access.log
 touch logs/nginx/php-error.log
 touch logs/dokuwiki/php/access.log
 touch logs/dokuwiki/php/error.log
+find logs -type d -exec chmod 777 \{\} \;;
+find logs -type f -exec chmod 666 \{\} \;;
 
 IMG="lhsradek/lhsdock:v3"
 IMGFILE="lhsdock-v3.img"

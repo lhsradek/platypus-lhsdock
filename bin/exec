@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-echo == lhsdock exec ==
-
-docker exec -it lhsdock bash
-
-# docker exec -it lhsdock-php bash

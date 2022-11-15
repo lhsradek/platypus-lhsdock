@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+read_var() {
+    VAR=$(grep -m 1 "$1" "$2" | xargs)
+    IFS="=" read -ra VAR <<< "$VAR"
+    echo "${VAR[1]}"
+}
+
+scriptPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+rootPath="$(dirname "${scriptPath}")"
+
+if [[ ! -f "$rootPath/.env" ]]; then
+    echo "ERROR: File .env not found";
+    echo;
+    exit 1;
+fi
+
+RUNENV=$1
+
+if [[ -z "$RUNENV" ]]
+then
+    RUNENV="local"
+fi
+
+echo "================= MAKE VOLUME ================="
+if !(docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create --name lhsdock-eps
+fi
+if !(docker volume inspect "lhsdock-es01" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-es01
+fi
+if !(docker volume inspect "lhsdock-es02" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-es02
+fi
+if !(docker volume inspect "lhsdock-es03" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-es03
+fi
+if !(docker volume inspect "lhsdock-fleet" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-fleet
+fi
+if !(docker volume inspect "lhsdock-heartbeat" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-heartbeat
+fi
+if !(docker volume inspect "lhsdock-kibana" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-kibana
+fi
+if !(docker volume inspect "lhsdock-logstash" >/dev/null 2>&1); then
+    echo "create:"
+    docker volume create lhsdock-logstash
+fi
+
+echo "================= MAKE docker-compose.$RUNENV.yml ================="
+
+if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
+  ${scriptPath}/stop
+  echo "Nothing to do, docker-compose.$RUNENV.yml exist. Remove it first!"
+  exit 1;
+else
+  cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-elastic.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-setup.yml >> $rootPath/docker-compose.$RUNENV.yml
+  echo
+  echo "================= START INSTALL ================"
+  ${scriptPath}/start
+  echo
+  INT_NETWORK=$(read_var INT_NETWORK .env)
+  APP_HOST=$(read_var APP_HOST .env)
+  ELASTIC_PASSWORD=$(read_var ELASTIC_PASSWORD .env)
+  echo "See to setup console for cluster-uuid or use 'curl -s -X GET --cacert certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty' after setup set kibana password and exit."
+  echo
+  echo "Set CLUSTER-UUID to '.env' and start 'bin/setup'"
+  echo
+  echo "Start 'bin/setup' and set Fleet Server in Kibana"
+fi

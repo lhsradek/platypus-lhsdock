@@ -1,0 +1,438 @@
+
+#
+# setup makes certs and change passwords
+#
+  setup:
+    # Ubuntu - elasticsearch
+    # see https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: "${APP_ID}-setup"
+    hostname: "setup.${INT_NETWORK}"
+    networks:
+      - intnet
+    volumes:
+      - ./certs:/usr/share/elasticsearch/config/certs
+    user: "0"
+    command: >
+      bash -c '
+        if [ x${ELASTIC_PASSWORD} == x ]; then
+          echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
+          exit 1;
+        elif [ x${KIBANA_PASSWORD} == x ]; then
+          echo "Set the KIBANA_PASSWORD environment variable in the .env file";
+          exit 1;
+        fi;
+        if [ ! -f certs/ca.zip ]; then
+          echo "Creating CA";
+          if [ ! -f config/certs/ca.zip ]; then
+            bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
+          fi;
+          unzip -n config/certs/ca.zip -d config/certs;
+        fi;
+        if [ ! -f certs/certs.zip ]; then
+          echo "Creating certs";
+          echo -ne \
+          "instances:\n"\
+          "  - name: ${APP_HOST}.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_HOST}.traefik.local\n"\
+          "  - name: www.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.traefik.local\n"\
+          "  - name: ${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_ID}-${APP_HOST}.${INT_NETWORK}\n"\
+          "      - ${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_ID}-www.${INT_NETWORK}\n"\
+          "      - www.${INT_NETWORK}\n"\
+          "  - name: apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - ${APP_ID}-apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - cerebro\n"\
+          "      - cerebro.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es01\n"\
+          "      - ${APP_ID}-es01\n"\
+          "      - ${APP_ID}-es01.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es02\n"\
+          "      - ${APP_ID}-es02\n"\
+          "      - ${APP_ID}-es02.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es03\n"\
+          "      - ${APP_ID}-es03\n"\
+          "      - ${APP_ID}-es03.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: eps.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - eps\n"\
+          "      - ${APP_ID}-eps\n"\
+          "      - ${APP_ID}-eps.${INT_NETWORK}\n"\
+          "      - eps.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet\n"\
+          "      - ${APP_ID}-fleet\n"\
+          "      - ${APP_ID}-fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: heartbeat.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - heartbeat\n"\
+          "      - ${APP_ID}-heartbeat\n"\
+          "      - ${APP_ID}-heartbeat.${INT_NETWORK}\n"\
+          "      - heartbeat.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - kibana\n"\
+          "      - ${APP_ID}-kibana\n"\
+          "      - ${APP_ID}-kibana.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: logstash.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - logstash\n"\
+          "      - ${APP_ID}-logstash\n"\
+          "      - ${APP_ID}-logstash.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - logstash.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wiki\n"\
+          "      - wiki.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: ${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.tomcat.local\n"\
+          "  - name: tombola.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - tombola.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: tombola.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - tombola.www.tomcat.local\n"\
+          "  - name: ad.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ad.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: ad.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ad.www.tomcat.local\n"\
+          "  - name: db.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: db.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.www.tomcat.local\n"\
+          "  - name: fleet.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: apm.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: fleet.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet.www.tomcat.local\n"\
+          "  - name: apm.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.www.tomcat.local\n"\
+          "  - name: ${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.wordpress.local\n"\
+          "  - name: wp.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wp.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: wp.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wp.www.wordpress.local\n"\
+          "  - name: wpa.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wpa.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: wpa.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wpa.www.wordpress.local\n"\
+          "  - name: pma.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - pma.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: pma.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - pma.www.wordpress.local\n"\
+          "  - name: db.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: db.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.www.wordpress.local\n"\
+          "  - name: fleet.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: apm.${APP_HOST}.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.${APP_HOST}.wordpress.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
+          "  - name: fleet.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet.www.wordpress.local\n"\
+          "  - name: apm.www.wordpress.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.www.wordpress.local\n"\
+          "  - name: www.intranet.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.intranet.local\n"\
+          "  - name: lhs.intranet.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - lhs.intranet.local\n"\
+          > config/certs/instances.yml;
+          if [ ! -f config/certs/certs.zip ]; then
+            bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+          fi;
+          unzip -n config/certs/certs.zip -d config/certs;
+        fi;
+        echo "Setting file permissions"
+        chown -R root:root config/certs;
+        # find . -type d -exec chmod 750 \{\} \;;
+        find . -type d -exec chmod 755 \{\} \;; # logstash
+        find . -type f -exec chmod 640 \{\} \;;
+        find . -type f -name ca.crt -exec chmod 644 \{\} \;; # logstash
+        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;  # cerebro
+        find . -type f -name cerebro.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;  # cerebro
+        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;;     # wiki
+        find . -type f -name wiki.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;;     # wiki
+        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.crt -exec chmod 644 \{\} \;; # logstash
+        find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;; # logstash
+        if [ ! -f /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key ]; then
+          openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key
+        fi;
+        find . -type f -name logstash.pkcs8.key -exec chmod 644 \{\} \;; # logstash
+        echo "Waiting for Elasticsearch availability";
+        until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 20; done;
+        echo "Setting kibana_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        curl -s -X GET --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep "cluster_uuid";
+        #
+        # create role Stack Management > Roles standalone_agent https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html        
+        # <code>
+        #   {
+        #     "standalone_agent": {
+        #       "cluster": ["monitor"],
+        #       "indices": [
+        #         {
+        #           "names": ["logs-*-*", "metrics-*-*", "traces-*-*", "synthetics-*-*"],
+        #           "privileges": ["auto_configure", "create_doc", "create_index"]
+        #         }
+        #       ]
+        #     }
+        #   }
+        # </code>
+        #
+        # echo "Setting apm_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting fleet-server password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/fleet-server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # 
+        # echo "Setting beats_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting remote_monitoring_user password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        # echo "Setting logstash_system password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        #
+        # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
+        # echo "Setting logstash_writer password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        #
+        # echo "Setting enterprise_search password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
+        #
+        # https://www.elastic.co/guide/en/elasticsearch/reference/8.5/defining-roles.html
+        #
+        # echo "Waiting for Kibana availability";
+        # until curl -s --cacert config/certs/ca/ca.crt -I https://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q "HTTP/1.1 302 Found"; do sleep 30; done;
+        echo "All done!";
+      '
+    healthcheck:
+      test: ["CMD-SHELL", "[ -f config/certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.crt ]"]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+# use:
+# find . -name *.crt -exec bash -c 'openssl x509 -in {} -out ${1%.crt}.pem' - {} \;;
+#
+# It's all my devel certs. My ${INT_NETWORK} is 'nginx.logal' (see https://github.com/lhsradek/platypus-lhsdock/blob/main/.env.dist)
+#
+
+volumes:
+  esdata01:
+    external: true
+    name: "${APP_ID}-es01"
+  esdata02:
+    external: true
+    name: "${APP_ID}-es02"
+  esdata03:
+    external: true
+    name: "${APP_ID}-es03"
+  epsdata:
+    external: true
+    name: "${APP_ID}-eps"
+  fleet:
+    external: true
+    name: "${APP_ID}-fleet"
+  heartbeat:
+    external: true
+    name: "${APP_ID}-heartbeat"
+  kibana:
+    external: true
+    name: "${APP_ID}-kibana"
+  logstash:
+    external: true
+    name: "${APP_ID}-logstash"
+#    
+# You can remove this. It's for my prune volume deletion protection:
+#
+  wordpressdb99:
+    external: true
+    name: wordpress-db-99
+  wordpresspma99:
+    external: true
+    name: wordpress-pma-99
+  wordpressredis99:
+    external: true
+    name: wordpress-redis-99
+  wordpressfleet99:
+    external: true
+    name: wordpress-fleet-99
+  wordpresswp99:
+    external: true
+    name: wordpress-wp-99
+  tomboladb:
+    external: true
+    name: tombola-db
+  tombolafleet:
+    external: true
+    name: tombola-fleet

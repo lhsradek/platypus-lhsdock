@@ -1,0 +1,102 @@
+
+  weblhs-php:
+    depends_on:
+      setup:
+        condition: service_healthy
+    # Alpine Linux
+    # image: php:fpm-alpine
+    image: lhsradek/fpm:v1
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-php"
+    hostname: "weblhs-php.${INT_NETWORK}"
+    networks:
+      # for elastic and traefik in application/html/index.php
+      - default
+      # local network:
+      - intnet
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - CLUSTER_NAME=${CLUSTER_NAME}
+      - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTIC_APM_ENVIRONMENT=${STAGE}
+      - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
+      # - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
+      - ELASTIC_APM_SERVER_URL=http://fleet.${APP_HOST}.${INT_NETWORK}:8200
+      - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
+      - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIME_ZONE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./extras/php/phpSettings.conf:/usr/local/etc/php-fpm.d/zzz-phpSettings.conf
+      - ./application/html:/var/www/html:ro
+      - ./logs/nginx/php-error.log:/var/log/error.log
+      - ./logs/nginx/php-access.log:/var/log/access.log
+ 
+  weblhs-wiki:
+    # Alpine Linux
+    depends_on:
+      setup:
+        condition: service_healthy
+    image: lscr.io/linuxserver/dokuwiki:latest
+    container_name: dokuwiki
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-wiki"
+    hostname: "wiki.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik:
+      - default
+    environment:
+      - DOKUWIKI_PASSWORD=${ELASTIC_PASSWORD}
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIME_ZONE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
+      - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
+      - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt
+      - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key
+      - ./extras/dokuwiki/config:/config
+      - ./png/cerebro01.png:/config/dokuwiki/data/media/cerebro01.png
+      - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
+      - ./png/cerebro03.png:/config/dokuwiki/data/media/cerebro03.png
+      - ./png/elastic-apm-php.png:/config/dokuwiki/data/media/elastic-apm-php.png
+      - ./png/fleet01.png:/config/dokuwiki/data/media/fleet01.png
+      - ./png/fleet02.png:/config/dokuwiki/data/media/fleet02.png
+      - ./png/fleet03.png:/config/dokuwiki/data/media/fleet03.png
+      - ./png/fleet04.png:/config/dokuwiki/data/media/fleet04.png
+      - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
+      - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
+      - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
+      - ./png/kibana04.png:/config/dokuwiki/data/media/kibana04.png
+      - ./png/kibana05.png:/config/dokuwiki/data/media/kibana05.png
+      - ./png/kibana06.png:/config/dokuwiki/data/media/kibana06.png
+      - ./png/kibana07.png:/config/dokuwiki/data/media/kibana07.png
+      - ./png/kibana08.png:/config/dokuwiki/data/media/kibana08.png
+      - ./png/kibana09.png:/config/dokuwiki/data/media/kibana09.png
+      - ./png/kibana10.png:/config/dokuwiki/data/media/kibana10.png
+      - ./png/kibana11.png:/config/dokuwiki/data/media/kibana11.png
+      - ./png/kibana12.png:/config/dokuwiki/data/media/kibana12.png
+      - ./png/kibana13.png:/config/dokuwiki/data/media/kibana13.png
+      - ./png/kibana14.png:/config/dokuwiki/data/media/kibana14.png
+      - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
+      - ./png/manager.png:/config/dokuwiki/data/media/manager.png
+      - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png
+      - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
+      - ./png/traefik02.png:/config/dokuwiki/data/media/traefik02.png
+      - ./png/wiki.png:/config/dokuwiki/data/media/wiki.png
+      - ./logs/dokuwiki:/config/log
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.weblhs-wiki-public.rule=Host(`wiki.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.weblhs-wiki-public.entrypoints=https"
+      - "traefik.http.routers.weblhs-wiki-public.tls=true"
+      - "traefik.http.services.weblhs-wiki-${APP_ID}.loadbalancer.server.port=443"
+      - "traefik.http.services.weblhs-wiki-${APP_ID}.loadbalancer.server.scheme=https"

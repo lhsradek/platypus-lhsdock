@@ -13,6 +13,9 @@ create .env file
 See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
 
 #### run lhsdock
+```# bin/install```
+```# bin/setup```
+```# bin/setup-fleet``` or ```# bin/setup-eps```
 ```# bin/start```
 
 #### exec lhsdock
@@ -83,6 +86,8 @@ Creating lhsdock-eps       ... done
 #### stop lhsdock
 ```# bin/stop```
 
+#### remove lhsdock
+```# bin/all-remove```
 
 #### Reposirories
 

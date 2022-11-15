@@ -1,11 +1,13 @@
 .env
 lhsdock-v3.img
+docker-compose.local.yml
 logs/
 certs/
 context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
 extras/dokuwiki/config/dokuwiki/data/attic/
+extras/dokuwiki/config/dokuwiki/lib/images/
 extras/dokuwiki/config/dokuwiki/data/index/
 extras/dokuwiki/config/dokuwiki/data/media/
 extras/dokuwiki/config/dokuwiki/data/media_meta/

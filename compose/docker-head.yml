@@ -1,0 +1,12 @@
+version: '3.9'
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK}
+  intnet:
+    external: false
+    name: ${INT_NETWORK}
+    driver: bridge
+
+services:

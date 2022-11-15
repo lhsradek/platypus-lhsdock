@@ -1,0 +1,50 @@
+
+#
+# === L - Logstash ===
+#
+  logstash:
+    depends_on:
+      es02:
+        condition: service_healthy
+    # Ubuntu - logstash 
+    image: logstash:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-logstash"
+    hostname: "logstash.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    ports:
+      - ${LOGSTASH_PORT}:5044
+      # - 9600:9600
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt:ro
+      - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt:ro
+      - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key:ro
+      - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - logstash:/usr/share/logstash
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTIC_USERNAME=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
+      - LOGSTASH_KEYSTORE_PASS=${ENCRYPTION_KEYS}
+      - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
+      - LS_JAVA_OPTS=${LS_JAVA_OPTS}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}
+    # inspiration from https://github.com/elastic/stack-docker/blob/master/docker-compose.yml
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -I http://logstash.${APP_HOST}.${INT_NETWORK}:9600 | grep -q 'HTTP/1.1 200 OK'"]
+      # increase interval and timeout if api.ssl.enabled: true - and test:
+      # test: ["CMD-SHELL", "bin/logstash -t | grep -q 'Config Validation Result: OK'"]
+      interval: 10s
+      timeout: 10s
+      retries: 500

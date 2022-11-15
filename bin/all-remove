@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# exit 0;
+
+scriptPath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+rootPath="$(dirname "${scriptPath}")"
+
+RUNENV=$1
+
+if [[ -z "$RUNENV" ]]
+then
+    RUNENV="local"
+fi
+
+if [ -f "$rootPath/docker-compose.$RUNENV.yml" ]; then
+  echo "================= STOP ================="
+  ${scriptPath}/stop
+  echo "Nothing to do, docker-compose.$RUNENV.yml exist. Use 'rm docker-compose.$RUNENV.yml' first!"
+  echo
+else
+  echo "================= REMOVE ALL VOLUME ================="
+  if (docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-eps
+  fi
+  if (docker volume inspect "lhsdock-es01" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-es01
+  fi
+  if (docker volume inspect "lhsdock-es02" >/dev/null 2>&1); then
+      echo "remove:"
+    docker volume rm lhsdock-es02
+  fi
+  if (docker volume inspect "lhsdock-es03" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-es03
+  fi
+  if (docker volume inspect "lhsdock-fleet" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-fleet
+  fi
+  if (docker volume inspect "lhsdock-heartbeat" >/dev/null 2>&1); then
+      echo "remove:"
+    docker volume rm lhsdock-heartbeat
+  fi
+  if (docker volume inspect "lhsdock-kibana" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-kibana
+  fi
+  if (docker volume inspect "lhsdock-logstash" >/dev/null 2>&1); then
+      echo "remove:"
+      docker volume rm lhsdock-logstash
+  fi
+fi
