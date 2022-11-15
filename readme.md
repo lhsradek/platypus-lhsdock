@@ -110,7 +110,7 @@ Creating lhsdock-eps       ... done
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
 
 With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
-which I don't use much anymore, the Elastic Certificate Tool is used by webservice 'setup'.
+which I don't use much anymore, the Elastic Certificate Tool is used by webservice [setup](https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-setup.yml).
 
 ```# perl /root/bin/platypus.pl```
 
@@ -150,6 +150,13 @@ Heartbeat is in a separate container, it tests the necessary ones before startin
 with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
 its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
 the police itself
+
+##### Metricbeat
+
+The stand-alone Metricbeat is in a separate cointainer too. Metricbeat is intended to be monitored by services that lack police
+integration such as Kibana, Elasticsearch and also so that beats in Elastic-agent, Heartbeat or Enterprise Search are not monitored by
+themselves, which is shown in 'Kibana - Monitor the Stack' in red or the service is completely missing (Kibana). When the integrations are completed and can be set in the agent instead of advice on how to turn on the service in Metric beat, then a separate Metricbeat will not
+be necessary. In 'Monitor the Stack' is often advised: 'Monitor with another Metricbeat.' That's what this Metricbeat is for.
 
 You will find an integrations when you first start kibana and they will have polices set.
 
