@@ -379,7 +379,7 @@
         # echo "Setting enterprise_search password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
-        # https://www.elastic.co/guide/en/elasticsearch/reference/8.5/defining-roles.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
         #
         # echo "Waiting for Kibana availability";
         # until curl -s --cacert config/certs/ca/ca.crt -I https://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q "HTTP/1.1 302 Found"; do sleep 30; done;
