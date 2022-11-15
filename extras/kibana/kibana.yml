@@ -242,6 +242,7 @@ xpack:
                     value: /hostfs
               - type: winlog
                 enabled: false
+          # https://zharif.my/logging-elk-cf/
           - name: nginx_nginx-1
             package:
               name: nginx

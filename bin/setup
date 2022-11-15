@@ -34,8 +34,11 @@ if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
   echo "Nothing to do, docker-compose.$RUNENV.yml exists. Remove it first!"
   exit 1;
 else
+  echo "================= MAKE docker-compose.$RUNENV.yml ================="
+  echo	
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-elastic.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-kibana.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-heartbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
@@ -46,5 +49,6 @@ else
   echo "================= START SETUP ================"
   ${scriptPath}/start
 
-  echo "Set policies and Fleet Server in KIBANA, start 'bin/setup-fleet' for Fleet Server or 'bin/setup-eps' for Enterprise Search"
+  echo "Visit Kibana, change integrations, policies and set Fleet Server by readme or dokuwiki from this project."
+  echo "Start 'bin/setup-fleet' for Fleet Server or 'bin/setup-eps' for FleetServer and Enterprise Search."
 fi

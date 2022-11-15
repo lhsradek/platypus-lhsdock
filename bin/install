@@ -55,7 +55,7 @@ if !(docker volume inspect "lhsdock-logstash" >/dev/null 2>&1); then
     echo "create:"
     docker volume create lhsdock-logstash
 fi
-
+echo
 echo "================= MAKE docker-compose.$RUNENV.yml ================="
 
 if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
@@ -80,5 +80,5 @@ else
   echo
   echo "Set CLUSTER-UUID to '.env' and start 'bin/setup'"
   echo
-  echo "Start 'bin/setup' and set Fleet Server in Kibana"
+  echo "Start 'bin/setup'"
 fi
