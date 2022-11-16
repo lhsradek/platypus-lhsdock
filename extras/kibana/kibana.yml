@@ -14,19 +14,19 @@ server:
 monitoring:
   ui:
     enabled: true
-    # container:
-    #   elasticsearch.enabled: true
-    #   logstash.enabled: true
+    container:
+      elasticsearch.enabled: true
+      logstash.enabled: true
     ccs.enabled: false
-    # elasticsearch:
-    #   hosts: 
-    #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    #     - "https://es02.${APP_HOST}.${APP_NET}:9201"
-    #     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-    #   username: "${ELASTICSEARCH_USERNAME}"
-    #   password: "${ELASTICSEARCH_PASSWORD}"
-    #   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    #   requestTimeout: 240000
+    elasticsearch:
+      hosts: 
+        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+        - "https://es02.${APP_HOST}.${APP_NET}:9201"
+        # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+      username: "${ELASTICSEARCH_USERNAME}"
+      password: "${ELASTICSEARCH_PASSWORD}"
+      ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      requestTimeout: 240000
   # https://www.elastic.co/guide/en/kibana/master/monitoring-settings-kb.html
   # https://www.elastic.co/guide/en/kibana/master/monitoring-metricbeat.html
   # https://www.elastic.co/guide/en/kibana/master/monitor-troubleshooting.html
@@ -36,7 +36,7 @@ monitoring:
 elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    # - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
