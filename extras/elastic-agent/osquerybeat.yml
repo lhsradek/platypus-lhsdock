@@ -123,7 +123,7 @@ processors:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-monitoring.enabled: true
+monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
 # Osquerybeat instance will appear in the Stack Monitoring UI. If output.elasticsearch

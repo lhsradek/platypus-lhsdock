@@ -12,11 +12,12 @@ server:
     key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
       
 monitoring:
+  cluster_uuid: "${CLUSTER_UUID}"
   ui:
     enabled: true
     container:
-      elasticsearch.enabled: true
-      logstash.enabled: true
+      elasticsearch.enabled: false
+      logstash.enabled: false
     ccs.enabled: false
     elasticsearch:
       hosts: 
