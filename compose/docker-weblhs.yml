@@ -21,11 +21,6 @@
       - intnet
     ports:
       - 4443:443
-    environment:
-      - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
-      - APP_NET=${INT_NETWORK}
-      - TZ=${TIME_ZONE}
     volumes:
       - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
       - ./extras/nginx/htpasswd:/etc/nginx/conf.d/htpasswd:ro
@@ -54,6 +49,11 @@
       - wordpressfleet99:/root/bin/volume/wordpress-fleet-99:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
       - tombolafleet:/root/bin/volume/tombola-fleet:ro
+    environment:
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - TZ=${TIME_ZONE}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"

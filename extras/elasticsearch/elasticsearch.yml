@@ -1,0 +1,23 @@
+cluster.initial_master_nodes: es01,es02
+# cluster.initial_master_nodes: es01,es02,es03
+
+cluster.name: "${CLUSTER_NAME}"
+network.host: 0.0.0.0
+node.roles: [master, data, ingest, ml, remote_cluster_client]
+bootstrap.memory_lock: true
+
+xpack:
+  monitoring.collection.enabled: false
+  license.self_generated.type: "${LICENSE}"
+  security:
+    authc.api_key.enabled: true        
+    http:
+      ssl:
+        enabled: true
+        verification_mode: "${VERIFICATION_MODE}"
+        certificate_authorities: "certs/ca/ca.crt"
+    transport:
+      ssl:
+        enabled: true
+        verification_mode: "${VERIFICATION_MODE}"
+        certificate_authorities: "certs/ca/ca.crt"

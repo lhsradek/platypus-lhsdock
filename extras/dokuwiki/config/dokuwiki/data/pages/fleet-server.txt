@@ -97,8 +97,8 @@ For Client SSL certificate key output from
 cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 </code>
 
-To logstash output - Advanced YAML configuration You can optional add:
-<code>ssl.verification_mode: none</code>
+To logstash output - Advanced YAML configuration add:
+<code>ssl.verification_mode: certificate</code>
 
 Default for agent integrations interferes with APM, don't change it
 

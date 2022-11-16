@@ -50,5 +50,5 @@ else
   ${scriptPath}/start
 
   echo "Visit Kibana, change integrations, policies and set Fleet Server by readme.md or dokuwiki from this project."
-  echo "Start 'bin/setup-fleet' for Fleet Server or 'bin/setup-eps' for FleetServer and Enterprise Search."
+  echo "Start 'bin/setup-fleet' for Fleet Server or 'bin/setup-eps' for Fleet Server and Enterprise Search."
 fi

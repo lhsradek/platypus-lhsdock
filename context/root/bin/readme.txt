@@ -95,17 +95,17 @@ Creating lhsdock-eps       ... done
 | ----------------------------------------------------- | ---------- | ----------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB      | lhsradek/lhsdock
 | lhsradek/lhsdock                                      | v3         | 25 - 61MB   | nginx:alpine
-| php                                                   | fpm-alpine | 73.4MB      |
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.5.0      | 1.29GB      |
-| docker.elastic.co/kibana/kibana                       | 8.5.0      | 715MB       |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.5.0      | 1.45GB      |
-| logstash                                              | 8.5.0      | 753MB       |
-| docker.elastic.co/beats/elastic-agent                 | 8.5.0      | 2.07GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics) | 8.5.0      | 3.59GB      |
-| docker.elastic.co/apm/apm-server                      | 8.5.0      | 230MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.5.0      | 466MB       |
-| docker.elastic.co/beats/heartbeat                     | 8.5.0      | 2.1GB       |
-| docker.elastic.co/beats/filebeat                      | 8.5.0      | 406MB       |
+| lhsradek/fpm                                          | v1         | 609MB       | php:fpm-alpine
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
+| docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
+| logstash                                              | 8.5.1      | 753MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.5.0      | 2.04GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics) | 8.5.1      | 3.58GB      |
+| docker.elastic.co/apm/apm-server                      | 8.5.1      | 230MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.5.1      | 466MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.5.1      | 2.6GB       |
+| docker.elastic.co/beats/filebeat                      | 8.5.1      | 394MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
 | lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
 
@@ -195,9 +195,9 @@ For Client SSL certificate key output from
 
 ```cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key```
 
-To logstash output - Advanced YAML configuration You can optional add:
+To logstash output - Advanced YAML configuration add:
 
-```ssl.verification_mode: none```
+```ssl.verification_mode: certificate```
 
 Default for agent integrations interferes with APM, don't change it
 

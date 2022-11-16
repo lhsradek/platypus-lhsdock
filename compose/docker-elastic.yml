@@ -24,6 +24,7 @@
       - 9300:9300
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch
@@ -31,28 +32,16 @@
       - node.name=es01
       - http.port=9200
       - transport.port=9300
-      - node.roles=[master, data, ingest, ml, remote_cluster_client]
-      - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es02:9301
       # - discovery.seed_hosts=es02:9301,es03:9302
-      - bootstrap.memory_lock=true
-      - xpack.security.enabled=true
-      - xpack.security.authc.api_key.enabled=true        
-      - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.crt
-      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.http.ssl.verification_mode=${VERIFICATION_MODE}
-      - xpack.security.transport.ssl.enabled=true
       - xpack.security.transport.ssl.key=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.transport.ssl.certificate=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.crt
-      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.transport.ssl.verification_mode=${VERIFICATION_MODE}
-      - xpack.license.self_generated.type=${LICENSE}
+      - CLUSTER_NAME=${CLUSTER_NAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ES_JAVA_OPTS=${ES01_JAVA_OPTS}
+      - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
     labels:
       - "traefik.enable=true"
@@ -94,6 +83,7 @@
       - 9301:9301
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
@@ -101,28 +91,16 @@
       - node.name=es02
       - http.port=9201
       - transport.port=9301
-      - node.roles=[master, data, ingest, ml, remote_cluster_client]
-      - cluster.name=${CLUSTER_NAME}
-      - cluster.initial_master_nodes=es01,es02
-      # - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es01:9300
       # - discovery.seed_hosts=es01:9300,es03:9302
-      - bootstrap.memory_lock=true
-      - xpack.security.enabled=true
-      - xpack.security.authc.api_key.enabled=true        
-      - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.crt
-      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.http.ssl.verification_mode=${VERIFICATION_MODE}
-      - xpack.security.transport.ssl.enabled=true
       - xpack.security.transport.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.transport.ssl.certificate=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.crt
-      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-      - xpack.security.transport.ssl.verification_mode=${VERIFICATION_MODE}
-      - xpack.license.self_generated.type=${LICENSE}
+      - CLUSTER_NAME=${CLUSTER_NAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ES_JAVA_OPTS=${ES02_JAVA_OPTS}
+      - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
     labels:
       - "traefik.enable=true"
@@ -168,6 +146,7 @@
 #       - 9302:9302
 #     volumes:
 #       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
 #       - ./certs:/usr/share/elasticsearch/config/certs
 #       - ./logs/es03:/usr/share/elasticsearch/logs
 #       - esdata03:/usr/share/elasticsearch
@@ -175,26 +154,15 @@
 #       - node.name=es03
 #       - http.port=9202
 #       - transport.port=9302
-#       - node.roles=[master, data, ingest, ml, remote_cluster_client]
-#       - cluster.name=${CLUSTER_NAME}
-#       - cluster.initial_master_nodes=es01,es02,es03
 #       - discovery.seed_hosts=es01:9300,es02:9301
-#       - bootstrap.memory_lock=true
-#       - xpack.security.enabled=true
-#       - xpack.security.authc.api_key.enabled=true        
-#       - xpack.security.http.ssl.enabled=true
 #       - xpack.security.http.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
 #       - xpack.security.http.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
-#       - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.http.ssl.verification_mode=${VERIFICATION_MODE}
-#       - xpack.security.transport.ssl.enabled=true
 #       - xpack.security.transport.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
 #       - xpack.security.transport.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
-#       - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
-#       - xpack.security.transport.ssl.verification_mode=${VERIFICATION_MODE}
-#       - xpack.license.self_generated.type=${LICENSE}
+#       - CLUSTER_NAME=${CLUSTER_NAME}
 #       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
 #       - ES_JAVA_OPTS=${ES03_JAVA_OPTS}
+#       - LICENSE=${LICENSE}
 #       - VERIFICATION_MODE=${VERIFICATION_MODE}
 #     # Traefik redirects the stray query directly to elastic. It is nice that the running service can be seen in traffic
 #     labels:

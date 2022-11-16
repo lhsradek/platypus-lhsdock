@@ -14,6 +14,7 @@ fleet:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "${VERIFICATION_MODE}"
 
+xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

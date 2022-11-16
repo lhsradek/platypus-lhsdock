@@ -6,6 +6,7 @@
 #http.named_pipe.user:
 #http.named_pipe.security_descriptor:
 
+xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

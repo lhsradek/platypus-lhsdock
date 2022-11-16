@@ -123,6 +123,7 @@ processors:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
+xpack.monitoring.enabled: false
 monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this

@@ -10,24 +10,23 @@ server:
     certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
     key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
-      
+
 monitoring:
-  cluster_uuid: "${CLUSTER_UUID}"
   ui:
     enabled: true
-    container:
-      elasticsearch.enabled: false
-      logstash.enabled: false
+    # container:
+    #   elasticsearch.enabled: true
+    #   logstash.enabled: true
     ccs.enabled: false
-    elasticsearch:
-      hosts: 
-        - "https://es01.${APP_HOST}.${APP_NET}:9200"
-        - "https://es02.${APP_HOST}.${APP_NET}:9201"
-        # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-      username: "${ELASTICSEARCH_USERNAME}"
-      password: "${ELASTICSEARCH_PASSWORD}"
-      ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      requestTimeout: 240000
+    # elasticsearch:
+    #   hosts: 
+    #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    #     - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    #     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    #   username: "${ELASTICSEARCH_USERNAME}"
+    #   password: "${ELASTICSEARCH_PASSWORD}"
+    #   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    #   requestTimeout: 240000
   # https://www.elastic.co/guide/en/kibana/master/monitoring-settings-kb.html
   # https://www.elastic.co/guide/en/kibana/master/monitoring-metricbeat.html
   # https://www.elastic.co/guide/en/kibana/master/monitor-troubleshooting.html
@@ -49,6 +48,7 @@ enterpriseSearch:
   accessCheckTimeout: 60000
 
 xpack:
+  monitoring.enabled: false
   reporting:
     kibanaServer.hostname: "kibana"
     roles.enabled: false
@@ -95,7 +95,7 @@ xpack:
 # For Client SSL certificate key:
 # cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 #
-# To logstash output - Advanced YAML configuration You can optional add:
+# To logstash output - Advanced YAML configuration add:
 # ssl.verification_mode: none
 #
 # Default for agent integrations interferes with APM, don't change it

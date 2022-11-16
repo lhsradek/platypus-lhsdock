@@ -12,12 +12,6 @@
     networks:
       # for traefik:
       - default
-    environment:
-      - DOKUWIKI_PASSWORD=${ELASTIC_PASSWORD}
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TIME_ZONE}
-      - VERIFICATION_MODE=${VERIFICATION_MODE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
@@ -54,6 +48,12 @@
       - ./png/traefik02.png:/config/dokuwiki/data/media/traefik02.png
       - ./png/wiki.png:/config/dokuwiki/data/media/wiki.png
       - ./logs/dokuwiki:/config/log
+    environment:
+      - DOKUWIKI_PASSWORD=${ELASTIC_PASSWORD}
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIME_ZONE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"

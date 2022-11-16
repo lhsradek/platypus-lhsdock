@@ -48,7 +48,7 @@ else
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-setup.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo
-  echo "================= START SETUP WITH FLLET SERVER AND ENTERPRISE SEARCH ================"
+  echo "================= START SETUP WITH FLEET SERVER AND ENTERPRISE SEARCH ================"
   ${scriptPath}/start
 
   echo "Use 'bin/stop for Stop, 'bin/start' for Start or 'bin/restart' for Restart"

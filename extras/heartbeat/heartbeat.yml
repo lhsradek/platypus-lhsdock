@@ -4,6 +4,7 @@ http.enabled: true
 http.port: 5066
 http.host: "0.0.0.0"
 
+xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

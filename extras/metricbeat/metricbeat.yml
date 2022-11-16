@@ -5,8 +5,9 @@ http.port: 5066
 http.host: "0.0.0.0"
 #http.host: "metricbeat.nginx.local"
 
+xpack.monitoring.enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 metricbeat.config.modules:
