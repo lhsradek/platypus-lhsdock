@@ -10,7 +10,7 @@
 # =========================== Modules configuration ============================
 
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
 metricbeat.config.modules:

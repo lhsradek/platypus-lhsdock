@@ -6,6 +6,10 @@
 #http.named_pipe.user:
 #http.named_pipe.security_descriptor:
 
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
 logging:
   to_stderr: true # Force the logging output to stderr
   #level: trace

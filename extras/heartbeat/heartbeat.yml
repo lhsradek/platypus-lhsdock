@@ -5,7 +5,7 @@ http.port: 5066
 http.host: "0.0.0.0"
 
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
 heartbeat.config.monitors:
