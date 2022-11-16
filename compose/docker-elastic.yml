@@ -24,7 +24,7 @@
       - 9300:9300
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch

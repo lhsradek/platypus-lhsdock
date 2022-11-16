@@ -5,7 +5,33 @@ use File::Path qw(make_path);
 use File::Copy;
 use Crypt::OpenSSL::X509;
  
-=head1 DESCRIPTION
+=head1 LICENSE
+/**
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2022 Radek Kádner
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+=cut
+
+=head1 TREE
 /**
  *
  * ├── demoCA
@@ -41,45 +67,16 @@ my $demo = "$path/openssl";
 
 # virtuals's names in array
 my @virts = qw/lhs.intranet.local
-alma.intranet.local
-lhs.alma.local
-alma.alma.local
-alma2.intranet.local
-alma2.alma.local
-alma8.intranet.local
-alma8.alma.local
-mamka.intranet.local
-www.alma.local
 docker.intranet.local
 docker.traefik.local
-docker.phpmyadmin.local
-docker.mysql.local
 docker.nginx.local
 docker.tomcat.local
-docker.postgres.local
-docker.redis.local
 docker.wordpress.local
 pma.docker.wordpress.local
-docker5.intranet.local
-docker5.traefik.local
-docker5.phpmyadmin.local
-docker5.mysql.local
-docker5.nginx.local
-docker5.tomcat.local
-docker5.postgres.local
-docker5.redis.local
-docker5.wordpress.local
-pma.docker5.wordpress.local
-docker5.intranet.local
-docker5.traefik.local
 www.intranet.local
 www.traefik.local
-www.phpmyadmin.local
-www.mysql.local
 www.nginx.local
 www.tomcat.local
-www.postgres.local
-www.redis.local
 www.wordpress.local
 pma.www.wordpress.local
 /;

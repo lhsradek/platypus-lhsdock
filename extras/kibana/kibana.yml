@@ -86,7 +86,7 @@ xpack:
 #
 # Specify hosts: logstash.docker.nginx.local:5044
 #
-# For Server SSL certificate authorities (optional):
+# For Server SSL certificate authorities:
 # cat ./certs/ca/ca.crt
 #
 # For Client SSL certificate:
@@ -96,7 +96,7 @@ xpack:
 # cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 #
 # To logstash output - Advanced YAML configuration add:
-# ssl.verification_mode: none
+# ssl.verification_mode: certificate
 #
 # Default for agent integrations interferes with APM, don't change it
 #
