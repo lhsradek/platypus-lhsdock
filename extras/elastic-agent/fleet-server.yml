@@ -1,18 +1,17 @@
 # Enables the stats endpoint under http://localhost:5601 by default.
 # Additional stats can be found under http://127.0.0.1:5066/stats and http://127.0.0.1:5066/state
-#http.enabled: true
-#http.host: 0.0.0.0
-#http.port: 5066
+http.enabled: true
+http.host: 0.0.0.0
+http.port: 5066
 #http.named_pipe.user:
 #http.named_pipe.security_descriptor:
 
-xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
-logging:
-  to_stderr: true # Force the logging output to stderr
+# logging:
+#  to_stderr: true # Force the logging output to stderr
   #level: trace
 
 fleet:
@@ -30,7 +29,6 @@ outputs:
     #api_key: "${AGENT_API_KEY}"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    #service_token: '${ELASTICSEARCH_SERVICE_TOKEN}'
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

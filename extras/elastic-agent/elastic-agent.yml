@@ -14,7 +14,6 @@ fleet:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "${VERIFICATION_MODE}"
 
-xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -36,7 +35,7 @@ monitoring:
 #     # exposes a /buffer endpoint that holds a history of recent metrics
 #     buffer.enabled: false
 
-agent.logging.to_stderr: true
+# agent.logging.to_stderr: true
 
 # agent.download:
 #   # source of the artifacts, requires elastic like structure and naming of the binaries

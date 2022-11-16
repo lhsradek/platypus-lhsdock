@@ -7,8 +7,7 @@
       es02:
         condition: service_healthy
     # Ubuntu - logstash 
-    image: logstash:8.5.0
-    # image: logstash:${STACK_VERSION}
+    image: logstash:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-logstash"
     hostname: "logstash.${APP_HOST}.${INT_NETWORK}"

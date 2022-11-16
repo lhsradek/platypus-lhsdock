@@ -99,7 +99,7 @@ Creating lhsdock-eps       ... done
 | docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
 | docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
 | docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
-| logstash                                              | 8.5.0      | 753MB       |
+| logstash                                              | 8.5.1      | 746MB       |
 | docker.elastic.co/beats/elastic-agent                 | 8.5.1      | 2.04GB      | 
 | docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.5.1      | 3.58GB      |
 | docker.elastic.co/apm/apm-server                      | 8.5.1      | 230MB       |
@@ -126,7 +126,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | ```es03.www.nginx.local```           |
 | kibana               | 5601/tcp               | lhsdock-kibana     | ```kibana.www.nginx.local```         |
 | apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm        | ```apm.nginx.local```                | *
-| metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | 
+| metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | * 
 | filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.nginx.local```           | *
 | heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | 
 | enterprise-search    | 3002/tcp               | lhsdock-eps        | ```eps.nginx.local```                | *
@@ -150,13 +150,6 @@ Heartbeat is in a separate container, it tests the necessary ones before startin
 with elasticsearch. Metricbeat in the elastic agent requires kibana, so the Fleet Server starts only after starting Kibana and
 its heartbeat is only used if the elastic synthetic police is set or another monitoring is manually set - it will introduce
 the police itself
-
-##### Metricbeat
-
-The stand-alone Metricbeat is in a separate cointainer too. Metricbeat is intended to be monitored services that lack police
-integration such as Kibana, Elasticsearch and also so that beats in Elastic-agent, Heartbeat or Enterprise Search are not monitored by
-themselves, which is shown in 'Kibana - Monitor the Stack' in red or the service is completely missing (Kibana). When the integrations are completed and can be set in the agent instead of advice on how to turn on the service in Metricbeat, then a separate Metricbeat will not
-be necessary. In 'Monitor the Stack' is often advised: 'Monitor with another Metricbeat.' That's what this Metricbeat is for.
 
 You will find an integrations when you first start Kibana and they will have polices set. [See settings.](https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml)
 

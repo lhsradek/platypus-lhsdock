@@ -10,6 +10,11 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
+# http.enabled: true
+# http.port: 5067
+# http.host: "0.0.0.0"
+# http.host: "file.nginx.local"
+
 # ============================== Filebeat inputs ===============================
 
 filebeat.inputs:
@@ -209,7 +214,6 @@ logging.selectors: ["*"]
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
-xpack.monitoring.enabled: false
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -221,17 +225,17 @@ monitoring:
 # output configuration, so if you have the Elasticsearch output configured such
 # that it is pointing to your Elasticsearch monitoring cluster, you can simply
 # uncomment the following line.
-monitoring.elasticsearch:
-  hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  protocol: "https"
-  username: "${ELASTICSEARCH_USERNAME}"
-  password: "${ELASTICSEARCH_PASSWORD}"
-  ssl:
-    enabled: true
-    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "${VERIFICATION_MODE}"
-
+# monitoring.elasticsearch:
+#   hosts: 
+#     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+#   protocol: "https"
+#   username: "${ELASTICSEARCH_USERNAME}"
+#   password: "${ELASTICSEARCH_PASSWORD}"
+#   ssl:
+#     enabled: true
+#     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#     verification_mode: "${VERIFICATION_MODE}"
+ 
 # ============================== Instrumentation ===============================
 
 # Instrumentation support for the filebeat.

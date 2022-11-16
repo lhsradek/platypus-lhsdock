@@ -390,8 +390,6 @@
       interval: 10s
       timeout: 10s
       retries: 120
-# use:
-# find . -name *.crt -exec bash -c 'openssl x509 -in {} -out ${1%.crt}.pem' - {} \;;
 #
 # It's all my devel certs. My ${INT_NETWORK} is 'nginx.logal' (see https://github.com/lhsradek/platypus-lhsdock/blob/main/.env.dist)
 #

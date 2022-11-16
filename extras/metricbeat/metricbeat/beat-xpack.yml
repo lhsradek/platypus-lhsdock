@@ -4,7 +4,11 @@
 - module: beat
   xpack.enabled: true
   period: 10s
-  hosts: ["metricbeat.${APP_NET}:5066", "heartbeat.${APP_NET}:5066"]
+  hosts: 
+    - "fleet.${APP_HOST}.${APP_NET}:5066"
+    - "fleet.${APP_HOST}.${APP_NET}:5067"
+    - "metricbeat.${APP_NET}:5066"
+    - "heartbeat.${APP_NET}:5066"
   #sername: "beats_system"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"

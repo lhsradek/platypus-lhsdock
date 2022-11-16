@@ -701,12 +701,14 @@ output.elasticsearch:
 # Stats can be access through http://localhost:5066/stats. For pretty JSON output
 # append ?pretty to the URL.
 
+#=============================== HTTP Endpoint ===============================
+
 # Defines if the HTTP endpoint is enabled.
 #http.enabled: false
-
+#http.enabled: true
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
 #http.host: localhost
-
+#http.host: "0.0.0.0"
 # Port on which the HTTP endpoint will bind. Default is 5066.
 #http.port: 5066
 
@@ -716,9 +718,8 @@ output.elasticsearch:
 # cluster.  This requires x-pack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
-xpack.monitoring.enabled: false   
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
 # Most settings from the Elasticsearch output are accepted here as well.
@@ -726,21 +727,16 @@ monitoring:
 # Any setting that is not set is automatically inherited from the Elasticsearch
 # output configuration. This means that if you have the Elasticsearch output configured,
 # you can simply uncomment the following line.
-#monitoring.elasticsearch:
-
-  # Protocol - either `http` (default) or `https`.
-  #protocol: "https"
-
-  # Authentication credentials - either API key or username/password.
-  #api_key: "id:api_key"
-  #username: "elastic"
-  #password: "changeme"
-
-  # Array of hosts to connect to.
-  # Scheme and port can be left out and will be set to the default (`http` and `9200`).
-  # In case you specify and additional path, the scheme is required: `http://localhost:9200/path`.
-  # IPv6 addresses should always be defined as: `https://[2001:db8::1]:9200`.
-  #hosts: ["localhost:9200"]
+monitoring:
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "certificate"
 
   # Set gzip compression level.
   #compression_level: 0

@@ -123,13 +123,14 @@ processors:
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-xpack.monitoring.enabled: false
-monitoring.enabled: false
 
 # Sets the UUID of the Elasticsearch cluster under which monitoring data for this
 # Osquerybeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
-monitoring.cluster_uuid: "${CLUSTER_UUID}"
+
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well.

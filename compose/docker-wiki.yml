@@ -2,7 +2,7 @@
   weblhs-wiki:
     # Alpine Linux
     depends_on:
-      setup:
+      weblhs:
         condition: service_healthy
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki

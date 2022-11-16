@@ -12,24 +12,24 @@ server:
     key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
 
 monitoring:
-  ui:
-    enabled: true
-    container:
-      elasticsearch.enabled: true
-      logstash.enabled: true
-    ccs.enabled: false
-    elasticsearch:
-      hosts: 
-        - "https://es01.${APP_HOST}.${APP_NET}:9200"
-        - "https://es02.${APP_HOST}.${APP_NET}:9201"
-        # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-      username: "${ELASTICSEARCH_USERNAME}"
-      password: "${ELASTICSEARCH_PASSWORD}"
-      ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      requestTimeout: 240000
   # https://www.elastic.co/guide/en/kibana/master/monitoring-settings-kb.html
   # https://www.elastic.co/guide/en/kibana/master/monitoring-metricbeat.html
   # https://www.elastic.co/guide/en/kibana/master/monitor-troubleshooting.html
+  ui:
+    enabled: true
+    ccs.enabled: false
+    # container:
+    #   elasticsearch.enabled: true
+    #   logstash.enabled: true
+    # elasticsearch:
+    #   hosts: 
+    #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    #     - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    #     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    #   username: "${ELASTICSEARCH_USERNAME}"
+    #   password: "${ELASTICSEARCH_PASSWORD}"
+    #   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    #   requestTimeout: 240000
   kibana.collection.enabled: false
 
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
@@ -153,16 +153,16 @@ xpack:
         version: latest
       - name: log
         version: latest
-      - name: logstash
-        version: latest
-      - name: osquery
-        version: latest
-      - name: osquery_manager
+       - name: logstash
         version: latest
       - name: synthetics
         version: latest
       - name: spring_boot
         version: latest
+      # - name: osquery
+      #   version: latest
+      # - name: osquery_manager
+      #   version: latest
       
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
@@ -336,30 +336,30 @@ xpack:
               name: synthetics
             description: Elastic Synthetics
             id: synthetics_nginx-1
-          - name: osquery_logs_nginx-1
-            package:
-              name: osquery
-            description: Osquery Logs
-            id: osquery_logs_nginx-1
-            inputs:
-              - type: logfile
-                enabled: false
-                streams:
-                  - data_stream:
-                      dataset: osquery.result
-                    enabled: false
-                    vars:
-                      - name: paths
-                        value:
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/osquerybeat-${STACK_VERSION}-linux-x86_64/logs/osqueryd.results.log
-                      - name: tags
-                        value:
-                          - osquery
-          - name: osquery_manager_nginx-1
-            package:
-              name: osquery_manager
-            description: Osquery Manager
-            id: osquery_manager_nginx-1
+          # - name: osquery_logs_nginx-1
+          #   package:
+          #     name: osquery
+          #   description: Osquery Logs
+          #   id: osquery_logs_nginx-1
+          #   inputs:
+          #     - type: logfile
+          #       enabled: false
+          #       streams:
+          #         - data_stream:
+          #             dataset: osquery.result
+          #           enabled: false
+          #           vars:
+          #             - name: paths
+          #               value:
+          #                 - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/osquerybeat-${STACK_VERSION}-linux-x86_64/logs/osqueryd.results.log
+          #             - name: tags
+          #               value:
+          #                 - osquery
+          # - name: osquery_manager_nginx-1
+          #   package:
+          #     name: osquery_manager
+          #   description: Osquery Manager
+          #   id: osquery_manager_nginx-1
 
       #
       # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql
