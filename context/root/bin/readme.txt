@@ -137,8 +137,16 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 ##### Cluster uuid
 
-Set ```CLUSTER_UUID```  in the ```.env``` before the first
-launch of the Fleet Server. Setup writes it on the console.
+Set ```CLUSTER_UUID```  in the ```.env``` before the first launch of the Fleet Server.
+
+```
+# curl -s -X GET --cacert certs/ca/ca.crt -u elastic:[KIBANA_PASSWORD] https://es01.docker.nginx.local:9200/?pretty | grep cluster_uuid
+```
+
+display such like this:
+```
+  "cluster_uuid" : "Eft1LUxGR5af29XSygQMHA",
+```
 
 In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
 
