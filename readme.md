@@ -92,7 +92,7 @@ Creating lhsdock-eps       ... done
 
 | REPOSITORY                                            |  TAG       | SIZE        | OPTIONAL
 | ----------------------------------------------------- | ---------- | ----------- | ----------------
-| nginx:alpine                                          | latest     | 23.5MB      | [[https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile|platypus-lhsdock]]
+| nginx:alpine                                          | latest     | 23.5MB      | [platypus-lhsdock](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile)
 | [lhsradek/platypus-fpm](https://github.com/lhsradek/platypus-lhsfpm) [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm)  | v1         | 609MB       | php:fpm-alpine
 | docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
 | docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
