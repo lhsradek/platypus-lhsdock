@@ -47,7 +47,7 @@ if [[ -f "$rootPath/docker-compose.extras.yml" ]]; then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-mkdir -p logs logs/es01 logs/es02 logs/es03 logs/eps logs/kibana logs/fleet logs/cerebro logs/metricbet logs/nginx logs/nginx logs/dokuwiki logs/dokuwiki/php
+mkdir -p logs logs/es01 logs/es02 logs/es03 logs/eps logs/fleet logs/cerebro logs/logstash logs/kibana logs/metricbet logs/nginx logs/nginx logs/dokuwiki logs/dokuwiki/php
 touch logs/nginx/php-access.log
 touch logs/nginx/php-error.log
 touch logs/dokuwiki/php/access.log

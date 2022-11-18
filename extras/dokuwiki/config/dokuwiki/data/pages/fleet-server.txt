@@ -12,13 +12,13 @@
 ==== Cluster uuid ====
 
 Set **CLUSTER_UUID** in the **.env** before the first
-launch of the Fleet Server. Setup writes it on the console or is on [[https://es01.docker.nginx.local:9200/?pretty|elasticsearch]].
+launch of the Fleet Server. On [[https://es01.docker.nginx.local:9200/?pretty|elasticsearch]].
 
 <code json>
 {
   "name" : "es01",
   "cluster_name" : "docker-cluster",
-  "cluster_uuid" : "S_tzwXP9S1-I4I9cIic1dA",
+  "cluster_uuid" : "Eft1LUxGR5af29XSygQMHA",
   "version" : {
     "number" : "8.5.0",
     "build_flavor" : "default",
@@ -34,10 +34,20 @@ launch of the Fleet Server. Setup writes it on the console or is on [[https://es
 }
 </code>
 
+<code bash>
+# curl -s -X GET --cacert certs/ca/ca.crt -u elastic:[KIBANA_PASSWORD] https://es01.docker.nginx.local:9200/?pretty | grep cluster_uuid
+</code>
+
+display such like this:
+<code json>
+  "cluster_uuid" : "Eft1LUxGR5af29XSygQMHA",
+</code>
+
+
 In env.:
 
 <code ini>
-CLUSTER_UUID=S_tzwXP9S1-I4I9cIic1dA
+CLUSTER_UUID=Eft1LUxGR5af29XSygQMHA
 </code>
 
 ==== Kibana manages Fleet Server ====
