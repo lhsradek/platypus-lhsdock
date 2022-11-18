@@ -18,6 +18,12 @@ monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
+agent.grpc:
+  # listen address for the GRPC server that spawned processes connect back to.
+  address: 0.0.0.0
+  # port for the GRPC server that spawned processes connect back to.
+  port: 6789
+
 # https://www.elastic.co/guide/en/fleet/current/elastic-agent-monitoring-configuration.html
 # agent.monitoring:
 #   # enabled turns on monitoring of running processes

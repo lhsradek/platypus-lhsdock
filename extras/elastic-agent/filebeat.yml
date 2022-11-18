@@ -10,8 +10,8 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
-http.enabled: true
-http.port: 5066
+# http.enabled: true
+# http.port: 5066
 # http.host: "0.0.0.0"
 # http.host: "file.nginx.local"
 
@@ -73,6 +73,7 @@ filebeat.config.modules:
 
 # ======================= Elasticsearch template setting =======================
 
+setup.ilm.overwrite: true
 setup.template.settings:
   index.number_of_shards: 1
   index.codec: best_compression
@@ -213,6 +214,8 @@ logging.selectors: ["*"]
 # Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
+
+# xpack.monitoring.enabled: false
 
 monitoring:
   enabled: false

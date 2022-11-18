@@ -166,7 +166,6 @@ xpack:
       
     # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
     # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
-    # https://www.elastic.co/guide/en/kibana/current/osquery.html
     agentPolicies:          
 
       - name: Agent Nginx policy 1
@@ -181,6 +180,18 @@ xpack:
               name: fleet_server
             description: Fleet Server
             id: fleet_server_nginx-1
+            inputs:
+              - type: fleet-server
+                vars:
+                  - name: host
+                    value: 0.0.0.0
+                  - name: port
+                    value: 8220
+                  # - name: custom
+                  #   value: | 
+                  #     http.enabled: true
+                  #     http.host: 0.0.0.0
+                  #     http.port: 5066
           - name: elastic_agent_nginx-1
             package:
               name: elastic_agent
@@ -380,11 +391,11 @@ xpack:
                   - data_stream:
                       dataset: logstash.stack_monitoring.node_stats
                     enabled: false
-          - name: log_nginx-1
+          - name: log_kibana_nginx-1
             package:
               name: log
             description: Custom Logs
-            id: log_nginx-1
+            id: log_kibana_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -396,6 +407,27 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
                       - name: data_stream.dataset
                         value: kibana.log
+          - name: log_elasticsearch_nginx-1
+            package:
+              name: log
+            description: Custom Logs
+            id: log_elasticsearch_nginx-1
+            inputs:
+              - type: logfile
+                enabled: false
+                streams:
+                  - data_stream:
+                      dataset: log.log
+                    enabled: false
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es01/gc.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es02/gc.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/es03/gc.log
+                      - name: data_stream.dataset
+                        value: elasticsearch.log
+          # https://www.elastic.co/guide/en/kibana/current/osquery.html
           # - name: osquery_logs_nginx-1
           #   package:
           #     name: osquery
@@ -420,7 +452,6 @@ xpack:
           #     name: osquery_manager
           #   description: Osquery Manager
           #   id: osquery_manager_nginx-1
-
       
       # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql
       # You can remove it.

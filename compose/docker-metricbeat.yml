@@ -23,9 +23,10 @@
       - intnet
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
-      - /:/hostfs:ro
       - ./logs/metricbeat:/usr/share/metricbeat/logs
       - metricbeat:/usr/share/metricbeat
     environment:
