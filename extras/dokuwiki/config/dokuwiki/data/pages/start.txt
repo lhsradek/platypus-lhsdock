@@ -1,6 +1,7 @@
 ====== platypus-lhsdock ======
 
-[[https://github.com/lhsradek/platypus-lhsdock]] with [[https://www.elastic.co/|ELK]]
+[[https://github.com/lhsradek/platypus-lhsdock|platypus-lhsdock]] [[https://hub.docker.com/repository/docker/lhsradek/lhsdock|{{https://img.shields.io/docker/pulls/lhsradek/lhsdock.png?recache}}]] with [[https://www.elastic.co/|ELK]]
+
 ===== Elasticsearch - Logstash - Kibana =====
 
  - [[Elasticsearch]]
@@ -18,6 +19,25 @@
  - [[Fleet-server|Fleet Server]]
 
  - [[Beats]]
+
+===== Repositories =====
+
+^ REPOSITORY                                            ^  TAG       ^ SIZE        ^ OPTIONAL ^
+| nginx:alpine                                          | latest     | 23.5MB      | [[https://github.com/lhsradek/platypus-lhsdock|platypus-lhsdock]] |
+| [[https://github.com/lhsradek/platypus-lhsfpm|platypus-lhsfpm]] [[https://hub.docker.com/repository/docker/lhsradek/fpm|{{https://img.shields.io/docker/pulls/lhsradek/fpm.png?recache}}]]       | v1         | 609MB       | php:fpm-alpine |
+| docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
+| docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
+| logstash                                              | 8.5.1      | 746MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.5.1      | 2.04GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.5.1      | 3.58GB      |
+| docker.elastic.co/apm/apm-server                      | 8.5.1      | 230MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.5.1      | 466MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.5.1      | 2.6GB       |
+| docker.elastic.co/beats/filebeat                      | 8.5.1      | 394MB       |
+| lmenezes/cerebro                                      | 0.9.4      | 284MB       |
+| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
+
 
 ==== setup lhsdock ====
 create .env file
@@ -94,32 +114,10 @@ Creating lhsdock-eps       ... done
 ==== stop lhsdock ====
 <code bash># bin/stop</code>
 
-===== Repositories =====
-
-^ REPOSITORY                                            ^  TAG       ^ SIZE        ^ OPTIONAL ^
-| nginx:alpine                                          | latest     | 23.5MB      | lhsradek/lhsdock |
-| lhsradek/lhsdock                                      | v3         | 25 - 63.5MB | nginx:alpine |
-| lhsradek/fpm                                          | v1         | 609MB       | php:fpm-alpine |
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
-| docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
-| logstash                                              | 8.5.1      | 746MB       |
-| docker.elastic.co/beats/elastic-agent                 | 8.5.1      | 2.04GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.5.1      | 3.58GB      |
-| docker.elastic.co/apm/apm-server                      | 8.5.1      | 230MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.5.1      | 466MB       |
-| docker.elastic.co/beats/heartbeat                     | 8.5.1      | 2.6GB       |
-| docker.elastic.co/beats/filebeat                      | 8.5.1      | 394MB       |
-| lmenezes/cerebro                                      | 0.9.4      | 284MB       |
-| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
-
-
 With [[https://hub.docker.com/repository/docker/lhsradek/lhsdock/|lhsradek/lhsdock]] You can use [[platypus.pl]] for certificates,
 which I don't use much anymore, the Elastic Certificate Tool is used by webservice 'setup'.
 
 <code bash># perl /root/bin/platypus.pl</code>
-
------
 
 ^ IMAGES               ^ PORTS                  ^ NAMES              ^ HOSTNAMES                 ^ OPTIONAL^
 | lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock            | <code>www.nginx.local</code>           |
@@ -138,9 +136,6 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 | [[logstash]]         | 5044/tcp, 9600/tcp     | lhsdock-logstash   | <code>logstash.nginx.local</code>      |  *  |
 | [[cerebro]]          | 9000/tcp               | lhsdock-cerebro    | <code>cerebro.www.nginx.local</code>   |  *  |
 | dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki       | <code>wiki.www.nginx.local</code>      |  *  |
-
-
------
 
 ===== Screenshots =====
 

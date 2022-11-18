@@ -11,7 +11,7 @@
 
 ==== Cluster uuid ====
 
-So that [[Beats#filebeat|filebeat]] in [[elastic-agent|elastic agent]] does not beats to a **Standalone Cluster**, it is good to have the **CLUSTER_UUID** set in the **.env** before the first
+Set **CLUSTER_UUID** in the **.env** before the first
 launch of the Fleet Server. Setup writes it on the console or is on [[https://es01.docker.nginx.local:9200/?pretty|elasticsearch]].
 
 <code json>
@@ -61,10 +61,6 @@ fleet:
 
 sets the fleet in kibana
 
-==== Copy cert ==== 
-
-<code bash>cp certs/ca/ca.crt cert/ca.crt</code> This is so that other elastic agents from other projects can have ca.crt in the cert directory.
-
 ==== Kibana - Fleet - Settings ====
 
 === Setting Fleet Server Outputs === 
@@ -83,8 +79,9 @@ See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-age
 Specify hosts: <code>logstash.docker.nginx.local:5044</code>
 
 For Server SSL certificate authorities (optional) output from
+
 <code bash>
-cat ./certs/ca/ca.crt
+cat ./certs/ca.crt
 </code>
 
 For Client SSL certificate output from

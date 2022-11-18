@@ -126,6 +126,7 @@
 #        
 #   Start with two elasticsearch, the third can be easily added after installation. Three nodes are a robust solution.
 #   Similar to how robust people tend to be slow, it takes a long time to restart three nodes and to go from red to green.
+#   For Three nodes uncomment this and change cluster.initial_master_nodes in ./extras/elasticsearch/elasticsearch.yml
 #
 #   es03:
 #     depends_on:

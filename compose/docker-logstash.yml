@@ -34,7 +34,7 @@
       - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./extras/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf
       - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf
       - ./extras/logstash/elasticsearch.conf:/usr/share/logstash/pipeline/elasticsearch.conf
       - ./extras/logstash/traefik.conf:/usr/share/logstash/pipeline/traefik.conf
@@ -48,13 +48,15 @@
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
+      - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
+      - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
       - LOGSTASH_KEYSTORE_PASS=${ENCRYPTION_KEYS}
       - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
       - LS_JAVA_OPTS=${LS_JAVA_OPTS}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    # inspiration from https://github.com/elastic/stack-docker/blob/master/docker-compose.yml
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://logstash.${APP_HOST}.${INT_NETWORK}:9600 | grep -q 'HTTP/1.1 200 OK'"]
+      # inspiration from https://github.com/elastic/stack-docker/blob/master/docker-compose.yml
       # increase interval and timeout if api.ssl.enabled: true - and test:
       # test: ["CMD-SHELL", "bin/logstash -t | grep -q 'Config Validation Result: OK'"]
       interval: 10s

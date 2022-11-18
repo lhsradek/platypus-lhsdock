@@ -337,52 +337,28 @@
           openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key
         fi;
         find . -type f -name logstash.pkcs8.key -exec chmod 644 \{\} \;; # logstash
+        #
+        # for elastic-agents
+        if [ ! -f /usr/share/elasticsearch/config/ca.crt ] ; then
+          cp /usr/share/elasticsearch/config/certs/ca/ca.crt /usr/share/elasticsearch/config/certs/ca.crt
+          chmod 644 /usr/share/elasticsearch/config/certs/ca.crt
+        fi;
+        #
         echo "Waiting for Elasticsearch availability";
         until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 20; done;
         echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
-        curl -s -X GET --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep "cluster_uuid";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
+        echo "Create ${LOGSTASH_WRITE_ROLE}";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"manage_index_templates\",\"manage_ilm\"],\"indices\":[{\"names\":[\"logstash*\"],\"privileges\":[\"write\",\"create\",\"create_index\",\"manage\",\"manage_ilm\"]}]}" | grep -q "^{"; do sleep 20; done;
+        echo "Create ${LOGSTASH_USERNAME}";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\"],\"full_name\":\"Logstash writer User\"}" | grep -q "^{"; do sleep 20; done;
         #
         # Optional create role Stack Management > Roles standalone_agent
         # https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html
         # It's not a condition, I haven't been doing it lately. Rather, it is a useful guide that may come in handy.
-        # <code>
-        #   {
-        #     "standalone_agent": {
-        #       "cluster": ["monitor"],
-        #       "indices": [
-        #         {
-        #           "names": ["logs-*-*", "metrics-*-*", "traces-*-*", "synthetics-*-*"],
-        #           "privileges": ["auto_configure", "create_doc", "create_index"]
-        #         }
-        #       ]
-        #     }
-        #   }
-        # </code>
-        #
-        # echo "Setting apm_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # echo "Setting fleet-server password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/fleet-server/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # 
-        # echo "Setting beats_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # echo "Setting remote_monitoring_user password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/remote_monitoring_user/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        # echo "Setting logstash_system password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        #
         # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
-        # echo "Setting logstash_writer password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_writer/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        #
-        # echo "Setting enterprise_search password";
-        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
-        #
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
         #
-        # echo "Waiting for Kibana availability";
-        # until curl -s --cacert config/certs/ca/ca.crt -I https://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q "HTTP/1.1 302 Found"; do sleep 30; done;
         echo "All done!";
       '
     healthcheck:

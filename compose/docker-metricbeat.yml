@@ -25,6 +25,7 @@
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+      - /:/hostfs:ro
       - ./logs/metricbeat:/usr/share/metricbeat/logs
       - metricbeat:/usr/share/metricbeat
     environment:
