@@ -1,14 +1,25 @@
 http.host: 0.0.0.0
 
+# xpack.monitoring:
+#   enabled: false
+#   elasticsearch:
+#     hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+#     ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
+#     username: "${ELASTIC_USERNAME}"
+#     password: "${ELASTIC_PASSWORD}"
+#     # username: "${LOGSTASH_USERNAME}"
+#     # password: "${LOGSTASH_PASSWORD}"
+
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
-  # for monitoring enabled: true
-  # elasticsearch:
-  #   hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-  #   username: "${ELASTIC_USERNAME}"
-  #   password: "${ELASTIC_PASSWORD}"
-  #   ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
+  elasticsearch:
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
+    username: "${ELASTIC_USERNAME}"
+    password: "${ELASTIC_PASSWORD}"
+    # username: "${LOGSTASH_USERNAME}"
+    # password: "${LOGSTASH_PASSWORD}"
 
 api.ssl.enabled: false
 # https://www.elastic.co/guide/en/logstash/current/ls-security.html

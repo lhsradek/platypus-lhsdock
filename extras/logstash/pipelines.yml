@@ -6,7 +6,7 @@
   path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"
 - pipeline.id: gc-pipeline
   path.config: "/usr/share/logstash/pipeline/gc.conf"
-- pipeline.id: elasticsearch-pipeline
-  path.config: "/usr/share/logstash/pipeline/elasticsearch.conf"
+# - pipeline.id: elasticsearch-pipeline
+#   path.config: "/usr/share/logstash/pipeline/elasticsearch.conf"
 - pipeline.id: traefik-pipeline
   path.config: "/usr/share/logstash/pipeline/traefik.conf"
