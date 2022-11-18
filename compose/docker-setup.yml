@@ -351,7 +351,7 @@
         echo "Create ${LOGSTASH_WRITE_ROLE}";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"manage_index_templates\",\"manage_ilm\"],\"indices\":[{\"names\":[\"logstash*\"],\"privileges\":[\"write\",\"create\",\"create_index\",\"manage\",\"manage_ilm\"]}]}" | grep -q "^{"; do sleep 20; done;
         echo "Create ${LOGSTASH_USERNAME}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\"],\"full_name\":\"Logstash writer User\"}" | grep -q "^{"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\"],\"full_name\":\"Logstash Writer\"}" | grep -q "^{"; do sleep 20; done;
         #
         # Optional create role Stack Management > Roles standalone_agent
         # https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html

@@ -241,6 +241,40 @@ xpack:
                 vars:
                   - name: system.hostfs
                     value: /hostfs
+                streams:
+                  - data_stream:
+                      dataset: system.cpu
+                    enabled: false
+                  - data_stream:
+                      dataset: system.diskio
+                    enabled: false
+                  - data_stream:
+                      dataset: system.filesystem
+                    enabled: false
+                  - data_stream:
+                      dataset: system.fsstat
+                    enabled: false
+                  - data_stream:
+                      dataset: system.load
+                    enabled: false
+                  - data_stream:
+                      dataset: system.memory
+                    enabled: false
+                  - data_stream:
+                      dataset: system.network
+                    enabled: false
+                  - data_stream:
+                      dataset: system.process
+                    enabled: false
+                  - data_stream:
+                      dataset: system.process.summary
+                    enabled: false
+                  - data_stream:
+                      dataset: system.socket_summary
+                    enabled: false
+                  - data_stream:
+                      dataset: system.uptime
+                    enabled: false
               - type: winlog
                 enabled: false
           - name: nginx_nginx-1
@@ -300,7 +334,6 @@ xpack:
                 streams:
                   - data_stream:
                       dataset: traefik.access
-                    keep_enabled: true
                     enabled: true
                     vars:
                       - name: paths
@@ -317,6 +350,23 @@ xpack:
             inputs:
               - type: logfile
                 enabled: false
+                streams:
+                  - data_stream:
+                      dataset: logstash.log
+                    enabled: false
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/logstash/logstash-plain.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/logstash/logstash-json.log
+                  - data_stream:
+                      dataset: logstash.slowlog
+                    enabled: false
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/logstash/logstash-slowlog-plain.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/logstash/logstash-slowlog-json.log
               - type: logstash/metrics
                 enabled: false
                 vars:
