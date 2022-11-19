@@ -19,7 +19,6 @@
     ports:
       - 4443:443
     volumes:
-      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf
       - ./extras/nginx/htpasswd:/etc/nginx/conf.d/htpasswd
       - ./certs/ca/ca.crt:/etc/ssl/private/ca.crt

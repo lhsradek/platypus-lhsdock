@@ -20,7 +20,6 @@
     #  - 9000:9000
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
       - ./logs/cerebro:/opt/cerebro/logs:rw

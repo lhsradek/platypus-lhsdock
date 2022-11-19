@@ -28,7 +28,6 @@ heartbeat.monitors:
   tags: [traefik]
   hosts:
     # traefik
-    - https://${APP_HOST}.traefik.local
     - https://www.traefik.local
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']

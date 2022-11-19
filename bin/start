@@ -47,13 +47,13 @@ if [[ -f "$rootPath/docker-compose.extras.yml" ]]; then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-mkdir -p logs logs/es01 logs/es02 logs/es03 logs/eps logs/fleet logs/cerebro logs/logstash logs/kibana logs/metricbeat logs/nginx logs/nginx logs/dokuwiki logs/dokuwiki/php
-touch logs/nginx/php-access.log
-touch logs/nginx/php-error.log
-touch logs/dokuwiki/php/access.log
-touch logs/dokuwiki/php/error.log
-find logs -type d -exec chmod 777 \{\} \;;
-find logs -type f -exec chmod 666 \{\} \;;
+mkdir -p $rootPath/logs $rootPath/logs/es01 $rootPath/logs/es02 $rootPath/logs/es03 $rootPath/logs/eps $rootPath/logs/fleet $rootPath/logs/cerebro $rootPath/logs/logstash $rootPath/logs/kibana $rootPath/logs/metricbeat $rootPath/logs/nginx $rootPath/logs/nginx $rootPath/logs/dokuwiki $rootPath/logs/dokuwiki/php
+touch $rootPath/logs/nginx/php-access.log
+touch $rootPath/logs/nginx/php-error.log
+touch $rootPath/logs/dokuwiki/php/access.log
+touch $rootPath/logs/dokuwiki/php/error.log
+find $rootPath/logs -type d -exec chmod 777 \{\} \;;
+find $rootPath/logs -type f -exec chmod 666 \{\} \;;
 
 IMG="lhsradek/lhsdock:v3"
 IMGFILE="lhsdock-v3.img"

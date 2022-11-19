@@ -40,6 +40,7 @@ else
   APP_HOST=$(read_var APP_HOST .env)
   ES_IP=$(read_var ES_IP .env)
   ES3=$(read_var ES3 .env)
+  mkdir -p $rootPath/extras/hosts
   echo "127.0.0.1        localhost eps heartbeat metricbeat fleet eps.${INT_NETWORK} fleet.${INT_NETWORK} heartbeat.${INT_NETWORK} metricbeat.${INT_NETWORK}" > $rootPath/extras/hosts/hosts
   echo "${ES_IP}   traefik ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_IP}   ${APP_HOST} ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
