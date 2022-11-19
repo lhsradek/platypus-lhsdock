@@ -1,13 +1,15 @@
 ====== Elastic Agent ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
+[[https://www.elastic.co/guide/en/fleet/current/index.html|Fleet and Elastic Agent Guide]]
+
 Elastic Agent contains [[beats]], [[fleet-server|Fleet Server]] and [[apm-server|APM Server]].
 
 [[https://github.com/elastic/elastic-agent|Elastic Agent on GitHub]]
 
 ===== Configuration ====
 
-[[fleet-server#add_agent|Configuration in Kibana]]
+[[fleet-server#kibana_-_fleet_-_settings|Configuration in Kibana]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
 

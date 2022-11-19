@@ -11,7 +11,7 @@
    - info
    - memory
    - network
-   - network_summary
+   # - network_summary
   period: 10s
   hosts: ["unix:///var/run/docker.sock"]
 

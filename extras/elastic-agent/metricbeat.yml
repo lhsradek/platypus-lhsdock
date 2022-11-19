@@ -9,6 +9,10 @@
 
 # =========================== Modules configuration ============================
 
+xpack.monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

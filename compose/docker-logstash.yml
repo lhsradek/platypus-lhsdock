@@ -32,11 +32,12 @@
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
       - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt
       - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf
+      - ./extras/logstash/beats.conf:/usr/share/logstash/pipeline/beats.conf
       - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf
-      - ./extras/logstash/elasticsearch.conf:/usr/share/logstash/pipeline/elasticsearch.conf
       - ./extras/logstash/traefik.conf:/usr/share/logstash/pipeline/traefik.conf
       - logstash:/usr/share/logstash
     environment:

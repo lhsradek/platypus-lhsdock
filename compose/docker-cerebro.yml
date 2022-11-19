@@ -4,9 +4,6 @@
 #
   cerebro:
     depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
       es02:
         condition: service_healthy
     # Debian - Cerebro
@@ -23,6 +20,7 @@
     #  - 9000:9000
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
       - ./logs/cerebro:/opt/cerebro/logs:rw

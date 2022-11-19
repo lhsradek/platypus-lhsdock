@@ -348,17 +348,23 @@
         until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 20; done;
         echo "Setting kibana_system password";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
+        echo "Setting beats_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
+        #
+        # https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
+        # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
         echo "Create ${LOGSTASH_WRITE_ROLE}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"manage_index_templates\",\"manage_ilm\"],\"indices\":[{\"names\":[\"logstash*\"],\"privileges\":[\"write\",\"create\",\"create_index\",\"manage\",\"manage_ilm\"]}]}" | grep -q "^{"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"monitor\",\"manage_index_templates\",\"manage_ilm\"],\"indices\":[{\"names\":[\"logstash*\"],\"privileges\":[\"write\",\"create\",\"create_index\",\"create_doc\",\"manage\",\"manage_ilm\"]}]}" | grep -q "^{"; do sleep 20; done;
         echo "Create ${LOGSTASH_USERNAME}";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\"],\"full_name\":\"Logstash Writer\"}" | grep -q "^{"; do sleep 20; done;
+        echo "Setting logstash_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
         #
-        # Optional create role Stack Management > Roles standalone_agent
-        # https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html
-        # It's not a condition, I haven't been doing it lately. Rather, it is a useful guide that may come in handy.
-        # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
-        # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
+        # echo "Setting enterprise_search password";
+        # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;
         #
+        curl -s -X GET --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep "cluster_uuid";
         echo "All done!";
       '
     healthcheck:
@@ -369,56 +375,3 @@
 #
 # It's all my devel certs. My ${INT_NETWORK} is 'nginx.logal' (see https://github.com/lhsradek/platypus-lhsdock/blob/main/.env.dist)
 #
-
-volumes:
-  esdata01:
-    external: true
-    name: "${APP_ID}-es01"
-  esdata02:
-    external: true
-    name: "${APP_ID}-es02"
-  esdata03:
-    external: true
-    name: "${APP_ID}-es03"
-  epsdata:
-    external: true
-    name: "${APP_ID}-eps"
-  fleet:
-    external: true
-    name: "${APP_ID}-fleet"
-  heartbeat:
-    external: true
-    name: "${APP_ID}-heartbeat"
-  kibana:
-    external: true
-    name: "${APP_ID}-kibana"
-  logstash:
-    external: true
-    name: "${APP_ID}-logstash"
-  metricbeat:
-    external: true
-    name: "${APP_ID}-metricbeat"
-#    
-# You can remove this in docker-setup.yml. It's for my prune volume deletion protection:
-#
-  wordpressdb99:
-    external: true
-    name: wordpress-db-99
-  wordpresspma99:
-    external: true
-    name: wordpress-pma-99
-  wordpressredis99:
-    external: true
-    name: wordpress-redis-99
-  wordpressfleet99:
-    external: true
-    name: wordpress-fleet-99
-  wordpresswp99:
-    external: true
-    name: wordpress-wp-99
-  tomboladb:
-    external: true
-    name: tombola-db
-  tombolafleet:
-    external: true
-    name: tombola-fleet

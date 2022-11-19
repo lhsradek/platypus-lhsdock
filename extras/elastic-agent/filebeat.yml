@@ -215,7 +215,9 @@ logging.selectors: ["*"]
 # is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
 #monitoring.cluster_uuid:
 
-# xpack.monitoring.enabled: false
+xpack.monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
 
 monitoring:
   enabled: false

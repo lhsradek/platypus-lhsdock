@@ -13,6 +13,7 @@ extras/dokuwiki/config/dokuwiki/data/media/
 extras/dokuwiki/config/dokuwiki/data/media_meta/
 extras/dokuwiki/config/dokuwiki/data/media_attic/
 extras/dokuwiki/config/dokuwiki/data/meta/
+extras/hosts/
 extras/nginx/htpasswd
 application/html/downloads/apm-agent-*
 application/html/downloads/elastic-agent-*

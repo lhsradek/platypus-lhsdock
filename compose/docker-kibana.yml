@@ -22,6 +22,7 @@
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/kibana/config/certs
       - ./logs/kibana:/usr/share/kibana/logs
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
       - kibana:/usr/share/kibana
     environment:

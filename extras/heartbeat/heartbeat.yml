@@ -17,6 +17,7 @@ heartbeat.config.monitors:
   reload.period: 5s
 
 heartbeat.monitors:
+
 - type: http
   schedule: '*/30 * * * * * *'
   id: http-traefik-service
@@ -54,6 +55,8 @@ heartbeat.monitors:
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
     - http://heartbeat.${APP_NET}:5066
+    # logstash for finger print:
+    # - https://logstash.${APP_HOST}.${APP_NET}:5044
     # tomcat
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     - https://${APP_HOST}.tomcat.local/tomcat.jsp

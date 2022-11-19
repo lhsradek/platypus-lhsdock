@@ -1,0 +1,53 @@
+
+volumes:
+  esdata01:
+    external: true
+    name: "${APP_ID}-es01"
+  esdata02:
+    external: true
+    name: "${APP_ID}-es02"
+  esdata03:
+    external: true
+    name: "${APP_ID}-es03"
+  epsdata:
+    external: true
+    name: "${APP_ID}-eps"
+  fleet:
+    external: true
+    name: "${APP_ID}-fleet"
+  heartbeat:
+    external: true
+    name: "${APP_ID}-heartbeat"
+  kibana:
+    external: true
+    name: "${APP_ID}-kibana"
+  logstash:
+    external: true
+    name: "${APP_ID}-logstash"
+  metricbeat:
+    external: true
+    name: "${APP_ID}-metricbeat"
+#    
+# You can remove this in docker-setup.yml. It's for my prune volume deletion protection:
+#
+  wordpressdb99:
+    external: true
+    name: wordpress-db-99
+  wordpresspma99:
+    external: true
+    name: wordpress-pma-99
+  wordpressredis99:
+    external: true
+    name: wordpress-redis-99
+  wordpressfleet99:
+    external: true
+    name: wordpress-fleet-99
+  wordpresswp99:
+    external: true
+    name: wordpress-wp-99
+  tomboladb:
+    external: true
+    name: tombola-db
+  tombolafleet:
+    external: true
+    name: tombola-fleet

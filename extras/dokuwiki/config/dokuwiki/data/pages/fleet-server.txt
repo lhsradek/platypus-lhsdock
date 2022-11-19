@@ -1,13 +1,13 @@
 ====== Fleet Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
-[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
-
-[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
-
 [[https://www.elastic.co/guide/en/fleet/current/index.html|Fleet and Elastic Agent Guide]]
 
 [[https://www.elastic.co/guide/en/fleet/current/fleet-settings.html|Fleet UI settings]]
+
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/elastic-agent|configuration]]
+
+[[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/nginx#readme|password configuration]]
 
 ==== Cluster uuid ====
 
@@ -88,12 +88,6 @@ See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-age
 
 Specify hosts: <code>logstash.docker.nginx.local:5044</code>
 
-For Server SSL certificate authorities (optional) output from
-
-<code bash>
-cat ./certs/ca.crt
-</code>
-
 For Client SSL certificate output from
 <code bash>
 cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt
@@ -105,7 +99,7 @@ cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 </code>
 
 To logstash output - Advanced YAML configuration add:
-<code>ssl.verification_mode: certificate</code>
+<code>ssl.verification_mode: none</code>
 
 Default for agent integrations interferes with APM, don't change it
 

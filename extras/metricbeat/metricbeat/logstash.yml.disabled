@@ -6,6 +6,6 @@
   #  - node
   #  - node_stats
   period: 10s
-  hosts: ["localhost.${APP_HOST}.${APP_NET}:9600"]
-  #username: "user"
-  #password: "secret"
+  hosts: ["logstash.${APP_HOST}.${APP_NET}:9600"]
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"

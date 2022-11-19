@@ -6,9 +6,6 @@
     depends_on:
       kibana:
         condition: service_healthy
-    depends_on:
-      logstash:
-        condition: service_healthy
     # Ubuntu - fleet
     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION}
@@ -29,6 +26,7 @@
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - ./certs:/usr/share/elastic-agent/certs
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
       - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml

@@ -20,3 +20,11 @@ networks:
     driver: bridge
 
 services:
+
+#
+# === E - Elasticsearch ===
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html
+# https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch
+#
+  es01:
