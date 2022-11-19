@@ -317,12 +317,7 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      # to existing server:
-                      - http://${APP_HOST}.${APP_NET}
-                      - http://wiki.${APP_HOST}.${APP_NET}
-                      # to services:
-                      # - http://weblhs
-                      # - http://weblhs-wiki
+                      - http://weblhs
                 streams:
                   - data_stream:
                       dataset: nginx.stubstatus
@@ -518,9 +513,6 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      # to existing server:
-                      # - http://${APP_HOST}.wordpress.local 
-                      # to service:
                       - http://webwp
                 streams:
                   - data_stream:
@@ -619,9 +611,6 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      # to existing server:
-                      # - http://${APP_HOST}.tomcat.local
-                      # to service:
                       - http://webtombola
                 streams:
                   - data_stream:
