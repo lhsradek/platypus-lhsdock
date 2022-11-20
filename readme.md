@@ -93,11 +93,11 @@ Creating lhsdock-eps       ... done
 | REPOSITORY                                            |  TAG       | SIZE        | OPTIONAL
 | ----------------------------------------------------- | ---------- | ----------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB      | [platypus-lhsdock](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile)
-| [lhsradek/platypus-fpm](https://github.com/lhsradek/platypus-lhsfpm) [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm)  | v1         | 609MB       | php:fpm-alpine
-| docker.elastic.co/elasticsearch/elasticsearch         | 8.5.1      | 1.29GB      |
-| docker.elastic.co/kibana/kibana                       | 8.5.1      | 707MB       |
+| [lhsradek/platypus-fpm](https://github.com/lhsradek/platypus-lhsfpm)[![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm)  | v1         | 609MB       | php:fpm-alpine
+| [docker.elastic.co/elasticsearch/elasticsearch](https://hub.docker.com/_/elasticsearch) | 8.5.1      | 1.29GB      |
+| [docker.elastic.co/kibana/kibana](https://hub.docker.com/_/kibana) | 8.5.1      | 707MB       |
 | docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
-| logstash                                              | 8.5.1      | 746MB       |
+| [logstash](https://hub.docker.com/_/logstash)         | 8.5.1      | 746MB       |
 | docker.elastic.co/beats/elastic-agent                 | 8.5.1      | 2.04GB      | 
 | docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.5.1      | 3.58GB      |
 | docker.elastic.co/apm/apm-server                      | 8.5.1      | 230MB       |
@@ -105,7 +105,7 @@ Creating lhsdock-eps       ... done
 | docker.elastic.co/beats/heartbeat                     | 8.5.1      | 2.6GB       |
 | docker.elastic.co/beats/filebeat                      | 8.5.1      | 394MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
-| lscr.io/linuxserver/dokuwiki                          | latest     | 209MB       |
+| [lscr.io/linuxserver/dokuwiki](https://hub.docker.com/r/linuxserver/dokuwiki) | latest     | 209MB       |
 
 With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
 which I don't use much anymore, the Elastic Certificate Tool is used by webservice [setup](https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-setup.yml).
