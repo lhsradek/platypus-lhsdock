@@ -48,7 +48,6 @@ enterpriseSearch:
   accessCheckTimeout: 60000
 
 xpack:
-  monitoring.enabled: false
   reporting:
     kibanaServer.hostname: "kibana"
     roles.enabled: false
@@ -207,7 +206,7 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
+                    value: "http://apm.fleet.${APP_HOST}.${APP_NET}:8200"
           - name: docker_nginx-1
             package:
               name: docker
@@ -215,7 +214,7 @@ xpack:
             id: docker_nginx-1
             inputs:
               - type: docker/metrics
-                enabled: false
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: docker.memory
@@ -246,44 +245,44 @@ xpack:
                           - /hostfs/var/log/auth.log
                           - /hostfs/var/log/secure
               - type: system/metrics
-                enabled: false
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
                 streams:
                   - data_stream:
                       dataset: system.cpu
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.diskio
                     enabled: false
                   - data_stream:
                       dataset: system.filesystem
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.fsstat
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.load
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.memory
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.network
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.process
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.process.summary
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.socket_summary
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.uptime
-                    enabled: false
+                    enabled: true
               - type: winlog
                 enabled: false
           - name: nginx_nginx-1
@@ -313,7 +312,7 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/error.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log
               - type: nginx/metrics
-                enabled: false
+                enabled: true
                 vars:
                   - name: hosts
                     value:
@@ -321,7 +320,7 @@ xpack:
                 streams:
                   - data_stream:
                       dataset: nginx.stubstatus
-                    enabled: false
+                    enabled: true
                     vars:
                       - name: period
                         value: 10s
@@ -343,9 +342,26 @@ xpack:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/access.json
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.json
               - type: traefik/metrics
                 enabled: false
+          - name: traefik_error_nginx-1
+            package:
+              name: log
+            description: Custom Logs
+            id: traefik_error_nginx-1
+            inputs:
+              - type: logfile
+                enabled: false
+                streams:
+                  - data_stream:
+                      dataset: log.log
+                    enabled: false
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.log
+                      - name: data_stream.dataset
+                        value: traefik.error
           - name: logstash_nginx-1
             package:
               name: logstash
@@ -391,9 +407,11 @@ xpack:
             id: kibana_nginx-1
             inputs:
               - type: logfile
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: log.log
+                    enabled: true
                     vars:
                       - name: paths
                         value:
@@ -479,7 +497,12 @@ xpack:
                     value: "0.0.0.0:8200"
                   - name: url
                     value: "http://fleet:8200"
-                    # value: "http://fleet.${APP_HOST}.wordpress.local:8200"
+                    # value: "http://apm.fleet.${APP_HOST}.wordpress.local:8200"
+                  # - name: custom
+                  #   value: | 
+                  #     http.enabled: true
+                  #     http.host: 0.0.0.0
+                  #     http.port: 5066
           - name: nginx_wordpress-1
             package:
               name: nginx
@@ -578,8 +601,13 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://fleet:8200"
-                    # value: "http://fleet.${APP_HOST}.tomcat.local:8200"
+                    value: "http://apm:8200"
+                    # value: "http://apm.fleet.${APP_HOST}.tomcat.local:8200"
+                  # - name: custom
+                  #   value: | 
+                  #     http.enabled: true
+                  #     http.host: 0.0.0.0
+                  #     http.port: 5066
           - name: nginx_tomcat-1
             package:
               name: nginx

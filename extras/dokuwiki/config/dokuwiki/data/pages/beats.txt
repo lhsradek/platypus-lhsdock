@@ -70,9 +70,13 @@ in red or the service is completely missing (Kibana). When the integrations are 
 
 ===== ... and others for example: =====
 
-==== Packetbeat ====
+=== Cloudbeat * ===
 
-==== Osquerybeat * ====
+=== Auditbeat ===
+
+=== Packetbeat ===
+
+=== Osquerybeat * ===
 
 [[Elastic-agent]] contains beats marked with an asterisk *
 

@@ -19,6 +19,8 @@
     hostname: "metricbeat.${INT_NETWORK}"
     user: root
     networks:
+      # for traefik:
+      - default
       # local network:
       - intnet
     volumes:

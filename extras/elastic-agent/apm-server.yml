@@ -4,7 +4,6 @@
 
 apm-server:
   # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
-  host: "0.0.0.0:8200"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:
@@ -705,12 +704,11 @@ output.elasticsearch:
 
 # Defines if the HTTP endpoint is enabled.
 #http.enabled: false
-#http.enabled: true
+# http.enabled: true
 # The HTTP endpoint will bind to this hostname or IP address. It is recommended to use only localhost.
-#http.host: localhost
-#http.host: "0.0.0.0"
+# http.host: "0.0.0.0"
 # Port on which the HTTP endpoint will bind. Default is 5066.
-#http.port: 5066
+# http.port: 5066
 
 #============================= X-pack Monitoring =============================
 

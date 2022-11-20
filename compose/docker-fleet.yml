@@ -14,9 +14,13 @@
     hostname: "fleet.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
+        aliases:
+          - apm
       # local network:
-      - intnet
+      intnet:
+        aliases:
+          - apm
     # ports:
     #  - ${APM_PORT}:8200
     #  - ${FLEET_PORT}:8220
@@ -94,8 +98,16 @@
       - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.fleet-public.entrypoints=https"
       - "traefik.http.routers.fleet-public.tls=true"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8200"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=http"
+      - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
+      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
+      #
+      - "traefik.http.routers.apm-public.rule=Host(`apm.fleet.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.apm-public.service=apm-${APP_ID}"
+      - "traefik.http.routers.apm-public.entrypoints=https"
+      - "traefik.http.routers.apm-public.tls=true"
+      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.port=8200"
+      - "traefik.http.services.apm-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 10s

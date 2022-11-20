@@ -19,14 +19,14 @@
     ports:
       # traefik syslog
       - 5000:5000
-      # elastic-agent https
+      # elastic-agent
       - ${LOGSTASH_PORT}:5044
-      # elasticsearch gc beat
+      # beat
       - 5045:5045
-      # nginx
+      # gc
       - 5046:5046
       # http metrics
-      # - 9600:9600
+      - 9600:9600
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt

@@ -4,4 +4,4 @@
 - module: logstash
   xpack.enabled: true
   period: 10s
-  hosts: ["${APP_ID}-logstash:9600"]
+  hosts: ["logstash.${APP_HOST}.${APP_NET}:9600"]

@@ -62,6 +62,14 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_IP}\n"\
+          "  - name: apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - ${APP_ID}-apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -113,9 +121,13 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
+          "      - apm\n"\
           "      - ${APP_ID}-fleet\n"\
+          "      - ${APP_ID}-apm\n"\
           "      - ${APP_ID}-fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - ${APP_ID}-apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_IP}\n"\
@@ -212,6 +224,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet.${APP_HOST}.tomcat.local\n"\
+          "      - apm.fleet.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_IP}\n"\
@@ -226,6 +239,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet.www.tomcat.local\n"\
+          "      - apm.fleet.www.tomcat.local\n"\
           "  - name: apm.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -289,6 +303,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet.${APP_HOST}.wordpress.local\n"\
+          "      - apm.fleet.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_IP}\n"\
@@ -303,6 +318,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet.www.wordpress.local\n"\
+          "      - apm.fleet.www.wordpress.local\n"\
           "  - name: apm.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -355,9 +371,9 @@
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
         # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
         echo "Create ${LOGSTASH_WRITE_ROLE}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"monitor\",\"manage_index_templates\",\"manage_ilm\"],\"indices\":[{\"names\":[\"logstash*\"],\"privileges\":[\"write\",\"create\",\"create_index\",\"create_doc\",\"manage\",\"manage_ilm\"]}]}" | grep -q "^{"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"indices\":[{\"names\":[\"logstash*\", \"log-*\"\"metrics-*\"],\"privileges\":[\"read\",\"write\",\"create\",\"create_index\",\"create_doc\",\"manage\",\"manage_ilm\",\"monitor\"]}]}" | grep -q "^{"; do sleep 20; done;
         echo "Create ${LOGSTASH_USERNAME}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\"],\"full_name\":\"Logstash Writer\"}" | grep -q "^{"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\", \"logstash_admin\", \"logstash_system\"],\"full_name\":\"Logstash Writer\"}" | grep -q "^{"; do sleep 20; done;
         echo "Setting logstash_system password";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
         #
