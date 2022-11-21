@@ -17,12 +17,16 @@
       default:
         aliases:
           - apm-server
+          - filebeat
+          - metricbeat
           - apm-server.${APP_HOST}.${INT_NETWORK}
           - fleet.${APP_HOST}.${INT_NETWORK}
       # local network:
       intnet:
         aliases:
           - apm-server
+          - filebeat
+          - metricbeat
           - apm-server.${APP_HOST}.${INT_NETWORK}
           - fleet.${APP_HOST}.${INT_NETWORK}
     # ports:
