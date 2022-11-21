@@ -26,7 +26,7 @@ apm:
   enabled: true
   environment: 'test'
   service_name: "enterprise-search"
-  server_url: "http://apm.fleet.${APP_HOST}.${APP_NET}:8200"
+  server_url: "http://fleet.${APP_HOST}.${APP_NET}:8200"
 
 # metricbeat monitor enterprise search, if not set true
 monitoring.reporting_enabled: false

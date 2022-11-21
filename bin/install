@@ -42,18 +42,16 @@ else
   ES3=$(read_var ES3 .env)
   mkdir -p $rootPath/extras/hosts
   echo "127.0.0.1        localhost" > $rootPath/extras/hosts/hosts
-  echo "127.0.0.1        apm        apm.fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "127.0.0.1        eps        eps.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "127.0.0.1        fleet      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "127.0.0.1        metricbeat metricbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "127.0.0.1        heartbeat  heartbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   traefik    ${APP_HOST}.traefik.local" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   ${APP_HOST}     ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   logstash   logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   kibana     kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  # echo "127.0.0.1        fleet      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  # echo "127.0.0.1        metricbeat metricbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  # echo "127.0.0.1        heartbeat  heartbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  # echo "${ES_IP}   traefik    ${APP_HOST}.traefik.local" >> $rootPath/extras/hosts/hosts
+  # echo "${ES_IP}   ${APP_HOST}     ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_IP}   es01       es01.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_IP}   es02       es02.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_IP}   es03       es03.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_IP}   logstash   logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_IP}   kibana     kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-setup-depends.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose.$RUNENV.yml

@@ -10,7 +10,7 @@
 # =========================== Modules configuration ============================
 
 # http.enabled: true
-# http.port: 5067
+# http.port: 5068
 # http.host: "0.0.0.0"
 
 monitoring:

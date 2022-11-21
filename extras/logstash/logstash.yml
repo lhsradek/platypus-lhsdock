@@ -15,6 +15,7 @@ api.ssl.enabled: false
 # https://www.elastic.co/guide/en/logstash/current/ls-security.html
 # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
 #
+# for port 9600 on https:
 # https://www.elastic.co/guide/en/logstash/current/keystore.html
 # bin/logstash-keystore create
 # api.ssl.enabled: true

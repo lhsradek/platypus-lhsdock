@@ -37,6 +37,9 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - ${APP_HOST}.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
           "  - name: www.traefik.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -61,15 +64,6 @@
           "      - ${APP_ID}-apm.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
-          "  - name: apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - ${APP_ID}-apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -77,7 +71,6 @@
           "      - cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -121,16 +114,15 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm\n"\
+          "      - apm-server\n"\
           "      - ${APP_ID}-fleet\n"\
-          "      - ${APP_ID}-apm\n"\
+          "      - ${APP_ID}-apm-server\n"\
           "      - ${APP_ID}-fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - ${APP_ID}-apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - ${APP_ID}-apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - apm.fleet.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: heartbeat.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -140,7 +132,6 @@
           "      - heartbeat.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -158,6 +149,9 @@
           "      - ${APP_ID}-logstash\n"\
           "      - ${APP_ID}-logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "      - logstash.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_IP}\n"\
           "  - name: metricbeat.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -167,7 +161,6 @@
           "      - metricbeat.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -175,14 +168,12 @@
           "      - wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - ${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -193,7 +184,6 @@
           "      - tombola.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: tombola.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -204,7 +194,6 @@
           "      - ad.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: ad.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -215,7 +204,6 @@
           "      - db.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: db.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -223,23 +211,33 @@
           "  - name: fleet.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - fleet\n"\
+          "      - apm-server\n"\
+          "      - webtombola-fleet\n"\
+          "      - webtombola-apm-server\n"\
+          "      - webtombola-fleet.${APP_HOST}.tomcat.local\n"\
+          "      - webtombola-apm-server.${APP_HOST}.tomcat.local\n"\
           "      - fleet.${APP_HOST}.tomcat.local\n"\
-          "      - apm.fleet.${APP_HOST}.tomcat.local\n"\
+          "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: apm.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: fleet.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - fleet\n"\
+          "      - apm-server\n"\
+          "      - webtombola-fleet\n"\
+          "      - webtombola-apm-server\n"\
+          "      - webtombola-fleet.www.tomcat.local\n"\
+          "      - webtombola-apm-server.www.tomcat.local\n"\
           "      - fleet.www.tomcat.local\n"\
-          "      - apm.fleet.www.tomcat.local\n"\
+          "      - apm-server.www.tomcat.local\n"\
           "  - name: apm.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -250,7 +248,6 @@
           "      - ${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -261,7 +258,6 @@
           "      - wp.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: wp.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -272,7 +268,6 @@
           "      - wpa.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: wpa.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -283,7 +278,6 @@
           "      - pma.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: pma.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -294,7 +288,6 @@
           "      - db.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: db.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -302,23 +295,33 @@
           "  - name: fleet.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - fleet\n"\
+          "      - apm-server\n"\
+          "      - webwp-fleet\n"\
+          "      - webwp-apm-server\n"\
+          "      - webwp-fleet.${APP_HOST}.wordpress.local\n"\
+          "      - webwp-apm-server.${APP_HOST}.wordpress.local\n"\
           "      - fleet.${APP_HOST}.wordpress.local\n"\
-          "      - apm.fleet.${APP_HOST}.wordpress.local\n"\
+          "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: apm.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
           "  - name: fleet.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - fleet\n"\
+          "      - apm-server\n"\
+          "      - webwp-fleet\n"\
+          "      - webwp-apm-server\n"\
+          "      - webwp-fleet.www.wordpress.local\n"\
+          "      - webwp-apm-server.www.wordpress.local\n"\
           "      - fleet.www.wordpress.local\n"\
-          "      - apm.fleet.www.wordpress.local\n"\
+          "      - apm-server.www.wordpress.local\n"\
           "  - name: apm.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
