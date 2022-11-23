@@ -1,0 +1,55 @@
+
+#
+# === APM Server ===
+#
+  apm-server:
+    depends_on:
+      kibana:
+        condition: service_healthy
+    # Ubuntu - enterprisesearch
+    image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
+    restart: ${DOCKER_RESTART_POLICY}
+    container_name: "${APP_ID}-apm-server"
+    hostname: "apm-server.${APP_HOST}.${INT_NETWORK}"
+    networks:
+      # for traefik
+      default:
+      # local network:
+      intnet:
+        ipv4_address: ${ES_NET}.10
+    ports:
+      - ${APM_PORT}:8200
+    #   - 5066:5066
+    volumes:
+      - ./certs:/usr/share/apm-server/certs
+      # - ./extras/hosts/hosts:/etc/hosts
+      - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
+      - ./logs/apm:/usr/share/apm-server/logs
+      - apm:/usr/share/apm-server
+    environment:
+      # - AGENT_API_KEY=${AGENT_API_KEY}
+      - APP_ID=${APP_ID}
+      - APP_HOST=${APP_HOST}
+      - APP_NET=${INT_NETWORK}
+      - APM_SERVER_CERT=/usr/share/apm-server/certs/apm-server.${INT_NETWORK}/apm-server.${INT_NETWORK}.crt
+      - APM_SERVER_CERT_KEY=/usr/share/apm-server/certs/apm-server.${INT_NETWORK}/apm-server.${INT_NETWORK}.key
+      - CLUSTER_NAME=${CLUSTER_NAME}
+      - CLUSTER_UUID=${CLUSTER_UUID}
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
+      - STAGE=${STAGE}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}        
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
+      - "traefik.http.routers.apm-server-public.entrypoints=https"
+      - "traefik.http.routers.apm-server-public.tls=true"
+      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=8200"
+      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
+    healthcheck:
+      test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
+      interval: 10s
+      timeout: 60s
+      retries: 500

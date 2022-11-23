@@ -13,12 +13,14 @@
     hostname: "heartbeat.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.7
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/heartbeat/certs
+      # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
       - heartbeat:/usr/share/heartbeat
     environment:

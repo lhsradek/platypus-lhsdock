@@ -2,11 +2,13 @@
 # For more information on multiple pipelines, see the documentation:
 #   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
 
-- pipeline.id: elastic-agent-pipeline
-  path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"
-# - pipeline.id: beats-pipeline
-#   path.config: "/usr/share/logstash/pipeline/beats.conf"
+- pipeline.id: beats-pipeline
+  path.config: "/usr/share/logstash/pipeline/beats.conf"
 - pipeline.id: gc-pipeline
   path.config: "/usr/share/logstash/pipeline/gc.conf"
-- pipeline.id: traefik-pipeline
-  path.config: "/usr/share/logstash/pipeline/traefik.conf"
+- pipeline.id: syslog-pipeline
+  path.config: "/usr/share/logstash/pipeline/syslog.conf"
+# - pipeline.id: elasticsearch
+#   path.config: "/usr/share/logstash/pipeline/elasticsearch.conf"
+# - pipeline.id: elastic-agent-pipeline
+#   path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"

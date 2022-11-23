@@ -18,6 +18,9 @@ networks:
     external: false
     name: ${INT_NETWORK}
     driver: bridge
+    ipam:
+      config:
+        - subnet: ${ES_NET}.0/24
 
 services:
 

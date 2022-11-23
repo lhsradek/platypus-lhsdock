@@ -22,7 +22,7 @@ if [[ -z "$RUNENV" ]]; then
 fi
 
 echo "================= MAKE VOLUME ================="
-for NAME in eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
+for NAME in apm eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
     if !(docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
         echo "create:"
         docker volume create --name lhsdock-${NAME}
@@ -38,22 +38,26 @@ if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
 else
   INT_NETWORK=$(read_var INT_NETWORK .env)
   APP_HOST=$(read_var APP_HOST .env)
-  ES_IP=$(read_var ES_IP .env)
   ES3=$(read_var ES3 .env)
+  ES_NET=$(read_var ES_NET .env)
   mkdir -p $rootPath/extras/hosts
-  echo "127.0.0.1        localhost" > $rootPath/extras/hosts/hosts
-  # echo "127.0.0.1        fleet      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  # echo "127.0.0.1        metricbeat metricbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  # echo "127.0.0.1        heartbeat  heartbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  # echo "${ES_IP}   traefik    ${APP_HOST}.traefik.local" >> $rootPath/extras/hosts/hosts
-  # echo "${ES_IP}   ${APP_HOST}     ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   es01       es01.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   es02       es02.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   es03       es03.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   logstash   logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_IP}   kibana     kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "::1               localhost ip6-localhost ip6-loopback" > $rootPath/extras/hosts/hosts
+  echo "127.0.0.1         localhost" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.2     es01       es01.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.3     es02       es02.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.4     es03       es03.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.5     logstash   logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.6     kibana     kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.7     heartbeat  heartbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.8     metricbeat metricbeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.9     filebeat   filebeat.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.10    apm-server apm-server.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.10    fleet      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.11    eps        eps.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.20    cerebro    cerebro.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.21    weblhs     ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.22    weblhs-php weblhs-php.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-setup-depends.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-es02.yml >> $rootPath/docker-compose.$RUNENV.yml
   if [ ${ES3} -eq 1 ]; then

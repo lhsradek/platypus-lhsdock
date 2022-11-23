@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+exit 1;
+
 read_var() {
     VAR=$(grep -m 1 "$1" "$2" | xargs)
     IFS="=" read -ra VAR <<< "$VAR"
@@ -55,7 +57,7 @@ else
   echo "================= START SETUP WITH FLEET SERVER ================"
   ${scriptPath}/start
 
-  echo "Start 'bin/setup-eps' for Enterprise Search"
+  echo "Start 'bin/setup-eps-fleet' for Enterprise Search"
   echo
   echo "Use 'bin/stop for Stop, 'bin/start' for Start or 'bin/restart' for Restart"
 fi

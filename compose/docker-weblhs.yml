@@ -13,9 +13,10 @@
     hostname: "${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.21
     ports:
       - 4443:443
     volumes:
@@ -34,8 +35,10 @@
       - esdata03:/root/bin/volume/es03:ro
       - logstash:/root/bin/volume/logstash:ro
       - epsdata:/root/bin/volume/eps:ro
+      - apm:/root/bin/volume/apm:ro
       - fleet:/root/bin/volume/fleet:ro
       - heartbeat:/root/bin/volume/heartbeat:ro
+      - filebeat:/root/bin/volume/filebeat:ro
       - kibana:/root/bin/volume/kibana:ro
       - metricbeat:/root/bin/volume/metricbeat:ro
       # It's for my prune volume deletion protection:
@@ -73,10 +76,11 @@
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${INT_NETWORK}"
     networks:
-      # for elastic and traefik in application/html/index.php
-      - default
+      # for traefik:
+      default:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.13
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
@@ -86,7 +90,7 @@
       - ELASTIC_APM_ENVIRONMENT=${STAGE}
       - ELASTIC_APM_HOSTNAME=weblhs-php.${INT_NETWORK}
       # - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
-      - ELASTIC_APM_SERVER_URL=http://fleet.${APP_HOST}.${INT_NETWORK}:8200
+      - ELASTIC_APM_SERVER_URL=http://apm-server.${APP_HOST}.${INT_NETWORK}:8200
       - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}.${INT_NETWORK}
       - PUID=1000

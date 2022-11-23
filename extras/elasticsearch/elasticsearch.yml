@@ -6,7 +6,6 @@ node.roles: [master, data, ingest, ml, remote_cluster_client]
 bootstrap.memory_lock: true
 
 xpack:
-  # monitoring.collection.enabled: false
   license.self_generated.type: "${LICENSE}"
   security:
     authc.api_key.enabled: true        

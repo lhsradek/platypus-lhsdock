@@ -44,16 +44,17 @@ else
   fi
   cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-kibana.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-apm.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-heartbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-metricbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-fleet.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-filebeat.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-eps.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-weblhs.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo
-  echo "================= START SETUP WITH FLEET SERVER AND ENTERPRISE SEARCH ================"
+  echo "================= START SETUP WITH ENTERPRISE SEARCH ================"
   ${scriptPath}/start
 
   echo "Use 'bin/stop for Stop, 'bin/start' for Start or 'bin/restart' for Restart"

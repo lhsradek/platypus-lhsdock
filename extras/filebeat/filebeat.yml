@@ -1,0 +1,76 @@
+###################### Filebeat Configuration #######################
+
+http.enabled: true
+http.port: 5066
+http.host: "0.0.0.0"
+
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts:
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "certificate"
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+output:
+  # for provisioning:
+  logstash:
+    enabled: true
+    hosts: 
+      - "logstash.${APP_HOST}.${APP_NET}:5044"
+    ssl:
+      # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      certificate: "${LOGSTASH_SERVER_CERT}"
+      key: "${LOGSTASH_SERVER_CERT_KEY}"
+      # verification_mode: "${VERIFICATION_MODE}"
+      verification_mode: "none"
+   
+  # for /filebeat -e setup --dashboards:
+  #  elasticsearch:
+  #    hosts: 
+  #     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #    protocol: "https"
+  #    username: "${ELASTICSEARCH_USERNAME}"
+  #    password: "${ELASTICSEARCH_PASSWORD}"
+  #    ssl:
+  #      enabled: true
+  #      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #      verification_mode: "${VERIFICATION_MODE}"
+
+setup:      
+  ilm.overwrite: true
+  template.settings:
+    index.number_of_shards: 1
+    #index.codec: best_compression
+    source.enabled: false
+  elasticsearch:
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    protocol: "https"
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    ssl:
+      enabled: true
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      verification_mode: "${VERIFICATION_MODE}"
+  
+  kibana:
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    protocol: "https"
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: "${VERIFICATION_MODE}"

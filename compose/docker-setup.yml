@@ -9,7 +9,9 @@
     container_name: "${APP_ID}-setup"
     hostname: "setup.${INT_NETWORK}"
     networks:
-      - intnet
+      # local network:
+      intnet:
+        ipv4_address: ${ES_NET}.30
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
     user: "0"
@@ -47,23 +49,23 @@
           "  - name: ${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - ${APP_ID}-${APP_HOST}.${INT_NETWORK}\n"\
           "      - ${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.21\n"\
           "      - ${ES_IP}\n"\
           "  - name: www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - ${APP_ID}-www.${INT_NETWORK}\n"\
           "      - www.${INT_NETWORK}\n"\
-          "  - name: apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "  - name: apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - apm.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - ${APP_ID}-apm.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.10\n"\
+          "      - ${ES_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -71,96 +73,94 @@
           "      - cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.20\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - es01\n"\
-          "      - ${APP_ID}-es01\n"\
-          "      - ${APP_ID}-es01.${APP_HOST}.${INT_NETWORK}\n"\
           "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.2\n"\
           "      - ${ES_IP}\n"\
           "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - es02\n"\
-          "      - ${APP_ID}-es02\n"\
-          "      - ${APP_ID}-es02.${APP_HOST}.${INT_NETWORK}\n"\
           "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.3\n"\
           "      - ${ES_IP}\n"\
           "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - es03\n"\
-          "      - ${APP_ID}-es03\n"\
-          "      - ${APP_ID}-es03.${APP_HOST}.${INT_NETWORK}\n"\
           "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.4\n"\
           "      - ${ES_IP}\n"\
           "  - name: eps.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - eps\n"\
-          "      - ${APP_ID}-eps\n"\
-          "      - ${APP_ID}-eps.${INT_NETWORK}\n"\
           "      - eps.${INT_NETWORK}\n"\
           "    ip:\n"\
+          "      - ${ES_NET}.11\n"\
           "      - 127.0.0.1\n"\
+          "  - name: filebeat.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - filebeat\n"\
+          "      - filebeat.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.9\n"\
           "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
           "      - apm-server\n"\
-          "      - ${APP_ID}-fleet\n"\
-          "      - ${APP_ID}-apm-server\n"\
-          "      - ${APP_ID}-fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - ${APP_ID}-apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.10\n"\
           "  - name: heartbeat.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - heartbeat\n"\
-          "      - ${APP_ID}-heartbeat\n"\
-          "      - ${APP_ID}-heartbeat.${INT_NETWORK}\n"\
           "      - heartbeat.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.7\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - kibana\n"\
-          "      - ${APP_ID}-kibana\n"\
-          "      - ${APP_ID}-kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "      - kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.6\n"\
           "      - ${ES_IP}\n"\
           "  - name: logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - logstash\n"\
-          "      - ${APP_ID}-logstash\n"\
-          "      - ${APP_ID}-logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "      - logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.5\n"\
           "      - ${ES_IP}\n"\
           "  - name: metricbeat.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - metricbeat\n"\
-          "      - ${APP_ID}-metricbeat\n"\
-          "      - ${APP_ID}-metricbeat.${INT_NETWORK}\n"\
           "      - metricbeat.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.8\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -213,18 +213,14 @@
           "      - localhost\n"\
           "      - fleet\n"\
           "      - apm-server\n"\
-          "      - webtombola-fleet\n"\
-          "      - webtombola-apm-server\n"\
-          "      - webtombola-fleet.${APP_HOST}.tomcat.local\n"\
-          "      - webtombola-apm-server.${APP_HOST}.tomcat.local\n"\
           "      - fleet.${APP_HOST}.tomcat.local\n"\
           "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "  - name: apm.${APP_HOST}.tomcat.local\n"\
+          "  - name: apm-server.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - apm.${APP_HOST}.tomcat.local\n"\
+          "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "  - name: fleet.www.tomcat.local\n"\
@@ -232,16 +228,12 @@
           "      - localhost\n"\
           "      - fleet\n"\
           "      - apm-server\n"\
-          "      - webtombola-fleet\n"\
-          "      - webtombola-apm-server\n"\
-          "      - webtombola-fleet.www.tomcat.local\n"\
-          "      - webtombola-apm-server.www.tomcat.local\n"\
           "      - fleet.www.tomcat.local\n"\
           "      - apm-server.www.tomcat.local\n"\
-          "  - name: apm.www.tomcat.local\n"\
+          "  - name: apm-server.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - apm.www.tomcat.local\n"\
+          "      - apm-server.www.tomcat.local\n"\
           "  - name: ${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -297,18 +289,14 @@
           "      - localhost\n"\
           "      - fleet\n"\
           "      - apm-server\n"\
-          "      - webwp-fleet\n"\
-          "      - webwp-apm-server\n"\
-          "      - webwp-fleet.${APP_HOST}.wordpress.local\n"\
-          "      - webwp-apm-server.${APP_HOST}.wordpress.local\n"\
           "      - fleet.${APP_HOST}.wordpress.local\n"\
           "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "  - name: apm.${APP_HOST}.wordpress.local\n"\
+          "  - name: apm-server.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - apm.${APP_HOST}.wordpress.local\n"\
+          "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "  - name: fleet.www.wordpress.local\n"\
@@ -316,16 +304,12 @@
           "      - localhost\n"\
           "      - fleet\n"\
           "      - apm-server\n"\
-          "      - webwp-fleet\n"\
-          "      - webwp-apm-server\n"\
-          "      - webwp-fleet.www.wordpress.local\n"\
-          "      - webwp-apm-server.www.wordpress.local\n"\
           "      - fleet.www.wordpress.local\n"\
           "      - apm-server.www.wordpress.local\n"\
-          "  - name: apm.www.wordpress.local\n"\
+          "  - name: apm-server.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
-          "      - apm.www.wordpress.local\n"\
+          "      - apm-server.www.wordpress.local\n"\
           "  - name: www.intranet.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -366,19 +350,23 @@
         echo "Waiting for Elasticsearch availability";
         until curl -s --cacert config/certs/ca/ca.crt https://es01.${APP_HOST}.${INT_NETWORK}:9200 | grep -q "missing authentication credentials"; do sleep 20; done;
         echo "Setting kibana_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 30; done;
         echo "Setting beats_system password";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 20; done;
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/beats_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 30; done;
+        echo "Setting apm_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/apm_system/_password -d "{\"password\":\"${APM_PASSWORD}\"}" | grep -q "^{}"; do sleep 30; done;
         #
         # https://www.elastic.co/guide/en/fleet/master/grant-access-to-elasticsearch.html
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/defining-roles.html
         # https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash
-        echo "Create ${LOGSTASH_WRITE_ROLE}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"indices\":[{\"names\":[\"logstash*\", \"log-*\"\"metrics-*\"],\"privileges\":[\"read\",\"write\",\"create\",\"create_index\",\"create_doc\",\"manage\",\"manage_ilm\",\"monitor\"]}]}" | grep -q "^{"; do sleep 30; done;
-        echo "Create ${LOGSTASH_USERNAME}";
-        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"password\":\"${LOGSTASH_PASSWORD}\",\"roles\":[\"${LOGSTASH_WRITE_ROLE}\", \"logstash_admin\", \"logstash_system\"],\"full_name\":\"Logstash Writer\"}" | grep -q "^{"; do sleep 20; done;
+        #
         echo "Setting logstash_system password";
         until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/logstash_system/_password -d "{\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{}"; do sleep 30; done;
+        echo "Create ${LOGSTASH_WRITE_ROLE}";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/role/${LOGSTASH_WRITE_ROLE} -d "{\"cluster\":[\"manage_index_templates\",\"manage_ilm\"],\"run_as\":[\"logstash_system\",\"elastic\"],\"indices\":[{\"names\":[\"logstash*\",\"logs-*\",\"metrics-*\",\"filebeat-*\",\"metricbeat-*\"],\"privileges\":[\"read\",\"write\",\"create\",\"index\",\"create_index\",\"create_doc\",\"manage\",\"manage_ilm\",\"monitor\",\"auto_configure\",\"delete_index\",\"all\"]}]}" | grep -q "^{"; do sleep 30; done;
+        echo "Create ${LOGSTASH_USERNAME}";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/${LOGSTASH_USERNAME} -d "{\"roles\":[\"${LOGSTASH_WRITE_ROLE}\", \"logstash_admin\", \"logstash_system\"],\"full_name\":\"Logstash Writer\",\"password\":\"${LOGSTASH_PASSWORD}\"}" | grep -q "^{"; do sleep 30; done;
+        #
         #
         # echo "Setting enterprise_search password";
         # until curl -s -X POST --cacert config/certs/ca/ca.crt -u elastic:${ELASTIC_PASSWORD} -H "Content-Type: application/json" https://es01.${APP_HOST}.${INT_NETWORK}:9200/_security/user/enterprise_search/_password -d "{\"password\":\"${EPS_PASSWORD}\"}" | grep -q "^{}"; do sleep 5; done;

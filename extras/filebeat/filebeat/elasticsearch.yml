@@ -14,16 +14,13 @@
       #- /usr/share/filebeat/elogs/es03/*_server.json  # JSON logs
 
   gc:
-    enabled: false
+    enabled: true
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     var.paths:
-      #- /usr/share/filebeat/elogs/es01/gc.log.[0-9]*
-      - /usr/share/filebeat/elogs/es01/gc.log
-      #- /usr/share/filebeat/elogs/es02/gc.log.[0-9]*
-      - /usr/share/filebeat/elogs/es02/gc.log
-      #- /usr/share/filebeat/elogs/es03/gc.log.[0-9]*
-      #- /usr/share/filebeat/elogs/es03/gc.log
+      - /usr/share/filebeat/elogs/es01/gc.log.[0-9]*
+      - /usr/share/filebeat/elogs/es02/gc.log.[0-9]*
+      - /usr/share/filebeat/elogs/es03/gc.log.[0-9]*
 
   audit:
     enabled: false

@@ -1,5 +1,8 @@
 
 volumes:
+  apm:
+    external: true
+    name: "${APP_ID}-apm"
   esdata01:
     external: true
     name: "${APP_ID}-es01"
@@ -15,6 +18,9 @@ volumes:
   fleet:
     external: true
     name: "${APP_ID}-fleet"
+  filebeat:
+    external: true
+    name: "${APP_ID}-filebeat"
   heartbeat:
     external: true
     name: "${APP_ID}-heartbeat"

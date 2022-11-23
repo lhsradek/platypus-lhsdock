@@ -6,10 +6,8 @@ monitoring:
   elasticsearch:
     hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
-    username: "${ELASTIC_USERNAME}"
-    password: "${ELASTIC_PASSWORD}"
-    # username: "${LOGSTASH_USERNAME}"
-    # password: "${LOGSTASH_PASSWORD}"
+    username: "${LOGSTASH_USERNAME}"
+    password: "${LOGSTASH_PASSWORD}"
 
 api.ssl.enabled: false
 # https://www.elastic.co/guide/en/logstash/current/ls-security.html

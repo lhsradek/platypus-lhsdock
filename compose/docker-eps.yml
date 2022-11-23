@@ -13,12 +13,14 @@
     hostname: "eps.${INT_NETWORK}"
     networks:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.11
     # ports:
     #  - ${ENTERPRISE_SEARCH_PORT}:3002
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/enterprise-search/config/certs:ro
+      # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
       - ./logs/eps:/var/log/enterprise-search:rw
       - epsdata:/usr/share/enterprise-search

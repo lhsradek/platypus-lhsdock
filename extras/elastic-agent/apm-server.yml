@@ -725,7 +725,6 @@ monitoring:
 # Any setting that is not set is automatically inherited from the Elasticsearch
 # output configuration. This means that if you have the Elasticsearch output configured,
 # you can simply uncomment the following line.
-monitoring:
   elasticsearch:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -735,7 +734,7 @@ monitoring:
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     ssl.verification_mode: "certificate"
-
+ 
   # Set gzip compression level.
   #compression_level: 0
 

@@ -1,63 +1,8 @@
-#
-# === APM Server ===
-#
-  apm:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
-    # Ubuntu - enterprisesearch
-    image: docker.elastic.co/apm/apm-server:${STACK_VERSION}
-    restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-apm"
-    hostname: "apm.${APP_HOST}.${INT_NETWORK}"
-    networks:
-      # for All the World
-      - default
-      # local network:
-      - intnet
-    # ports:
-    #   - ${APM_PORT}:8200
-    #   - 5066:5066
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/apm-server/certs
-      - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
-      - ./logs/apm:/usr/share/apm-server/logs
-      - apm:/usr/share/apm-server
-    environment:
-      - AGENT_API_KEY=${AGENT_API_KEY}
-      - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
-      - APP_NET=${INT_NETWORK}
-      - APM_SERVER_CERT=/usr/share/apm-server/certs/apm.${INT_NETWORK}/apm.${INT_NETWORK}.crt
-      - APM_SERVER_CERT_KEY=/usr/share/apm-server/certs/apm.${INT_NETWORK}/apm.${INT_NETWORK}.key
-      - CLUSTER_NAME=${CLUSTER_NAME}
-      - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
-      - STAGE=${STAGE}
-      - VERIFICATION_MODE=${VERIFICATION_MODE}        
-    healthcheck:
-      # test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
-      test: ["CMD-SHELL", "curl -s -I http://apm.${INT_NETWORK}:8200 | grep -q 'HTTP/1.1 200 OK'"]
-      interval: 10s
-      timeout: 60s
-      retries: 500
 
 #
 # === Filebeat ===
 #
   filebeat:
-    depends_on:
-      es01:
-        condition: service_healthy
-    depends_on:
-      es02:
-        condition: service_healthy
     depends_on:
       logstash:
         condition: service_healthy
@@ -67,24 +12,26 @@
     container_name: "${APP_ID}-filebeat"
     hostname: "filebeat.${INT_NETWORK}"
     networks:
-    # local network:
-      - intnet
+      # local network:
+      intnet:
+        ipv4_address: ${ES_NET}.9
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./logs/file/logs:/usr/share/filebeat/logs
-      # - ./logs/file/registry:/usr/share/filebeat/data/registry
+      - ./logs/filebeat:/usr/share/filebeat/logs
+      # - ./logs/filebeat/registry:/usr/share/filebeat/data/registry
       - ./logs/apm:/usr/share/filebeat/elogs/apm-server
       - ./logs/dokuwiki:/usr/share/filebeat/elogs/nginx/dokuwiki
       - ./logs/es01:/usr/share/filebeat/elogs/es01
       - ./logs/es02:/usr/share/filebeat/elogs/es02
       - ./logs/es03:/usr/share/filebeat/elogs/es03
       - ./logs/eps:/usr/share/filebeat/elogs/eps
-      - ./logs/heart:/usr/share/filebeat/elogs/heart
+      - ./logs/heartbeat:/usr/share/filebeat/elogs/heartbeat
       - ./logs/kibana:/usr/share/filebeat/elogs/kibana
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
       - ./logs/metricbeat:/usr/share/filebeat/elogs/metricbeat
@@ -97,13 +44,14 @@
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
       - APP_NET=${INT_NETWORK}
-      - AGENT_API_KEY=${AGENT_API_KEY}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
+      - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"

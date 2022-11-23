@@ -13,13 +13,15 @@
     hostname: "cerebro.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.20
     # ports:
     #  - 9000:9000
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts
       - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
       - ./logs/cerebro:/opt/cerebro/logs:rw

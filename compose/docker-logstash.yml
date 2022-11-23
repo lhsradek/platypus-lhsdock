@@ -12,17 +12,16 @@
     container_name: "${APP_ID}-logstash"
     hostname: "logstash.${APP_HOST}.${INT_NETWORK}"
     networks:
-      # for traefik:
-      - default
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.5
     ports:
       # traefik syslog
-      - 5000:5000
+      - 5000:5000/udp
+      - 5000:5000/tcp
       # elastic-agent
-      - ${LOGSTASH_PORT}:5044
       # beat
-      - 5045:5045
+      - ${LOGSTASH_PORT}:5044
       # gc
       - 5046:5046
       # http metrics
@@ -32,13 +31,13 @@
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
       - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt
       - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key
-      - ./extras/hosts/hosts:/etc/hosts
+      # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf
       - ./extras/logstash/beats.conf:/usr/share/logstash/pipeline/beats.conf
       - ./extras/logstash/gc.conf:/usr/share/logstash/pipeline/gc.conf
-      - ./extras/logstash/traefik.conf:/usr/share/logstash/pipeline/traefik.conf
+      - ./extras/logstash/syslog.conf:/usr/share/logstash/pipeline/syslog.conf
       - logstash:/usr/share/logstash
     environment:
       - APP_ID=${APP_ID}
@@ -46,15 +45,16 @@
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
       - LOGSTASH_KEYSTORE_PASS=${ENCRYPTION_KEYS}
-      - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
       - LS_JAVA_OPTS=${LS_JAVA_OPTS}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
+      - STACK_VERSION=${STACK_VERSION}
+      # - ELASTIC_USERNAME=elastic
+      # - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      # - LOGSTASH_ELASTIC_AGENT_API_KEY=${LOGSTASH_ELASTIC_AGENT_API_KEY}
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://localhost:9600 | grep -q 'HTTP/1.1 200 OK'"]
       # inspiration from https://github.com/elastic/stack-docker/blob/master/docker-compose.yml

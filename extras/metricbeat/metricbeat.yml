@@ -5,23 +5,19 @@ http.port: 5066
 http.host: "0.0.0.0"
 # http.host: "metricbeat.nginx.local"
 
-xpack.monitoring:
-  enabled: false
-  cluster_uuid: "${CLUSTER_UUID}"
-
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
-#   elasticsearch:
-#     username: "${ELASTICSEARCH_USERNAME}"
-#     password: "${ELASTICSEARCH_PASSWORD}"
-#     hosts:
-#       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-#     protocol: "https"
-#     ssl.enabled: true
-#     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#     ssl.verification_mode: "certificate"
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts:
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "certificate"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -69,7 +65,7 @@ output.elasticsearch:
 # ------------------------------ Logstash Output -------------------------------
 
 # output.logstash:
-#   hosts: ["logstash.${APP_HOST}.${APP_NET}:5045"]
+#   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
 #   ssl:
 #     certificate: "${LOGSTASH_SERVER_CERT}"
 #     key: "${LOGSTASH_SERVER_CERT_KEY}"

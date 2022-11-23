@@ -6,7 +6,6 @@ apm-server:
   #host: "unix:///var/run/docker.sock"
   #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
   host: "0.0.0.0"
-  #host: "apm.nginx.local"
 
   #---------------------------- APM Server - RUM Real User Monitoring ----------------------------
 
@@ -21,13 +20,13 @@ apm-server:
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
         protocol: "https"
         #api_key: "id:api_key"
+        # username: "apm_system"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
         ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-        # ssl.certificate: "${APM_SERVER_CERT}"
-        # ssl.key: "${APM_SERVER_CERT_KEY}"
+        ssl.verification_mode: "${VERIFICATION_MODE}"
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
-      # index_pattern: "apm-*-sourcemap*"
+        index_pattern: "apm-*-sourcemap*"
 
 #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
@@ -40,9 +39,7 @@ apm-server:
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "certificate"
-    # ssl.certificate: "${APM_SERVER_CERT}"
-    # ssl.key: "${APM_SERVER_CERT_KEY}"
+    ssl.verification_mode: "${VERIFICATION_MODE}"
 
 #============================= Instrumentation =============================
 # instrumentation:
@@ -69,14 +66,12 @@ output.elasticsearch:
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
-  #username: "apm_system"
+  # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.verification_mode: "certificate"
-  # ssl.certificate: "${APM_SERVER_CERT}"
-  # ssl.key: "${APM_SERVER_CERT_KEY}"
+  ssl.verification_mode: "${VERIFICATION_MODE}"
 
 #=============================== HTTP Endpoint ===============================
 
@@ -84,22 +79,18 @@ http.enabled: true
 http.host: "0.0.0.0"
 http.port: 5066
 
-#============================= X-pack Monitoring =============================
+#============================= Monitoring =============================
 
-xpack.monitoring.enabled: true
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
-# monitoring:
-#   elasticsearch:
-#     username: "${ELASTICSEARCH_USERNAME}"
-#     password: "${ELASTICSEARCH_PASSWORD}"
-#     hosts: 
-#       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-#     protocol: "https"
-#     ssl.enabled: true
-#     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#     ssl.verification_mode: "certificate"
-#     ssl.certificate: "${APM_SERVER_CERT}"
-#     ssl.key: "${APM_SERVER_CERT_KEY}"
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "${VERIFICATION_MODE}"

@@ -11,9 +11,9 @@
 
 [[https://www.elastic.co/blog/configuring-ssl-tls-and-https-to-secure-elasticsearch-kibana-beats-and-logstash]]
 
-[[https://www.elastic.co/guide/en/elasticsearch/reference/8.5/index-mgmt.html]]
+[[https://www.elastic.co/guide/en/elasticsearch/reference/current/index-mgmt.html]]
 
-[[https://www.elastic.co/guide/en/kibana/7.1/tutorial-define-index.html]]
+[[https://www.elastic.co/guide/en/kibana/current/tutorial-define-index.html]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/logstash/|configuratios]]
 

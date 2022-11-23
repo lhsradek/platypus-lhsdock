@@ -69,10 +69,10 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8220"
-          - "https://fleet.${APP_HOST}.wordpress.local:8220"
-          - "https://fleet.www.tomcat.local:8220"
-          - "https://fleet.${APP_HOST}.tomcat.local:8220"
+          - "https://fleet.www.wordpress.local:8221"
+          - "https://fleet.${APP_HOST}.wordpress.local:8221"
+          - "https://fleet.www.tomcat.local:8222"
+          - "https://fleet.${APP_HOST}.tomcat.local:8222"
         # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
 # Disable previous lines (if not) after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
 # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
@@ -188,7 +188,7 @@ xpack:
                     value: | 
                       http.enabled: true
                       http.host: 0.0.0.0
-                      http.port: 5066
+                      http.port: 6789
           - name: elastic_agent_nginx-1
             package:
               name: elastic_agent
@@ -206,7 +206,7 @@ xpack:
                   - name: host
                     value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://fleet.${APP_HOST}.${APP_NET}:8200"
+                    value: "http://apm-server.${APP_HOST}.${APP_NET}:8200"
           - name: docker_nginx-1
             package:
               name: docker
@@ -226,7 +226,7 @@ xpack:
             id: system_nginx-1
             inputs:
               - type: logfile
-                enabled: false
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -475,34 +475,36 @@ xpack:
           - metrics
         package_policies:
           - name: fleet_server_wordpress-1
-            description: Fleet Server
-            id: fleet_server_wordpress-1
             package:
               name: fleet_server
+            description: Fleet Server
+            id: fleet_server_wordpress-1
+            inputs:
+              - type: fleet-server
+                vars:
+                  - name: host
+                    value: 0.0.0.0
+                  - name: port
+                    value: 8221
           - name: elastic_agent_wordpress-1
-            description: Elastic Agent
-            id: elastic_agent_wordpress-1
             package:
               name: elastic_agent
+            description: Elastic Agent
+            id: elastic_agent_wordpress-1
           - name: apm_wordpress-1
-            description: Elastic APM
-            id: apm_wordpress-1
             package:
               name: apm
+            description: Elastic APM
+            id: apm_wordpress-1
             inputs:
               - type: apm
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8200"
+                    value: "0.0.0.0:8201"
                   - name: url
-                    value: "http://fleet:8200"
-                    # value: "http://fleet.${APP_HOST}.wordpress.local:8200"
-                  # - name: custom
-                  #   value: | 
-                  #     http.enabled: true
-                  #     http.host: 0.0.0.0
-                  #     http.port: 5066
+                    value: "http://apm-server:8201"
+                  #   value: "http://apm-server.${APP_HOST}.wordpress.local:8201"
           - name: docker_wordpress-1
             package:
               name: docker
@@ -658,34 +660,36 @@ xpack:
           - metrics
         package_policies:
           - name: fleet_server_tomcat-1
-            description: Fleet Server
-            id: fleet_server_tomcat-1
             package:
               name: fleet_server
+            description: Fleet Server
+            id: fleet_server_tomcat-1
+            inputs:
+              - type: fleet-server
+                vars:
+                  - name: host
+                    value: 0.0.0.0
+                  - name: port
+                    value: 8222
           - name: elastic_agent_tomcat-1
-            description: Elastic Agent
-            id: elastic_agent_tomcat-1
             package:
               name: elastic_agent
+            description: Elastic Agent
+            id: elastic_agent_tomcat-1
           - name: apm_tomcat-1
-            description: Elastic APM
-            id: apm_tomcat-1
             package:
               name: apm
+            description: Elastic APM
+            id: apm_tomcat-1
             inputs:
               - type: apm
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8200"
+                    value: "0.0.0.0:8202"
                   - name: url
-                    value: "http://fleet:8200"
-                    # value: "http://fleet.${APP_HOST}.tomcat.local:8200"
-                  # - name: custom
-                  #   value: | 
-                  #     http.enabled: true
-                  #     http.host: 0.0.0.0
-                  #     http.port: 5066
+                    value: "http://apm-server:8202"
+                  #   value: "http://apm-server.${APP_HOST}.tomcat.local:8202"
           - name: docker_tomcat-1
             package:
               name: docker

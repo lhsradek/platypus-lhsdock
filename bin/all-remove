@@ -20,7 +20,7 @@ if [ -f "$rootPath/docker-compose.$RUNENV.yml" ]; then
   exit 1;
 else
   echo "================= REMOVE ALL VOLUME ================="
-  for NAME in eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
+  for NAME in apm eps es01 es02 es03 fleet filebeat heartbeat kibana logstash metricbeat; do
     echo ${NAME}
     if (docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
       echo "remove:"

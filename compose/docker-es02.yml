@@ -10,15 +10,16 @@
     hostname: "es02.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
       # local network:
-      - intnet
+      intnet:
+        ipv4_address: ${ES_NET}.3
     ports:
       - 9201:9201
       - 9301:9301
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./extras/hosts/hosts:/etc/hosts
+      # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es02:/usr/share/elasticsearch/logs

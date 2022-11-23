@@ -12,7 +12,7 @@
     - process_summary
     - socket_summary
     #- entropy
-    - core
+    #- core
     #- diskio
     #- socket
     #- service
