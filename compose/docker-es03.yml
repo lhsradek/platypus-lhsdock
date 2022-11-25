@@ -18,7 +18,7 @@
       default:
       # local network:
       intnet:
-        ipv4_address: ${ES_NET}.3
+        ipv4_address: ${ES_NET}.4
     ports:
       - 9202:9202
       # - 9302:9302

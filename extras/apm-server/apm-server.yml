@@ -17,7 +17,7 @@ apm-server:
     output:
       elasticsearch:
         hosts:
-          - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          - "https://es01.${APP_HOST}.${APP_NET}:9200"
         protocol: "https"
         #api_key: "id:api_key"
         # username: "apm_system"
@@ -64,8 +64,7 @@ apm-server:
 output.elasticsearch:
   enabled: true
   hosts: 
-    # - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
