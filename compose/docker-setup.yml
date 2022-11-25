@@ -1,6 +1,6 @@
 
 #
-# setup makes certs and change passwords
+# setup makes certs, create role and user and change passwords
 #
   setup:
     # Ubuntu - elasticsearch
