@@ -8,9 +8,9 @@
     - load
     - memory
     - network
-    - process
-    - process_summary
-    - socket_summary
+    #- process
+    #- process_summary
+    #- socket_summary
     #- entropy
     #- core
     #- diskio
@@ -25,9 +25,9 @@
 
 - module: system
   period: 1m
-  metricsets:
-    - filesystem
-    - fsstat
+  # metricsets:
+  #  - filesystem
+  #  - fsstat
   processors:
   - drop_event.when.regexp:
       system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)'

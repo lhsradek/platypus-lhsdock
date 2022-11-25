@@ -19,3 +19,6 @@ xpack:
         enabled: true
         verification_mode: "${VERIFICATION_MODE}"
         certificate_authorities: "certs/ca/ca.crt"
+
+# logger.org.elasticsearch.discovery: INFO
+logger.discovery.level: INFO

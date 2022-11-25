@@ -42,7 +42,7 @@
       #- /usr/share/filebeat/logs/es02/*_index_search_slowlog.json    # JSON logs
       #- /usr/share/filebeat/logs/es02/*_index_indexing_slowlog.json  # JSON logs
       #- /usr/share/filebeat/logs/es03/*_index_search_slowlog.json    # JSON logs
-      # /usr/share/filebeat/logs/es03/*_index_indexing_slowlog.json  # JSON logs
+      #- /usr/share/filebeat/logs/es03/*_index_indexing_slowlog.json  # JSON logs
 
   deprecation:
     enabled: false

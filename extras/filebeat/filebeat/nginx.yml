@@ -12,7 +12,8 @@
       - /usr/share/filebeat/elogs/nginx/default/access.log
       - /usr/share/filebeat/elogs/nginx/default/php-access.log
       - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/access.log
-      - /usr/share/filebeat/elogs/nginx/dokuwiki/php/access.log
+      # - /usr/share/filebeat/elogs/nginx/dokuwiki/php/access.log
+      #
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/access.log
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.access.log
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.access.log
@@ -31,6 +32,7 @@
       - /usr/share/filebeat/elogs/nginx/default/php-error.log
       - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/error.log
       - /usr/share/filebeat/elogs/nginx/dokuwiki/php/error.log
+      #
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/wp.error.log

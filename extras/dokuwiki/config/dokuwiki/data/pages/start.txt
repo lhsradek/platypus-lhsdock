@@ -1,24 +1,10 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+
 ====== platypus-lhsdock ======
 
 [[https://github.com/lhsradek/platypus-lhsdock|platypus-lhsdock]] [[https://hub.docker.com/repository/docker/lhsradek/lhsdock|{{https://img.shields.io/docker/pulls/lhsradek/lhsdock.png?recache}}]] with [[https://www.elastic.co/|ELK]]
 
 ===== Elasticsearch - Logstash - Kibana =====
-
- - [[Elasticsearch]]
-
- - [[Logstash]]
-
- - [[Kibana]]
-
- - [[Cerebro]]
-
- - [[Elastic-agent|Elastic agent]]
-
- - [[Apm-server|Apm Server]]
-
- - [[Fleet-server|Fleet Server]]
-
- - [[Beats]]
 
 ===== Repositories =====
 

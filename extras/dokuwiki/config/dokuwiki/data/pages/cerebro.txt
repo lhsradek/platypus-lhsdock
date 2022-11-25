@@ -1,7 +1,9 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** >>**Cerebro**<< [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+
 ====== Cerebro ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
-[[https://github.com/lmenezes/cerebro|Cerebro]] is a web console and status view for [[Elasticsearch]]. Cerebro doesn't need kibana to run, and even then you can set a lot of things in elastic.
+[[https://github.com/lmenezes/cerebro|Cerebro]] is a web console and status view for [[Elasticsearch]]. Cerebro doesn't need kibana to run and even then you can set a lot of things in elastic.
 
 Cerebro is installed on url [[https://cerebro.docker.nginx.local]] 
 

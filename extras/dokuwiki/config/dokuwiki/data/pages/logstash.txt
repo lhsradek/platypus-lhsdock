@@ -1,4 +1,7 @@
+**[[Elasticsearch]]** >>**Logstash**<< **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+
 ====== Logstash ======
+
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]]L[[Kibana|K]]
 
 ===== Important urls: =====
@@ -16,6 +19,16 @@
 [[https://www.elastic.co/guide/en/kibana/current/tutorial-define-index.html]]
 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/logstash/|configuratios]]
+
+==== Kibana - Observability - Monitor the Stack - Logstash pipelines ====
+
+{{kibana16.png?600x263}}
+
+==== Kibana - Fleet - Settings ====
+
+[[fleet-server#kibana - fleet - settings| The Kibana Fleet Server settings]]
+
+{{fleet01.png?600x395}}
 
 -----
 

@@ -1,3 +1,5 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] >>**Beats**<<
+
 ====== Beats ======
 
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
@@ -21,7 +23,8 @@ Filebeat, together with [[logstash]], processes the file logs for [[elasticsearc
 ===== Kibana displays the logs =====
 
 === Kibana - Observability - Logs - Stream ===
-{{kibana08.png?600x432}}
+
+{{kibana08.png?600x462}}
 
 ===== Heartbeat * =====
 

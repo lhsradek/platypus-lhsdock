@@ -61,7 +61,10 @@
           "  - name: apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
           "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
+          "      - metric.apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
@@ -220,7 +223,10 @@
           "  - name: apm-server.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
           "      - apm-server.${APP_HOST}.tomcat.local\n"\
+          "      - metric.apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "  - name: fleet.www.tomcat.local\n"\
@@ -233,7 +239,10 @@
           "  - name: apm-server.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
           "      - apm-server.www.tomcat.local\n"\
+          "      - metric.apm-server.www.tomcat.local\n"\
           "  - name: ${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -296,7 +305,10 @@
           "  - name: apm-server.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
           "      - apm-server.${APP_HOST}.wordpress.local\n"\
+          "      - metric.apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "  - name: fleet.www.wordpress.local\n"\
@@ -309,7 +321,10 @@
           "  - name: apm-server.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
           "      - apm-server.www.wordpress.local\n"\
+          "      - metric.apm-server.www.wordpress.local\n"\
           "  - name: www.intranet.local\n"\
           "    dns:\n"\
           "      - localhost\n"\

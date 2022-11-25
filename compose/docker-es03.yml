@@ -21,11 +21,13 @@
         ipv4_address: ${ES_NET}.3
     ports:
       - 9202:9202
-      - 9302:9302
+      # - 9302:9302
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # - ./extras/hosts/hosts:/etc/hosts
-      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./extras/elasticsearch/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties:ro
+      - ./extras/elasticsearch/log4j2.file.properties:/usr/share/elasticsearch/config/log4j2.file.properties:ro
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es03:/usr/share/elasticsearch/logs
       - esdata03:/usr/share/elasticsearch

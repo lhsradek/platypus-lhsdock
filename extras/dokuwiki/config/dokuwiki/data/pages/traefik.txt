@@ -1,4 +1,7 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+
 ====== Traefik ======
+
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
 Traefik is installed on url [[https://docker.traefik.local]] 

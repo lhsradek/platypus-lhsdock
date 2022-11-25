@@ -22,6 +22,7 @@
       - ./certs:/usr/share/heartbeat/certs
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+      - ./logs/heartbeat:/usr/share/heartbeat/logs
       - heartbeat:/usr/share/heartbeat
     environment:
       - APP_ID=${APP_ID}

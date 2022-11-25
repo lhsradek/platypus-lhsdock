@@ -14,10 +14,10 @@
       - default
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh 
-      - ./certs/ca/ca.crt:/config/keys/ca.pem
-      - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt
-      - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key
+      - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh:ro
+      - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
+      - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt:ro
+      - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key:ro
       - ./extras/dokuwiki/config:/config
       - ./png/cerebro01.png:/config/dokuwiki/data/media/cerebro01.png
       - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
@@ -27,6 +27,9 @@
       - ./png/fleet02.png:/config/dokuwiki/data/media/fleet02.png
       - ./png/fleet03.png:/config/dokuwiki/data/media/fleet03.png
       - ./png/fleet04.png:/config/dokuwiki/data/media/fleet04.png
+      - ./png/fleet05.png:/config/dokuwiki/data/media/fleet05.png
+      - ./png/fleet06.png:/config/dokuwiki/data/media/fleet06.png
+      - ./png/fleet07.png:/config/dokuwiki/data/media/fleet07.png
       - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
       - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
       - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
@@ -41,6 +44,9 @@
       - ./png/kibana12.png:/config/dokuwiki/data/media/kibana12.png
       - ./png/kibana13.png:/config/dokuwiki/data/media/kibana13.png
       - ./png/kibana14.png:/config/dokuwiki/data/media/kibana14.png
+      - ./png/kibana15.png:/config/dokuwiki/data/media/kibana15.png
+      - ./png/kibana16.png:/config/dokuwiki/data/media/kibana16.png
+      - ./png/kibana17.png:/config/dokuwiki/data/media/kibana17.png
       - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png

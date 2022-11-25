@@ -4,7 +4,9 @@ monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
     ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
     username: "${LOGSTASH_USERNAME}"
     password: "${LOGSTASH_PASSWORD}"

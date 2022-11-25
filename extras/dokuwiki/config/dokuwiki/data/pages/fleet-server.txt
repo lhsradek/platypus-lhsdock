@@ -1,4 +1,7 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] >>**Fleet-server**<< [[Beats]]
+
 ====== Fleet Server ======
+
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
 [[https://www.elastic.co/guide/en/fleet/current/index.html|Fleet and Elastic Agent Guide]]
@@ -118,6 +121,11 @@ FLEET_ENROLLMENT_TOKEN=alpnaWVJUUI2SGplNGVIMk1yV246dFNlWk1fdGZSVXVENGE2YmRCYXFwU
 FLEET_SERVER_POLICY_ID=agent-nginx-policy-1
 </code>
 
+For tomcat:
+
+{{fleet05.png?600x298}}
+
+
 ==== Kibana - Fleet - Agents ====
 
 **Add a Fleet Server** select Advanced. As a policy slect **Agent Nginx policy 1**
@@ -132,6 +140,8 @@ For example:
 FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2Njg0NjgzNzY4Mjc6bjRueHFvSlFSZE9XbXFnWGgyY05rZw
 </code>
 
+{{fleet06.png?600x298}}
+
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
 everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
 
@@ -142,6 +152,9 @@ and edit the **.env** and set it.
 FLEET_SERVER_POLICY_ID=agent-nginx-policy-2
 </code>
 
+For Tomcat:
+
+{{fleet07.png?600x434}}
 
 -----
 

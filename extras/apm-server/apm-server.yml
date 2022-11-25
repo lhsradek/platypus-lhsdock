@@ -17,7 +17,7 @@ apm-server:
     output:
       elasticsearch:
         hosts:
-          - "https://es01.${APP_HOST}.${APP_NET}:9200"
+          - "https://es02.${APP_HOST}.${APP_NET}:9201"
         protocol: "https"
         #api_key: "id:api_key"
         # username: "apm_system"
@@ -64,7 +64,8 @@ apm-server:
 output.elasticsearch:
   enabled: true
   hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    # - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -82,7 +83,7 @@ http.port: 5066
 #============================= Monitoring =============================
 
 monitoring:
-  enabled: true
+  enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
   elasticsearch:

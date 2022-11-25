@@ -22,7 +22,7 @@ if [[ -z "$RUNENV" ]]; then
 fi
 
 echo "================= MAKE VOLUME ================="
-for NAME in apm eps es01 es02 es03 fleet heartbeat kibana logstash metricbeat; do
+for NAME in apm eps es01 es02 es03 filebeat fleet heartbeat kibana logstash metricbeat; do
     if !(docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
         echo "create:"
         docker volume create --name lhsdock-${NAME}

@@ -17,8 +17,8 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.10
-    ports:
-      - ${APM_PORT}:8200
+    # ports:
+    #   - ${APM_PORT}:8200
     #   - 5066:5066
     volumes:
       - ./certs:/usr/share/apm-server/certs
@@ -48,8 +48,15 @@
       - "traefik.http.routers.apm-server-public.tls=true"
       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=8200"
       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
+      #
+      - "traefik.http.routers.apm-server-metric-public.rule=Host(`metric.apm-server.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.apm-server-metric-public.service=apm-server-metric-${APP_ID}"
+      - "traefik.http.routers.apm-server-metric-public.entrypoints=https"
+      - "traefik.http.routers.apm-server-metric-public.tls=true"
+      - "traefik.http.services.apm-server-metric-${APP_ID}.loadbalancer.server.port=5066"
+      - "traefik.http.services.apm-server-metric-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       interval: 10s
-      timeout: 60s
+      timeout: 30s
       retries: 500

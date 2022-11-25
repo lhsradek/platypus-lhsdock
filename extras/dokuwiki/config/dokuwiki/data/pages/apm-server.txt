@@ -1,3 +1,5 @@
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] >>**Apm-server**<< [[Fleet-server]] [[Beats]]
+
 ====== Application Performance Monitoring (APM) Server ======
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
@@ -31,7 +33,7 @@ GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-l
 
 === Kibana - Observability - APM - Trases ===
 
-{{kibana12.png?600x434}}
+{{kibana12.png?600x428}}
 
 === Kibana - Observability - APM - Dependences ===
 

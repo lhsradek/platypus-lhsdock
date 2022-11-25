@@ -14,7 +14,9 @@
     hostname: "fleet.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik
-      defualt:
+      default:
+        aliases:
+          - apm-server
       # local network:
       intnet:
         aliases:
@@ -56,7 +58,6 @@
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - AMP_SERVER_ENABLE=1
       - ELASTIC_AGENT_TAGS=${ELASTIC_AGENT_TAGS}
       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - ELASTICSEARCH_USERNAME=elastic
@@ -95,9 +96,9 @@
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
       - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
       - "traefik.http.routers.fleet-public.entrypoints=https"
       - "traefik.http.routers.fleet-public.tls=true"
-      - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
       #

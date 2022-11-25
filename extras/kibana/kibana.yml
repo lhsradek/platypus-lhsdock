@@ -43,9 +43,9 @@ elasticsearch:
   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   requestTimeout: 240000
 
-enterpriseSearch:
-  host: "http://eps.${APP_NET}:3002"
-  accessCheckTimeout: 60000
+# enterpriseSearch:
+#   host: "http://eps.${APP_NET}:3002"
+#   accessCheckTimeout: 60000
 
 xpack:
   reporting:
@@ -69,12 +69,12 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8221"
-          - "https://fleet.${APP_HOST}.wordpress.local:8221"
-          - "https://fleet.www.tomcat.local:8222"
-          - "https://fleet.${APP_HOST}.tomcat.local:8222"
-        # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-# Disable previous lines (if not) after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
+          - "https://fleet.www.wordpress.local:8220"
+          - "https://fleet.${APP_HOST}.wordpress.local:8220"
+          - "https://fleet.www.tomcat.local:8220"
+          - "https://fleet.${APP_HOST}.tomcat.local:8220"
+          # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
+# Disable previous block (if not) after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
 # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
 #
 # Elasticsearch - Advanced YAML configuration:
@@ -214,7 +214,7 @@ xpack:
             id: docker_nginx-1
             inputs:
               - type: docker/metrics
-                enabled: true
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: docker.memory
@@ -245,7 +245,7 @@ xpack:
                           - /hostfs/var/log/auth.log
                           - /hostfs/var/log/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -485,7 +485,7 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8221
+                    value: 8220
           - name: elastic_agent_wordpress-1
             package:
               name: elastic_agent
@@ -501,9 +501,9 @@ xpack:
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8201"
+                    value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://apm-server:8201"
+                    value: "http://apm-server:8200"
                   #   value: "http://apm-server.${APP_HOST}.wordpress.local:8201"
           - name: docker_wordpress-1
             package:
@@ -670,7 +670,7 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8222
+                    value: 8220
           - name: elastic_agent_tomcat-1
             package:
               name: elastic_agent
@@ -686,9 +686,9 @@ xpack:
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8202"
+                    value: "0.0.0.0:8200"
                   - name: url
-                    value: "http://apm-server:8202"
+                    value: "http://apm-server:8200"
                   #   value: "http://apm-server.${APP_HOST}.tomcat.local:8202"
           - name: docker_tomcat-1
             package:
@@ -861,8 +861,7 @@ logging:
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
         type: pattern
-        # pattern: "[%date][%level][%logger][%meta] %message"
-        pattern: "[%date][%level][%logger] %message"
+        pattern: "[%date][%level][%logger][%meta] %message"
   root:
     appenders: [default, file]
     level: info
