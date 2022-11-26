@@ -21,8 +21,6 @@
       - /var/run/docker.sock:/var/run/docker.sock
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ./extras/elasticsearch/log4j2.properties:/usr/share/elasticsearch/config/log4j2.properties:ro
-      - ./extras/elasticsearch/log4j2.file.properties:/usr/share/elasticsearch/config/log4j2.file.properties:ro
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
@@ -30,8 +28,8 @@
       - node.name=es02
       - http.port=9201
       - transport.port=9301
-      # - discovery.seed_hosts=es01:9300
-      - discovery.seed_hosts=es01:9300,es03:9302
+      - discovery.seed_hosts=es01:9300
+      # - discovery.seed_hosts=es01:9300,es03:9302
       - xpack.security.http.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.crt
       - xpack.security.transport.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key

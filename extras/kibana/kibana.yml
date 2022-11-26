@@ -43,9 +43,9 @@ elasticsearch:
   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   requestTimeout: 240000
 
-# enterpriseSearch:
-#   host: "http://eps.${APP_NET}:3002"
-#   accessCheckTimeout: 60000
+enterpriseSearch:
+  host: "http://eps.${APP_NET}:3002"
+  accessCheckTimeout: 60000
 
 xpack:
   reporting:

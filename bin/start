@@ -47,8 +47,7 @@ if [[ -f "$rootPath/docker-compose.extras.yml" ]]; then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-mkdir -p $rootPath/logs $rootPath/logs/apm $rootPath/logs/es01 $rootPath/logs/es02 $rootPath/logs/es03 $rootPath/logs/eps $rootPath/logs/filebeat $rootPath/logs/cerebro $rootPath/logs/logstash $rootPath/logs/kibana $rootPath/logs/metricbeat $rootPath/logs/nginx $rootPath/logs/nginx $rootPath/logs/dokuwiki $rootPath/logs/dokuwiki/php
-# mkdir -p $rootPath/logs $rootPath/logs/es01 $rootPath/logs/es02 $rootPath/logs/es03 $rootPath/logs/eps $rootPath/logs/fleet $rootPath/logs/cerebro $rootPath/logs/logstash $rootPath/logs/kibana $rootPath/logs/metricbeat $rootPath/logs/nginx $rootPath/logs/nginx $rootPath/logs/dokuwiki $rootPath/logs/dokuwiki/php
+mkdir -p $rootPath/logs $rootPath/logs/apm $rootPath/logs/es01 $rootPath/logs/es02 $rootPath/logs/es03 $rootPath/logs/eps $rootPath/logs/filebeat $rootPath/logs/fleet $rootPath/logs/cerebro $rootPath/logs/heartbeat $rootPath/logs/logstash $rootPath/logs/kibana $rootPath/logs/metricbeat $rootPath/logs/nginx $rootPath/logs/nginx $rootPath/logs/dokuwiki $rootPath/logs/dokuwiki/php
 touch $rootPath/logs/nginx/php-access.log
 touch $rootPath/logs/nginx/php-error.log
 touch $rootPath/logs/dokuwiki/php/access.log
