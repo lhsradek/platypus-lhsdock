@@ -127,9 +127,9 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 === platypus-lhsdock ===
 
-{{lhsdock.png?600x200}}
+{{lhsdock.png?600x466}}
 
 === Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
 
-{{kibana01.png?600x200}}
+{{kibana01.png?600x440}}
 

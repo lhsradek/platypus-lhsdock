@@ -15,11 +15,12 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.9
+    user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
+      # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      # - /proc:/hostfs/proc:ro
+      # - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/hosts/hosts:/etc/hosts
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
@@ -39,6 +40,7 @@
       # - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/elogs/nginx/tombola
       # - /root/tombola/logs/tombola-tomcat/:/usr/share/filebeat/elogs/tomcat/tombola
       - /root/platypus-box/logs/traefik:/usr/share/filebeat/elogs/traefik
+      - /var/log:/usr/share/filebeat/elogs/system
       - filebeat:/usr/share/filebeat
     environment:
       - APP_ID=${APP_ID}

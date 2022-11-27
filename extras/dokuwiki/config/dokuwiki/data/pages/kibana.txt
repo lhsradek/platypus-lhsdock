@@ -70,7 +70,7 @@ GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
 === Observability - APM - Services ===
 
-{{kibana10.png?600x434}}
+{{kibana10.png?600x466}}
 
 Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
 
@@ -80,7 +80,7 @@ Service **lhsdock** exists by [[elastic-agent#elastic_apm_agent_php]]
 
 === Observability - APM - Dependences ===
 
-{{kibana13.png?600x434}}
+{{kibana13.png?600x466}}
 
 === Observability - APM - Settings Agent - keys ===
 

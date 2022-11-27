@@ -234,16 +234,16 @@ xpack:
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/messages
-                          - /hostfs/var/log/syslog
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/messages
+                          # - /hostfs/var/log/syslog
                   - data_stream:
                       dataset: system.auth
                     enabled: false
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/auth.log
-                          - /hostfs/var/log/secure
+                          # - /hostfs/var/log/auth.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
                 enabled: false
                 vars:
@@ -532,16 +532,16 @@ xpack:
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/messages
-                          - /hostfs/var/log/syslog
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/messages
+                          # - /hostfs/var/log/syslog
                   - data_stream:
                       dataset: system.auth
                     enabled: false
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/auth.log
-                          - /hostfs/var/log/secure
+                          # - /hostfs/var/log/auth.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
                 enabled: false
                 vars:
@@ -717,16 +717,16 @@ xpack:
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/messages
-                          - /hostfs/var/log/syslog
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/messages
+                          # - /hostfs/var/log/syslog
                   - data_stream:
                       dataset: system.auth
                     enabled: false
                     vars:
                       - name: paths
                         value:
-                          - /hostfs/var/log/auth.log
-                          - /hostfs/var/log/secure
+                          # - /hostfs/var/log/auth.log
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
                 enabled: false
                 vars:

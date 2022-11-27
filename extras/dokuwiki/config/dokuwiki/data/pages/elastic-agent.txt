@@ -43,7 +43,7 @@ Elastic APM agent can connect to [[APM-Server|APM server]].
 
 ===== Elastic APM agent java =====
 
-[[https://github.com/elastic/apm-agent-java|Elastic APM agent java]] [[https://search.maven.org/search?q=a:elastic-apm-agent|elastic-apm-agent]]
+[[https://github.com/elastic/apm-agent-java|Elastic APM agent java]] [[https://search.maven.org/search?q=a:elastic-apm-agent|elastic-apm-agent]] [[https://www.elastic.co/blog/monitoring-java-applications-and-getting-started-with-the-elastic-apm-java-agent]]
 
 ===== Elastic APM agent php =====
 

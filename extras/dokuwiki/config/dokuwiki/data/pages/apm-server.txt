@@ -25,7 +25,7 @@ GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-l
 
 === Kibana - Observability - APM - Services ===
 
-{{kibana10.png?600x434}}
+{{kibana10.png?600x466}}
 
 === Kibana - Observability - APM - Services - docker-wordpress99 - Overview ===
 
@@ -33,10 +33,10 @@ GET [[https://es01.docker.nginx.local:9200/.apm-custom-link?pretty|.apm-custom-l
 
 === Kibana - Observability - APM - Trases ===
 
-{{kibana12.png?600x428}}
+{{kibana12.png?600x466}}
 
 === Kibana - Observability - APM - Dependences ===
 
-{{kibana13.png?600x434}}
+{{kibana13.png?600x466}}
 
 -----
