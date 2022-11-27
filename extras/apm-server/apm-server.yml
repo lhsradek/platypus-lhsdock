@@ -46,7 +46,7 @@ apm-server:
 #   enabled: true
 #   environment: "${STAGE}"
 #   hosts:
-#     - http://apm.nginx.local:8200
+#     - http://apm-server.docker.nginx.local:8200
 #   profiling:
 #     cpu:
 #       enabled: true

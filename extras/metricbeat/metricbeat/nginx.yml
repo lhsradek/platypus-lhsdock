@@ -12,10 +12,8 @@
     # - "http://${APP_HOST}.${APP_NET}"
 
   # Path to server status. Default nginx_status
-  #server_status_path: "nginx_status"
+  server_status_path: "nginx_status"
 
-  #username: "user"
-  #password: "secret"
   #ssl:
   #  enabled: true
   #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

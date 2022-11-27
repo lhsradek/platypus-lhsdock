@@ -18,9 +18,10 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.8
+    user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       # - ./extras/hosts/hosts:/etc/hosts
@@ -41,8 +42,6 @@
       - ELASTICSEARCH_SERVER_CERT_KEY=/usr/share/metricbeat/certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.key
       - LOGSTASH_SERVER_CERT=/usr/share/metricbeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
       - LOGSTASH_SERVER_CERT_KEY=/usr/share/metricbeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
-      - METRICBEAT_SERVER_CERT=/usr/share/metricbeat/certs/metricbeat.${INT_NETWORK}/metricbeat.${INT_NETWORK}.crt
-      - METRICBEAT_SERVER_CERT_KEY=/usr/share/metricbeat/certs/metricbeat.${INT_NETWORK}/metricbeat.${INT_NETWORK}.key
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
     labels:

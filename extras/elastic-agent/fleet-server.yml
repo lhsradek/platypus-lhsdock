@@ -1,34 +1,29 @@
-# Additional stats can be found under http://127.0.0.1:5066/stats and http://127.0.0.1:5066/state
-#http.enabled: true
-#http.host: 0.0.0.0
-#http.port: 5066
+http.enabled: true
+http.host: 0.0.0.0
+http.port: 5066
 #http.named_pipe.user:
 #http.named_pipe.security_descriptor:
 
-monitoring:
-  enabled: false
-  cluster_uuid: "${CLUSTER_UUID}"
-
-# logging:
-#  to_stderr: true # Force the logging output to stderr
-  #level: trace
+logging:
+  to_stderr: true # Force the logging output to stderr
+  level: trace
 
 fleet:
-  hosts:
-    - "https://fleet.${APP_ID}.${APP_NET}:8220"
-  agent:
-    # id: 1e4954ce-af37-4731-9f4a-407b08e69e42
-    logging:
-      level: '${LOG_LEVEL:DEBUG}'
+  hosts: ["https://fleet.wordpress.local:8220"]
+  # agent:
+  #   id: "fb41b289-10cf-40c7-94fb-ee854e748e1e"
 
+id: "${FLEET_SERVER_POLICY_ID}"
 outputs:
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: ["https://es01.${APP_ID}.${APP_NET}:9200"]
     protocol: "https"
-    #api_key: "${AGENT_API_KEY}"
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
+    # username: "${ELASTICSEARCH_USERNAME}"
+    # password: "${ELASTICSEARCH_PASSWORD}"
+    service_token: '${FLEET_SERVER_SERVICE_TOKEN}'
+    api_key:  '${FLEET_ENROLLMENT_TOKEN}'
+
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "${VERIFICATION_MODE}"
+      verification_mode: "certificate"

@@ -99,8 +99,7 @@ inputs:
 outputs:
   default:
     type: elasticsearch
-    hosts:
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     # api_key: "${AGENT_API_KEY}"
     username: "${FLEET_SERVER_ELASTICSEARCH_USERNAME}"
     password: "${FLEET_SERVER_ELASTICSEARCH_PASSWORD}"

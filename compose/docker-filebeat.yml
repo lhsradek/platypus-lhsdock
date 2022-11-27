@@ -20,7 +20,7 @@
       - /var/run/docker.sock:/var/run/docker.sock
       # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       # - /proc:/hostfs/proc:ro
-      # - /:/hostfs:ro
+      - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/hosts/hosts:/etc/hosts
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
