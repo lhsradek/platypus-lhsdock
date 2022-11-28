@@ -10,7 +10,7 @@
     image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-metricbeat"
-    hostname: "metricbeat.${INT_NETWORK}"
+    hostname: "metricbeat.${APP_HOST}.${INT_NETWORK}"
     user: root
     networks:
       # for traefik:
@@ -47,14 +47,14 @@
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.metricbeat-public.rule=Host(`metricbeat.${INT_NETWORK}`)"
+      - "traefik.http.routers.metricbeat-public.rule=Host(`metricbeat.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.metricbeat-public.entrypoints=https"
       - "traefik.http.routers.metricbeat-public.tls=true"
       - "traefik.http.services.metricbeat-${APP_ID}.loadbalancer.server.port=5066"
       - "traefik.http.services.metricbeat-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${APP_HOST}.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 10s
       retries: 500

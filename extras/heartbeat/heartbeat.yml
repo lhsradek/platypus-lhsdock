@@ -48,8 +48,9 @@ heartbeat.monitors:
     - https://${APP_HOST}.${APP_NET}/downloads/
     - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
-    - http://heartbeat.${APP_NET}:5066
-    - http://metricbeat.${APP_NET}:5066
+    - http://heartbeat.${APP_HOST}.${APP_NET}:5066
+    - http://metricbeat.${APP_HOST}.${APP_NET}:5066
+    - http://filebeat.${APP_HOST}.${APP_NET}:5066
     # logstash for finger print:
     # - https://logstash.${APP_HOST}.${APP_NET}:5044
     # tomcat
@@ -81,8 +82,9 @@ heartbeat.monitors:
   tags: [tcp]
   hosts:
     # - platypus-box_traefik_1.platypus-local-dev-network:80
-    - heartbeat.${APP_NET}:5066
-    - metricbeat.${APP_NET}:5066
+    - heartbeat.${APP_HOST}.${APP_NET}:5066
+    - metricbeat.${APP_HOST}.${APP_NET}:5066
+    - filebeat.${APP_HOST}.${APP_NET}:5066
     - eps.${APP_NET}:3002
     - kibana.${APP_HOST}.${APP_NET}:5601
     - logstash.${APP_HOST}.${APP_NET}:5044

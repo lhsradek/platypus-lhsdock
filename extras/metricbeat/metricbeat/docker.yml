@@ -5,13 +5,13 @@
   metricsets:
     - container
     - cpu
-    # - diskio
-    # - event
-    # - healthcheck
+    - diskio
+    - event
+    - healthcheck
     - info
     - memory
     - network
-    - network_summary
+    # - network_summary
   period: 10s
   hosts: ["unix:///var/run/docker.sock"]
 
@@ -30,4 +30,3 @@
     #certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     #certificate:           "/etc/pki/client/cert.pem"
     #key:                   "/etc/pki/client/cert.key"
-    

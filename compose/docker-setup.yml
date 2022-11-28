@@ -104,19 +104,19 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.4\n"\
           "      - ${ES_IP}\n"\
-          "  - name: eps.${INT_NETWORK}\n"\
+          "  - name: eps.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - eps\n"\
-          "      - eps.${INT_NETWORK}\n"\
+          "      - eps.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - ${ES_NET}.11\n"\
           "      - 127.0.0.1\n"\
-          "  - name: filebeat.${INT_NETWORK}\n"\
+          "  - name: filebeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - filebeat\n"\
-          "      - filebeat.${INT_NETWORK}\n"\
+          "      - filebeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.9\n"\
@@ -130,11 +130,11 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
-          "  - name: heartbeat.${INT_NETWORK}\n"\
+          "  - name: heartbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - heartbeat\n"\
-          "      - heartbeat.${INT_NETWORK}\n"\
+          "      - heartbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.7\n"\
@@ -156,11 +156,11 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.5\n"\
           "      - ${ES_IP}\n"\
-          "  - name: metricbeat.${INT_NETWORK}\n"\
+          "  - name: metricbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - metricbeat\n"\
-          "      - metricbeat.${INT_NETWORK}\n"\
+          "      - metricbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.8\n"\

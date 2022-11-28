@@ -38,7 +38,7 @@ elasticsearch:
   requestTimeout: 240000
 
 enterpriseSearch:
-  host: "http://eps.${APP_NET}:3002"
+  host: "http://eps.${APP_HOST}.${APP_NET}:3002"
   accessCheckTimeout: 60000
 
 xpack:
@@ -63,10 +63,10 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8220"
-          - "https://fleet.${APP_HOST}.wordpress.local:8220"
-          - "https://fleet.www.tomcat.local:8220"
-          - "https://fleet.${APP_HOST}.tomcat.local:8220"
+          - "https://fleet.www.wordpress.local:8222"
+          - "https://fleet.${APP_HOST}.wordpress.local:8222"
+          - "https://fleet.www.tomcat.local:8223"
+          - "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
 # Disable previous block (if not) after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
 # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
@@ -293,24 +293,25 @@ xpack:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/access.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-access.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/access.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/access.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-access.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/access.log
                   - data_stream:
                       dataset: nginx.error
                     vars:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/error.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-error.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/nginx/error.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/php-error.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/dokuwiki/php/error.log
               - type: nginx/metrics
                 enabled: true
                 vars:
                   - name: hosts
                     value:
                       - http://weblhs
+                      - http://weblhs-wiki
                 streams:
                   - data_stream:
                       dataset: nginx.stubstatus
@@ -479,7 +480,7 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8220
+                    value: 8222
           - name: elastic_agent_wordpress-1
             package:
               name: elastic_agent
@@ -592,9 +593,9 @@ xpack:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/access.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-access.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.access.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.access.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-access.log
                   - data_stream:
                       dataset: nginx.error
                     enabled: true
@@ -602,9 +603,9 @@ xpack:
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/error.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-error.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/pma.error.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/wp.error.log
+                          # - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/php-error.log
               - type: nginx/metrics
                 enabled: true
                 vars:
@@ -664,7 +665,7 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8220
+                    value: 8223
           - name: elastic_agent_tomcat-1
             package:
               name: elastic_agent

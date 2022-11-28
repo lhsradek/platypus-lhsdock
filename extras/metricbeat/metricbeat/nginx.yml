@@ -2,14 +2,14 @@
 # Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-nginx.html
 
 - module: nginx
-  # metricsets:
-  #  - stubstatus
+  metricsets:
+    - stubstatus
   period: 10s
 
   # Nginx hosts
   hosts: 
     - "http://weblhs"
-    # - "http://${APP_HOST}.${APP_NET}"
+    - "http://weblhs-wiki"
 
   # Path to server status. Default nginx_status
   server_status_path: "nginx_status"

@@ -187,7 +187,10 @@ For Client SSL certificate key output from
 
 To logstash output - Advanced YAML configuration add:
 
-```ssl.verification_mode: none```
+```
+ssl.verification_mode: none
+timeout: 500s
+```
 
 Default for agent integrations interferes with APM, don't change it
 

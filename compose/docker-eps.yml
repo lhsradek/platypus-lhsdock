@@ -10,7 +10,7 @@
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-eps"
-    hostname: "eps.${INT_NETWORK}"
+    hostname: "eps.${APP_HOST}.${INT_NETWORK}"
     networks:
       # local network:
       intnet:
@@ -44,7 +44,7 @@
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://eps.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
+      test: ["CMD-SHELL", "curl -s -I http://eps.${APP_HOST}.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
       timeout: 10s
       retries: 500

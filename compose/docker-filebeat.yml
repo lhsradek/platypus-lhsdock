@@ -10,7 +10,7 @@
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-filebeat"
-    hostname: "filebeat.${INT_NETWORK}"
+    hostname: "filebeat.${APP_HOST}.${INT_NETWORK}"
     networks:
       # local network:
       intnet:
@@ -57,7 +57,7 @@
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://filebeat.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://filebeat.${APP_HOST}.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 60s
       retries: 500

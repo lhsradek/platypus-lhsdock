@@ -14,9 +14,9 @@
     hostname: "fleet.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik
-      default:
-        aliases:
-          - apm-server
+      # default:
+      #   aliases:
+      #     - apm-server
       # local network:
       intnet:
         aliases:
@@ -24,7 +24,7 @@
         ipv4_address: ${ES_NET}.10
     ports:
       - ${APM_PORT}:8200
-      # - ${FLEET_PORT}:8220
+      - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     # this EA is without enabled metricbeat
     volumes:
@@ -75,6 +75,7 @@
       - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
       - FLEET_SERVER_HOST=fleet.${APP_HOST}.${INT_NETWORK}
+      - FLEET_SERVER_PORT=${FLEET_SERVER_PORT}
       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/fleet.${APP_HOST}.${INT_NETWORK}/fleet.${APP_HOST}.${INT_NETWORK}.crt
       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/fleet.${APP_HOST}.${INT_NETWORK}/fleet.${APP_HOST}.${INT_NETWORK}.key
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
@@ -92,22 +93,22 @@
       - STAGE=${STAGE}
       - STV=${STV}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
-      - "traefik.http.routers.fleet-public.entrypoints=https"
-      - "traefik.http.routers.fleet-public.tls=true"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
-      - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
-      #
-      - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
-      - "traefik.http.routers.apm-server-public.entrypoints=https"
-      - "traefik.http.routers.apm-server-public.tls=true"
-      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=8200"
-      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.fleet-public.rule=Host(`fleet.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
+#       - "traefik.http.routers.fleet-public.entrypoints=https"
+#       - "traefik.http.routers.fleet-public.tls=true"
+#       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=8220"
+#       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
+#
+#       - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
+#       - "traefik.http.routers.apm-server-public.entrypoints=https"
+#       - "traefik.http.routers.apm-server-public.tls=true"
+#       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${FLEET_SERVER_PORT}"
+#       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 10s
