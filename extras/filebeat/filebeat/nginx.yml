@@ -31,7 +31,7 @@
       - /usr/share/filebeat/elogs/nginx/default/error.log
       - /usr/share/filebeat/elogs/nginx/default/php-error.log
       - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/error.log
-      - /usr/share/filebeat/elogs/nginx/dokuwiki/php/error.log
+      # - /usr/share/filebeat/elogs/nginx/dokuwiki/php/error.log
       #
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/error.log
       # - /usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql/pma.error.log

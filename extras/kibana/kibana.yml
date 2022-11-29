@@ -68,7 +68,12 @@ xpack:
           - "https://fleet.www.tomcat.local:8223"
           - "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
-# Disable previous block (if not) after the first Kibana running and add to Fleet - Setings - Outputs or set stright:
+# Disable previous block (if not) after the first Kibana running
+#
+# Port 8221 is used internally on localhost in Fleet Server and so we skipped it. To change port use environment variable
+# FLEET_SERVER_PORT
+#
+# Add to Fleet - Setings - Outputs or set stright:
 # Elasticsearch - hosts: https://es01.docker.nginx.local:9200
 #
 # Elasticsearch - Advanced YAML configuration:
@@ -198,17 +203,19 @@ xpack:
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8200"
+                    value: "0.0.0.0:8201"
                   - name: url
-                    value: "http://apm-server.${APP_HOST}.${APP_NET}:8200"
+                    value: "http://apm-server.${APP_HOST}.${APP_NET}:8201"
           - name: docker_nginx-1
             package:
               name: docker
             description: Docker Metrics
             id: docker_nginx-1
             inputs:
-              - type: docker/metrics
+              - type: filestream
                 enabled: false
+              - type: docker/metrics
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: docker.memory
@@ -220,7 +227,7 @@ xpack:
             id: system_nginx-1
             inputs:
               - type: logfile
-                enabled: true
+                enabled: false
                 streams:
                   - data_stream:
                       dataset: system.syslog
@@ -234,12 +241,14 @@ xpack:
                       dataset: system.auth
                     enabled: false
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: false
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -496,9 +505,9 @@ xpack:
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8200"
+                    value: "0.0.0.0:8201"
                   - name: url
-                    value: "http://apm-server:8200"
+                    value: "http://apm-server:8201"
                   #   value: "http://apm-server.${APP_HOST}.wordpress.local:8201"
           - name: docker_wordpress-1
             package:
@@ -506,8 +515,10 @@ xpack:
             description: Docker Metrics
             id: docker_wordpress-1
             inputs:
-              - type: docker/metrics
+              - type: filestream
                 enabled: false
+              - type: docker/metrics
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: docker.memory
@@ -533,12 +544,14 @@ xpack:
                       dataset: system.auth
                     enabled: false
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: false
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -641,7 +654,11 @@ xpack:
               - type: redis
                 enabled: false
               - type: redis/metrics
-                enabled: false
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - redis:6379
       
       #        
       # This policy is for https://github.com/lhsradek/tombola
@@ -681,9 +698,9 @@ xpack:
                 keep_enabled: true
                 vars:
                   - name: host
-                    value: "0.0.0.0:8200"
+                    value: "0.0.0.0:8201"
                   - name: url
-                    value: "http://apm-server:8200"
+                    value: "http://apm-server:8201"
                   #   value: "http://apm-server.${APP_HOST}.tomcat.local:8202"
           - name: docker_tomcat-1
             package:
@@ -691,8 +708,10 @@ xpack:
             description: Docker Metrics
             id: docker_tomcat-1
             inputs:
-              - type: docker/metrics
+              - type: filestream
                 enabled: false
+              - type: docker/metrics
+                enabled: true
                 streams:
                   - data_stream:
                       dataset: docker.memory
@@ -718,12 +737,14 @@ xpack:
                       dataset: system.auth
                     enabled: false
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: false
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -812,8 +833,19 @@ xpack:
               - type: logfile
                 enabled: false
               - type: postgresql/metrics
-                enabled: false
-                # postgres://tombola-db:5432/tombola
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - postgres://db:5432/${POSTGRES_DB}
+                  - name: username
+                    value: ${POSTGRES_USERNAME}
+                  - name: password
+                    value: ${POSTGRES_PASSWORD}
+                streams:
+                  - data_stream:
+                      dataset: postgresql.statement
+                    enabled: false
           - name: tomcat_tomcat-1
             package:
               name: tomcat
@@ -846,7 +878,11 @@ xpack:
               - type: redis
                 enabled: false
               - type: redis/metrics
-                enabled: false
+                enabled: true
+                vars:
+                  - name: hosts
+                    value:
+                      - redis:6379
       
 # https://www.elastic.co/guide/en/kibana/current/logging-configuration.html
 logging:

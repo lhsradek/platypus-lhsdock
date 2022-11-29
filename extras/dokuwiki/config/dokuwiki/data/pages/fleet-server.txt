@@ -91,7 +91,7 @@ Specify hosts: <code>https://es01.docker.nginx.local:9200</code>
 Advanced YAML configuration:
 <code ini>
 ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-timeout: 500s
+timeout: 300s
 </code>
 
 == Logstash ==
@@ -99,6 +99,12 @@ timeout: 500s
 See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
 Specify hosts: <code>logstash.docker.nginx.local:5044</code>
+
+For Server SSL certificate authorities (optional)
+
+<code bash>
+cat ./certs/ca/ca.crt
+</code>
 
 For Client SSL certificate output from
 <code bash>
@@ -112,8 +118,8 @@ cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 
 To logstash output - Advanced YAML configuration add:
 <code>
-ssl.verification_mode: none
-timeout: 500s
+ssl.verification_mode: certificate
+timeout: 300s
 </code>
 
 Default for agent integrations interferes with APM, don't change it

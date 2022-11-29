@@ -45,6 +45,9 @@
       - STV=${STV}
       - NODE_OPTIONS=${KIBANA_NODE_OPTS}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
