@@ -9,25 +9,25 @@ monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
-  elasticsearch:
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-    protocol: "https"
-    ssl.enabled: true
-    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "certificate"
+#   elasticsearch:
+#     username: "${ELASTICSEARCH_USERNAME}"
+#     password: "${ELASTICSEARCH_PASSWORD}"
+#     hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+#     protocol: "https"
+#     ssl.enabled: true
+#     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#     ssl.verification_mode: "certificate"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
 
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
+  # - add_host_metadata:
+  #     when.not.contains.tags: forwarded
   - add_docker_metadata: ~
-  - add_cloud_metadata: ~
-  - add_kubernetes_metadata: ~
+  # - add_cloud_metadata: ~
+  # - add_kubernetes_metadata: ~
 
 # hostPid: true
 

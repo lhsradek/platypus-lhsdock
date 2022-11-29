@@ -216,10 +216,10 @@ xpack:
                 enabled: false
               - type: docker/metrics
                 enabled: true
-                streams:
-                  - data_stream:
-                      dataset: docker.memory
-                    enabled: false
+                # streams:
+                #   - data_stream:
+                #       dataset: docker.memory
+                #     enabled: false
           - name: system_nginx-1
             package:
               name: system
@@ -248,7 +248,7 @@ xpack:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -258,7 +258,7 @@ xpack:
                     enabled: true
                   - data_stream:
                       dataset: system.diskio
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.filesystem
                     enabled: true
@@ -519,10 +519,10 @@ xpack:
                 enabled: false
               - type: docker/metrics
                 enabled: true
-                streams:
-                  - data_stream:
-                      dataset: docker.memory
-                    enabled: false
+                # streams:
+                #   - data_stream:
+                #       dataset: docker.memory
+                #     enabled: false
           - name: system_wordpress-1
             package:
               name: system
@@ -551,7 +551,7 @@ xpack:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -561,7 +561,7 @@ xpack:
                     enabled: true
                   - data_stream:
                       dataset: system.diskio
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.filesystem
                     enabled: true
@@ -712,10 +712,10 @@ xpack:
                 enabled: false
               - type: docker/metrics
                 enabled: true
-                streams:
-                  - data_stream:
-                      dataset: docker.memory
-                    enabled: false
+                # streams:
+                #   - data_stream:
+                #       dataset: docker.memory
+                #     enabled: false
           - name: system_tomcat-1
             package:
               name: system
@@ -744,7 +744,7 @@ xpack:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -754,7 +754,7 @@ xpack:
                     enabled: true
                   - data_stream:
                       dataset: system.diskio
-                    enabled: false
+                    enabled: true
                   - data_stream:
                       dataset: system.filesystem
                     enabled: true
