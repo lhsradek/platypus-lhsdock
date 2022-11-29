@@ -4,8 +4,7 @@
 
 apm-server:
   #host: "unix:///var/run/docker.sock"
-  #host: "unix:/usr/share/elastic-agent/state/data/tmp/default/apm-server/apm-server.sock"
-  #host: "0.0.0.0"
+  host: "0.0.0.0"
 
   #---------------------------- APM Server - RUM Real User Monitoring ----------------------------
 
