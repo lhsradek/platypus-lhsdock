@@ -71,6 +71,8 @@
   weblhs-php:
     # Alpine Linux
     # image: php:fpm-alpine
+    # or lhsradek/fpm:v1 with elastic-apm-php agent https://www.elastic.co/guide/en/apm/agent/php/current/intro.html
+    # https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile
     image: lhsradek/fpm:v1
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-php"
