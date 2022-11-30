@@ -19,15 +19,15 @@ GET [[https://es01.docker.nginx.local:9200/.ds-logs-elastic_agent*/_search?prett
 
 ==== Deb ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.0-amd64.deb|elastic-agent-8.5.0-amd64.deb]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-amd64.deb|elastic-agent-8.5.2-amd64.deb]]
 
 ==== Linux tar ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.0-linux-x86_64.tar.gz|elastic-agent-8.5.0-linux-x86_64.tar.gz]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-linux-x86_64.tar.gz|elastic-agent-8.5.2-linux-x86_64.tar.gz]]
 
 ==== RPM ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.0-x86_64.rpm|elastic-agent-8.5.0-x86_64.rpm]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-x86_64.rpm|elastic-agent-8.5.2-x86_64.rpm]]
 
 -----
 
@@ -100,11 +100,11 @@ See the ElasticApm transaction in [[index.php]] inside methodhs IndexController.
 
 ==== Deb ====
 
-[[https://docker.nginx.local/downloads/apm-agent-php_1.6.1_all.deb|apm-agent-php_1.6.1_all.deb]]
+[[https://docker.nginx.local/downloads/apm-agent-php_1.6.2_all.deb|apm-agent-php_1.6.2_all.deb]]
 
 ==== Alpine ====
 
-[[https://docker.nginx.local/downloads/apm-agent-php_1.6.1_all.apk|apm-agent-php_1.6.1_all.apk]]
+[[https://docker.nginx.local/downloads/apm-agent-php_1.6.2_all.apk|apm-agent-php_1.6.2_all.apk]]
 
 Web is [[https://hub.docker.com/_/nginx|alpine nginx]] with [[https://hub.docker.com/_/php|fpm-alpine]] and [[https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile|lhsradek/fpm:v1 Dockerfile]] with:
 <code bash>
@@ -117,18 +117,18 @@ RUN rm -f /root/bin/apm-agent-php_*.apk
 
 ==== RPM ====
 
-[[https://docker.nginx.local/downloads/apm-agent-php-1.6.1-1.noarch.rpm|apm-agent-php-1.6.1-1.noarch.rpm]]
+[[https://docker.nginx.local/downloads/apm-agent-php-1.6.2-1.noarch.rpm|apm-agent-php-1.6.2-1.noarch.rpm]]
 
 <code bash>
-[root@docker ~]# dnf -y install https://docker.nginx.local/downloads/apm-agent-php-1.6.1-1.noarch.rpm --setopt sslverify=0
+[root@docker ~]# dnf -y install https://docker.nginx.local/downloads/apm-agent-php-1.6.2-1.noarch.rpm --setopt sslverify=0
 Last metadata expiration check: 1:31:50 ago on Thu Oct 13 15:42:29 2022.
-apm-agent-php-1.6.1-1.noarch.rpm                                                                            58 MB/s | 1.0 MB     00:00    
+apm-agent-php-1.6.2-1.noarch.rpm                                                                            58 MB/s | 1.0 MB     00:00    
 Dependencies resolved.
 ===========================================================================================================================================
  Package                             Architecture                 Version                         Repository                          Size
 ===========================================================================================================================================
 Installing:
- apm-agent-php                       noarch                       1.6.1-1                         @commandline                       1.0 M
+ apm-agent-php                       noarch                       1.6.2-1                         @commandline                       1.0 M
 
 Transaction Summary
 ===========================================================================================================================================
@@ -143,13 +143,13 @@ Running transaction test
 Transaction test succeeded.
 Running transaction
   Preparing        :                                                                                                                   1/1 
-  Installing       : apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
-  Running scriptlet: apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
+  Installing       : apm-agent-php-1.6.2-1.noarch                                                                                      1/1 
+  Running scriptlet: apm-agent-php-1.6.2-1.noarch                                                                                      1/1 
 Installing Elastic PHP agent
-  Verifying        : apm-agent-php-1.6.1-1.noarch                                                                                      1/1 
+  Verifying        : apm-agent-php-1.6.2-1.noarch                                                                                      1/1 
 
 Installed:
-  apm-agent-php-1.6.1-1.noarch                                                                                                             
+  apm-agent-php-1.6.2-1.noarch                                                                                                             
 
 Complete!
 </code>
