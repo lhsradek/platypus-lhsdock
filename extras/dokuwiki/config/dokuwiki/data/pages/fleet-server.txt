@@ -94,7 +94,7 @@ ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
 timeout: 300s
 </code>
 
-Optional The second elastic:
+Optional other elasticsearch for example:
 <code>https://es02.docker.nginx.local:9201</code> with the same **Advanced YAML configuration**.
 
 
