@@ -252,7 +252,7 @@ xpack:
                         value:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
-              - type: truem/metrics
+              - type: system/metrics
                 enabled: true
                 vars:
                   - name: system.hostfs

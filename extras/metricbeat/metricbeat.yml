@@ -77,7 +77,7 @@ output:
 setup:
   ilm.overwrite: true 
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 2
     index.codec: best_compression
     # _source.enabled: false
 
