@@ -50,7 +50,9 @@ output:
 # ----------------------------- Elasticsearch Output ----------------------------
 
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -80,7 +82,9 @@ setup:
     # _source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

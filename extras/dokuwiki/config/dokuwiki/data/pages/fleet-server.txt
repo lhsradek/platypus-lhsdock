@@ -63,16 +63,16 @@ fleet:
     fleet_server:
       hosts:
         - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-        - "https://fleet.www.wordpress.local:8222"
-        - "https://fleet.${APP_HOST}.wordpress.local:8222"
-        - "https://fleet.www.tomcat.local:8223"
-        - "https://fleet.${APP_HOST}.tomcat.local:8223"
+        - "https://fleet.www.wordpress.local:8220"
+        - "https://fleet.${APP_HOST}.wordpress.local:8220"
+        - "https://fleet.www.tomcat.local:8220"
+        - "https://fleet.${APP_HOST}.tomcat.local:8220"
     elasticsearch:
       hosts: 
         - "https://es01.${APP_HOST}.${APP_NET}:9200"
 </code>
 
-Port 8221 is used internally on localhost in Fleet Server and so we skipped it. To change port use environment variable
+Port 8221 is used internally on localhost in Fleet Server. To change port use environment variable
 **FLEET_SERVER_PORT** in .env for example:
 <code ini>
 FLEET_SERVER_PORT=8222
@@ -86,37 +86,40 @@ sets the fleet in kibana
 
 == Elasticsearch ==
 
-Specify hosts: <code>https://es01.docker.nginx.local:9200</code>
+**Specify hosts**: <code>https://es01.docker.nginx.local:9200</code>
 
-Advanced YAML configuration:
+**Advanced YAML configuration:**
 <code ini>
 ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
 timeout: 300s
 </code>
 
+Optional The second elastic:
+<code>https://es02.docker.nginx.local:9201</code> with the same **Advanced YAML configuration**.
+
+
 == Logstash ==
 
 See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
-Specify hosts: <code>logstash.docker.nginx.local:5044</code>
+**Specify hosts:** <code>logstash.docker.nginx.local:5044</code>
 
-For Server SSL certificate authorities (optional)
-
+For **Server SSL certificate authorities (optional)**
 <code bash>
 cat ./certs/ca/ca.crt
 </code>
 
-For Client SSL certificate output from
+For **Client SSL certificate** output from
 <code bash>
 cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt
 </code>
 
-For Client SSL certificate key output from
+For **Client SSL certificate key** output from
 <code bash>
 cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 </code>
 
-To logstash output - Advanced YAML configuration add:
+To logstash output **Advanced YAML configuration** add:
 <code>
 ssl.verification_mode: certificate
 timeout: 300s

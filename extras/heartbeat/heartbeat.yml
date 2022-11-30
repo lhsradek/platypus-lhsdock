@@ -28,7 +28,7 @@ heartbeat.config.monitors:
 heartbeat.monitors:
 
 - type: http
-  schedule: '*/20 * * * * * *'
+  schedule: '*/30 * * * * * *'
   id: http-service
   name: HTTP Service
   data_stream.namespace: default
@@ -151,7 +151,9 @@ output:
  
 # ------------------------------ Elasticsearch Output -------------------------------
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'

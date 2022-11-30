@@ -4,6 +4,7 @@
 
 apm-server:
   # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
+  host: "0.0.0.0"
 
   # Agent authorization configuration. If no methods are defined, all requests will be allowed.
   #auth:

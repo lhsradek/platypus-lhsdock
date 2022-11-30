@@ -22,7 +22,9 @@ monitoring:
       elasticsearch.enabled: true
       logstash.enabled: true
     elasticsearch:
-      hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+      hosts: 
+        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+        - "https://es02.${APP_HOST}.${APP_NET}:9201"
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -31,7 +33,9 @@ monitoring:
 
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
 elasticsearch:
-  hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+  hosts: 
+    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -63,14 +67,14 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8222"
-          - "https://fleet.${APP_HOST}.wordpress.local:8222"
-          - "https://fleet.www.tomcat.local:8223"
-          - "https://fleet.${APP_HOST}.tomcat.local:8223"
+          - "https://fleet.www.wordpress.local:8220"
+          - "https://fleet.${APP_HOST}.wordpress.local:8220"
+          - "https://fleet.www.tomcat.local:8220"
+          - "https://fleet.${APP_HOST}.tomcat.local:8220"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
 # Disable previous block (if not) after the first Kibana running
 #
-# Port 8221 is used internally on localhost in Fleet Server and so we skipped it. To change port use environment variable
+# Port 8221 is used internally on localhost in Fleet Server. To change port use environment variable
 # FLEET_SERVER_PORT
 #
 # Add to Fleet - Setings - Outputs or set stright:
@@ -183,8 +187,9 @@ xpack:
                     value: 0.0.0.0
                   - name: port
                     value: 8220
-                  # - name: custom
-                  #   value: | 
+                  - name: custom
+                    value: | 
+                      timeout: 120s
                   #     http.enabled: true
                   #     http.host: 0.0.0.0
                   #     http.port: 5066
@@ -247,8 +252,8 @@ xpack:
                         value:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
-              - type: system/metrics
-                enabled: false
+              - type: truem/metrics
+                enabled: true
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -299,6 +304,8 @@ xpack:
                   - data_stream:
                       dataset: nginx.access
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/access.log
@@ -308,6 +315,8 @@ xpack:
                   - data_stream:
                       dataset: nginx.error
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/default/error.log
@@ -343,6 +352,8 @@ xpack:
                       dataset: traefik.access
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/access.json
@@ -361,6 +372,8 @@ xpack:
                       dataset: log.log
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.log
@@ -489,7 +502,10 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8222
+                    value: 8220
+                  - name: custom
+                    value: | 
+                      timeout: 120s
           - name: elastic_agent_wordpress-1
             package:
               name: elastic_agent
@@ -603,6 +619,8 @@ xpack:
                       dataset: nginx.access
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/access.log
@@ -613,6 +631,8 @@ xpack:
                       dataset: nginx.error
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/platypus-wordpress-mysql/error.log
@@ -640,7 +660,22 @@ xpack:
             id: mysql_wordpress-1
             inputs:
               - type: logfile
-                enabled: false
+                enabled: true
+                streams:
+                  - data_stream:
+                      dataset: mysql.error
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/mysql/platypus-wordpress-mysql/error.log
+                  - data_stream:
+                      dataset: mysql.slowlog
+                    enabled: true
+                    vars:
+                      - name: paths
+                        value:
+                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/mysql/platypus-wordpress-mysql/mariadb-slow.log
               - type: mysql/metrics
                 enabled: false
           - name: redis_wordpress-1
@@ -682,7 +717,10 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8223
+                    value: 8220
+                  - name: custom
+                    value: | 
+                      timeout: 120s
           - name: elastic_agent_tomcat-1
             package:
               name: elastic_agent
@@ -796,6 +834,8 @@ xpack:
                       dataset: nginx.access
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/access.log
@@ -805,6 +845,8 @@ xpack:
                       dataset: nginx.error
                     enabled: true
                     vars:
+                      - name: preserve_original_event
+                        value: false
                       - name: paths
                         value:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/error.log

@@ -13,7 +13,7 @@
     hostname: "kibana.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      default:
+      # default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.6
@@ -48,17 +48,17 @@
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.kibana-public.rule=Host(`kibana.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.kibana-public.entrypoints=https"
-      - "traefik.http.routers.kibana-public.tls=true"
-      - "traefik.http.routers.kibana-public.middlewares=kibana-${APP_ID}@docker"
-      - "traefik.http.middlewares.kibana-${APP_ID}.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.kibana-${APP_ID}.redirectscheme.port=5601"
-      - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.port=5601"
-      - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.scheme=https"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.kibana-public.rule=Host(`kibana.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.kibana-public.entrypoints=https"
+#       - "traefik.http.routers.kibana-public.tls=true"
+#       - "traefik.http.routers.kibana-public.middlewares=kibana-${APP_ID}@docker"
+#       - "traefik.http.middlewares.kibana-${APP_ID}.redirectscheme.scheme=https"
+#       - "traefik.http.middlewares.kibana-${APP_ID}.redirectscheme.port=5601"
+#       - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.port=5601"
+#       - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
         soft: -1

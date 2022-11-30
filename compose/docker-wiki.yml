@@ -11,7 +11,10 @@
     hostname: "wiki.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      - default
+      default:
+      # local network for metricbeat:
+      intnet:
+        ipv4_address: ${ES_NET}.23
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh:ro

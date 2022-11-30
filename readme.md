@@ -94,16 +94,16 @@ Creating lhsdock-eps       ... done
 | ----------------------------------------------------- | ---------- | ----------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB      | [platypus-lhsdock](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile)
 | [lhsradek/platypus-fpm](https://github.com/lhsradek/platypus-lhsfpm) [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm)  | v1         | 609MB       | php:fpm-alpine
-| [docker.elastic.co/elasticsearch/elasticsearch](https://hub.docker.com/_/elasticsearch) | 8.5.1      | 1.29GB      |
+| [docker.elastic.co/elasticsearch/elasticsearch](https://hub.docker.com/_/elasticsearch) | 8.5.2      | 1.29GB      |
 | [docker.elastic.co/kibana/kibana](https://hub.docker.com/_/kibana) | 8.5.1      | 707MB       |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.5.1      | 1.45GB      |
-| [logstash](https://hub.docker.com/_/logstash)         | 8.5.1      | 746MB       |
-| docker.elastic.co/beats/elastic-agent                 | 8.5.1      | 2.04GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.5.1      | 3.58GB      |
-| docker.elastic.co/apm/apm-server                      | 8.5.1      | 149MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.5.1      | 466MB       |
-| docker.elastic.co/beats/heartbeat                     | 8.5.1      | 2.6GB       |
-| docker.elastic.co/beats/filebeat                      | 8.5.1      | 394MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.5.2      | 1.45GB      |
+| [logstash](https://hub.docker.com/_/logstash)         | 8.5.2      | 746MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.5.2      | 1.51GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.5.2      | 3.03GB      |
+| docker.elastic.co/apm/apm-server                      | 8.5.2      | 149MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.5.2      | 316MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.5.2      | 1.87GB      |
+| docker.elastic.co/beats/filebeat                      | 8.5.2      | 281MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
 | [lscr.io/linuxserver/dokuwiki](https://hub.docker.com/r/linuxserver/dokuwiki) | latest     | 209MB       |
 
@@ -162,7 +162,10 @@ Elasticsearch - hosts:
 
 Elasticsearch - Advanced YAML configuration:
 
-```ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]```
+```
+ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
+timeout: 60s
+```
 
 ##### Logstash
 
@@ -177,6 +180,11 @@ Specify hosts:
 
 ```logstash.docker.nginx.local:5044```
 
+For Server SSL certificate authorities (optional)
+```
+cat ./certs/ca/ca.crt
+```
+
 For Client SSL certificate output from
 
 ```cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt```
@@ -188,8 +196,8 @@ For Client SSL certificate key output from
 To logstash output - Advanced YAML configuration add:
 
 ```
-ssl.verification_mode: none
-timeout: 500s
+ssl.verification_mode: certificate
+timeout: 60s
 ```
 
 Default for agent integrations interferes with APM, don't change it

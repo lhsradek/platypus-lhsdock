@@ -13,7 +13,7 @@
     hostname: "filebeat.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      default:
+      # default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.9
@@ -57,14 +57,14 @@
       - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
       - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.filebeat-public.rule=Host(`filebeat.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.filebeat-public.entrypoints=https"
-      - "traefik.http.routers.filebeat-public.tls=true"
-      - "traefik.http.services.filebeat-${APP_ID}.loadbalancer.server.port=5066"
-      - "traefik.http.services.filebeat-${APP_ID}.loadbalancer.server.scheme=http"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.filebeat-public.rule=Host(`filebeat.${APP_HOST}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.filebeat-public.entrypoints=https"
+#       - "traefik.http.routers.filebeat-public.tls=true"
+#       - "traefik.http.services.filebeat-${APP_ID}.loadbalancer.server.port=5066"
+#       - "traefik.http.services.filebeat-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "filebeat test output | grep 'talk to server... OK'"
       test: ["CMD-SHELL", "curl -s -I http://filebeat.${APP_HOST}.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]

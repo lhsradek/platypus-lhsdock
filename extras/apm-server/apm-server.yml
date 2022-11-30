@@ -3,7 +3,6 @@
 ################################ APM Server ################################
 
 apm-server:
-  #host: "unix:///var/run/docker.sock"
   host: "0.0.0.0"
 
   #---------------------------- APM Server - RUM Real User Monitoring ----------------------------
@@ -15,8 +14,9 @@ apm-server:
     enabled: true
     output:
       elasticsearch:
-        hosts:
+        hosts: 
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
+          - "https://es02.${APP_HOST}.${APP_NET}:9201"
         protocol: "https"
         #api_key: "id:api_key"
         # username: "apm_system"
@@ -64,6 +64,7 @@ output.elasticsearch:
   enabled: true
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
+    - "https://es02.${APP_HOST}.${APP_NET}:9201"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -87,7 +88,9 @@ monitoring:
   elasticsearch:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
