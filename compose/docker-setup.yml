@@ -96,6 +96,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.20\n"\
           "      - ${ES_IP}\n"\
+          "  - name: cerebro.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - cerebro\n"\
+          "      - cerebro.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.20\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\

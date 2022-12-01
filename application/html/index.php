@@ -121,17 +121,21 @@ class IndexController {
 $index = new IndexController();
 $port = $index->getPort();
 $parent = @$_SERVER['APP_HOST'];
+$host = @$_SERVER['HOST_NICK'];
 $net = @$_SERVER['APP_NET'];
 $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
-# $isTraefik = @$index->isUrl("http://".$parent.".traefik.local");
-$isTraefik = @$index->isUrl("http://web.traefik.local");
-$isKibana = @$index->isSocket("kibana.".$parent.".".$net, 5601);
+if ($parent == "docker") {
+  $isTraefik = @$index->isUrl("http://web.traefik.local");
+} else {
+  $isTraefik = @$index->isUrl("http://".$parent.".traefik.local");
+}
+$isKibana = @$index->isSocket("kibana.".$host.".".$net, 5601);
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
-$isEs01 = @$index->isSocket("es01.".$parent.".".$net, 9200);
-$isEs02 = @$index->isSocket("es02.".$parent.".".$net, 9201);
-$isEs03 = @$index->isSocket("es03.".$parent.".".$net, 9202);
+$isEs01 = @$index->isSocket("es01.".$host.".".$net, 9200);
+$isEs02 = @$index->isSocket("es02.".$host.".".$net, 9201);
+$isEs03 = @$index->isSocket("es03.".$host.".".$net, 9202);
 $isWiki = @$index->isUrl("https://wiki.".$parent.".".$net);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
@@ -179,16 +183,21 @@ if ($printEnv) {
           <ul>
 	    <?php
         if($isTraefik || $isWiki) { ?><li><?php
-		if($isTraefik) { ?>
+		if($isTraefik) {
+                  if ($parent == "docker") { ?>
 <a href=https://web.traefik.local<?php print($port); ?> target="_blank">web.traefik.local</a>
-<!-- <a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a>  -->
-		<?php } if($isWiki) {
+                <?php } else { ?>
+<a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a>
+                  <?php
+                  }
+                }
+		if($isWiki) {
 			$index->printWiki("traefik");
 		} ?></li><?php
 	}
 	if($isKibana || $isWiki) { ?><li><?php
 		if($isKibana) { ?>
-<a href="https://kibana.<?php print($parent.".".$net); ?>:5601" target="_blank">kibana.<?php print($parent.".".$net); ?></a> <?php
+<a href="https://kibana.<?php print($host.".".$net); ?>:5601" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("kibana");
 		} ?></li><?php
@@ -202,16 +211,16 @@ if ($printEnv) {
 	}
 	if($isEs01 || $isWiki) { ?><li><?php
 		if($isEs01) { ?>
-<a href="https://es01.<?php print($parent.".".$net.$port); ?>:9200/?pretty" target="_blank">es01.<?php print($parent.".".$net); ?></a> <?php
+<a href="https://es01.<?php print($host.".".$net.$port); ?>:9200/?pretty" target="_blank">es01.<?php print($host.".".$net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("elasticsearch");
 		} ?></li><?php
 	}
 	if($isEs02) { ?>
-<li><a href="https://es02.<?php print($parent.".".$net.$port); ?>:9201/?pretty" target="_blank">es02.<?php print($parent.".".$net); ?></a></li> <?php
+<li><a href="https://es02.<?php print($host.".".$net.$port); ?>:9201/?pretty" target="_blank">es02.<?php print($host.".".$net); ?></a></li> <?php
 	}
 	if($isEs03) { ?>
-<li><a href="https://es03.<?php print($parent.".".$net.$port); ?>:9202/?pretty" target="_blank">es03.<?php print($parent.".".$net); ?></a></li> <?php
+<li><a href="https://es03.<?php print($host.".".$net.$port); ?>:9202/?pretty" target="_blank">es03.<?php print($host.".".$net); ?></a></li> <?php
 	}
 	if($isWiki) { ?>
 <li><a href="https://wiki.<?php print($parent.".".$net.$port); ?>" target="_blank">wiki.<?php print($parent.".".$net); ?></a><img src="dokuwiki.png" width="12" height="12"></li><?php

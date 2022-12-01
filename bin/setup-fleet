@@ -42,6 +42,7 @@ else
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   # cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-fleet.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-weblhs.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
