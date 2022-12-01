@@ -42,11 +42,11 @@
       - kibana:/root/bin/volume/kibana:ro
       - metricbeat:/root/bin/volume/metricbeat:ro
       # It's for my prune volume deletion protection:
-      - wordpresswp${WP_NUM}:/root/bin/volume/wordpress-wp-${WP_NUM}:ro
-      - wordpressdb${WP_NUM}:/root/bin/volume/wordpress-db-${WP_NUM}:ro
-      - wordpresspma${WP_NUM}:/root/bin/volume/wordpress-pma-${WP_NUM}:ro
-      - wordpressredis${WP_NUM}:/root/bin/volume/wordpress-redis-${WP_NUM}:ro
-      - wordpressfleet${WP_NUM}:/root/bin/volume/wordpress-fleet-${WP_NUM}99:ro
+      - wordpresswp:/root/bin/volume/wordpress-wp-${WP_NUM}:ro
+      - wordpressdb:/root/bin/volume/wordpress-db-${WP_NUM}:ro
+      - wordpresspma:/root/bin/volume/wordpress-pma-${WP_NUM}:ro
+      - wordpressredis:/root/bin/volume/wordpress-redis-${WP_NUM}:ro
+      - wordpressfleet:/root/bin/volume/wordpress-fleet-${WP_NUM}:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
       - tombolafleet:/root/bin/volume/tombola-fleet:ro
     environment:

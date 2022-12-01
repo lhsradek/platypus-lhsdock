@@ -36,19 +36,19 @@ volumes:
 #    
 # You can remove this in docker-setup.yml. It's for my prune volume deletion protection:
 #
-  wordpressdb99:
+  wordpressdb:
     external: true
     name: wordpress-db-${WP_NUM}
-  wordpresspma99:
+  wordpresspma:
     external: true
     name: wordpress-pma-${WP_NUM}
-  wordpressredis99:
+  wordpressredis:
     external: true
     name: wordpress-redis-${WP_NUM}
-  wordpressfleet99:
+  wordpressfleet:
     external: true
     name: wordpress-fleet-${WP_NUM}
-  wordpresswp99:
+  wordpresswp:
     external: true
     name: wordpress-wp-${WP_NUM}
   tomboladb:

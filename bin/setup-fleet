@@ -57,7 +57,7 @@ else
   cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo
   echo "================= START SETUP WITH FLEET SERVER ================"
-  ${scriptPath}/start
+  #${scriptPath}/start
 
   echo "Start 'bin/setup-eps-fleet' for Enterprise Search"
   echo
