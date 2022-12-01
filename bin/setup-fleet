@@ -40,26 +40,15 @@ else
   echo	
   echo "================= MAKE docker-compose.$RUNENV.yml ================="
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-es02.yml >> $rootPath/docker-compose.$RUNENV.yml
-  ES3=$(read_var ES3 .env)
-  if [ ${ES3} -eq 1 ]; then
-    cat $rootPath/compose/docker-es03.yml >> $rootPath/docker-compose.$RUNENV.yml
-  fi
-  cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-kibana.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-heartbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-metricbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
+  # cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-fleet.yml >> $rootPath/docker-compose.$RUNENV.yml
-  cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-weblhs.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo
-  echo "================= START SETUP WITH FLEET SERVER ================"
+  echo "================= START SETUP WITH SOLO FLEET SERVER ================"
   #${scriptPath}/start
 
-  echo "Start 'bin/setup-eps-fleet' for Enterprise Search"
   echo
   echo "Use 'bin/stop for Stop, 'bin/start' for Start or 'bin/restart' for Restart"
 fi
