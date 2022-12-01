@@ -29,7 +29,7 @@ monitoring:
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       requestTimeout: 240000
-  kibana.collection.enabled: false
+  kibana.collection.enabled: true
 
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
 elasticsearch:
@@ -67,10 +67,10 @@ xpack:
       fleet_server:
         hosts:
           - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8220"
-          - "https://fleet.${APP_HOST}.wordpress.local:8220"
-          - "https://fleet.www.tomcat.local:8220"
-          - "https://fleet.${APP_HOST}.tomcat.local:8220"
+          - "https://fleet.www.wordpress.local:8222"
+          - "https://fleet.${APP_HOST}.wordpress.local:8222"
+          - "https://fleet.www.tomcat.local:8223"
+          - "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
 # Disable previous block (if not) after the first Kibana running
 #
@@ -189,10 +189,8 @@ xpack:
                     value: 8220
                   - name: custom
                     value: | 
-                      timeout: 120s
-                  #     http.enabled: true
-                  #     http.host: 0.0.0.0
-                  #     http.port: 5066
+                      timeout: 60s
+                      ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
           - name: elastic_agent_nginx-1
             package:
               name: elastic_agent
@@ -253,7 +251,7 @@ xpack:
                           # - /hostfs/var/log/auth.log
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
               - type: system/metrics
-                enabled: true
+                enabled: false
                 vars:
                   - name: system.hostfs
                     value: /hostfs
@@ -502,10 +500,11 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8220
+                    value: 8222
                   - name: custom
                     value: | 
-                      timeout: 120s
+                      timeout: 60s
+                      ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
           - name: elastic_agent_wordpress-1
             package:
               name: elastic_agent
@@ -717,10 +716,11 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8220
+                    value: 8223
                   - name: custom
                     value: | 
-                      timeout: 120s
+                      timeout: 60s
+                      ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
           - name: elastic_agent_tomcat-1
             package:
               name: elastic_agent
@@ -739,7 +739,6 @@ xpack:
                     value: "0.0.0.0:8201"
                   - name: url
                     value: "http://apm-server:8201"
-                  #   value: "http://apm-server.${APP_HOST}.tomcat.local:8202"
           - name: docker_tomcat-1
             package:
               name: docker

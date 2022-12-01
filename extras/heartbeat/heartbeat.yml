@@ -70,8 +70,8 @@ heartbeat.monitors:
     # - https://www.intranet.local/downloads/
   ssl:
     certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
-    verification_mode: "none"
-    # verification_mode: "${VERIFICATION_MODE}"
+    # verification_mode: "none"
+    verification_mode: "${VERIFICATION_MODE}"
 
 - type: tcp
 #   schedule: '*/20 * * * * * *'
