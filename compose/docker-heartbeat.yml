@@ -26,7 +26,7 @@
       - heartbeat:/usr/share/heartbeat
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
+      - APP_HOST=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
@@ -35,8 +35,8 @@
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-      - LOGSTASH_SERVER_CERT=/usr/share/metricbeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
-      - LOGSTASH_SERVER_CERT_KEY=/usr/share/metricbeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
+      - LOGSTASH_SERVER_CERT=/usr/share/metricbeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/metricbeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.key
 #     labels:
 #       - "traefik.enable=true"
 #       - "traefik.docker.network=${DOCKER_NETWORK}"

@@ -46,16 +46,16 @@
       - filebeat:/usr/share/filebeat
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${APP_HOST}
+      - APP_HOST=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - ELASTICSEARCH_HOSTS=https://es01.${HOST_NICK}.${INT_NETWORK}:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/filebeat/certs/ca/ca.crt
-      - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.crt
-      - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key
+      - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.key
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
 #     labels:
 #       - "traefik.enable=true"
