@@ -135,12 +135,12 @@ $isKibana = @$index->isSocket("kibana.".$host.".".$net, 5601);
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = @$index->isSocket("es01.".$host.".".$net, 9200);
 $isEs02 = @$index->isSocket("es02.".$host.".".$net, 9201);
-$isEs03 = @$index->isSocket("es03.".$host.".".$net, 9202);
-$isWiki = @$index->isUrl("https://wiki.".$parent.".".$net);
+$isEs03 = false; // @$index->isSocket("es03.".$host.".".$net, 9202);
+$isWiki = @$index->isUrl("http://weblhs-wiki");
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
-$isRc = @$index->isUrl("https://rc.".$parent.".wordpress.local");
+$isRc =  @$index->isUrl("https://rc.".$parent.".wordpress.local");
 $isTomcat = @$index->isUrl("https://".$parent.".tomcat.local/manager/");
 $env = "";
 if ($printEnv) {
