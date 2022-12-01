@@ -181,10 +181,15 @@
           "      - localhost\n"\
           "      - wiki\n"\
           "      - wiki.${APP_HOST}.${INT_NETWORK}\n"\
+          "  - name: wiki.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - wiki\n"\
+          "      - wiki.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.23\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
