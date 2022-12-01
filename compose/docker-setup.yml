@@ -76,6 +76,17 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
           "      - ${ES_IP}\n"\
+          "  - name: apm-server.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - metric\n"\
+          "      - apm-server.www.${INT_NETWORK}\n"\
+          "      - metric.apm-server.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.10\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -140,6 +151,17 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
           "      - ${ES_IP}\n"\
+          "  - name: fleet.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet\n"\
+          "      - apm-server\n"\
+          "      - fleet.www.${INT_NETWORK}\n"\
+          "      - apm-server.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.10\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: heartbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
