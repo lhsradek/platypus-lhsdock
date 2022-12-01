@@ -86,6 +86,7 @@
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
+      - HOST_NICK=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
