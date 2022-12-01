@@ -38,19 +38,19 @@ volumes:
 #
   wordpressdb99:
     external: true
-    name: wordpress-db-99
+    name: wordpress-db-${WP_NUM}
   wordpresspma99:
     external: true
-    name: wordpress-pma-99
+    name: wordpress-pma-${WP_NUM}
   wordpressredis99:
     external: true
-    name: wordpress-redis-99
+    name: wordpress-redis-${WP_NUM}
   wordpressfleet99:
     external: true
-    name: wordpress-fleet-99
+    name: wordpress-fleet-${WP_NUM}
   wordpresswp99:
     external: true
-    name: wordpress-wp-99
+    name: wordpress-wp-${WP_NUM}
   tomboladb:
     external: true
     name: tombola-db
