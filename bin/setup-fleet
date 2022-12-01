@@ -25,7 +25,7 @@ APP_ID=$(read_var APP_ID .env)
 
 for NAME in fleet; do
   if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then
-    echo "Volume don't exists. First start 'bin/install' or create ${APP_ID}-${NAME}!"
+    echo "Volume don't exists. First create ${APP_ID}-${NAME}!"
     exit 1
   fi
 done;
