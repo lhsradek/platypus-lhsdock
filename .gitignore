@@ -7,6 +7,7 @@ context/root/bin/demoCA/
 context/root/bin/lhsdock/
 context/root/bin/openssl/
 extras/dokuwiki/config/dokuwiki/conf/
+extras/dokuwiki/config/dokuwiki/conf/plugins.local.php
 extras/dokuwiki/config/dokuwiki/data/attic/
 extras/dokuwiki/config/dokuwiki/lib/images/
 extras/dokuwiki/config/dokuwiki/data/index/
