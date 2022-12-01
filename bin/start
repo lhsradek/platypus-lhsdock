@@ -29,10 +29,12 @@ if [[ ! -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
     exit 1;
 fi
 
-if !(docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
-  echo "Volume don't exists. First start 'bin/install' !"
-  exit 1
-fi  
+for NAME in logstash; do
+  if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then
+    echo "Volume don't exists. First start 'bin/install' or create ${APP_ID}-${NAME}!"
+    exit 1
+  fi
+done;
 
 if !(docker network inspect "${DOCKER_NETWORK}" >/dev/null 2>&1); then
     echo "ERROR: Docker network ${DOCKER_NETWORK} is not running. Start it first."

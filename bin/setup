@@ -21,10 +21,14 @@ if [[ -z "$RUNENV" ]]; then
     RUNENV="local"
 fi
 
-if !(docker volume inspect "lhsdock-eps" >/dev/null 2>&1); then
-  echo "Volume don't exists. First start 'bin/install' !"
-  exit 1
-fi	 
+APP_ID=$(read_var APP_HOST .env)
+
+for NAME in apm es01 es02 es03 filebeat heartbeat logstash kibana metricbeat; do
+  if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then
+    echo "Volume don't exists. First start 'bin/install' or create ${APP_ID}-${NAME}!"
+    exit 1
+  fi
+done;
 
 if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
   echo "================= STOP ================="
