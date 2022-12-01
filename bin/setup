@@ -21,7 +21,7 @@ if [[ -z "$RUNENV" ]]; then
     RUNENV="local"
 fi
 
-APP_ID=$(read_var APP_HOST .env)
+APP_ID=$(read_var APP_ID .env)
 
 for NAME in apm es01 es02 es03 filebeat heartbeat logstash kibana metricbeat; do
   if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then

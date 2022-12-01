@@ -29,6 +29,8 @@ if [[ ! -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
     exit 1;
 fi
 
+APP_ID=$(read_var APP_ID .env)
+
 for NAME in logstash; do
   if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then
     echo "Volume don't exists. First start 'bin/install' or create ${APP_ID}-${NAME}!"
