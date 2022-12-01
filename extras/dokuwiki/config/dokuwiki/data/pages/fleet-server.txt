@@ -104,6 +104,11 @@ See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-age
 
 **Specify hosts:** <code>logstash.docker.nginx.local:5044</code>
 
+For **Server SSL certificate authorities (optional)** output from
+<code bash>
+cat ./certs/ca/ca.crt
+</code>
+
 For **Client SSL certificate** output from
 <code bash>
 cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt
@@ -116,7 +121,7 @@ cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 
 To logstash output **Advanced YAML configuration** add:
 <code>
-ssl.verification_mode: none
+ssl.verification_mode: certificate
 timeout: 60s
 </code>
 
