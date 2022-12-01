@@ -63,10 +63,10 @@ fleet:
     fleet_server:
       hosts:
         - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-        - "https://fleet.www.wordpress.local:8220"
-        - "https://fleet.${APP_HOST}.wordpress.local:8220"
-        - "https://fleet.www.tomcat.local:8220"
-        - "https://fleet.${APP_HOST}.tomcat.local:8220"
+        - "https://fleet.www.wordpress.local:8222"
+        - "https://fleet.${APP_HOST}.wordpress.local:8222"
+        - "https://fleet.www.tomcat.local:8223"
+        - "https://fleet.${APP_HOST}.tomcat.local:8223"
     elasticsearch:
       hosts: 
         - "https://es01.${APP_HOST}.${APP_NET}:9200"
@@ -91,7 +91,7 @@ sets the fleet in kibana
 **Advanced YAML configuration:**
 <code ini>
 ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-timeout: 300s
+timeout: 60s
 </code>
 
 Optional other elasticsearch for example:
@@ -103,11 +103,6 @@ Optional other elasticsearch for example:
 See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
 **Specify hosts:** <code>logstash.docker.nginx.local:5044</code>
-
-For **Server SSL certificate authorities (optional)**
-<code bash>
-cat ./certs/ca/ca.crt
-</code>
 
 For **Client SSL certificate** output from
 <code bash>
@@ -121,8 +116,8 @@ cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.key
 
 To logstash output **Advanced YAML configuration** add:
 <code>
-ssl.verification_mode: certificate
-timeout: 300s
+ssl.verification_mode: none
+timeout: 60s
 </code>
 
 Default for agent integrations interferes with APM, don't change it
