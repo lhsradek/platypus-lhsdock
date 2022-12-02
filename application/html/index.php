@@ -131,12 +131,12 @@ if ($parent == "docker") {
 } else {
   $isTraefik = @$index->isUrl("http://".$parent.".traefik.local");
 }
-$isKibana = @$index->isSocket("kibana.".$host.".".$net, 5601);
+$isKibana = @$index->isUrl("https://kibana.".$host.".".$net.":5601");
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
-$isEs01 = @$index->isSocket("es01.".$host.".".$net, 9200);
-$isEs02 = @$index->isSocket("es02.".$host.".".$net, 9201);
-$isEs03 = false; // @$index->isSocket("es03.".$host.".".$net, 9202);
-$isWiki = @$index->isUrl("http://weblhs-wiki");
+$isEs01 = @$index->isUrl("https://es01.".$host.".".$net.":9200");
+$isEs02 = false; // @$index->isUrl("https://es02.".$host.".".$net.":9201");
+$isEs03 = false; // @$index->isUrl("https://es03.".$host.".".$net.":9202");
+$isWiki = @$index->isUrl("https://wiki.".$host.".".$net);
 $isWp = @$index->isUrl("https://".$parent.".wordpress.local");
 $isWpa = @$index->isUrl("https://wpa.".$parent.".wordpress.local");
 $isPma = @$index->isUrl("https://pma.".$parent.".wordpress.local");
