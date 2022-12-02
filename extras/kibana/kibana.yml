@@ -29,7 +29,7 @@ monitoring:
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       requestTimeout: 240000
-  kibana.collection.enabled: true
+  kibana.collection.enabled: false
 
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
 elasticsearch:
@@ -61,19 +61,20 @@ xpack:
   apm.serviceMapEnabled: false
   fleet:
 
-    agents:
+    #agents:
       # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
       # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
       # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
-      fleet_server:
-        hosts:
-          - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8222"
-          - "https://fleet.${APP_HOST}.wordpress.local:8222"
-          - "https://fleet.www.tomcat.local:8223"
-          - "https://fleet.${APP_HOST}.tomcat.local:8223"
+      #fleet_server:
+        #hosts:
+          #- "https://fleet.${APP_HOST}.${APP_NET}:8220"
+          #- "https://fleet.www.${APP_NET}:8220"
+          #- "https://fleet.www.wordpress.local:8222"
+          #- "https://fleet.${APP_HOST}.wordpress.local:8222"
+          #- "https://fleet.www.tomcat.local:8223"
+          #- "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
+ 
 # Disable previous line or block (if not) after the first Kibana running
 #
 # Port 8221 is used internally on localhost in Fleet Server. To change port use environment variable
@@ -256,7 +257,8 @@ xpack:
                 enabled: false
                 vars:
                   - name: system.hostfs
-                    value: /hostfs
+                    # value: /hostfs
+                    value: /
                 streams:
                   - data_stream:
                       dataset: system.cpu
@@ -571,7 +573,8 @@ xpack:
                 enabled: false
                 vars:
                   - name: system.hostfs
-                    value: /hostfs
+                    # value: /hostfs
+                    value: /
                 streams:
                   - data_stream:
                       dataset: system.cpu
@@ -786,7 +789,8 @@ xpack:
                 enabled: false
                 vars:
                   - name: system.hostfs
-                    value: /hostfs
+                    # value: /hostfs
+                    value: /
                 streams:
                   - data_stream:
                       dataset: system.cpu
