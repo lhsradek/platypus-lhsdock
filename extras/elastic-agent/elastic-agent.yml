@@ -14,6 +14,8 @@ agent.monitoring:
       host: localhost 
       port: 6791
 
+# https://www.elastic.co/guide/en/fleet/current/fleet-agent-proxy-support.html
+
 # outputs:
 #   default:
 #     type: elasticsearch
