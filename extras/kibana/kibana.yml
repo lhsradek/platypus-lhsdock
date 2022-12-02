@@ -61,18 +61,18 @@ xpack:
   apm.serviceMapEnabled: false
   fleet:
 
-    #agents:
+    agents:
       # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
       # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
       # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
-      #fleet_server:
-        #hosts:
-          #- "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          #- "https://fleet.www.${APP_NET}:8220"
-          #- "https://fleet.www.wordpress.local:8222"
-          #- "https://fleet.${APP_HOST}.wordpress.local:8222"
-          #- "https://fleet.www.tomcat.local:8223"
-          #- "https://fleet.${APP_HOST}.tomcat.local:8223"
+      fleet_server:
+        hosts:
+          - "https://fleet.${APP_HOST}.${APP_NET}:8220"
+          - "https://fleet.www.${APP_NET}:8220"
+          - "https://fleet.www.wordpress.local:8222"
+          - "https://fleet.${APP_HOST}.wordpress.local:8222"
+          - "https://fleet.www.tomcat.local:8223"
+          - "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
  
 # Disable previous line or block (if not) after the first Kibana running
@@ -178,11 +178,11 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_nginx-1
+          - name: nginx_fleet_server-1
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server_nginx-1
+            id: nginx_fleet_server-1
             inputs:
               - type: fleet-server
                 vars:
@@ -198,12 +198,12 @@ xpack:
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent_nginx-1
-          - name: apm_nginx-1
+            id: nginx_elastic_agent-1
+          - name: nginx_apm-1
             package:
               name: apm
             description: Elastic APM
-            id: apm_nginx-1
+            id: nginx_apm-1
             inputs:
               - type: apm
                 keep_enabled: true
@@ -212,11 +212,11 @@ xpack:
                     value: "0.0.0.0:8201"
                   - name: url
                     value: "http://apm-server.${APP_HOST}.${APP_NET}:8201"
-          - name: docker_nginx-1
+          - name: nginx_docker-1
             package:
               name: docker
             description: Docker Metrics
-            id: docker_nginx-1
+            id: nginx_docker-1
             inputs:
               - type: filestream
                 enabled: false
@@ -226,11 +226,11 @@ xpack:
                 #   - data_stream:
                 #       dataset: docker.memory
                 #     enabled: false
-          - name: system_nginx-1
+          - name: nginx_system-1
             package:
               name: system
             description: System
-            id: system_nginx-1
+            id: nginx_system-1
             inputs:
               - type: logfile
                 enabled: false
@@ -341,11 +341,11 @@ xpack:
                         value: 10s
                       - name: server_status_path
                         value: /nginx_status
-          - name: traefik_nginx-1
+          - name: nginx_traefik-1
             package:
               name: traefik
             description: Traefik
-            id: traefik_nginx-1
+            id: nginx_traefik-1
             inputs:
               - type: logfile
                 enabled: true
@@ -361,11 +361,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/access.json
               - type: traefik/metrics
                 enabled: false
-          - name: traefik_error_nginx-1
+          - name: nginx_traefik_error-1
             package:
               name: log
             description: Custom Logs
-            id: traefik_error_nginx-1
+            id: nginx_traefik_error-1
             inputs:
               - type: logfile
                 enabled: true
@@ -381,11 +381,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/traefik/traefik.log
                       - name: data_stream.dataset
                         value: traefik.error
-          - name: logstash_nginx-1
+          - name: nginx_logstash-1
             package:
               name: logstash
             description: Logstash
-            id: logstash_nginx-1
+            id: nginx_logstash-1
             inputs:
               - type: logfile
                 enabled: false
@@ -419,11 +419,11 @@ xpack:
                   - data_stream:
                       dataset: logstash.stack_monitoring.node_stats
                     enabled: true
-          - name: kibana_nginx-1
+          - name: nginx_kibana-1
             package:
               name: log
             description: Custom Logs
-            id: kibana_nginx-1
+            id: nginx_kibana-1
             inputs:
               - type: logfile
                 enabled: true
@@ -437,11 +437,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/kibana/kibana.log
                       - name: data_stream.dataset
                         value: kibana.log
-          - name: elasticsearch_nginx-1
+          - name: nginx_elasticsearch-1
             package:
               name: log
             description: Custom Logs
-            id: elasticsearch_nginx-1
+            id: nginx_elasticsearch-1
             inputs:
               - type: logfile
                 enabled: false
@@ -458,11 +458,11 @@ xpack:
                       - name: data_stream.dataset
                         value: elasticsearch.log
           # https://www.elastic.co/guide/en/kibana/current/osquery.html
-          # - name: osquery_logs_nginx-1
+          # - name: nginx_osquery_logs-1
           #   package:
           #     name: osquery
           #   description: Osquery Logs
-          #   id: osquery_logs_nginx-1
+          #   id: nginx_osquery_logs-1
           #   inputs:
           #     - type: logfile
           #       enabled: false
@@ -477,11 +477,11 @@ xpack:
           #             - name: tags
           #               value:
           #                 - osquery
-          # - name: osquery_manager_nginx-1
+          # - name: nginx_osquery_manager-1
           #   package:
           #     name: osquery_manager
           #   description: Osquery Manager
-          #   id: osquery_manager_nginx-1
+          #   id: nginx_osquery_manager-1
       
       # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql
       # You can remove it.
@@ -493,11 +493,11 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_wordpress-1
+          - name: wordpress_fleet_server-1
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server_wordpress-1
+            id: wordpress_fleet_server-1
             inputs:
               - type: fleet-server
                 vars:
@@ -509,16 +509,16 @@ xpack:
                     value: | 
                       timeout: 60s
                       ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-          - name: elastic_agent_wordpress-1
+          - name: wordpress_elastic_agent-1
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent_wordpress-1
-          - name: apm_wordpress-1
+            id: wordpress_elastic_agent-1
+          - name: wordpress_apm-1
             package:
               name: apm
             description: Elastic APM
-            id: apm_wordpress-1
+            id: wordpress_apm-1
             inputs:
               - type: apm
                 keep_enabled: true
@@ -528,11 +528,11 @@ xpack:
                   - name: url
                     value: "http://apm-server:8201"
                   #   value: "http://apm-server.${APP_HOST}.wordpress.local:8201"
-          - name: docker_wordpress-1
+          - name: wordpress_docker-1
             package:
               name: docker
             description: Docker Metrics
-            id: docker_wordpress-1
+            id: wordpress_docker-1
             inputs:
               - type: filestream
                 enabled: false
@@ -542,11 +542,11 @@ xpack:
                 #   - data_stream:
                 #       dataset: docker.memory
                 #     enabled: false
-          - name: system_wordpress-1
+          - name: wordpress_system-1
             package:
               name: system
             description: System
-            id: system_wordpress-1
+            id: wordpress_system-1
             inputs:
               - type: logfile
                 enabled: false
@@ -611,11 +611,11 @@ xpack:
                     enabled: true
               - type: winlog
                 enabled: false
-          - name: nginx_wordpress-1
+          - name: wordpress_nginx-1
             package:
               name: nginx
             description: Nginx
-            id: nginx_wordpress-1
+            id: wordpress_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -657,11 +657,11 @@ xpack:
                         value: 10s
                       - name: server_status_path
                         value: /nginx_status
-          - name: mysql_wordpress-1
+          - name: wordpress_mysql-1
             package:
               name: mysql
             description: Mysql
-            id: mysql_wordpress-1
+            id: wordpress_mysql-1
             inputs:
               - type: logfile
                 enabled: true
@@ -682,11 +682,11 @@ xpack:
                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/mysql/platypus-wordpress-mysql/mariadb-slow.log
               - type: mysql/metrics
                 enabled: false
-          - name: redis_wordpress-1
+          - name: wordpress_redis-1
             package:
               name: redis
             description: Redis
-            id: redis_wordpress-1
+            id: wordpress_redis-1
             inputs:
               - type: logfile
                 enabled: false
@@ -710,11 +710,11 @@ xpack:
           - logs
           - metrics
         package_policies:
-          - name: fleet_server_tomcat-1
+          - name: tomcat_fleet_server-1
             package:
               name: fleet_server
             description: Fleet Server
-            id: fleet_server_tomcat-1
+            id: tomcat_fleet_server-1
             inputs:
               - type: fleet-server
                 vars:
@@ -726,16 +726,16 @@ xpack:
                     value: | 
                       timeout: 60s
                       ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-          - name: elastic_agent_tomcat-1
+          - name: tomcat_elastic_agent-1
             package:
               name: elastic_agent
             description: Elastic Agent
-            id: elastic_agent_tomcat-1
-          - name: apm_tomcat-1
+            id: tomcat_elastic_agent-1
+          - name: tomcat_apm-1
             package:
               name: apm
             description: Elastic APM
-            id: apm_tomcat-1
+            id: tomcat_apm-1
             inputs:
               - type: apm
                 keep_enabled: true
@@ -744,11 +744,11 @@ xpack:
                     value: "0.0.0.0:8201"
                   - name: url
                     value: "http://apm-server:8201"
-          - name: docker_tomcat-1
+          - name: tomcat_docker-1
             package:
               name: docker
             description: Docker Metrics
-            id: docker_tomcat-1
+            id: tomcat_docker-1
             inputs:
               - type: filestream
                 enabled: false
@@ -758,11 +758,11 @@ xpack:
                 #   - data_stream:
                 #       dataset: docker.memory
                 #     enabled: false
-          - name: system_tomcat-1
+          - name: tomcat_system-1
             package:
               name: system
             description: System
-            id: system_tomcat-1
+            id: tomcat_system-1
             inputs:
               - type: logfile
                 enabled: false
@@ -827,11 +827,11 @@ xpack:
                     enabled: true
               - type: winlog
                 enabled: false
-          - name: nginx_tomcat-1
+          - name: tomcat_nginx-1
             package:
               name: nginx
             description: Nginx
-            id: nginx_tomcat-1
+            id: tomcat_nginx-1
             inputs:
               - type: logfile
                 streams:
@@ -871,11 +871,11 @@ xpack:
                         value: 10s
                       - name: server_status_path
                         value: /nginx_status
-          - name: postgresql_tomcat-1
+          - name: tomcat_postgresql-1
             package:
               name: postgresql
             description: Postgresql
-            id: postgresql_tomcat-1
+            id: tomcat_postgresql-1
             inputs:
               - type: logfile
                 enabled: false
@@ -914,11 +914,11 @@ xpack:
           #   id: spring_boot_tomcat-1
           #   metrics.hosts:
           #     - "https://webtombola-tombola/tombola:8443"
-          - name: redis_tomcat-1
+          - name: tomcat_redis-1
             package:
               name: redis
             description: Redis
-            id: redis_tomcat-1
+            id: tomcat_redis-1
             inputs:
               - type: logfile
                 enabled: false
