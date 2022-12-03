@@ -42,7 +42,7 @@
           "      - web.traefik.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: www.traefik.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -57,13 +57,14 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.21\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
           "      - www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.61\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -75,7 +76,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: apm-server.www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -85,7 +86,7 @@
           "      - metric.apm-server.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.10\n"\
+          "      - ${ES_NET}.50\n"\
           "      - ${WWW_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -95,7 +96,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.20\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: cerebro.www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -103,7 +104,7 @@
           "      - cerebro.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.20\n"\
+          "      - ${ES_NET}.60\n"\
           "      - ${WWW_IP}\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -113,7 +114,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.2\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -122,7 +123,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.3\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -131,7 +132,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.4\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: eps.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -148,7 +149,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.9\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -158,8 +159,8 @@
           "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.10\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${ES_NET}.12\n"\
+          "      - ${MY_IP}\n"\
           "  - name: fleet.www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -169,7 +170,7 @@
           "      - apm-server.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.10\n"\
+          "      - ${ES_NET}.50\n"\
           "      - ${WWW_IP}\n"\
           "  - name: heartbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -179,7 +180,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.7\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -188,7 +189,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.6\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -197,7 +198,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.5\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: metricbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -206,7 +207,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.8\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -215,7 +216,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.23\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: wiki.www.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -223,7 +224,7 @@
           "      - wiki.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.23\n"\
+          "      - ${ES_NET}.63\n"\
           "      - ${WWW_IP}\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
@@ -231,7 +232,7 @@
           "      - ${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -245,7 +246,7 @@
           "      - tombola.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: tombola.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -259,7 +260,7 @@
           "      - ad.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: ad.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -273,7 +274,7 @@
           "      - db.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: db.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -287,7 +288,8 @@
           "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${ES_NET}.14\n"\
+          "      - ${MY_IP}\n"\
           "  - name: apm-server.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -297,7 +299,7 @@
           "      - metric.apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: fleet.www.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -307,6 +309,7 @@
           "      - apm-server.www.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.52\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.www.tomcat.local\n"\
           "    dns:\n"\
@@ -324,7 +327,7 @@
           "      - ${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -338,7 +341,7 @@
           "      - wp.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: wp.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -352,7 +355,7 @@
           "      - wpa.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: wpa.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -366,7 +369,7 @@
           "      - pma.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: pma.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -391,7 +394,8 @@
           "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${ES_NET}.13\n"\
+          "      - ${MY_IP}\n"\
           "  - name: apm-server.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -401,7 +405,7 @@
           "      - metric.apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_IP}\n"\
+          "      - ${MY_IP}\n"\
           "  - name: fleet.www.wordpress.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -411,6 +415,7 @@
           "      - apm-server.www.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.51\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.www.wordpress.local\n"\
           "    dns:\n"\
@@ -438,7 +443,6 @@
           "      - lhs.intranet.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_GW}\n"\
           "      - ${MY_IP}\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then

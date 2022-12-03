@@ -60,13 +60,13 @@ else
   echo "${ES_NET}.21                ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_NET}.22                weblhs-php.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   echo "${ES_NET}.23                wiki.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.62                fleet.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.63                fleet.www.wordpress.local" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.64                fleet.www.tomcat.local" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.70                cerebro.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.71                ${APP_HOST}.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.72                weblhs-php.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-  echo "${ES_NET}.73                wiki.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.50                fleet.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.51                fleet.www.wordpress.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.52                fleet.www.tomcat.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.60                cerebro.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.61                www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.62                weblhs-php.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.63                wiki.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
   cat $rootPath/compose/docker-head.yml > $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-es02.yml >> $rootPath/docker-compose.$RUNENV.yml
