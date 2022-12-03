@@ -30,8 +30,8 @@ inputs:
         data_stream.dataset: system.memory
       - metricset: network
         data_stream.dataset: system.network
-      # - metricset: filesystem
-      #   data_stream.dataset: system.filesystem
+      - metricset: filesystem
+        data_stream.dataset: system.filesystem
 
 output:
   # for /metricbeat -e setup --dashboards:
