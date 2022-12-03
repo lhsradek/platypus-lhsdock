@@ -16,7 +16,6 @@
       intnet:
         ipv4_address: ${ES_NET}.23
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh:ro
       - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
       - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt:ro
