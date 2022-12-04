@@ -24,6 +24,11 @@ processors:
   - add_docker_metadata: ~
   # - add_cloud_metadata: ~
 
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
 output:
   # for provisioning:
   logstash:
