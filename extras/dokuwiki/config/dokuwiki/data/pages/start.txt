@@ -125,11 +125,15 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 ===== Screenshots =====
 
-=== platypus-lhsdock ===
-
-{{lhsdock.png?600x466}}
-
 === Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
 
 {{kibana01.png?600x440}}
+
+=== Dashboard - LHS ===
+
+{{dashboard01.png?600x466}}
+
+=== platypus-lhsdock ===
+
+{{lhsdock.png?600x466}}
 
