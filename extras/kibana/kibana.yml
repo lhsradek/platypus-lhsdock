@@ -61,18 +61,18 @@ xpack:
   apm.serviceMapEnabled: false
   fleet:
 
-    agents:
+    #agents:
       # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
       # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
       # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
-      fleet_server:
-        hosts:
-          - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.${APP_NET}:8220"
-          - "https://fleet.www.wordpress.local:8222"
-          - "https://fleet.${APP_HOST}.wordpress.local:8222"
-          - "https://fleet.www.tomcat.local:8223"
-          - "https://fleet.${APP_HOST}.tomcat.local:8223"
+      #fleet_server:
+        #hosts:
+          #- "https://fleet.${APP_HOST}.${APP_NET}:8220"
+          #- "https://fleet.www.${APP_NET}:8220"
+          #- "https://fleet.www.wordpress.local:8222"
+          #- "https://fleet.${APP_HOST}.wordpress.local:8222"
+          #- "https://fleet.www.tomcat.local:8223"
+          #- "https://fleet.${APP_HOST}.tomcat.local:8223"
           # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
  
 # Disable previous line or block (if not) after the first Kibana running
