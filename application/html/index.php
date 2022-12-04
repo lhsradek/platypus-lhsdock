@@ -129,7 +129,7 @@ $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 if ($parent == "docker") {
   $isTraefik = @$index->isUrl("http://web.traefik.local");
 } else {
-  $isTraefik = @$index->isUrl("http://".$parent.".traefik.local");
+  $isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
 }
 $isKibana = @$index->isUrl("https://kibana.".$host.".".$net.":5601");
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
