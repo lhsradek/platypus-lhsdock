@@ -24,7 +24,7 @@
       # - /proc:/hostfs/proc:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
-      - ./extras/hosts/hosts:/etc/hosts
+      # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs/filebeat:/usr/share/filebeat/logs
       # - ./logs/filebeat/registry:/usr/share/filebeat/data/registry
