@@ -31,6 +31,7 @@
       - CEREBRO_PORT=9000
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CERTIFICATEAUTHORITY=/opt/cerebro/conf/certs/ca/ca.crt
+      - CERTIFICATEAUTHORITY2=/opt/cerebro/conf/certs/platel-ca.crt
       - CEREBRO_SERVER_CERT=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.crt
       - CEREBRO_SERVER_CERT_KEY=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.key
       - ES_URL=https://es01.${HOST_NICK}.${INT_NETWORK}:9200
