@@ -19,6 +19,11 @@
         ipv4_address: ${ES_NET}.20
     # ports:
     #  - 9000:9000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: ${CEREBRO_OPTS}
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
       # - ./extras/hosts/hosts:/etc/hosts
@@ -35,7 +40,6 @@
       - CEREBRO_SERVER_CERT=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.crt
       - CEREBRO_SERVER_CERT_KEY=/opt/cerebro/conf/certs/${CEREBRO_CERTNAME}.key
       - ES_URL=https://es01.${HOST_NICK}.${INT_NETWORK}:9200
-      - JAVA_OPTS=${CEREBRO_JAVA_OPTS}
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
