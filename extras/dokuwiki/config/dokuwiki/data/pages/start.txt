@@ -113,10 +113,10 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 | elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | <code>es02.www.nginx.local</code>      |
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | <code>es03.www.nginx.local</code>      |  *  |
 | [[kibana]]           | 5601/tcp               | lhsdock-kibana     | <code>kibana.www.nginx.local</code>    |
-| [[apm-server]]       | 5066/tcp, 8200/tcp     | lhsdock-apm        | <code>apm.nginx.local</code>           |  *  |
+| [[apm-server]]       | 5066/tcp, 8200/tcp     | lhsdock-apm-server | <code>apm-server.nginx.local</code>    |  *  |
 | [[beats#metricbeat|metricbeat]]| 5066/tcp     | lhsdock-metricbeat | <code>metricbeat.nginx.local</code>    |  *  |
 | [[beats#filebeat|filebeat]]    | 5066/tcp     | lhsdock-filebeat   | <code>filebeat.nginx.local</code>      |  *  |
-| [[beats#heartbeat|heartbeat]]  | 5066/tcp               | lhsdock-heartbeat  | <code>heartbeat.nginx.local</code>     |
+| [[beats#heartbeat|heartbeat]]  | 5066/tcp     | lhsdock-heartbeat  | <code>heartbeat.nginx.local</code>     |
 | enterprise-search    | 3002/tcp               | lhsdock-eps        | <code>eps.nginx.local</code>           |  *  |
 | [[elastic-agent]]    | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | <code>fleet.nginx.local</code>         |  *  |
 | [[logstash]]         | 5044/tcp, 9600/tcp     | lhsdock-logstash   | <code>logstash.nginx.local</code>      |  *  |
