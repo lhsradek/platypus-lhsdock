@@ -123,7 +123,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 | elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | ```es02.www.nginx.local```           | 
 | elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | ```es03.www.nginx.local```           |
 | kibana               | 5601/tcp               | lhsdock-kibana     | ```kibana.www.nginx.local```         |
-| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm        | ```apm.nginx.local```                | *
+| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm-server | ```apm-server.nginx.local```         | *
 | metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | * 
 | filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.nginx.local```           | *
 | heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | *
