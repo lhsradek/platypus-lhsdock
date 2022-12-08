@@ -19,8 +19,8 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.4
-    ports:
-      - 9202:9202
+    #ports:
+      #- 9202:9202
       # - 9302:9302
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
