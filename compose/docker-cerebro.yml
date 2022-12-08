@@ -4,7 +4,7 @@
 #
   cerebro:
     depends_on:
-      es02:
+      es01:
         condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:latest
