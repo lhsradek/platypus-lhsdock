@@ -14,8 +14,6 @@
     networks:
      # for traefik:
       default:
-        aliases:
-          - logstash.{APP_HOST}.${INT_NETWORK}
       # local network:
       intnet:
         aliases:
