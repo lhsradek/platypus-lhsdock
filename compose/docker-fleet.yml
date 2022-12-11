@@ -94,14 +94,14 @@
 #       - "traefik.http.routers.fleet-public.service=fleet-${APP_ID}"
 #       - "traefik.http.routers.fleet-public.entrypoints=https"
 #       - "traefik.http.routers.fleet-public.tls=true"
-#       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=${APM_PORT}"
+#       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.port=${FLEET_SERVER_PORT}"
 #       - "traefik.http.services.fleet-${APP_ID}.loadbalancer.server.scheme=https"
 # 
 #       - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
 #       - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
 #       - "traefik.http.routers.apm-server-public.entrypoints=https"
 #       - "traefik.http.routers.apm-server-public.tls=true"
-#       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${FLEET_SERVER_PORT}"
+#       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${APM_PORT}"
 #       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
