@@ -39,6 +39,7 @@ elasticsearch:
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl.verificationMode: "${VERIFICATION_MODE}"
   requestTimeout: 240000
 
 enterpriseSearch:
@@ -59,6 +60,8 @@ xpack:
     poll_interval: 180000
     max_workers: 2
   apm.serviceMapEnabled: false
+  remote_clusters.ui.enabled: false
+  snapshot_restore.ui.enabled: false
   fleet:
 
     agents:
