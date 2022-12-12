@@ -132,7 +132,7 @@ if ($parent == "docker") {
   $isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
 }
 $isKibana = @$index->isUrl("https://kibana.".$host.".".$net.":5601");
-$isKibanaPlatel = @$index->isUrl("https://kibana.platel:5601");
+$isKibanaPlatel = @$index->isUrl("http://kibana.platel:5601");
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = @$index->isUrl("https://es01.".$host.".".$net.":9200");
 $isEs02 = false; // @$index->isUrl("https://es02.".$host.".".$net.":9201");
@@ -204,7 +204,7 @@ if ($printEnv) {
 		} ?></li><?php
 	}
 	if($isKibanaPlatel) { ?><li>
-<a href="https://kibana.platel:5601" target="_blank">kibana.platel</a> <?php
+<a href="https://kibana.platel" target="_blank">kibana.platel</a> <?php
 	}
 	if($isCerebro|| $isWiki) { ?><li><?php
 		if($isCerebro) { ?>
