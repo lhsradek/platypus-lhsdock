@@ -33,7 +33,7 @@
       # metrics
       # - 9600:9600
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      # - /var/run/docker.sock:/var/run/docker.sock
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
       - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt
       - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key
