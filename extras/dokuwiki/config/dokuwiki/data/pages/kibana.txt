@@ -26,7 +26,7 @@ GET [[https://kibana.docker.nginx.local:5601/status|status]]
 
 === Observability - Infrastructure - Inventory - metric.nginx.local ===
 
-{{kibana01.png?600x436}}
+{{kibana01.png?600x466}}
 
 === Observability - Infrastructure - Inventory - Host - metric.nginx.local ===
 

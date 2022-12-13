@@ -63,7 +63,7 @@ in red or the service is completely missing (Kibana). When the integrations are 
 [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/metricbeat|configuration]]
 
 === Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
-{{kibana01.png?600x432}}
+{{kibana01.png?600x466}}
 
 === Kibana - Observability - Infrastructure - Inventory - Docker Containers ===
 {{kibana03.png?600x432}}
