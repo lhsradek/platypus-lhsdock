@@ -11,16 +11,16 @@
 ^ REPOSITORY                                            ^  TAG       ^ SIZE        ^ OPTIONAL ^
 | nginx:alpine                                          | latest     | 23.5MB      | [[https://github.com/lhsradek/platypus-lhsdock|platypus-lhsdock]] |
 | [[https://github.com/lhsradek/platypus-lhsfpm|platypus-lhsfpm]] [[https://hub.docker.com/repository/docker/lhsradek/fpm|{{https://img.shields.io/docker/pulls/lhsradek/fpm.png?recache}}]]       | v1         | 610MB       | php:fpm-alpine |
-| [[https://hub.docker.com/_/elasticsearch|docker.elastic.co/elasticsearch/elasticsearch]] | 8.5.2 | 1.29GB      |
-| [[https://hub.docker.com/_/kibana|docker.elastic.co/kibana/kibana]] | 8.5.2      | 707MB       |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.5.2      | 1.45GB      |
-| [[https://hub.docker.com/_/logstash|logstash]]        | 8.5.2      | 746MB       |
-| docker.elastic.co/beats/elastic-agent                 | 8.5.2      | 1.51GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.5.2      | 3.03GB      |
-| docker.elastic.co/apm/apm-server                      | 8.5.2      | 149MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.5.2      | 316MB       |
-| docker.elastic.co/beats/heartbeat                     | 8.5.2      | 1.87GB      |
-| docker.elastic.co/beats/filebeat                      | 8.5.2      | 281MB       |
+| [[https://hub.docker.com/_/elasticsearch|docker.elastic.co/elasticsearch/elasticsearch]] | 8.5.3 | 1.29GB      |
+| [[https://hub.docker.com/_/kibana|docker.elastic.co/kibana/kibana]] | 8.5.3      | 711MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.5.3      | 1.45GB      |
+| [[https://hub.docker.com/_/logstash|logstash]]        | 8.5.3      | 740MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.5.3      | 1.51GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [[https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics|Elastic Synthetics]] | 8.5.3      | 3.04GB      |
+| docker.elastic.co/apm/apm-server                      | 8.5.3      | 148MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.5.3      | 317MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.5.3      | 1.88GB      |
+| docker.elastic.co/beats/filebeat                      | 8.5.3      | 282MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
 | [[https://hub.docker.com/r/linuxserver/dokuwiki|lscr.io/linuxserver/dokuwiki]]   | latest     | 209MB       |
 

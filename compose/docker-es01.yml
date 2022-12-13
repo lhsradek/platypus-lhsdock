@@ -22,8 +22,8 @@
       - node.name=es01
       - http.port=9200
       - transport.port=9300
-      - discovery.seed_hosts=es02:9301
-      # - discovery.seed_hosts=es02:9301,es03:9302
+      # - discovery.seed_hosts=es02:9301
+      - discovery.seed_hosts=es02:9301,es03:9302
       - xpack.security.http.ssl.key=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.crt
       - xpack.security.transport.ssl.key=certs/es01.${APP_HOST}.${INT_NETWORK}/es01.${APP_HOST}.${INT_NETWORK}.key
@@ -43,6 +43,8 @@
       - "traefik.http.routers.es01-public.middlewares=es01-${APP_ID}@docker"
       - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.scheme=https"
       - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.port=9200"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=9200"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
         soft: -1
