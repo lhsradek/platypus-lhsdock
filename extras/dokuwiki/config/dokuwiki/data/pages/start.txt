@@ -125,7 +125,7 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 ===== Screenshots =====
 
-=== Kibana - Observability - Infrastructure - Inventory - metric.nginx.local ===
+=== Kibana - Observability - Infrastructure - Inventory - metricbeat.docker.nginx.local ===
 
 {{kibana01.png?600x440}}
 
