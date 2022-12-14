@@ -4,6 +4,8 @@ with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
+[Lightweight version](https://github.com/lhsradek/platypus-platel)
+
 #### setup
 create .env file
 

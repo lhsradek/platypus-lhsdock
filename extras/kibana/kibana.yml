@@ -27,7 +27,9 @@ monitoring:
         - "https://es02.${APP_HOST}.${APP_NET}:9201"
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
-      ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      ssl:
+        certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+        verificationMode: "${VERIFICATION_MODE}"
       requestTimeout: 240000
   kibana.collection.enabled: false
 
@@ -38,8 +40,9 @@ elasticsearch:
     - "https://es02.${APP_HOST}.${APP_NET}:9201"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
-  ssl.certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  ssl.verificationMode: "${VERIFICATION_MODE}"
+  ssl:
+    certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    verificationMode: "${VERIFICATION_MODE}"
   requestTimeout: 240000
 
 enterpriseSearch:
