@@ -136,7 +136,6 @@ if ($parent == "www") {
 } else {
   $isKibana = @$index->isUrl("http://kibana.".$host.".".$net.":5601");
 }
-dd
 if ($parent == "docker") {
   $isKibanaPlatel = @$index->isUrl("https://kibana.platel");
 } else {
