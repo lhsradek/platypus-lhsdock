@@ -131,11 +131,12 @@ if ($parent == "docker") {
 } else {
   $isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
 }
-if ($parent == "docker") {
-  $isKibana = @$index->isUrl("http://kibana.".$host.".".$net.":5601");
+if ($parent == "www") {
+  $isKibana = @$index->isUrl("https://kibana.docker.".$net.":443");
 } else {
-  $isKibana = @$index->isUrl("http://kibana.docker.".$net);
+  $isKibana = @$index->isUrl("http://kibana.".$host.".".$net.":5601");
 }
+dd
 if ($parent == "docker") {
   $isKibanaPlatel = @$index->isUrl("https://kibana.platel");
 } else {
