@@ -19,15 +19,15 @@ GET [[https://es01.docker.nginx.local:9200/.ds-logs-elastic_agent*/_search?prett
 
 ==== Deb ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-amd64.deb|elastic-agent-8.5.2-amd64.deb]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.3-amd64.deb|elastic-agent-8.5.3-amd64.deb]]
 
 ==== Linux tar ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-linux-x86_64.tar.gz|elastic-agent-8.5.2-linux-x86_64.tar.gz]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.3-linux-x86_64.tar.gz|elastic-agent-8.5.3-linux-x86_64.tar.gz]]
 
 ==== RPM ====
 
-[[https://docker.nginx.local/downloads/elastic-agent-8.5.2-x86_64.rpm|elastic-agent-8.5.2-x86_64.rpm]]
+[[https://docker.nginx.local/downloads/elastic-agent-8.5.3-x86_64.rpm|elastic-agent-8.5.3-x86_64.rpm]]
 
 -----
 
