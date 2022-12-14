@@ -8,4 +8,6 @@ Traefik is installed on url [[https://docker.traefik.local]]
 
 {{traefik01.png?600x466}}
 
+{{traefik02.png?600x466}}
+
 {{traefik03.png?209x207}}

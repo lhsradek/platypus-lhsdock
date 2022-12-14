@@ -5,7 +5,6 @@ server:
   shutdownTimeout: "5s"
   socketTimeout: "240000"
   publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}"
-  port: 5601
   ssl:
     enabled: false
     # enabled: true
