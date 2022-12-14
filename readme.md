@@ -4,8 +4,6 @@ with Elasticsearch, Logstash and Kibana ([ELK](https://www.elastic.co/))
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/lhsdock)](https://hub.docker.com/repository/docker/lhsradek/lhsdock)
 
-[Lightweight version](https://github.com/lhsradek/platypus-platel)
-
 #### setup
 create .env file
 
@@ -17,7 +15,9 @@ create .env file
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
-See https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
+See:
+* https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
+* [Lightweight version](https://github.com/lhsradek/platypus-platel)
 
 #### run lhsdock
 ```# bin/start```
