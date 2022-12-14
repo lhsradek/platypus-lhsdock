@@ -63,7 +63,7 @@
       - "traefik.http.services.weblhs-${APP_ID}.loadbalancer.server.port=443"
       - "traefik.http.services.weblhs-${APP_ID}.loadbalancer.server.scheme=https"
     healthcheck:
-      test: "curl -s --cacert /etc/ssl/private/ca.crt -I https://docker.nginx.local/downloads | grep -q 'HTTP/2 301'"
+      test: "curl -s --cacert /etc/ssl/private/ca.crt -I https://localhost/downloads | grep -q 'HTTP/2 301'"
       interval: 5s
       timeout: 5s
       retries: 150
