@@ -4,10 +4,11 @@
 - module: kibana
   xpack.enabled: true
   period: 10s
-  hosts: ["https://kibana.${APP_HOST}.${APP_NET}:5601"]
+  hosts: ["http://kibana.${APP_HOST}.${APP_NET}:5601"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
-    enabled: true
-    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    enabled: false
+    # enabled: true
+    # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
 

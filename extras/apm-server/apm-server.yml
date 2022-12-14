@@ -30,15 +30,14 @@ apm-server:
 #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
     enabled: true
-    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-    protocol: "https"
-    # api_key: "${AGENT_API_KEY}"
-    # username: "apm_system"
+    host: "http://kibana.${APP_HOST}.${APP_NET}:5601"
+    protocol: "http"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    ssl.enabled: true
-    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "${VERIFICATION_MODE}"
+    ssl.enabled: false
+    # ssl.enabled: true
+    # ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    # ssl.verification_mode: "${VERIFICATION_MODE}"
 
 #============================= Instrumentation =============================
 # instrumentation:

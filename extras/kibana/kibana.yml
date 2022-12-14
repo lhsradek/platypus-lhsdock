@@ -4,12 +4,14 @@ server:
   host: "0.0.0.0"
   shutdownTimeout: "5s"
   socketTimeout: "240000"
-  publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+  publicBaseUrl: "https://kibana.${APP_HOST}.${APP_NET}"
+  port: 5601
   ssl:
-    enabled: true
-    certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
-    key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
+    enabled: false
+    # enabled: true
+    # certificateAuthorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    # certificate: "${ELASTICSEARCH_SSL_SERVER_CERT}" 
+    # key: "${ELASTICSEARCH_SSL_SERVER_CERT_KEY}"
 
 monitoring:
   # https://www.elastic.co/guide/en/kibana/master/monitoring-settings-kb.html

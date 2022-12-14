@@ -18,8 +18,8 @@ elasticsearch:
     certificate_authority: '${ELASTIC_SSL_CERTIFICATEAUTHORITIES}'
 
 kibana:
-  host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-  external_url: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+  host: "http://kibana.${APP_HOST}.${APP_NET}"
+  external_url: "https://kibana.${APP_HOST}.${APP_NET}"
 
 # https://www.elastic.co/guide/en/enterprise-search/current/configuration.html#configuration-settings-apm-instrumentation   
 apm:

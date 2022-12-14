@@ -48,7 +48,6 @@ heartbeat.monitors:
     # - https://es03.${APP_HOST}.${APP_NET}:9202
     - https://${APP_HOST}.${APP_NET}/downloads/
     - https://www.${APP_NET}/downloads/
-    - https://kibana.${APP_HOST}.${APP_NET}:5601/status
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
     - https://wiki.www.${APP_NET}/doku.php?id=wiki:welcome
     - http://heartbeat.${APP_HOST}.${APP_NET}:5066

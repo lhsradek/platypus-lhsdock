@@ -94,11 +94,11 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
 
   kibana:
-    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
-    # api_key: ${AGENT_API_KEY}
+    host: "http://kibana.${APP_HOST}.${APP_NET}:5601"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
-      enabled: true
-      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "${VERIFICATION_MODE}"
+      enabled: false
+      # enabled: true
+      # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # verification_mode: "${VERIFICATION_MODE}"

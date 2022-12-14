@@ -131,7 +131,7 @@ if ($parent == "docker") {
 } else {
   $isTraefik = @$index->isUrl("https://".$parent.".traefik.local");
 }
-$isKibana = @$index->isUrl("https://kibana.".$host.".".$net.":5601");
+$isKibana = @$index->isUrl("http://kibana.".$host.".".$net.":5601");
 if ($parent == "docker") {
   $isKibanaPlatel = @$index->isUrl("https://kibana.platel");
 } else {
@@ -202,7 +202,7 @@ if ($printEnv) {
 	}
 	if($isKibana || $isWiki) { ?><li><?php
 		if($isKibana) { ?>
-<a href="https://kibana.<?php print($host.".".$net); ?>:5601" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
+<a href="https://kibana.<?php print($host.".".$net); ?>" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("kibana");
 		} ?></li><?php
