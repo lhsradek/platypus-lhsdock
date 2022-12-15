@@ -25,6 +25,7 @@
       - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
       - ./png/cerebro03.png:/config/dokuwiki/data/media/cerebro03.png
       - ./png/dashboard01.png:/config/dokuwiki/data/media/dashboard01.png
+      - ./png/discover01.png:/config/dokuwiki/data/media/discover01.png
       - ./png/elastic-apm-php.png:/config/dokuwiki/data/media/elastic-apm-php.png
       - ./png/fleet01.png:/config/dokuwiki/data/media/fleet01.png
       - ./png/fleet02.png:/config/dokuwiki/data/media/fleet02.png
