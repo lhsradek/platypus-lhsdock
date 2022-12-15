@@ -76,7 +76,7 @@
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - FLEET_URL=https://fleet.${APP_HOST}.${INT_NETWORK}:8220
-      - KIBANA_FLEET_HOST=https://kibana.${HOST_NICK}.${INT_NETWORK}:5601
+      - KIBANA_FLEET_HOST=https://kibana.${HOST_NICK}.${INT_NETWORK}
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
