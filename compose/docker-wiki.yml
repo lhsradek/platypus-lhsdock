@@ -52,6 +52,7 @@
       - ./png/kibana17.png:/config/dokuwiki/data/media/kibana17.png
       - ./png/lhsdock.png:/config/dokuwiki/data/media/lhsdock.png
       - ./png/manager.png:/config/dokuwiki/data/media/manager.png
+      - ./png/tombola.png:/config/dokuwiki/data/media/tombola.png
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png
       - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
       - ./png/traefik02.png:/config/dokuwiki/data/media/traefik02.png

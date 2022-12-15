@@ -100,7 +100,7 @@ class IndexController {
 		if ($serverPort == 80 || $serverPort == 443) {
 			$ret = "";
 		} else {
-			$ret = ":" . $serverPort;
+			$ret = ":".$serverPort;
 		}
 		return $ret;
 	}
@@ -194,9 +194,9 @@ if ($printEnv) {
         if($isTraefik || $isWiki) { ?><li><?php
 		if($isTraefik) {
                   if ($parent == "docker") { ?>
-<a href=https://web.traefik.local<?php print($port); ?> target="_blank">web.traefik.local</a>
+<a href="https://web.traefik.local<?php print($port); ?>" target="_blank">web.traefik.local</a>
                 <?php } else { ?>
-<a href=https://<?php print($parent); ?>.traefik.local<?php print($port); ?> target="_blank"><?php print($parent); ?>.traefik.local</a>
+<a href="https://<?php print($parent); ?>.traefik.local<?php print($port); ?>" target="_blank"><?php print($parent); ?>.traefik.local</a>
                   <?php
                   }
                 }
@@ -206,7 +206,7 @@ if ($printEnv) {
 	}
 	if($isKibana || $isWiki) { ?><li><?php
 		if($isKibana) { ?>
-<a href="https://kibana.<?php print($host.".".$net); ?>" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
+<a href="https://kibana.<?php print($host.".".$net.$port); ?>/app/home" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("kibana");
 		} ?></li><?php
