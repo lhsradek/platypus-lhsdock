@@ -9,6 +9,8 @@ Traefik is installed on local url https://www.traefik.local
 
 ==== Settings for APM-server ===
 
+In **traefik.yml**:
+
 <code yaml>
 tracing:
   serviceName: "www-traefik"
