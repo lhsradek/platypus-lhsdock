@@ -61,7 +61,7 @@ search]] ca cert. So it is good to have at least one APM on http. Another option
 is to have a separate APM for these two applications somewhere inside the
 container and use
 [[https://www.elastic.co/guide/en/apm/guide/master/configuration-instrumentation.html|instrumentation
-to APM]] with https.
+to APM]] with https. See traefik labels https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-apm.yml
 
 ==== Entrypoints for Fleet servers ====
 
@@ -80,6 +80,8 @@ it. See {{fleet01.png?linkonly}}
   https-8223:
     address: :8223
 </code>
+
+See traefik labels https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-fleet.yml
 
 ==== Entrypoints for Logstash ====
 
