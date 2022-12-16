@@ -1,13 +1,118 @@
-**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+**[[Elasticsearch]]** **[[Logstash]]** **[[Kibana]]** [[Cerebro]]
+[[Elastic-agent]] [[APM-server]] [[Fleet-server]] [[Beats]] >>**Traefik**<<
 
 ====== Traefik ======
 
 [[start|platypus-lhsdock]] with [[Elasticsearch|E]][[Logstash|L]][[Kibana|K]]
 
-Traefik is installed on url [[https://docker.traefik.local]] 
+Traefik is installed on local url https://www.traefik.local
 
+==== Settings for APM-server ===
+
+<code yaml>
+tracing:
+  serviceName: "www-traefik"
+  spanNameLimit: 150
+  elastic:
+    serverURL: "http://apm-server.docker.nginx.local:8200"
+    serviceEnvironment: "production"
+</code>
+
+{{traefik03.png?209x207}} APM will be displayed in
+{{kibana10.png?linkonly|services}} and {{kibana12.png?linkonly|traces}}
+
+==== Classic entrypoints ====
+
+<code yaml>
+entryPoints:
+  http:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+
+  https:
+    address: :443
+</code>
+
+==== Entrypoints for APM ====
+
+For APM if you want to have it in traffic. I have several on one server, for
+each application, to test the settings in the policies:
+<code yaml>
+  http-8200:
+    address: :8200
+
+  http-8201:
+    address: :8201
+
+  http-8202:
+    address: :8202
+</code>
+APM can also be on https, but I couldn't find a way to give
+[[https://doc.traefik.io/traefik/observability/tracing/elastic/|traefik]] and
+[[https://www.elastic.co/guide/en/enterprise-search/current/configuration.html#configuration-settings-apm-instrumentation|enterprise
+search]] ca cert. So it is good to have at least one APM on http. Another option
+is to have a separate APM for these two applications somewhere inside the
+container and use
+[[https://www.elastic.co/guide/en/apm/guide/master/configuration-instrumentation.html|instrumentation
+to APM]] with https.
+
+==== Entrypoints for Fleet servers ====
+
+For [[Fleet-server]] if you want to have it in traffic. Again, I use more of
+them for different containers, although there should be one on one machine and
+can be used by multiple agents. I tune the settings of each fleet server with
+it. See {{fleet01.png?linkonly}}
+
+<code yaml>
+  https-8220:
+    address: :8220
+
+  https-8222:
+    address: :8222
+
+  https-8223:
+    address: :8223
+</code>
+
+==== Entrypoints for Logstash ====
+
+For [[logstash]] [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/logstash|ports]]
+
+=== syslog pipelines ===
+<code yaml>
+  tcp-access:
+    address: :5000/tcp
+  udp-access:
+    address: :5000/udp
+
+  tcp-error:
+    address: :5001/tcp
+  udp-error:
+    address: :5001/udp
+</code>
+
+=== elastic-agent beat ===
+<code yaml>
+  tcp-elastic:
+    address: :5044/tcp
+</code>
+
+=== classic beat ===
+<code yaml>
+  tcp-beat:
+    address: :5045/tcp
+</code>
+
+It doesn't have to be in traffic if you expose the ports. This is useful if you
+want to see in traefik log on intranet.
+
+==== Routes ====
 {{traefik01.png?600x466}}
 
+==== Services ====
 {{traefik02.png?600x466}}
 
-{{traefik03.png?209x207}}

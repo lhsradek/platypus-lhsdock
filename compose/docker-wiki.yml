@@ -57,7 +57,7 @@
       - ./png/tomcat.png:/config/dokuwiki/data/media/tomcat.png
       - ./png/traefik01.png:/config/dokuwiki/data/media/traefik01.png
       - ./png/traefik02.png:/config/dokuwiki/data/media/traefik02.png
-      - ./png/traefik02.png:/config/dokuwiki/data/media/traefik03.png
+      - ./png/traefik03.png:/config/dokuwiki/data/media/traefik03.png
       - ./png/wiki.png:/config/dokuwiki/data/media/wiki.png
       - ./logs/dokuwiki:/config/log
     environment:

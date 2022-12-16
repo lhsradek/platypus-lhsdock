@@ -1,4 +1,4 @@
-**[[Elasticsearch]]** >>**Logstash**<< **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+**[[Elasticsearch]]** >>**Logstash**<< **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[APM-server]] [[Fleet-server]] [[Beats]] [[Traefik]]
 
 ====== Logstash ======
 

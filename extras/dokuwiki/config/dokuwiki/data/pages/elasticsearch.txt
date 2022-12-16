@@ -1,4 +1,4 @@
- >>**Elasticsearch**<< **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[Apm-server]] [[Fleet-server]] [[Beats]]
+ >>**Elasticsearch**<< **[[Logstash]]** **[[Kibana]]** [[Cerebro]] [[Elastic-agent]] [[APM-server]] [[Fleet-server]] [[Beats]] [[Traefik]]
 
 ====== Elasticksearch ======
 
@@ -34,7 +34,8 @@ GET [[https://es01.docker.nginx.local:9200/_search?q=application&pretty|_search?
 
 Limit of total fields [1000] in index [test_index] has been exceeded:
 
-PUT /test_index/_settings<code json>
+<code json>
+PUT test_index/_settings
 {
   "index.mapping.total_fields.limit": 2000
 }
@@ -42,7 +43,8 @@ PUT /test_index/_settings<code json>
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html
 
-PUT /_cluster/settings/<code json>
+<code json>
+PUT _cluster/settings/
 {
   "persistent": {
     "logger.org.elasticsearch.discovery": "INFO"
