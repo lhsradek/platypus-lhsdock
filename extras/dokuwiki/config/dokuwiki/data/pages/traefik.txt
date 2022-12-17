@@ -21,8 +21,7 @@ tracing:
 </code>
 
 {{traefik03.png?209x207}} APM will be displayed in
-{{kibana10.png?linkonly|services}} and {{kibana12.png?linkonly|traces}} or in
-dependeces
+{{kibana10.png?linkonly|services}} and {{kibana12.png?linkonly|traces}}
 
 ==== Classic entrypoints ====
 
