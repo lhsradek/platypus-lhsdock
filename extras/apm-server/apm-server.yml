@@ -11,14 +11,14 @@ apm-server:
   # RUM does not support token based authorization. Enabled RUM endpoints will not require any authorization
   # token configured for other endpoints.
   rum:
-    enabled: true
+    enabled: false
     output:
       elasticsearch:
         hosts: 
           - "https://es01.${APP_HOST}.${APP_NET}:9200"
-          - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          # - "https://es02.${APP_HOST}.${APP_NET}:9201"
         protocol: "https"
-        #api_key: "id:api_key"
+        # api_key: "id:api_key"
         # username: "apm_system"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"
@@ -63,7 +63,7 @@ output.elasticsearch:
   enabled: true
   hosts: 
     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    # - "https://es02.${APP_HOST}.${APP_NET}:9201"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -89,7 +89,7 @@ monitoring:
     password: "${ELASTICSEARCH_PASSWORD}"
     hosts: 
       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      # - "https://es02.${APP_HOST}.${APP_NET}:9201"
     protocol: "https"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
