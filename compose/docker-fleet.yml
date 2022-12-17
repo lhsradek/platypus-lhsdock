@@ -25,9 +25,9 @@
     # this EA is without enabled metricbeat
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup
+      - /proc:/hostfs/proc
+      - /:/hostfs
       - ./certs:/usr/share/elastic-agent/certs
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
