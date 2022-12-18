@@ -60,6 +60,7 @@
       - STACK_VERSION=${STACK_VERSION}
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - TRAEFIK_LOG=${TRAEFIK_LOG}
 #     labels:
 #       - "traefik.enable=true"
 #       - "traefik.docker.network=${DOCKER_NETWORK}"

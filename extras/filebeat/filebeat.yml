@@ -23,6 +23,12 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
+filebeat.inputs:
+  - type: filestream
+    id: traefik.error
+    paths:
+      - ${TRAEFIK_LOG}
+
 output:
   # for provisioning:
   logstash:
