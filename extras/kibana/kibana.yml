@@ -338,7 +338,6 @@ xpack:
                   - name: hosts
                     value:
                       - http://weblhs
-                      - http://weblhs-wiki
                 streams:
                   - data_stream:
                       dataset: nginx.stubstatus
