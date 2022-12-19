@@ -23,12 +23,19 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
+processors:
+  - add_tags:
+      tags: ["${STAGE}"]
+      target: "environment"
+  - add_tags:
+      tags: ["${APP_HOST}-${APP_ID}"]
+      target: "app.id"
+
 filebeat.inputs:
   - type: filestream
     id: traefik.error
     paths:
       - ${TRAEFIK_LOG}
-    tags: ["${APP_HOST}-filebeat", "${APP_ID}"]
 
 output:
   # for provisioning:
