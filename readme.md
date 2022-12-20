@@ -151,7 +151,8 @@ display such like this:
 ```
 
 Or see
-```docker logs -f lhsdock-setup
+```
+# docker logs -f lhsdock-setup
 ```
 
 In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
