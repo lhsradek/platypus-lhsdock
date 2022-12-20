@@ -8,6 +8,10 @@
         condition: service_healthy
     # Ubuntu - logstash 
     image: logstash:${STACK_VERSION}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_LOGSTASH_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-logstash"
     hostname: "logstash.${APP_HOST}.${INT_NETWORK}"

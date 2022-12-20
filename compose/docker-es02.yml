@@ -5,6 +5,10 @@
         condition: service_healthy
     # Ubuntu - elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_ES02_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-es02"
     hostname: "es02.${APP_HOST}.${INT_NETWORK}"

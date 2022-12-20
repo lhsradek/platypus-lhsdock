@@ -8,6 +8,10 @@
         condition: service_healthy
     # Ubuntu - filebeat
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-filebeat"
     hostname: "filebeat.${APP_HOST}.${INT_NETWORK}"

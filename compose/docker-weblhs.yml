@@ -8,6 +8,10 @@
     #   dockerfile: Dockerfile 
     # image: lhsradek/lhsdock:v3
     image: nginx:alpine
+    deploy:
+      resources:
+        limits:
+          memory: ${NGINX_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-web"
     hostname: "${APP_HOST}.${INT_NETWORK}"
@@ -74,6 +78,10 @@
     # or lhsradek/fpm:v1 with elastic-apm-php agent https://www.elastic.co/guide/en/apm/agent/php/current/intro.html
     # https://github.com/lhsradek/platypus-lhsfpm/blob/main/context/Dockerfile
     image: lhsradek/fpm:v1
+    deploy:
+      resources:
+        limits:
+          memory: ${PHP_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-php"
     hostname: "weblhs-php.${APP_HOST}.${INT_NETWORK}"

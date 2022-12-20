@@ -8,6 +8,10 @@
         condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:latest
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_CEREBRO_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-cerebro"
     hostname: "cerebro.${APP_HOST}.${INT_NETWORK}"

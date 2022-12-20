@@ -5,6 +5,10 @@
         condition: service_healthy
     # Alpine Linux
     image: lscr.io/linuxserver/dokuwiki:latest
+    deploy:
+      resources:
+        limits:
+          memory: ${WIKI_LIMIT}
     container_name: dokuwiki
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-wiki"

@@ -8,6 +8,10 @@
         condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_KIBANA_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-kibana"
     hostname: "kibana.${APP_HOST}.${INT_NETWORK}"

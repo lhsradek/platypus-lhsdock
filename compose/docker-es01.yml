@@ -1,4 +1,8 @@
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_ES01_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-es01"
     hostname: "es01.${APP_HOST}.${INT_NETWORK}"
