@@ -23,11 +23,6 @@
         ipv4_address: ${ES_NET}.20
     # ports:
     #  - 9000:9000
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: ${CEREBRO_OPTS}
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
       # - ./extras/hosts/hosts:/etc/hosts
