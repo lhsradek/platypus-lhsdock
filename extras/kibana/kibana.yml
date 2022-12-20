@@ -943,7 +943,7 @@ logging:
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
         type: pattern
-        pattern: "[%date][%level][%logger][%meta] %message"
+        pattern: "[%date][%level][%logger] %message"
   root:
     appenders: [default, file]
     level: info
