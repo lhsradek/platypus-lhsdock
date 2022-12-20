@@ -150,6 +150,8 @@ display such like this:
   "cluster_uuid" : "Eft1LUxGR5af29XSygQMHA",
 ```
 
+Or see ```docker logs -f lhsdock-setup``
+
 In case of any change in the environment variables, the volume of the fleet server must be deleted, the fleet server will be created again and will enroll everything by itself. It is naive to think that variables can be changed additionally. It is always necessary to empty the volume
 
 You will find an integrations when you first start Kibana and they will have polices set. [See settings.](https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml)
