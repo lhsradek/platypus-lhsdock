@@ -65,6 +65,8 @@
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - TRAEFIK_LOG=${TRAEFIK_LOG}
+      - TRAEFIK_AGENT_LOG=${TRAEFIK_AGENT_LOG}
+      - KIBANA_AGENT_LOG=${KIBANA_AGENT_LOG}
 #     labels:
 #       - "traefik.enable=true"
 #       - "traefik.docker.network=${DOCKER_NETWORK}"
