@@ -12,7 +12,7 @@
       resources:
         limits:
           memory: ${MEM_CEREBRO_LIMIT}
-    restart: ${DOCKER_RESTART_POLICY}
+    restart: "no"
     container_name: "${APP_ID}-cerebro"
     hostname: "cerebro.${APP_HOST}.${INT_NETWORK}"
     networks:

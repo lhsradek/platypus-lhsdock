@@ -77,3 +77,4 @@ if !(docker-compose ${ARGS} pull); then
   docker-compose ${ARGS} pull # !
 fi
 docker-compose ${ARGS} up -d
+docker-compose ${ARGS} stop cerebro 
