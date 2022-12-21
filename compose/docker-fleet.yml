@@ -55,7 +55,8 @@
     # https://www.elastic.co/guide/en/fleet/current/elastic-agent-container.html
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${HOST_NICK}
+      - APP_HOST=${APP_HOST}
+      - HOST_NICK=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}

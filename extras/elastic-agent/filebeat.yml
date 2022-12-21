@@ -39,7 +39,7 @@ output:
   # for provisioning:
   logstash:
     enabled: true
-    hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+    hosts: ["logstash.${HOST_NICK}.${APP_NET}:5044"]
     ssl:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       certificate: "${LOGSTASH_SERVER_CERT}"
@@ -50,9 +50,9 @@ output:
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
   #   hosts: 
-  #    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-  #    - "https://es02.${APP_HOST}.${APP_NET}:9201"
-  #    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+  #    - "https://es01.${HOST_NICK}.${APP_NET}:9200"
+  #    - "https://es02.${HOST_NICK}.${APP_NET}:9201"
+  #    # - "https://es03.${HOST_NICK}.${APP_NET}:9202"
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
@@ -71,7 +71,7 @@ setup:
     source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -83,7 +83,7 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
   
   kibana:
-    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+    host: "https://kibana.${HOST_NICK}.${APP_NET}:5601"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "https"
