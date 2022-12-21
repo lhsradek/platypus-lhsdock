@@ -8,15 +8,6 @@ monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
 
-#   elasticsearch:
-#     username: "${ELASTICSEARCH_USERNAME}"
-#     password: "${ELASTICSEARCH_PASSWORD}"
-#     hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-#     protocol: "https"
-#     ssl.enabled: true
-#     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#     ssl.verification_mode: "certificate"
-
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
   path: ${path.config}/monitors.d/*.yml
@@ -27,22 +18,22 @@ heartbeat.config.monitors:
 
 heartbeat.monitors:
 
-- type: http
-  schedule: '*/15 * * * * *'
-  id: http-service-ext
-  name: HTTP Service
-  data_stream.namespace: default
-  service.name: heartbeat-http-ext
-  check.response.status: [200, 301, 401, 404]
-  tags: [web-ext]
-  hosts:
-    # eliasondrej.com
-    - https://eliasondrej.com
-    - https://traefik.eliasondrej.com
-    - https://kibana.eliasondrej.com
-  ssl:
-    verification_mode: "none"
-
+# - type: http
+#   schedule: '*/15 * * * * *'
+#   id: http-service-ext
+#   name: HTTP Service
+#   data_stream.namespace: default
+#   service.name: heartbeat-http-ext
+#   check.response.status: [200, 301, 401, 404]
+#   tags: [web-ext]
+#   hosts:
+#     # eliasondrej.com
+#     - https://eliasondrej.com
+#     - https://traefik.eliasondrej.com
+#     - https://kibana.eliasondrej.com
+#   ssl:
+#     verification_mode: "none"
+ 
 - type: http
 #  schedule: '*/20 * * * * * *'
   schedule: '* * * * * *'
