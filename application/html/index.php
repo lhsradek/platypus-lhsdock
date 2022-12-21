@@ -165,7 +165,7 @@ if ($printEnv) {
   <title><?php print($index->getServerName())?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="style.css" type="text/css">
-  <link rel="shortcut icon" href="/favicon.png" th:type="image/png"/>
+  <link rel="shortcut icon" href="/favicon.png" type="image/png"/>
 </head>
 
 <body>
