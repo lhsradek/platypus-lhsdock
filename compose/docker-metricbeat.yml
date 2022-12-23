@@ -15,7 +15,6 @@
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-metricbeat"
     hostname: "metricbeat.${APP_HOST}.${INT_NETWORK}"
-    user: root
     networks:
       # for traefik:
       # default:
