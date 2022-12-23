@@ -139,7 +139,7 @@ if ($parent == "www") {
 if ($parent == "docker") {
   $isKibanaPlatel = @$index->isUrl("https://kibana.platel");
 } else {
-  $isKibanaPlatel = @$index->isUrl("http://kibana.platel:5601");
+  $isKibanaPlatel = @$index->isUrl("http://kibana.platel:5601") || @$index->isUrl("http://kibana.platel");
 }
 $isCerebro = @$index->isSocket("cerebro.".$parent.".".$net, 9000);
 $isEs01 = false; // @$index->isUrl("https://es01.".$host.".".$net.":9200");
