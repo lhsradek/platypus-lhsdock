@@ -7,10 +7,12 @@
     - state
   period: 10s
   hosts: 
-    - apm-server.${APP_HOST}.${APP_NET}:5066
-    - metricbeat.${APP_HOST}.${APP_NET}:5066
-    - filebeat.${APP_HOST}.${APP_NET}:5066
-    - heartbeat.${APP_HOST}.${APP_NET}:5066
+    # - apm-server.${HOST_NICK}.${APP_NET}:5066
+    - metricbeat.${HOST_NICK}.${APP_NET}:5066
+    - filebeat.${HOST_NICK}.${APP_NET}:5066
+    - heartbeat.${HOST_NICK}.${APP_NET}:5066
+    - filebeat.www.traefik.local:5066
+    - metricbeat.www.traefik.local:5066
   username: "beats_system"
   #username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
