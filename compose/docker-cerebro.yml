@@ -30,7 +30,7 @@
       - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
       - ./logs/cerebro:/opt/cerebro/logs:rw
     environment:
-      - BASIC_AUTH_USER=elastic
+      - BASIC_AUTH_USER=${ELASTIC_USERNAME}
       - BASIC_AUTH_PWD=${ELASTIC_PASSWORD}
       - CEREBRO_PORT=9000
       - CLUSTER_NAME=${CLUSTER_NAME}

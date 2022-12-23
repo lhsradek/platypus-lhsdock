@@ -30,11 +30,12 @@
       - heartbeat:/usr/share/heartbeat
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${HOST_NICK}
+      - APP_HOST=${APP_HOST}
       - APP_NET=${INT_NETWORK}
+      - HOST_NICK=${HOST_NICK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_USERNAME=${ELASTIC_USERNAME}
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/heartbeat/certs/ca/ca.crt
       - STAGE=${STAGE}

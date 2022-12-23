@@ -67,7 +67,7 @@ output:
 setup:      
   ilm.overwrite: true
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 2
     #index.codec: best_compression
     source.enabled: false
   elasticsearch:
@@ -83,7 +83,7 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
   
   kibana:
-    host: "http://kibana.${APP_HOST}.${APP_NET}:5601"
+    host: "${KIBANA_HOST}"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "http"

@@ -30,14 +30,16 @@
       - epsdata:/usr/share/enterprise-search
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${HOST_NICK}
+      - APP_HOST=${APP_HOST}
+      - HOST_NICK=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
-      - ELASTIC_USERNAME=elastic
+      - APP_SERVER_JAVA_OPTS=${EPS_APP_JAVA_OPTS}
+      - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - JAVA_OPTS=${EPS_JAVA_OPTS}
-      - APP_SERVER_JAVA_OPTS=${EPS_APP_JAVA_OPTS}
+      - KIBANA_HOST=${KIBANA_HOST}
       - JAVA_GC_LOGGING=false
       - VERIFICATION_MODE=${VERIFICATION_MODE}
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]

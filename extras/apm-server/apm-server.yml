@@ -15,8 +15,8 @@ apm-server:
     output:
       elasticsearch:
         hosts: 
-          - "https://es01.${APP_HOST}.${APP_NET}:9200"
-          # - "https://es02.${APP_HOST}.${APP_NET}:9201"
+          - "https://es01.${HOST_NICK}.${APP_NET}:9200"
+          # - "https://es02.${HOST_NICK}:9201"
         protocol: "https"
         # api_key: "id:api_key"
         # username: "apm_system"
@@ -30,7 +30,7 @@ apm-server:
 #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
     enabled: true
-    host: "http://kibana.${APP_HOST}.${APP_NET}:5601"
+    host: "${KIBANA_HOST}"
     protocol: "http"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -62,8 +62,8 @@ apm-server:
 output.elasticsearch:
   enabled: true
   hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    # - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    - "https://es01.${HOST_NICK}.${APP_NET}:9200"
+    # - "https://es02.${HOST_NICK}.${APP_NET}:9201"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -88,8 +88,8 @@ monitoring:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      # - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      - "https://es01.${HOST_NICK}.${APP_NET}:9200"
+      # - "https://es02.${HOST_NICK}.${APP_NET}:9201"
     protocol: "https"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

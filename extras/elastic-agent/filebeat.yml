@@ -66,7 +66,7 @@ output:
 setup:      
   ilm.overwrite: true
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 2
     #index.codec: best_compression
     source.enabled: false
 
@@ -83,12 +83,12 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
   
   kibana:
-    host: "https://kibana.${HOST_NICK}.${APP_NET}:5601"
+    host: "${KIBANA_FLEET_HOST}"
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "https"
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
-      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "${VERIFICATION_MODE}"

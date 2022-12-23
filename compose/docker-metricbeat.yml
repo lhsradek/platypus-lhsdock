@@ -33,16 +33,16 @@
       - metricbeat:/usr/share/metricbeat
     environment:
       - APP_ID=${APP_ID}
-      - APP_HOST=${HOST_NICK}
+      - APP_HOST=${APP_HOST}
+      - HOST_NICK=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
-      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_USERNAME=${ELASTIC_USERNAME}
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/metricbeat/certs/ca/ca.crt
-      - LOGSTASH_SERVER_CERT=/usr/share/metricbeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.crt
-      - LOGSTASH_SERVER_CERT_KEY=/usr/share/metricbeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.key
+      - KIBANA_HOST=${KIBANA_HOST}
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
 #     labels:

@@ -27,7 +27,7 @@ apm-server:
   #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
     enabled: true
-    host: "https://kibana.${HOST_NICK}.${APP_NET}:5601"
+    host: "${KIBANA_FLEET_HOST}"
     protocol: "https"
     # api_key: "${AGENT_API_KEY}"
     # username: "apm_system"

@@ -56,9 +56,7 @@ output:
 # ----------------------------- Elasticsearch Output ----------------------------
 
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -67,17 +65,6 @@ output:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "${VERIFICATION_MODE}"
     
-# ------------------------------ Logstash Output -------------------------------
-
-  # logstash:
-  #   hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
-  #   ssl:
-  #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #     certificate: "${LOGSTASH_SERVER_CERT}"
-  #     key: "${LOGSTASH_SERVER_CERT_KEY}"
-  #     # verification_mode: "none"
-  #     verification_mode: "${VERIFICATION_MODE}"
-   
 # ------------------------------ Setup -------------------------------
 
 setup:
@@ -88,9 +75,7 @@ setup:
     # _source.enabled: false
 
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -100,7 +85,7 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
 
   kibana:
-    host: "http://kibana.${APP_HOST}.${APP_NET}:5601"
+    host: "${KIBANA_HOST}"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
