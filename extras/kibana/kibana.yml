@@ -943,7 +943,7 @@ logging:
       fileName: /usr/share/kibana/logs/kibana.log
       layout:
         type: pattern
-        pattern: "[%date][%level][%logger] %message"
+        pattern: "%date{ISO8601}{Europe/London} [%level][%logger] %message"
   root:
     appenders: [default, file]
     level: info
@@ -955,6 +955,7 @@ logging:
       appenders: [default, file]
       level: info
     - name: server
+      appenders: [default, file]
       level: fatal
     - name: telemetry
       appenders: [default, file]

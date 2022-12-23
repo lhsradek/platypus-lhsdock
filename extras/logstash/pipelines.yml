@@ -4,6 +4,8 @@
 
 - pipeline.id: beat-pipeline
   path.config: "/usr/share/logstash/pipeline/beat.conf"
+- pipeline.id: elastic-agent-pipeline
+  path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"
 - pipeline.id: syslog-access-pipeline
   path.config: "/usr/share/logstash/pipeline/syslog-access.conf"
 - pipeline.id: syslog-error-pipeline

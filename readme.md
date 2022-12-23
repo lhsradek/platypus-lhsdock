@@ -171,7 +171,7 @@ Elasticsearch - Advanced YAML configuration:
 
 ```
 ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-timeout: 60s
+timeout: 20s
 ```
 
 ##### Logstash
@@ -187,11 +187,6 @@ Specify hosts:
 
 ```logstash.docker.nginx.local:5044```
 
-For Server SSL certificate authorities (optional)
-```
-cat ./certs/ca/ca.crt
-```
-
 For Client SSL certificate output from
 
 ```cat ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt```
@@ -203,8 +198,8 @@ For Client SSL certificate key output from
 To logstash output - Advanced YAML configuration add:
 
 ```
-ssl.verification_mode: certificate
-timeout: 60s
+ssl.verification_mode: none
+timeout: 20s
 ```
 
 Default for agent integrations interferes with APM, don't change it

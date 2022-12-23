@@ -44,9 +44,10 @@
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./extras/logstash/beat.conf:/usr/share/logstash/pipeline/beat.conf
       - ./extras/logstash/syslog-access.conf:/usr/share/logstash/pipeline/syslog-access.conf
       - ./extras/logstash/syslog-error.conf:/usr/share/logstash/pipeline/syslog-error.conf
+      - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf
+      - ./extras/logstash/beat.conf:/usr/share/logstash/pipeline/beat.conf
       - logstash:/usr/share/logstash
     environment:
       - APP_ID=${APP_ID}
