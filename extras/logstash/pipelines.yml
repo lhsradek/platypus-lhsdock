@@ -4,9 +4,17 @@
 
 - pipeline.id: beat-pipeline
   path.config: "/usr/share/logstash/pipeline/beat.conf"
+  queue.type: persisted
+  queue.max_bytes: 1gb    
 - pipeline.id: elastic-agent-pipeline
   path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"
+  queue.type: persisted
+  queue.max_bytes: 1gb    
 - pipeline.id: syslog-access-pipeline
   path.config: "/usr/share/logstash/pipeline/syslog-access.conf"
+  queue.type: persisted
+  queue.max_bytes: 1gb    
 - pipeline.id: syslog-error-pipeline
   path.config: "/usr/share/logstash/pipeline/syslog-error.conf"
+  queue.type: persisted
+  queue.max_bytes: 1gb    
