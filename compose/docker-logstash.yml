@@ -35,7 +35,7 @@
       # beat pipeline
       - 5045:5045
       # metrics
-      # - 9600:9600
+      # - ${LOGSTASH_MONITOR_PORT}:9600
     volumes:
       # - /var/run/docker.sock:/var/run/docker.sock
       - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
@@ -65,9 +65,14 @@
       - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - TRAEFIK_LOG=${TRAEFIK_LOG}
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.docker.network=${DOCKER_NETWORK}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logstash-public.rule=Host(`logstash.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.logstash-public.entrypoints=http-${LOGSTASH_MONITOR_PORT}"
+      - "traefik.http.routers.logstash-public.tls=false"
+      - "traefik.http.routers.logstash-public.service=logstash-${APP_ID}"
+      - "traefik.http.services.logstash-${APP_ID}.loadbalancer.server.port=${LOGSTASH_MONITOR_PORT}"
+      - "traefik.http.services.logstash-${APP_ID}.loadbalancer.server.scheme=http"
 #       - "traefik.tcp.routers.logstash-access.tls=false"
 #       - "traefik.tcp.routers.logstash-access.rule=HostSNI(`*`)"
 #       - "traefik.tcp.routers.logstash-access.entrypoints=tcp-access"

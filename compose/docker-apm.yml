@@ -24,7 +24,7 @@
     # ports:
     # for external apps as traefik or other apps without apm in container
     #   - ${APM_PORT}:8200
-    #   - 5066:5066
+    #   - ${MONITOR_PORT}:5066
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -52,12 +52,12 @@
       - "traefik.http.routers.apm-server-public.tls=false"
       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${APM_PORT}"
       - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
-      # - "traefik.http.routers.apm-server-metric-public.rule=Host(`metric.apm-server.${APP_HOST}.${INT_NETWORK}`)"
-      # - "traefik.http.routers.apm-server-metric-public.service=apm-server-metric-${APP_ID}"
-      # - "traefik.http.routers.apm-server-metric-public.entrypoints=http-5066"
-      # - "traefik.http.routers.apm-server-metric-public.tls=false"
-      # - "traefik.http.services.apm-server-metric-${APP_ID}.loadbalancer.server.port=5066"
-      # - "traefik.http.services.apm-server-metric-${APP_ID}.loadbalancer.server.scheme=http"
+      - "traefik.http.routers.apm-server-public-monitor.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.apm-server-public-monitor.service=apm-server-monitor-${APP_ID}"
+      - "traefik.http.routers.apm-server-public-monitor.entrypoints=http-${MONITOR_PORT}"
+      - "traefik.http.routers.apm-server-public-monitor.tls=false"
+      - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
+      - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       interval: 10s

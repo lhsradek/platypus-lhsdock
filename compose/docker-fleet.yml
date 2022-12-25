@@ -80,7 +80,7 @@
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
-      - FLEET_URL=https://fleet.${APP_HOST}.${INT_NETWORK}:8220
+      - FLEET_URL=https://fleet.${APP_HOST}.${INT_NETWORK}:${FLEET_SERVER_PORT}
       - KIBANA_FLEET_HOST=${KIBANA_HOST}
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - KIBANA_FLEET_SETUP=1

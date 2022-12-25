@@ -39,6 +39,16 @@ entryPoints:
     address: :443
 </code>
 
+==== Entrypoints for monitoring ====
+
+For [[beats#metricbeat|metricbeat]], [[beats#filebeat|filebeat]],
+[[beats#heartbeat|heartbeat]] and [[apm-server|APM Server]]:
+
+<code yaml>
+  http-5066:
+    address: :5066
+</code>
+
 ==== Entrypoints for APM ====
 
 For APM if you want to have it in traffic. I have several on one server, for
@@ -109,6 +119,12 @@ For [[logstash]] [[https://github.com/lhsradek/platypus-lhsdock/tree/main/extras
 <code yaml>
   tcp-beat:
     address: :5045/tcp
+</code>
+
+=== monitoring ===
+<code yaml>
+  http-9600:
+    address: :9600
 </code>
 
 It doesn't have to be in traffic if you expose the ports. This is useful if you
