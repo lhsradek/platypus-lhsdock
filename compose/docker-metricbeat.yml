@@ -29,6 +29,7 @@
       - ./certs:/usr/share/metricbeat/certs
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+      - ./extras/metricbeat/metricbeat:/root/bin
       - ./logs/metricbeat:/usr/share/metricbeat/logs
       - metricbeat:/usr/share/metricbeat
     environment:

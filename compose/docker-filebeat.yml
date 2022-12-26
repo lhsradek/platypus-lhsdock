@@ -24,12 +24,10 @@
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      # - /proc:/hostfs/proc:ro
-      - /:/hostfs:ro
       - ./certs:/usr/share/filebeat/certs
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./extras/filebeat/filebeat:/root/bin
       - ./logs/filebeat:/usr/share/filebeat/logs
       # - ./logs/filebeat/registry:/usr/share/filebeat/data/registry
       - ./logs/apm:/usr/share/filebeat/elogs/apm-server
@@ -42,11 +40,7 @@
       - ./logs/kibana:/usr/share/filebeat/elogs/kibana
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
       - ./logs/metricbeat:/usr/share/filebeat/elogs/metricbeat
-      # - /root/platypus-wordpress-mysql/logs/wordpress-nginx/:/usr/share/filebeat/elogs/nginx/platypus-wordpress-mysql
-      # - /root/tombola/logs/tombola-nginx/:/usr/share/filebeat/elogs/nginx/tombola
-      # - /root/tombola/logs/tombola-tomcat/:/usr/share/filebeat/elogs/tomcat/tombola
       - /root/platypus-box/logs/traefik:/usr/share/filebeat/elogs/traefik
-      - /var/log:/usr/share/filebeat/elogs/system
       - filebeat:/usr/share/filebeat
     environment:
       - APP_ID=${APP_ID}

@@ -19,7 +19,7 @@
       intnet:
         ipv4_address: ${ES_NET}.3
     ports:
-      - 9201:9201
+      - ${ES2_PORT}:9201
       # - 9301:9301
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -50,7 +50,9 @@
       - "traefik.http.routers.es02-public.rule=Host(`es02.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.es02-public.entrypoints=https"
       - "traefik.http.routers.es02-public.tls=true"
-      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=9201"
+      - "traefik.http.middlewares.es02-${APP_ID}.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.es02-${APP_ID}.redirectscheme.port=${ES2_PORT}"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES2_PORT}"
       - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
