@@ -46,7 +46,7 @@ output:
 # ----------------------------- Elasticsearch Output ----------------------------
 
   elasticsearch:
-    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -65,7 +65,7 @@ setup:
     # _source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

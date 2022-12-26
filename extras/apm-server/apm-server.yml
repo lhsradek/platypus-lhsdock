@@ -15,8 +15,8 @@ apm-server:
     output:
       elasticsearch:
         hosts: 
-          - "https://es01.${HOST_NICK}.${APP_NET}:9200"
-          # - "https://es02.${HOST_NICK}:9201"
+          - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
+          # - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
         protocol: "https"
         # api_key: "id:api_key"
         # username: "apm_system"
@@ -39,21 +39,6 @@ apm-server:
     # ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     # ssl.verification_mode: "${VERIFICATION_MODE}"
 
-#============================= Instrumentation =============================
-# instrumentation:
-#   enabled: true
-#   environment: "${STAGE}"
-#   hosts:
-#     - http://apm-server.docker.nginx.local:8200
-#   profiling:
-#     cpu:
-#       enabled: true
-#       interval: 60s
-#       duration: 10s
-#     heap:
-#       enabled: true
-#       interval: 60s
-
 #================================ Outputs =================================
 
 #output.console:
@@ -61,9 +46,9 @@ apm-server:
 #-------------------------- Elasticsearch output --------------------------
 output.elasticsearch:
   enabled: true
-  hosts: 
-    - "https://es01.${HOST_NICK}.${APP_NET}:9200"
-    # - "https://es02.${HOST_NICK}.${APP_NET}:9201"
+  hosts:
+    - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
+    # - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"
@@ -88,8 +73,8 @@ monitoring:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     hosts: 
-      - "https://es01.${HOST_NICK}.${APP_NET}:9200"
-      - "https://es02.${HOST_NICK}.${APP_NET}:9201"
+      - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
+      - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
     protocol: "https"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

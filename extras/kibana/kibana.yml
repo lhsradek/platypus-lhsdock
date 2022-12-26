@@ -25,8 +25,8 @@ monitoring:
       logstash.enabled: true
     elasticsearch:
       hosts: 
-        - "https://es01.${APP_HOST}.${APP_NET}:9200"
-        - "https://es02.${APP_HOST}.${APP_NET}:9201"
+        - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
+        - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl:
@@ -38,8 +38,8 @@ monitoring:
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
 elasticsearch:
   hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:9200"
-    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+    - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
+    - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
@@ -48,7 +48,7 @@ elasticsearch:
   requestTimeout: 240000
 
 enterpriseSearch:
-  host: "http://eps.${APP_HOST}.${APP_NET}:3002"
+  host: "http://eps.${APP_HOST}.${APP_NET}:${ENTERPRISE_SEARCH_PORT}"
   accessCheckTimeout: 60000
 
 xpack:
@@ -75,13 +75,13 @@ xpack:
       # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
       fleet_server:
         hosts:
-          - "https://fleet.${APP_HOST}.${APP_NET}:8220"
-          - "https://fleet.www.${APP_NET}:8220"
+          - "https://fleet.${APP_HOST}.${APP_NET}:${FLEET_SERVER_PORT}"
+          - "https://fleet.www.${APP_NET}:${FLEET_SERVER_PORT}"
           - "https://fleet.www.wordpress.local:8222"
           - "https://fleet.${APP_HOST}.wordpress.local:8222"
           - "https://fleet.www.tomcat.local:8223"
           - "https://fleet.${APP_HOST}.tomcat.local:8223"
-          # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200", "https://es02.${APP_HOST}.${APP_NET}:9201"]
+          # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}", "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"]
  
 # Disable previous line or block (if not) after the first Kibana running
 #
@@ -197,7 +197,7 @@ xpack:
                   - name: host
                     value: 0.0.0.0
                   - name: port
-                    value: 8220
+                    value: ${FLEET_SERVER_PORT}
                   - name: custom
                     value: | 
                       timeout: 60s
@@ -417,7 +417,7 @@ xpack:
                 vars:
                   - name: hosts
                     value:
-                      - http://logstash.${APP_HOST}.${APP_NET}:9600 
+                      - http://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT} 
                 streams:
                   - data_stream:
                       dataset: logstash.stack_monitoring.node

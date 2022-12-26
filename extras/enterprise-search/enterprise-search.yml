@@ -7,10 +7,10 @@ allow_es_settings_modification: true
 ent_search:
   listen_host: "0.0.0.0"
   listen_port: 3002
-  external_url: "http://eps.${HOST_NICK}.${APP_NET}:3002"
+  external_url: "http://eps.${HOST_NICK}.${APP_NET}:${ENTERPRISE_SEARCH_PORT}"
 
 elasticsearch:
-  host: "https://es01.${HOST_NICK}.${APP_NET}:9200"
+  host: "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
   username: '${ELASTIC_USERNAME}'
   password: '${ELASTIC_PASSWORD}'
   ssl:
@@ -26,7 +26,7 @@ apm:
   enabled: true
   environment: 'test'
   service_name: "enterprise-search"
-  server_url: "http://apm-server.${HOST_NICK}.${APP_NET}:8200"
+  server_url: "http://apm-server.${HOST_NICK}.${APP_NET}:${APM_PORT}"
 
 # metricbeat monitor enterprise search, if not set true
 monitoring.reporting_enabled: false

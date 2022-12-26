@@ -38,8 +38,12 @@
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - JAVA_OPTS=${EPS_JAVA_OPTS}
+      - ES1_PORT=${ES1_PORT}
       - KIBANA_HOST=${KIBANA_HOST}
+      - KIBANA_PORT=${KIBANA_PORT}
+      - APM_PORT=${APM_PORT}
+      - ENTERPRISE_SEARCH_PORT=${ENTERPRISE_SEARCH_PORT}
+      - JAVA_OPTS=${EPS_JAVA_OPTS}
       - JAVA_GC_LOGGING=false
       - VERIFICATION_MODE=${VERIFICATION_MODE}
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
@@ -48,7 +52,7 @@
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -I http://eps.${APP_HOST}.${INT_NETWORK}:3002 | grep -q 'HTTP/1.1 302 Found'"]
+      test: ["CMD-SHELL", "curl -s -I http://eps.${APP_HOST}.${INT_NETWORK}:${ENTERPRISE_SEARCH_PORT} | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
       timeout: 10s
       retries: 500

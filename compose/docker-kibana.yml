@@ -37,13 +37,20 @@
       - APP_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:9200
+      - ELASTICSEARCH_HOSTS=https://es01.${APP_HOST}.${INT_NETWORK}:${ES1_PORT}
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/kibana/config/certs/ca/ca.crt
       - ELASTICSEARCH_SSL_SERVER_CERT=/usr/share/kibana/config/certs/kibana.${APP_HOST}.${INT_NETWORK}/kibana.${APP_HOST}.${INT_NETWORK}.crt
       - ELASTICSEARCH_SSL_SERVER_CERT_KEY=/usr/share/kibana/config/certs/kibana.${APP_HOST}.${INT_NETWORK}/kibana.${APP_HOST}.${INT_NETWORK}.key
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ES1_PORT=${ES1_PORT}
+      - ES2_PORT=${ES2_PORT}
+      - ES3_PORT=${ES3_PORT}
+      - APM_PORT=${APM_PORT}
+      - ENTERPRISE_SEARCH_PORT=${ENTERPRISE_SEARCH_PORT}
+      - FLEET_SERVER_PORT=${FLEET_SERVER_PORT}
+      - LOGSTASH_MONITOR_PORT=${LOGSTASH_MONITOR_PORT}
       - STACK_VERSION=${STACK_VERSION}
       - STV=${STV}
       - NODE_OPTIONS=${KIBANA_NODE_OPTS}
@@ -57,14 +64,14 @@
       - "traefik.http.routers.kibana-public.rule=Host(`kibana.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.kibana-public.entrypoints=https"
       - "traefik.http.routers.kibana-public.tls=true"
-      - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.port=5601"
+      - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.port=${KIBANA_PORT}"
       - "traefik.http.services.kibana-${APP_ID}.loadbalancer.server.scheme=http"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     healthcheck:
-      test: ["CMD-SHELL", "curl -I http://kibana.${APP_HOST}.${INT_NETWORK}:5601 | grep -q 'HTTP/1.1 302 Found'"]
+      test: ["CMD-SHELL", "curl -I http://kibana.${APP_HOST}.${INT_NETWORK}:${KIBANA_PORT} | grep -q 'HTTP/1.1 302 Found'"]
       interval: 10s
       timeout: 10s
       retries: 500

@@ -12,7 +12,7 @@ monitoring:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     hosts:
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
     protocol: "https"
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -54,7 +54,7 @@ output:
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
   #   hosts: 
-  #    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #    - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
@@ -72,8 +72,8 @@ setup:
     source.enabled: false
   elasticsearch:
     hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      #- "https://es02.${APP_HOST}.${APP_NET}:9201"
+      - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
+      #- "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

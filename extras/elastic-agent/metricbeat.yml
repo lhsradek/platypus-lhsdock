@@ -42,7 +42,7 @@ inputs:
 output:
   # for /metricbeat -e setup --dashboards:
   elasticsearch:
-    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -67,7 +67,7 @@ setup:
     source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

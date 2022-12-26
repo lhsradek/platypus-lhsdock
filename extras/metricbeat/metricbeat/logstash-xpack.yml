@@ -7,6 +7,6 @@
     - node_stats
   xpack.enabled: true
   period: 10s
-  hosts: ["logstash.${HOST_NICK}.${APP_NET}:9600"]
+  hosts: ["logstash.${HOST_NICK}.${APP_NET}:${LOGSTASH_MONITOR_PORT}"]
   #username: "logstash_system"
   #password: "${ELASTICSEARCH_PASSWORD}"

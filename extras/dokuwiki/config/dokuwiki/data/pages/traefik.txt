@@ -72,6 +72,21 @@ container and use
 [[https://www.elastic.co/guide/en/apm/guide/master/configuration-instrumentation.html|instrumentation
 to APM]] with https. See traefik labels https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-apm.yml
 
+==== Entrypoints for Elasticsearch ====
+
+For [[Elasticsearch]] if you want to have it in traffic.
+
+<code yaml>
+  https-9200:
+    address: :9200
+
+  https-9201:
+    address: :9201
+
+  https-9202:
+    address: :9202
+</code>
+
 ==== Entrypoints for Fleet servers ====
 
 For [[Fleet-server]] if you want to have it in traffic. Again, I use more of

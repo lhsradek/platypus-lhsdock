@@ -6,6 +6,6 @@
   #  - node
   #  - node_stats
   period: 10s
-  hosts: ["logstash.${HOST_NICK}.${APP_NET}:9600"]
+  hosts: ["logstash.${HOST_NICK}.${APP_NET}:${LOGSTASH_MONITOR_PORT}"]
   #username: "user"
   #password: "secret"

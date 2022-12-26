@@ -5,7 +5,7 @@
   metricsets:
     - status
   period: 10s
-  hosts: ["http://kibana.${HOST_NICK}.${APP_NET}:5601"]
+  hosts: ["http://kibana.${HOST_NICK}.${APP_NET}:${KIBANA_PORT}"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:

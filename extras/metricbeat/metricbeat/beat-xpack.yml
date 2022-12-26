@@ -5,10 +5,10 @@
   xpack.enabled: true
   period: 10s
   hosts: 
-    - "http://metricbeat.${HOST_NICK}.${APP_NET}:5066"
-    - "http://filebeat.${HOST_NICK}.${APP_NET}:5066"
-    - "http://heartbeat.${HOST_NICK}.${APP_NET}:5066"
-    - "http://apm-server.${HOST_NICK}.${APP_NET}:5066"
+    - "http://metricbeat.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}"
+    - "http://filebeat.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}"
+    - "http://heartbeat.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}"
+    - "http://apm-server.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}"
     # - "http://filebeat.www.traefik.local:5066"
     # - "http://metricbeat.www.traefik.local:5066"
   username: "beats_system"
