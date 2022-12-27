@@ -55,6 +55,7 @@
       - ES1_PORT=${ES1_PORT}
       - ES2_PORT=${ES2_PORT}
       - ES3_PORT=${ES3_PORT}
+      - MONITOR_PORT=${MONITOR_PORT}
       - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.crt
       - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.key
       - STAGE=${STAGE}
