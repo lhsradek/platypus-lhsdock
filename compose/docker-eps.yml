@@ -13,7 +13,7 @@
         limits:
           memory: ${MEM_EPS_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-eps"
+    container_name: "${APP_HOST}-${APP_ID}-eps"
     hostname: "eps.${APP_HOST}.${INT_NETWORK}"
     networks:
       # local network:

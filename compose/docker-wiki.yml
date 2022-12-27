@@ -11,7 +11,7 @@
           memory: ${WIKI_LIMIT}
     container_name: dokuwiki
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-wiki"
+    container_name: "${APP_HOST}-${APP_ID}-wiki"
     hostname: "wiki.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:

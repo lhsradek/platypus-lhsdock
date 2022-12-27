@@ -14,7 +14,7 @@
         limits:
           memory: ${MEM_FLEET_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-fleet"
+    container_name: "${APP_HOST}-${APP_ID}-fleet"
     hostname: "fleet.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik

@@ -8,12 +8,12 @@
     - load
     - memory
     - network
-    #- process
-    #- process_summary
-    #- socket_summary
-    #- entropy
-    #- core
-    #- diskio
+    - process
+    - process_summary
+    - socket_summary
+    - entropy
+    - core
+    - diskio
     #- socket
     #- service
     #- users

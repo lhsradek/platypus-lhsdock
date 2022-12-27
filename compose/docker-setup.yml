@@ -6,7 +6,7 @@
     # Ubuntu - elasticsearch
     # see https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
-    container_name: "${APP_ID}-setup"
+    container_name: "${APP_HOST}-${APP_ID}-setup"
     hostname: "setup.${INT_NETWORK}"
     networks:
       # local network:

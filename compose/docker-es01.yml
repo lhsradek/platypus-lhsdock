@@ -4,7 +4,7 @@
         limits:
           memory: ${MEM_ES01_LIMIT}
     restart: ${DOCKER_RESTART_POLICY}
-    container_name: "${APP_ID}-es01"
+    container_name: "${APP_HOST}-${APP_ID}-es01"
     hostname: "es01.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
