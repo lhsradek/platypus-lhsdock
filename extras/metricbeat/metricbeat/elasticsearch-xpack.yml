@@ -5,9 +5,9 @@
   xpack.enabled: true
   period: 10s
   hosts: 
-    - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
-    - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
-    # - "https://es03.${HOST_NICK}.${APP_NET}:${ES3_PORT}"
+    - "https://es01.${HOST_HOST}.${APP_NET}:${ES1_PORT}"
+    - "https://es02.${HOST_HOST}.${APP_NET}:${ES2_PORT}"
+    # - "https://es03.${HOST_HOST}.${APP_NET}:${ES3_PORT}"
   protocol: "https"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"

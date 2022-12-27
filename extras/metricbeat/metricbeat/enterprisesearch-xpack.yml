@@ -6,8 +6,8 @@
   metricsets: ["health", "stats"]
   enabled: true
   period: 10s
-  hosts: ["http://eps.${HOST_NICK}.${APP_NET}:3002"]
-  # hosts: ["http://eps.${HOST_NICK}.${APP_NET}:3002/diagnostics"]
+  hosts: ["http://eps.${APP_HOST}.${APP_NET}:3002"]
+  # hosts: ["http://eps.${APP_HOST}.${APP_NET}:3002/diagnostics"]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   #username: "admin"
