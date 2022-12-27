@@ -45,6 +45,12 @@ volumes:
   wordpressredis:
     external: true
     name: wordpress-redis-${WP_NUM}
+  wordpressfilebeat:
+    external: true
+    name: wordpress-filebeat-${WP_NUM}
+  wordpressmetricbeat:
+    external: true
+    name: wordpress-metricbeat-${WP_NUM}
   wordpressfleet:
     external: true
     name: wordpress-fleet-${WP_NUM}
