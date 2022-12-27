@@ -60,7 +60,7 @@
       - "traefik.http.services.metricbeat-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       # test: "metricbeat test output | grep 'talk to server... OK'"
-      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${APP_HOST}.${INT_NETWORK}:5066 | grep -q 'HTTP/1.1 200 OK'"]
+      test: ["CMD-SHELL", "curl -s -I http://metricbeat.${APP_HOST}.${INT_NETWORK}:${MONITOR_PORT} | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s
       timeout: 10s
       retries: 500
