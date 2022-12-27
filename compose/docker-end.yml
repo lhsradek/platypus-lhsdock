@@ -63,3 +63,10 @@ volumes:
   tombolafleet:
     external: true
     name: tombola-fleet
+  traefikfilebeat:
+    external: true
+    name: "traefik-filebeat"
+  traefikmetricbeat:
+    external: true
+    name: "traefik-metricbeat"
+      

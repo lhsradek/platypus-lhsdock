@@ -55,6 +55,8 @@
       - wordpressmetricbeat:/root/bin/volume/wordpress-metricbeat-${WP_NUM}:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
       - tombolafleet:/root/bin/volume/tombola-fleet:ro
+      - traefikfilebeat:/root/bin/volume/traefik-filebeat:ro
+      - traefikmetricbeat:/root/bin/volume/traefik-metricbeat:ro
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
