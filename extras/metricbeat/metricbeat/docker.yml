@@ -6,9 +6,9 @@
     - container
     - cpu
     - diskio
-    - event
-    - healthcheck
-    - info
+    #- event
+    #- healthcheck
+    #- info
     - memory
     - network
     # - network_summary

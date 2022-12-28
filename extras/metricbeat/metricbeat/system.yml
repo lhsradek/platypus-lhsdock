@@ -10,10 +10,10 @@
     - network
     - process
     - process_summary
-    - socket_summary
-    - entropy
-    - core
-    - diskio
+    #- socket_summary
+    #- entropy
+    #- core
+    #- diskio
     #- socket
     #- service
     #- users
