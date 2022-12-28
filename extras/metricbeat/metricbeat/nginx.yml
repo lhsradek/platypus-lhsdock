@@ -8,12 +8,13 @@
 
   # Nginx hosts
   hosts: 
-    - "http://${APP_HOST}.${APP_NET}"
-    - "http://wiki.${APP_HOST}.${APP_NET}"
+    - "http://weblhs"
+    - "http://weblhs-wiki"
 
   # Path to server status. Default nginx_status
   server_status_path: "nginx_status"
 
-  #ssl:
-  #  enabled: true
-  #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  ssl:
+    enabled: false
+    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    verification_mode: "none"
