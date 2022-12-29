@@ -50,7 +50,36 @@ elasticsearch:
 enterpriseSearch:
   host: "http://eps.${APP_HOST}.${APP_NET}:${ENTERPRISE_SEARCH_PORT}"
   accessCheckTimeout: 60000
-
+      
+# https://www.elastic.co/guide/en/kibana/current/logging-configuration.html
+logging:
+  appenders:
+    file:
+      type: file
+      fileName: /usr/share/kibana/logs/kibana.log
+      layout:
+        type: pattern
+        pattern: "%date{ISO8601}{Europe/London} [%level][%logger] %message"
+  root:
+    appenders: [default, file]
+    level: info
+  loggers:
+    - name: plugins
+      appenders: [default, file]
+      level: info
+    - name: optimize
+      appenders: [default, file]
+      level: info
+    - name: server
+      appenders: [default, file]
+      level: fatal
+    - name: telemetry
+      appenders: [default, file]
+      level: info
+    - name: metrics.ops
+      appenders: [default, file]
+      level: info
+        
 xpack:
   reporting:
     kibanaServer.hostname: "kibana"
@@ -68,20 +97,60 @@ xpack:
   remote_clusters.ui.enabled: false
   snapshot_restore.ui.enabled: false
   fleet:
+#
+# You will find these integrations when you first start kibana and they will have polices set.
+#
+    packages:
+      - name: elastic_agent
+        version: latest
+      - name: fleet_server
+        version: latest
+      - name: apm
+        version: latest
+      - name: system
+        version: latest
+      - name: docker
+        version: latest
+      - name: mysql
+        version: latest
+      - name: nginx
+        version: latest
+      - name: postgresql
+        version: latest
+      - name: redis
+        version: latest
+      - name: tomcat
+        version: latest
+      - name: traefik
+        version: latest
+      - name: log
+        version: latest
+      - name: spring_boot
+        version: latest
+      - name: logstash
+        version: latest
+      - name: synthetics
+        version: latest
+      # - name: osquery
+      #   version: latest
+      # - name: osquery_manager
+      #   version: latest
+      
+# https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
 
-    agents:
-      # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
-      # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
-      # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
-      fleet_server:
-        hosts:
-          - "https://fleet.${APP_HOST}.${APP_NET}:${FLEET_SERVER_PORT}"
-          - "https://fleet.www.${APP_NET}:${FLEET_SERVER_PORT}"
-          - "https://fleet.www.wordpress.local:8222"
-          - "https://fleet.${APP_HOST}.wordpress.local:8222"
-          - "https://fleet.www.tomcat.local:8223"
-          - "https://fleet.${APP_HOST}.tomcat.local:8223"
-          # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}", "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"]
+    #agents:
+    #   # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
+    #   # https://www.elastic.co/guide/en/fleet/current/secure-connections.html
+    #   # https://www.elastic.co/guide/en/fleet/current/secure-logstash-connections.html
+      #fleet_server:
+        #hosts:
+          #- "https://fleet.www.${APP_NET}:${FLEET_SERVER_PORT}"
+    #       - "https://fleet.www.${APP_NET}:${FLEET_SERVER_PORT}"
+    #       - "https://fleet.www.wordpress.local:8222"
+    #       - "https://fleet.${APP_HOST}.wordpress.local:8222"
+    #       - "https://fleet.www.tomcat.local:8223"
+    #       - "https://fleet.${APP_HOST}.tomcat.local:8223"
+    #       # elasticsearch.hosts: ["https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}", "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"]
  
 # Disable previous line or block (if not) after the first Kibana running
 #
@@ -133,75 +202,36 @@ xpack:
 # Restart and see how Fleet Server start and enroll.
 #
 
+#    https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
+#    https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
 #
-# https://www.elastic.co/guide/en/fleet/current/create-a-policy-no-ui.html
-#
-# You will find these integrations when you first start kibana and they will have polices set.
-#
-    packages:
-      - name: elastic_agent
-        version: latest
-      - name: fleet_server
-        version: latest
-      - name: apm
-        version: latest
-      - name: system
-        version: latest
-      - name: docker
-        version: latest
-      - name: mysql
-        version: latest
-      - name: nginx
-        version: latest
-      - name: postgresql
-        version: latest
-      - name: redis
-        version: latest
-      - name: tomcat
-        version: latest
-      - name: traefik
-        version: latest
-      - name: log
-        version: latest
-      - name: spring_boot
-        version: latest
-      - name: logstash
-        version: latest
-      - name: synthetics
-        version: latest
-      # - name: osquery
-      #   version: latest
-      # - name: osquery_manager
-      #   version: latest
-      
-    # https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
-    # https://www.elastic.co/guide/en/fleet/current/migrate-beats-to-agent.html
     agentPolicies:          
 
-#       - name: Agent Nginx policy 1
-#         description: Agent Nginx policy
-#         id: agent-nginx-policy-1
-#         namespace: default
-#         monitoring_enabled:
-#           - logs
-#           - metrics
-#         package_policies:
-#           - name: nginx_fleet_server-1
-#             package:
-#               name: fleet_server
-#             description: Fleet Server
-#             id: nginx_fleet_server-1
-#             inputs:
-#               - type: fleet-server
-#                 vars:
-#                   - name: host
-#                     value: 0.0.0.0
-#                   - name: port
-#                     value: ${FLEET_SERVER_PORT}
-#                   - name: custom
-#                     value: | 
-#                       timeout: 60s
-#                       ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
+      - name: Agent Nginx policy 1
+        description: Agent Nginx policy
+        id: agent-nginx-policy-1
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: nginx_fleet_server-1
+            package:
+              name: fleet_server
+            description: Fleet Server
+            id: nginx_fleet_server-1
+            inputs:
+              - type: fleet-server
+                vars:
+                  - name: host
+                    value: 0.0.0.0
+                  - name: port
+                    value: ${FLEET_SERVER_PORT}
+                  - name: custom
+                    value: | 
+                      timeout: 60s
+                      ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
+                       
 #           - name: nginx_elastic_agent-1
 #             package:
 #               name: elastic_agent
@@ -488,7 +518,7 @@ xpack:
 #           #     name: osquery_manager
 #           #   description: Osquery Manager
 #           #   id: nginx_osquery_manager-1
-#       
+       
 #       # This policy is for https://github.com/lhsradek/platypus-wordpress-mysql
 #       # You can remove it.
 #       - name: Agent Wordpress policy 1
@@ -703,263 +733,235 @@ xpack:
 #                   - name: hosts
 #                     value:
 #                       - redis:6379
-      
-      #        
-      # This policy is for https://github.com/lhsradek/tombola
-      # You can remove it.
-      - name: Agent Tomcat policy 1
-        description: Agent Tomcat policy
-        id: agent-tomcat-policy-1
-        namespace: default
-        monitoring_enabled:
-          - logs
-          - metrics
-        package_policies:
-          - name: tomcat_fleet_server-1
-            package:
-              name: fleet_server
-            description: Fleet Server
-            id: tomcat_fleet_server-1
-            inputs:
-              - type: fleet-server
-                vars:
-                  - name: host
-                    value: 0.0.0.0
-                  - name: port
-                    value: 8223
-                  - name: custom
-                    value: | 
-                      timeout: 60s
-                      ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
-          - name: tomcat_elastic_agent-1
-            package:
-              name: elastic_agent
-            description: Elastic Agent
-            id: tomcat_elastic_agent-1
-          - name: tomcat_apm-1
-            package:
-              name: apm
-            description: Elastic APM
-            id: tomcat_apm-1
-            inputs:
-              - type: apm
-                keep_enabled: true
-                vars:
-                  - name: host
-                    value: "0.0.0.0:8201"
-                  - name: url
-                    value: "http://apm-server:8201"
-          - name: tomcat_docker-1
-            package:
-              name: docker
-            description: Docker Metrics
-            id: tomcat_docker-1
-            inputs:
-              - type: filestream
-                enabled: false
-              - type: docker/metrics
-                enabled: true
-                # streams:
-                #   - data_stream:
-                #       dataset: docker.memory
-                #     enabled: false
-          - name: tomcat_system-1
-            package:
-              name: system
-            description: System
-            id: tomcat_system-1
-            inputs:
-              - type: logfile
-                enabled: false
-                streams:
-                  - data_stream:
-                      dataset: system.syslog
-                    enabled: false
-                    vars:
-                      - name: paths
-                        value:
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/messages
-                          # - /hostfs/var/log/syslog
-                  - data_stream:
-                      dataset: system.auth
-                    enabled: false
-                    vars:
-                      - name: preserve_original_event
-                        value: false
-                      - name: paths
-                        value:
-                          # - /hostfs/var/log/auth.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
-              - type: system/metrics
-                enabled: false
-                vars:
-                  - name: system.hostfs
-                    value: /hostfs
-                streams:
-                  - data_stream:
-                      dataset: system.cpu
-                    enabled: true
-                  - data_stream:
-                      dataset: system.diskio
-                    enabled: true
-                  - data_stream:
-                      dataset: system.filesystem
-                    enabled: true
-                  - data_stream:
-                      dataset: system.fsstat
-                    enabled: true
-                  - data_stream:
-                      dataset: system.load
-                    enabled: true
-                  - data_stream:
-                      dataset: system.memory
-                    enabled: true
-                  - data_stream:
-                      dataset: system.network
-                    enabled: true
-                  - data_stream:
-                      dataset: system.process
-                    enabled: true
-                  - data_stream:
-                      dataset: system.process.summary
-                    enabled: true
-                  - data_stream:
-                      dataset: system.socket_summary
-                    enabled: true
-                  - data_stream:
-                      dataset: system.uptime
-                    enabled: true
-              - type: winlog
-                enabled: false
-          - name: tomcat_nginx-1
-            package:
-              name: nginx
-            description: Nginx
-            id: tomcat_nginx-1
-            inputs:
-              - type: logfile
-                streams:
-                  - data_stream:
-                      dataset: nginx.access
-                    enabled: true
-                    vars:
-                      - name: preserve_original_event
-                        value: false
-                      - name: paths
-                        value:
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/access.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.access.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.access.log
-                  - data_stream:
-                      dataset: nginx.error
-                    enabled: true
-                    vars:
-                      - name: preserve_original_event
-                        value: false
-                      - name: paths
-                        value:
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/error.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.error.log
-                          - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.error.log
-              - type: nginx/metrics
-                enabled: true
-                vars:
-                  - name: hosts
-                    value:
-                      - http://webtombola
-                streams:
-                  - data_stream:
-                      dataset: nginx.stubstatus
-                    vars:
-                      - name: period
-                        value: 10s
-                      - name: server_status_path
-                        value: /nginx_status
-          - name: tomcat_postgresql-1
-            package:
-              name: postgresql
-            description: Postgresql
-            id: tomcat_postgresql-1
-            inputs:
-              - type: logfile
-                enabled: false
-              - type: postgresql/metrics
-                enabled: true
-                vars:
-                  - name: hosts
-                    value:
-                      - postgres://db:5432/${POSTGRES_DB}
-                  - name: username
-                    value: ${POSTGRES_USERNAME}
-                  - name: password
-                    value: ${POSTGRES_PASSWORD}
-                streams:
-                  - data_stream:
-                      dataset: postgresql.statement
-                    enabled: false
-          - name: tomcat_tomcat-1
-            package:
-              name: tomcat
-            description: Tomcat
-            id: tomcat_tomcat-1
-            inputs:
-              - type: logfile
-                enabled: false
-              - type: tcp
-                enabled: false
-              - type: udp
-                enabled: false
-              - type: tomcat/metrics
-                enabled: false
-          #  - name: spring-boot_tomcat-1
-          #   package:
-          #     name: spring_boot_tomcat-1
-          #   description: Spring Boot
-          #   id: spring_boot_tomcat-1
-          #   metrics.hosts:
-          #     - "https://webtombola-tombola/tombola:8443"
-          - name: tomcat_redis-1
-            package:
-              name: redis
-            description: Redis
-            id: tomcat_redis-1
-            inputs:
-              - type: logfile
-                enabled: false
-              - type: redis
-                enabled: false
-              - type: redis/metrics
-                enabled: true
-                vars:
-                  - name: hosts
-                    value:
-                      - redis:6379
-      
-# https://www.elastic.co/guide/en/kibana/current/logging-configuration.html
-logging:
-  appenders:
-    file:
-      type: file
-      fileName: /usr/share/kibana/logs/kibana.log
-      layout:
-        type: pattern
-        pattern: "%date{ISO8601}{Europe/London} [%level][%logger] %message"
-  root:
-    appenders: [default, file]
-    level: info
-  loggers:
-    - name: plugins
-      appenders: [default, file]
-      level: info
-    - name: optimize
-      appenders: [default, file]
-      level: info
-    - name: server
-      appenders: [default, file]
-      level: fatal
-    - name: telemetry
-      appenders: [default, file]
-      level: info
-    - name: metrics.ops
-      appenders: [default, file]
-      level: info
+       
+#       #        
+#       # This policy is for https://github.com/lhsradek/tombola
+#       # You can remove it.
+#       - name: Agent Tomcat policy 1
+#         description: Agent Tomcat policy
+#         id: agent-tomcat-policy-1
+#         namespace: default
+#         monitoring_enabled:
+#           - logs
+#           - metrics
+#         package_policies:
+#           - name: tomcat_fleet_server-1
+#             package:
+#               name: fleet_server
+#             description: Fleet Server
+#             id: tomcat_fleet_server-1
+#             inputs:
+#               - type: fleet-server
+#                 vars:
+#                   - name: host
+#                     value: 0.0.0.0
+#                   - name: port
+#                     value: 8223
+#                   - name: custom
+#                     value: | 
+#                       timeout: 60s
+#                       ssl.certificate_authorities: ["/usr/share/elastic-agent/certs/ca.crt"]
+#           - name: tomcat_elastic_agent-1
+#             package:
+#               name: elastic_agent
+#             description: Elastic Agent
+#             id: tomcat_elastic_agent-1
+#           - name: tomcat_apm-1
+#             package:
+#               name: apm
+#             description: Elastic APM
+#             id: tomcat_apm-1
+#             inputs:
+#               - type: apm
+#                 keep_enabled: true
+#                 vars:
+#                   - name: host
+#                     value: "0.0.0.0:8201"
+#                   - name: url
+#                     value: "http://apm-server:8201"
+#           - name: tomcat_docker-1
+#             package:
+#               name: docker
+#             description: Docker Metrics
+#             id: tomcat_docker-1
+#             inputs:
+#               - type: filestream
+#                 enabled: false
+#               - type: docker/metrics
+#                 enabled: true
+#                 # streams:
+#                 #   - data_stream:
+#                 #       dataset: docker.memory
+#                 #     enabled: false
+#           - name: tomcat_system-1
+#             package:
+#               name: system
+#             description: System
+#             id: tomcat_system-1
+#             inputs:
+#               - type: logfile
+#                 enabled: false
+#                 streams:
+#                   - data_stream:
+#                       dataset: system.syslog
+#                     enabled: false
+#                     vars:
+#                       - name: paths
+#                         value:
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/messages
+#                           # - /hostfs/var/log/syslog
+#                   - data_stream:
+#                       dataset: system.auth
+#                     enabled: false
+#                     vars:
+#                       - name: preserve_original_event
+#                         value: false
+#                       - name: paths
+#                         value:
+#                           # - /hostfs/var/log/auth.log
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/system/secure
+#               - type: system/metrics
+#                 enabled: false
+#                 vars:
+#                   - name: system.hostfs
+#                     value: /hostfs
+#                 streams:
+#                   - data_stream:
+#                       dataset: system.cpu
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.diskio
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.filesystem
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.fsstat
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.load
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.memory
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.network
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.process
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.process.summary
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.socket_summary
+#                     enabled: true
+#                   - data_stream:
+#                       dataset: system.uptime
+#                     enabled: true
+#               - type: winlog
+#                 enabled: false
+#           - name: tomcat_nginx-1
+#             package:
+#               name: nginx
+#             description: Nginx
+#             id: tomcat_nginx-1
+#             inputs:
+#               - type: logfile
+#                 streams:
+#                   - data_stream:
+#                       dataset: nginx.access
+#                     enabled: true
+#                     vars:
+#                       - name: preserve_original_event
+#                         value: false
+#                       - name: paths
+#                         value:
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/access.log
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.access.log
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.access.log
+#                   - data_stream:
+#                       dataset: nginx.error
+#                     enabled: true
+#                     vars:
+#                       - name: preserve_original_event
+#                         value: false
+#                       - name: paths
+#                         value:
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/error.log
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/ad.error.log
+#                           - /usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola/web.error.log
+#               - type: nginx/metrics
+#                 enabled: true
+#                 vars:
+#                   - name: hosts
+#                     value:
+#                       - http://webtombola
+#                 streams:
+#                   - data_stream:
+#                       dataset: nginx.stubstatus
+#                     vars:
+#                       - name: period
+#                         value: 10s
+#                       - name: server_status_path
+#                         value: /nginx_status
+#           - name: tomcat_postgresql-1
+#             package:
+#               name: postgresql
+#             description: Postgresql
+#             id: tomcat_postgresql-1
+#             inputs:
+#               - type: logfile
+#                 enabled: false
+#               - type: postgresql/metrics
+#                 enabled: true
+#                 vars:
+#                   - name: hosts
+#                     value:
+#                       - postgres://db:5432/${POSTGRES_DB}
+#                   - name: username
+#                     value: ${POSTGRES_USERNAME}
+#                   - name: password
+#                     value: ${POSTGRES_PASSWORD}
+#                 streams:
+#                   - data_stream:
+#                       dataset: postgresql.statement
+#                     enabled: false
+#           - name: tomcat_tomcat-1
+#             package:
+#               name: tomcat
+#             description: Tomcat
+#             id: tomcat_tomcat-1
+#             inputs:
+#               - type: logfile
+#                 enabled: false
+#               - type: tcp
+#                 enabled: false
+#               - type: udp
+#                 enabled: false
+#               - type: tomcat/metrics
+#                 enabled: false
+#           #  - name: spring-boot_tomcat-1
+#           #   package:
+#           #     name: spring_boot_tomcat-1
+#           #   description: Spring Boot
+#           #   id: spring_boot_tomcat-1
+#           #   metrics.hosts:
+#           #     - "https://webtombola-tombola/tombola:8443"
+#           - name: tomcat_redis-1
+#             package:
+#               name: redis
+#             description: Redis
+#             id: tomcat_redis-1
+#             inputs:
+#               - type: logfile
+#                 enabled: false
+#               - type: redis
+#                 enabled: false
+#               - type: redis/metrics
+#                 enabled: true
+#                 vars:
+#                   - name: hosts
+#                     value:
+#                       - redis:6379
+#

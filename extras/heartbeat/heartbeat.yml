@@ -16,6 +16,31 @@ heartbeat.config.monitors:
   # How often to check for changes
   reload.period: 5s
 
+processors:
+  # https://www.elastic.co/guide/en/beats/heartbeat/current/add-observer-metadata.html
+  - add_observer_metadata:
+      cache.ttl: 5m
+      geo:
+        name: KnO
+        location: 50.3871, -13.17379
+        continent_name: Europe
+        country_iso_code: CZE
+        region_name: Czech Republic
+        region_iso_code: CZ-422
+        city_name: Klášterec nad Ohří
+  - add_tags:
+      tags: ["${STAGE}"]
+      target: "environment"
+  - add_tags:
+      tags: ["${APP_HOST}-${APP_ID}"]
+      target: "app.id"
+
+instrumentation:
+  enabled: true
+  environment: "${STAGE}"
+  hosts: ["${ELASTIC_APM_SERVER_URL}"]
+  api_key: "${ELASTIC_APM_API_KEY}"
+
 heartbeat.monitors:
 
 # - type: http
@@ -60,7 +85,6 @@ heartbeat.monitors:
     - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
-    - http://filebeat.www.traefik.local:${MONITOR_PORT}
     # logstash for finger print:
     # - https://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_PORT_5044}
     # tomcat
@@ -97,7 +121,7 @@ heartbeat.monitors:
     - metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - filebeat.www.traefik.local:${MONITOR_PORT}
-    - eps.${APP_NET}:${ENTERPRISE_SEARCH_PORT}
+    # - eps.${APP_NET}:${ENTERPRISE_SEARCH_PORT}
     - kibana.${APP_HOST}.${APP_NET}:${KIBANA_PORT}
     - logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
 
@@ -130,19 +154,6 @@ heartbeat.jobs:
     limit: 3
   browser:
     limit: 2    
-
-processors:
-  # https://www.elastic.co/guide/en/beats/heartbeat/current/add-observer-metadata.html
-  - add_observer_metadata:
-      cache.ttl: 5m
-      geo:
-        name: KnO
-        location: 50.3871, -13.17379
-        continent_name: Europe
-        country_iso_code: CZE
-        region_name: Czech Republic
-        region_iso_code: CZ-422
-        city_name: Klášterec nad Ohří
 
 output:
 

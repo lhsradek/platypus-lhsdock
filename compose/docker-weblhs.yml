@@ -54,7 +54,9 @@
       - wordpressfilebeat:/root/bin/volume/wordpress-filebeat-${WP_NUM}:ro
       - wordpressmetricbeat:/root/bin/volume/wordpress-metricbeat-${WP_NUM}:ro
       - tomboladb:/root/bin/volume/tombola-db:ro
-      - tombolafleet:/root/bin/volume/tombola-fleet:ro
+      # - tombolafleet:/root/bin/volume/tombola-fleet:ro
+      - tombolafilebeat:/root/bin/volume/tombola-filebeat:ro
+      - tombolametricbeat:/root/bin/volume/tombola-metricbeat:ro
       - traefikfilebeat:/root/bin/volume/traefik-filebeat:ro
       - traefikmetricbeat:/root/bin/volume/traefik-metricbeat:ro
     environment:
@@ -106,6 +108,7 @@
       - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
       - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL}
       - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
+      - ELASTIC_APM_SERVICE_NODE_NAME=weblhs-php.${APP_HOST}.${INT_NETWORK}
       - PUID=1000
       - PGID=1000
       - TZ=${TIME_ZONE}

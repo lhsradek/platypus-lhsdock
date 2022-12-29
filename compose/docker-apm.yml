@@ -21,10 +21,10 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.10
-    # ports:
     # for external apps as traefik or other apps without apm in container
-    #   - ${APM_PORT}:8200
-    #   - ${MONITOR_PORT}:5066
+    # ports:
+    # - ${APM_PORT}:8200
+      # - ${MONITOR_PORT}:5066
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/apm-server/certs
@@ -41,6 +41,10 @@
       - ELASTICSEARCH_USERNAME=${ELASTIC_USERNAME}
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
+      - ELASTIC_APM_ENVIRONMENT=${STAGE}
+      - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
+      - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL}
+      - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
       - ES1_PORT=${ES1_PORT}
       - ES2_PORT=${ES2_PORT}
       - ES3_PORT=${ES3_PORT}

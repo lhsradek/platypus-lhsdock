@@ -3,9 +3,6 @@
 # Status and configurations of docker-cloud without using Kibana and Web console for REST.
 #
   cerebro:
-    depends_on:
-      es01:
-        condition: service_healthy
     # Debian - Cerebro
     image: lmenezes/cerebro:latest
     deploy:
@@ -47,3 +44,4 @@
       - "traefik.http.routers.cerebro-public.tls=true"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.port=9000"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.scheme=http"
+

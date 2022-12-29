@@ -60,9 +60,15 @@ volumes:
   tomboladb:
     external: true
     name: tombola-db
-  tombolafleet:
+  # tombolafleet:
+  #   external: true
+  #   name: tombola-fleet
+  tombolafilebeat:
     external: true
-    name: tombola-fleet
+    name: tombola-filebeat
+  tombolametricbeat:
+    external: true
+    name: tombola-metricbeat
   traefikfilebeat:
     external: true
     name: "traefik-filebeat"

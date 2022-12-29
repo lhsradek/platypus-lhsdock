@@ -31,6 +31,13 @@ processors:
       tags: ["${APP_HOST}-${APP_ID}"]
       target: "app.id"
 
+instrumentation:
+  enabled: true
+  environment: "${STAGE}"
+  hosts: ["${ELASTIC_APM_SERVER_URL}"]
+  api_key: "${ELASTIC_APM_API_KEY}"
+  tags: ["${APP_HOST}-${APP_ID}"]
+
 filebeat.inputs:
   - type: filestream
     id: traefik.error

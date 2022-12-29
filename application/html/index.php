@@ -125,6 +125,11 @@ $host = @$_SERVER['HOST_NICK'];
 $net = @$_SERVER['APP_NET'];
 $clusterName = @$_SERVER['CLUSTER_NAME'];
 $clusterUuid = @$_SERVER['CLUSTER_UUID'];
+$apmEnv = @$_SERVER['ELASTIC_APM_ENVIRONMENT'];
+$apmUrl = @$_SERVER['ELASTIC_APM_SERVER_URL'];
+$apmName = @$_SERVER['ELASTIC_APM_SERVICE_NAME'];
+$apmNode = @$_SERVER['ELASTIC_APM_SERVICE_NODE_NAME'];
+
 $serverSoftware = ucfirst(preg_split("/\//", $_SERVER['SERVER_SOFTWARE'])[0]);
 if ($parent == "docker") {
   $isTraefik = @$index->isUrl("http://web.traefik.local");
@@ -178,7 +183,9 @@ if ($printEnv) {
     <a href="mailto:radek.kadner@gmail.com"><img src="mail.png"/></a></span></h1>
   <div class="content">
     <div class="content-middle">
-      <p><small><?php print(".env: ".$clusterName." ".$clusterUuid); ?></small></p><?php if ($printEnv) { ?>
+      <p>
+<small><?php print($clusterName." ".$apmName." ".$apmNode." ".$apmUrl." ".$apmEnv." ".$clusterUuid); ?></small>
+      </p><?php if ($printEnv) { ?>
       <h2>Environment</h2>
 <code><?php print($env); ?></code>
 <?php
