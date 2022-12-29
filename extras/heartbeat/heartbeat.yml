@@ -39,7 +39,8 @@ instrumentation:
   enabled: true
   environment: "${STAGE}"
   hosts: ["${ELASTIC_APM_SERVER_URL}"]
-  api_key: "${ELASTIC_APM_API_KEY}"
+  # api_key: "${ELASTIC_APM_API_KEY}"
+  tags: ["${APP_HOST}-${APP_ID}"]
 
 heartbeat.monitors:
 

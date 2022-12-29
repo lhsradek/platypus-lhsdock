@@ -22,8 +22,8 @@
       intnet:
         ipv4_address: ${ES_NET}.10
     # for external apps as traefik or other apps without apm in container
-    # ports:
-    # - ${APM_PORT}:8200
+    ports:
+      - ${APM_PORT}:8200
       # - ${MONITOR_PORT}:5066
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
