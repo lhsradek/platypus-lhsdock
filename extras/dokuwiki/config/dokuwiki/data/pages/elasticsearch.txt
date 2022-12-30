@@ -32,6 +32,14 @@ GET [[https://es01.docker.nginx.local:9200/_search?q=application&pretty|_search?
 
 -----
 
+
+<code json>
+PUT _security/user/kibana_system/_password
+{
+  "password":"changeme"
+}
+</code>
+
 Limit of total fields [1000] in index [test_index] has been exceeded:
 
 <code json>

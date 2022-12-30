@@ -61,8 +61,8 @@ heartbeat.monitors:
 #     verification_mode: "none"
  
 - type: http
-#  schedule: '*/20 * * * * * *'
-  schedule: '* * * * * *'
+  schedule: '*/30 * * * * * *'
+  # schedule: '* * * * * *'
   id: http-service
   name: HTTP Service
   data_stream.namespace: default
@@ -109,8 +109,8 @@ heartbeat.monitors:
     verification_mode: "${VERIFICATION_MODE}"
 
 - type: tcp
-#   schedule: '*/20 * * * * * *'
-  schedule: '* * * * * *'
+  schedule: '*/30 * * * * * *'
+#   schedule: '* * * * * *'
   id: tcp-service
   name: TCP Service
   data_stream.namespace: default
@@ -127,8 +127,8 @@ heartbeat.monitors:
     - logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
 
 - type: icmp
-#   schedule: '*/20 * * * * * *'
-  schedule: '* * * * * *'
+  schedule: '*/30 * * * * * *'
+#   schedule: '* * * * * *'
   id: icmp-service
   name: ICMP Service
   data_stream.namespace: default

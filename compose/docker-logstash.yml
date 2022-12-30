@@ -31,9 +31,9 @@
       - 5001:5001/udp
       - 5001:5001/tcp
       # elastic-agent pipeline
-      # - ${LOGSTASH_PORT_5044}:5044
+      - ${LOGSTASH_PORT_5044}:5044
       # beat pipeline
-      # - ${LOGSTASH_PORT_5045}:5045
+      - ${LOGSTASH_PORT_5045}:5045
       # metrics
       # - ${LOGSTASH_MONITOR_PORT}:9600
     volumes:
