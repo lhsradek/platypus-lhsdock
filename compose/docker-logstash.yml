@@ -53,6 +53,7 @@
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
       - APP_NET=${INT_NETWORK}
+      - HOST_NICK=${HOST_NICK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
