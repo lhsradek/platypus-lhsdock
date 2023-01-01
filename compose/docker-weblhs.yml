@@ -59,6 +59,7 @@
       - tombolametricbeat:/root/bin/volume/tombola-metricbeat:ro
       - traefikfilebeat:/root/bin/volume/traefik-filebeat:ro
       - traefikmetricbeat:/root/bin/volume/traefik-metricbeat:ro
+      - traefiklogstash:/root/bin/volume/traefik-logstash:ro
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
