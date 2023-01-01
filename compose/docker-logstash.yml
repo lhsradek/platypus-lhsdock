@@ -31,9 +31,9 @@
       - 5001:5001/udp
       - 5001:5001/tcp
       # elastic-agent pipeline
-      - ${LOGSTASH_PORT_5044}:5044
+      # - ${LOGSTASH_PORT_5044}:5044
       # beat pipeline
-      - ${LOGSTASH_PORT_5045}:5045
+      # - ${LOGSTASH_PORT_5045}:5045
       # metrics
       # - ${LOGSTASH_MONITOR_PORT}:9600
     volumes:
@@ -104,7 +104,7 @@
       # - "traefik.tcp.routers.logstash-elastic.tls.passthrough=true"
       # - "traefik.tcp.routers.logstash-elastic.service=logstash-${APP_ID}-tcp-elastic"
       # - "traefik.tcp.services.logstash-${APP_ID}-tcp-elastic.loadbalancer.server.port=${LOGSTASH_PORT_5044}"
-      #
+      # 
       # - "traefik.tcp.routers.logstash-beat.rule=HostSNI(`logstash.${APP_HOST}.${INT_NETWORK}`)"
       # - "traefik.tcp.routers.logstash-beat.entrypoints=tcp-beat"
       # - "traefik.tcp.routers.logstash-beat.tls=true"

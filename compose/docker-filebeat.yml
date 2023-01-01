@@ -64,6 +64,7 @@
       - MONITOR_PORT=${MONITOR_PORT}
       - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.crt
       - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/logstash.${HOST_NICK}.${INT_NETWORK}/logstash.${HOST_NICK}.${INT_NETWORK}.key
+      - LOGSTASH_HOST=${LOGSTASH_HOST}
       - STAGE=${STAGE}
       - TRAEFIK_LOG=${TRAEFIK_LOG}
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
