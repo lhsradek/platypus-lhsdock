@@ -27,9 +27,9 @@ volumes:
   kibana:
     external: true
     name: "${APP_ID}-kibana"
-  logstash:
-    external: true
-    name: "${APP_ID}-logstash"
+  # logstash:
+  #   external: true
+  #   name: "${APP_ID}-logstash"
   metricbeat:
     external: true
     name: "${APP_ID}-metricbeat"

@@ -37,7 +37,7 @@
       - esdata01:/root/bin/volume/es01:ro
       - esdata02:/root/bin/volume/es02:ro
       - esdata03:/root/bin/volume/es03:ro
-      - logstash:/root/bin/volume/logstash:ro
+      # - logstash:/root/bin/volume/logstash:ro
       - epsdata:/root/bin/volume/eps:ro
       - apm:/root/bin/volume/apm:ro
       - fleet:/root/bin/volume/fleet:ro

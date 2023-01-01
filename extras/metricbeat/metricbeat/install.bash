@@ -17,7 +17,7 @@ rm -f /usr/share/metricbeat/modules.d/kibana-xpack.yml.disabled
 cp /root/bin/kibana-xpack.yml /usr/share/metricbeat/modules.d/kibana-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/logstash-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/logstash-xpack.yml.disabled
-cp /root/bin/logstash-xpack.yml /usr/share/metricbeat/modules.d/logstash-xpack.yml
+cp /root/bin/logstash-xpack.yml /usr/share/metricbeat/modules.d/logstash-xpack.yml.disabled
 rm -f /usr/share/metricbeat/modules.d/nginx.yml
 rm -f /usr/share/metricbeat/modules.d/nginx.yml.disabled
 cp /root/bin/nginx.yml /usr/share/metricbeat/modules.d/nginx.yml

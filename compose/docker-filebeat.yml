@@ -4,7 +4,7 @@
 #
   filebeat:
     depends_on:
-      logstash:
+      es02:
         condition: service_healthy
     # Ubuntu - filebeat
     image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
