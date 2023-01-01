@@ -83,16 +83,17 @@ heartbeat.monitors:
     - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
-    - https://cerebro.${HOST_NICK}.${APP_NET}
-    - https://${HOST_NICK}.${APP_NET}/downloads/
-    - https://wiki.${HOST_NICK}.${APP_NET}/doku.php?id=wiki:welcome
-    - http://filebeat.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}
-    - http://metricbeat.${HOST_NICK}.${APP_NET}:${MONITOR_PORT}
+    - https://cerebro.www.${APP_NET}
+    - https://www.${APP_NET}/downloads/
+    - https://wiki.www.${APP_NET}/doku.php?id=wiki:welcome
+    - http://filebeat.www.${APP_NET}:${MONITOR_PORT}
+    - http://metricbeat.www.${APP_NET}:${MONITOR_PORT}
     # traefik
     - http://filebeat.web.traefik.local:${MONITOR_PORT}
     - http://metricbeat.web.traefik.local:${MONITOR_PORT}
-    - http://filebeat.${HOST_NICK}.traefik.local:${MONITOR_PORT}
-    - http://metricbeat.${HOST_NICK}.traefik.local:${MONITOR_PORT}
+    - http://filebeat.www.traefik.local:${MONITOR_PORT}
+    - http://metricbeat.www.traefik.local:${MONITOR_PORT}
+    - http://logstash.www.traefik.local:${LOGSTASH_MONITOR_PORT}
     # logstash for finger print:
     # - https://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_PORT_5044}
     # tomcat
@@ -101,22 +102,22 @@ heartbeat.monitors:
     - https://ad.${APP_HOST}.tomcat.local
     - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - https://${HOST_NICK}.tomcat.local/tombola-javadoc/
-    - https://${HOST_NICK}.tomcat.local/tomcat.jsp
-    - https://ad.${HOST_NICK}.tomcat.local
+    - https://www.tomcat.local/tombola-javadoc/
+    - https://www.tomcat.local/tomcat.jsp
+    - https://ad.www.tomcat.local
     - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - http://filebeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
-    - http://metricbeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
+    - http://filebeat.www.tomcat.local:${MONITOR_PORT}
+    - http://metricbeat.www.tomcat.local:${MONITOR_PORT}
     # wordpress
     - https://${APP_HOST}.wordpress.local
     - https://pma.${APP_HOST}.wordpress.local
     - http://filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
-    - https://${HOST_NICK}.wordpress.local
-    - https://pma.${HOST_NICK}.wordpress.local
-    - http://filebeat.${HOST_NICK}.wordpress.local:${MONITOR_PORT}
-    - http://metricbeat.${HOST_NICK}.wordpress.local:${MONITOR_PORT}
+    - https://www.wordpress.local
+    - https://pma.www.wordpress.local
+    - http://filebeat.www.wordpress.local:${MONITOR_PORT}
+    - http://metricbeat.www.wordpress.local:${MONITOR_PORT}
     # intranet
     # - https://lhs.intranet.local/downloads/
     # - https://www.intranet.local/downloads/
@@ -144,18 +145,18 @@ heartbeat.monitors:
     # traefik
     # - filebeat.web.traefik.local:${MONITOR_PORT}
     # - metricbeat.web.traefik.local:${MONITOR_PORT}
-    # - filebeat.${HOST_NICK}.traefik.local:${MONITOR_PORT}
-    # - metricbeat.${HOST_NICK}.traefik.local:${MONITOR_PORT}
+    # - filebeat.www.traefik.local:${MONITOR_PORT}
+    # - metricbeat.www.traefik.local:${MONITOR_PORT}
     # tomcat
     # - filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
     # - metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    # - filebeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
-    # - metricbeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
+    # - filebeat.www.tomcat.local:${MONITOR_PORT}
+    # - metricbeat.www.tomcat.local:${MONITOR_PORT}
     # wordpress
     # - filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     # - metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
-    # - filebeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
-    # - metricbeat.${HOST_NICK}.tomcat.local:${MONITOR_PORT}
+    # - filebeat.www.tomcat.local:${MONITOR_PORT}
+    # - metricbeat.www.tomcat.local:${MONITOR_PORT}
 
 - type: icmp
   schedule: '*/30 * * * * * *'
@@ -168,7 +169,7 @@ heartbeat.monitors:
   hosts:
     - ${APP_HOST}.${APP_NET}
     - weblhs-php.${APP_NET}
-    # - ${HOST_NICK}.intranet.local
+    # - www.intranet.local
     # - apm.${APP_HOST}.${APP_NET}
     # - cerebro.${APP_HOST}.${APP_NET}
     # - es01.${APP_HOST}.${APP_NET}
