@@ -8,6 +8,6 @@
     - "http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}"
     - "http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}"
     - "http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}"
-    - "http://apm-server.${APP_HOST}.${APP_NET}:${MONITOR_PORT}"
+    # - "http://apm-server.${APP_HOST}.${APP_NET}:${MONITOR_PORT}"
   username: "beats_system"
   password: "${ELASTICSEARCH_PASSWORD}"

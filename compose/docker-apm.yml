@@ -17,7 +17,7 @@
     hostname: "apm-server.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik
-      default:
+      # default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.10
@@ -45,6 +45,7 @@
       - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
       - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL}
       - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
+      - ELASTIC_APM_SERVICE_NODE_NAME=apm-server.${APP_HOST}.${INT_NETWORK}
       - ES1_PORT=${ES1_PORT}
       - ES2_PORT=${ES2_PORT}
       - ES3_PORT=${ES3_PORT}
@@ -53,19 +54,21 @@
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}        
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
-      - "traefik.http.routers.apm-server-public.entrypoints=http-${APM_PORT}"
-      - "traefik.http.routers.apm-server-public.tls=false"
-      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${APM_PORT}"
-      - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
-      - "traefik.http.routers.apm-server-public-monitor.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.apm-server-public-monitor.service=apm-server-monitor-${APP_ID}"
-      - "traefik.http.routers.apm-server-public-monitor.entrypoints=http-${MONITOR_PORT}"
-      - "traefik.http.routers.apm-server-public-monitor.tls=false"
-      - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
-      - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.scheme=http"
+      - "traefik.enable=false"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.apm-server-public.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
+    #   - "traefik.http.routers.apm-server-public.service=apm-server-${APP_ID}"
+    #   - "traefik.http.routers.apm-server-public.entrypoints=http-${APM_PORT}"
+    #   - "traefik.http.routers.apm-server-public.tls=false"
+    #   - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.port=${APM_PORT}"
+    #   - "traefik.http.services.apm-server-${APP_ID}.loadbalancer.server.scheme=http"
+    #   - "traefik.http.routers.apm-server-public-monitor.rule=Host(`apm-server.${APP_HOST}.${INT_NETWORK}`)"
+    #   - "traefik.http.routers.apm-server-public-monitor.service=apm-server-monitor-${APP_ID}"
+    #   - "traefik.http.routers.apm-server-public-monitor.entrypoints=http-${MONITOR_PORT}"
+    #   - "traefik.http.routers.apm-server-public-monitor.tls=false"
+    #   - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
+    #   - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
       interval: 10s

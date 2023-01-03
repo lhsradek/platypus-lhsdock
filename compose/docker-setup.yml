@@ -35,21 +35,6 @@
           echo "Creating certs";
           echo -ne \
           "instances:\n"\
-          "  - name: web.traefik.local\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - web\n"\
-          "      - web.traefik.local\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - ${MY_IP}\n"\
-          "  - name: www.traefik.local\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - www.traefik.local\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - ${WWW_IP}\n"\
           "  - name: ${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -70,9 +55,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - metric.apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.10\n"\
@@ -81,9 +64,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.www.${INT_NETWORK}\n"\
-          "      - metric.apm-server.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.50\n"\
@@ -154,9 +135,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.${APP_HOST}.${INT_NETWORK}\n"\
-          "      - apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.12\n"\
@@ -165,9 +144,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.www.${INT_NETWORK}\n"\
-          "      - apm-server.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.50\n"\
@@ -181,6 +158,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.7\n"\
           "      - ${MY_IP}\n"\
+          "  - name: heartbeat.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - heartbeat\n"\
+          "      - heartbeat.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.7\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -199,15 +185,6 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.5\n"\
           "      - ${MY_IP}\n"\
-          "  - name: metricbeat.${APP_HOST}.${INT_NETWORK}\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - metricbeat\n"\
-          "      - metricbeat.${APP_HOST}.${INT_NETWORK}\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.8\n"\
-          "      - ${MY_IP}\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -225,6 +202,37 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.63\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: web.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - web\n"\
+          "      - web.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: logstash.web.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - logstash\n"\
+          "      - logstash.web.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: www.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: logstash.www.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - logstash\n"\
+          "      - logstash.www.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
@@ -283,9 +291,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.${APP_HOST}.tomcat.local\n"\
-          "      - apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.14\n"\
@@ -294,9 +300,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.${APP_HOST}.tomcat.local\n"\
-          "      - metric.apm-server.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${MY_IP}\n"\
@@ -304,9 +308,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.www.tomcat.local\n"\
-          "      - apm-server.www.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.52\n"\
@@ -315,9 +317,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.www.tomcat.local\n"\
-          "      - metric.apm-server.www.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
@@ -389,9 +389,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.${APP_HOST}.wordpress.local\n"\
-          "      - apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.13\n"\
@@ -400,9 +398,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.${APP_HOST}.wordpress.local\n"\
-          "      - metric.apm-server.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${MY_IP}\n"\
@@ -410,9 +406,7 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - fleet\n"\
-          "      - apm-server\n"\
           "      - fleet.www.wordpress.local\n"\
-          "      - apm-server.www.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.51\n"\
@@ -421,11 +415,41 @@
           "    dns:\n"\
           "      - localhost\n"\
           "      - apm-server\n"\
-          "      - metric\n"\
           "      - apm-server.www.wordpress.local\n"\
-          "      - metric.apm-server.www.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: es01.${ELASTIC_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es01\n"\
+          "      - es01.${ELASTIC_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ELASTIC_NET}.2\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: es02.${ELASTIC_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es02\n"\
+          "      - es02.${ELASTIC_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ELASTIC_NET}.3\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: es03.${ELASTIC_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es03\n"\
+          "      - es03.${ELASTIC_NETWORK}\n"\
+          "  - name: kibana.${ELASTIC_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - kibana\n"\
+          "      - kibana.${ELASTIC_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ELASTIC_NET}.6\n"\
           "      - ${WWW_IP}\n"\
           "  - name: www.intranet.local\n"\
           "    dns:\n"\
@@ -464,6 +488,12 @@
         find . -type f -name logstash.${APP_HOST}.${INT_NETWORK}.key -exec chmod 644 \{\} \;; # for logstash
         if [ ! -f /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key ]; then
           openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.${APP_HOST}.${INT_NETWORK}.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.${APP_HOST}.${INT_NETWORK}/logstash.pkcs8.key
+        fi;
+        if [ ! -f /usr/share/elasticsearch/config/certs/logstash.web.traefik.local/logstash.pkcs8.key ]; then
+          openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.web.traefik.local/logstash.web.traefik.local.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.web.traefik.local/logstash.pkcs8.key
+        fi;
+        if [ ! -f /usr/share/elasticsearch/config/certs/logstash.www.traefik.local/logstash.pkcs8.key ]; then
+          openssl pkcs8 -inform PEM -in /usr/share/elasticsearch/config/certs/logstash.www.traefik.local/logstash.www.traefik.local.key -topk8 -nocrypt -outform PEM -out /usr/share/elasticsearch/config/certs/logstash.www.traefik.local/logstash.pkcs8.key
         fi;
         find . -type f -name logstash.pkcs8.key -exec chmod 644 \{\} \;; # logstash
         #

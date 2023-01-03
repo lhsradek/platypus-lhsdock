@@ -46,7 +46,7 @@ else
   if [ ${ES3} -eq 1 ]; then
     cat $rootPath/compose/docker-es03.yml >> $rootPath/docker-compose.$RUNENV.yml
   fi
-  # cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-logstash.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-kibana.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-apm.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-heartbeat.yml >> $rootPath/docker-compose.$RUNENV.yml

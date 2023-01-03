@@ -185,7 +185,7 @@ For Server SSL certificate authorities (optional) output from
 
 Specify hosts:
 
-```logstash.docker.nginx.local:5044```
+```logstash.docker.nginx.local:5045```
 
 For Client SSL certificate output from
 

@@ -2,19 +2,19 @@
 # For more information on multiple pipelines, see the documentation:
 #   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
 
-- pipeline.id: beat-pipeline
+- pipeline.id: ${APP_HOST}-${APP_ID}-beat-pipeline
   path.config: "/usr/share/logstash/pipeline/beat.conf"
   queue.type: persisted
   queue.max_bytes: 1gb    
-- pipeline.id: elastic-agent-pipeline
+- pipeline.id: ${APP_HOST}-${APP_ID}-elastic-agent-pipeline
   path.config: "/usr/share/logstash/pipeline/elastic-agent.conf"
   queue.type: persisted
   queue.max_bytes: 1gb    
-- pipeline.id: syslog-access-pipeline
-  path.config: "/usr/share/logstash/pipeline/syslog-access.conf"
-  queue.type: persisted
-  queue.max_bytes: 1gb    
-- pipeline.id: syslog-error-pipeline
-  path.config: "/usr/share/logstash/pipeline/syslog-error.conf"
-  queue.type: persisted
-  queue.max_bytes: 1gb    
+# - pipeline.id: ${APP_HOST}-${APP_ID}-syslog-access-pipeline
+#   path.config: "/usr/share/logstash/pipeline/syslog-access.conf"
+#   queue.type: persisted
+#   queue.max_bytes: 1gb    
+# - pipeline.id: ${APP_HOST}-${APP_ID}-syslog-error-pipeline
+#   path.config: "/usr/share/logstash/pipeline/syslog-error.conf"
+#   queue.type: persisted
+#   queue.max_bytes: 1gb    

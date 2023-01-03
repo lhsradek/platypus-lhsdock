@@ -13,6 +13,9 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
+  # elastic:
+  #   external: true
+  #   name: ${ELASTIC_NETWORK}
   intnet:
     external: false
     name: ${INT_NETWORK}

@@ -1,4 +1,5 @@
 .env
+apm-key.txt
 lhsdock-v3.img
 docker-compose*
 logs/

@@ -83,6 +83,7 @@ heartbeat.monitors:
     - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
+    - http://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
     - https://cerebro.www.${APP_NET}
     - https://www.${APP_NET}/downloads/
     - https://wiki.www.${APP_NET}/doku.php?id=wiki:welcome
@@ -91,6 +92,7 @@ heartbeat.monitors:
     # traefik
     - http://filebeat.web.traefik.local:${MONITOR_PORT}
     - http://metricbeat.web.traefik.local:${MONITOR_PORT}
+    - http://logstash.web.traefik.local:${LOGSTASH_MONITOR_PORT}
     - http://filebeat.www.traefik.local:${MONITOR_PORT}
     - http://metricbeat.www.traefik.local:${MONITOR_PORT}
     - http://logstash.www.traefik.local:${LOGSTASH_MONITOR_PORT}
@@ -110,8 +112,8 @@ heartbeat.monitors:
     - http://filebeat.www.tomcat.local:${MONITOR_PORT}
     - http://metricbeat.www.tomcat.local:${MONITOR_PORT}
     # wordpress
-    - https://${APP_HOST}.wordpress.local
-    - https://pma.${APP_HOST}.wordpress.local
+    - https://${APP_HOST}.wordpress.local:443
+    - https://pma.${APP_HOST}.wordpress.local:443
     - http://filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     - https://www.wordpress.local

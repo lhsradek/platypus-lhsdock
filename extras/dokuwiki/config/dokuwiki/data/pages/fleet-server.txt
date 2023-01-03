@@ -102,7 +102,7 @@ Optional other elasticsearch for example:
 
 See https://www.gooksu.com/2022/05/fleet-server-with-logstash-output-elastic-agent/
 
-**Specify hosts:** <code>logstash.docker.nginx.local:5044</code>
+**Specify hosts:** <code>logstash.docker.nginx.local:5045</code>
 
 For **Client SSL certificate** output from
 <code bash>

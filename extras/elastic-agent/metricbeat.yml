@@ -46,7 +46,7 @@ output:
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    timeout: 300s
+    timeout: 20s
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -63,8 +63,8 @@ output:
 setup:
   template.settings:
     index.number_of_shards: 2
-    # index.codec: "best_compression"
-    source.enabled: false
+    index.codec: "best_compression"
+    # source.enabled: false
 
   elasticsearch:
     hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]

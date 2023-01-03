@@ -53,13 +53,15 @@
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
     labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.heartbeat-public.rule=Host(`heartbeat.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.heartbeat-public.entrypoints=http-${MONITOR_PORT}"
-      - "traefik.http.routers.heartbeat-public.tls=false"
-      - "traefik.http.services.heartbeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
-      - "traefik.http.services.heartbeat-${APP_ID}.loadbalancer.server.scheme=http"
+      - "traefik.enable=false"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=${DOCKER_NETWORK}"
+    #   - "traefik.http.routers.heartbeat-public.rule=Host(`heartbeat.${APP_HOST}.${INT_NETWORK}`)"
+    #   - "traefik.http.routers.heartbeat-public.entrypoints=http-${MONITOR_PORT}"
+    #   - "traefik.http.routers.heartbeat-public.tls=false"
+    #   - "traefik.http.services.heartbeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
+    #   - "traefik.http.services.heartbeat-${APP_ID}.loadbalancer.server.scheme=http"
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://heartbeat.${APP_HOST}.${INT_NETWORK}:${MONITOR_PORT} | grep -q 'HTTP/1.1 200 OK'"]
       interval: 10s

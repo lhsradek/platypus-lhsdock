@@ -54,7 +54,7 @@ output:
 #
   #logstash:
     #enabled: true
-    #hosts: [ "logstash.${HOST_NICK}.${APP_NET}:5045" ]
+    #hosts: [ "logstash.${HOST_NICK}.${APP_NET}:5044" ]
     #ssl:
       #certificate: "${LOGSTASH_SERVER_CERT}"
       #key: "${LOGSTASH_SERVER_CERT_KEY}"
@@ -81,7 +81,7 @@ setup:
   ilm.overwrite: true 
   template.settings:
     index.number_of_shards: 4
-    index.codec: best_compression
+    index.codec: "best_compression"
     # _source.enabled: false
 
   elasticsearch:

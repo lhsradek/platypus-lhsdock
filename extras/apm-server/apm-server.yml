@@ -18,7 +18,7 @@ apm-server:
           - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
           # - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
         protocol: "https"
-        # api_key: "id:api_key"
+        api_key: "${ELASTIC_APM_API_KEY}"
         # username: "apm_system"
         username: "${ELASTICSEARCH_USERNAME}"
         password: "${ELASTICSEARCH_PASSWORD}"

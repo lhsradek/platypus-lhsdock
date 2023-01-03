@@ -12,8 +12,8 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.2
-    # ports:
-    #   - ${ES1_PORT}:9200
+    ports:
+      - ${ES1_PORT}:9200
       # - 9300:9300
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
