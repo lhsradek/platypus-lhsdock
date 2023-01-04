@@ -68,7 +68,8 @@
       - STACK_VERSION=${STACK_VERSION}
       - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - TRAEFIK_LOG=${TRAEFIK_LOG}
+      - TRAEFIK_ACCESS=/usr/share/filebeat/elogs/traefik/${TRAEFIK_ACCESS}
+      - TRAEFIK_LOG=/usr/share/filebeat/elogs/traefik/${TRAEFIK_LOG}
     labels:
       - "traefik.enable=false"
     # labels:

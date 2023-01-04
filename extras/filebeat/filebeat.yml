@@ -43,10 +43,17 @@ instrumentation:
 
 # filebeat.inputs:
 #   - type: filestream
-#     id: ${APP_HOST}-${APP_ID}
-#     id: traefik.error
+#     id: "${APP_HOST}-${APP_ID}"
 #     paths:
-#       - /usr/share/filebeat/elogs/traefik/${TRAEFIK_LOG}
+#       - /usr/share/filebeat/elogs/nginx/default/access.log
+#       # - /usr/share/filebeat/elogs/nginx/default/php-access.log
+#       - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/access.log
+#       # - /usr/share/filebeat/elogs/nginx/dokuwiki/php/access.log
+#       - /usr/share/filebeat/elogs/nginx/default/error.log
+#       # - /usr/share/filebeat/elogs/nginx/default/php-error.log
+#       - /usr/share/filebeat/elogs/nginx/dokuwiki/nginx/error.log
+#       # - /usr/share/filebeat/elogs/nginx/dokuwiki/php/error.log
+#     service.type: "nginx"
 
 output:
   # for provisioning:
