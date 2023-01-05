@@ -8,8 +8,8 @@
 
   # Nginx hosts
   hosts: 
-    - "http://weblhs"
-    - "http://weblhs-wiki"
+    - "http://${APP_HOST}.${APP_NET}"
+    - "http://wiki.${APP_HOST}.${APP_NET}"
 
   # Path to server status. Default nginx_status
   server_status_path: "nginx_status"
