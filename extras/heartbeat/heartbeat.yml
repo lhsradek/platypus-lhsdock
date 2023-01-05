@@ -83,7 +83,7 @@ heartbeat.monitors:
     - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
-    - http://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
+    # - http://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
     - https://cerebro.www.${APP_NET}
     - https://www.${APP_NET}/downloads/
     - https://wiki.www.${APP_NET}/doku.php?id=wiki:welcome
