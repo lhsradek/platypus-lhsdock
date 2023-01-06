@@ -61,8 +61,8 @@ output:
     enabled: true
     hosts: 
       -  "${LOGSTASH_HOST}"
-    # index: "_filebeat-*"
-    timeout: 180s
+    index: "logs-*"
+    timeout: 20s
     ssl:
       enabled: false
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -82,10 +82,8 @@ output:
   #     enabled: true
   #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   #     verification_mode: "${VERIFICATION_MODE}"
-  #   index: "_logs-*"
-  #   index: "_filebeat-*"
-
-setup:      
+   
+se# tup:      
   ilm.overwrite: true
   template.settings:
     index.number_of_shards: 4

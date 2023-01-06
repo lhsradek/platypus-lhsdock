@@ -50,7 +50,6 @@
       - wordpressdb:/root/bin/volume/wordpress-db-${WP_NUM}:ro
       - wordpresspma:/root/bin/volume/wordpress-pma-${WP_NUM}:ro
       - wordpressredis:/root/bin/volume/wordpress-redis-${WP_NUM}:ro
-      - wordpressfleet:/root/bin/volume/wordpress-fleet-${WP_NUM}:ro
       - wordpressfilebeat:/root/bin/volume/wordpress-filebeat-${WP_NUM}:ro
       - wordpressmetricbeat:/root/bin/volume/wordpress-metricbeat-${WP_NUM}:ro
       - tomboladb:/root/bin/volume/tombola-db:ro

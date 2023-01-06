@@ -51,9 +51,6 @@ volumes:
   wordpressmetricbeat:
     external: true
     name: wordpress-metricbeat-${WP_NUM}
-  wordpressfleet:
-    external: true
-    name: wordpress-fleet-${WP_NUM}
   wordpresswp:
     external: true
     name: wordpress-wp-${WP_NUM}

@@ -16,5 +16,5 @@
 
   ssl:
     enabled: false
-    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    verification_mode: "none"
+    # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    # verification_mode: "none"
