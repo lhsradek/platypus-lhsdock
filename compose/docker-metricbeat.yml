@@ -21,12 +21,11 @@
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.8
-    # user: root
+    user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
-      # - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       # - ./extras/hosts/hosts:/etc/hosts
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
