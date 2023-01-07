@@ -77,13 +77,13 @@ output:
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
-  #   timeout: 180s
+  #   timeout: 20s
   #   ssl:
   #     enabled: true
   #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   #     verification_mode: "${VERIFICATION_MODE}"
-   
-se# tup:      
+
+setup:      
   ilm.overwrite: true
   template.settings:
     index.number_of_shards: 4
