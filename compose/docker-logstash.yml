@@ -72,6 +72,7 @@
       - TRAEFIK_LOG=/usr/share/filebeat/elogs/traefik/${TRAEFIK_LOG}
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
       - "traefik.http.routers.logstash-public.rule=Host(`logstash.${APP_HOST}.${INT_NETWORK}`)"
       - "traefik.http.routers.logstash-public.entrypoints=http-${LOGSTASH_MONITOR_PORT}"
       - "traefik.http.routers.logstash-public.tls=false"
