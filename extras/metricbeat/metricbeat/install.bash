@@ -8,7 +8,7 @@
 
 rm -f /usr/share/metricbeat/modules.d/beat-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/beat-xpack.yml.disabled
-cp /root/bin/beat-xpack.yml /usr/share/metricbeat/modules.d/beat-xpack.yml.disabled
+cp /root/bin/beat-xpack.yml /usr/share/metricbeat/modules.d/beat-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/beat.yml
 rm -f /usr/share/metricbeat/modules.d/beat.yml.disabled
 cp /root/bin/beat.yml /usr/share/metricbeat/modules.d/beat.yml
