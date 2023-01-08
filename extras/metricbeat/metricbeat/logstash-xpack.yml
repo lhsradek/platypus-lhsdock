@@ -7,6 +7,6 @@
     - node_stats
   xpack.enabled: true
   period: 10s
-  hosts: ["logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}"]
+  hosts: ["logstash.web.traefik.local:${LOGSTASH_MONITOR_PORT}"]
   #username: "logstash_system"
   #password: "${ELASTICSEARCH_PASSWORD}"

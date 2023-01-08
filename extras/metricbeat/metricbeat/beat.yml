@@ -11,8 +11,6 @@
     - metricbeat.${HOST_NICK}.${APP_NET}:5066
     - filebeat.${HOST_NICK}.${APP_NET}:5066
     - heartbeat.${HOST_NICK}.${APP_NET}:5066
-    - filebeat.www.traefik.local:5066
-    - metricbeat.www.traefik.local:5066
   username: "beats_system"
   #username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"

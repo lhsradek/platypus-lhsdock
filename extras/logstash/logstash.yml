@@ -2,12 +2,12 @@ http.host: 0.0.0.0
 
 monitoring:
   enabled: false
-  # cluster_uuid: "${CLUSTER_UUID}"
-  # elasticsearch:
-  #   hosts: ["${ELASTIC_HOST}"]
-  #   ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
-  #   username: "elastic"
-  #   password: "${LOGSTASH_PASSWORD}"
+  cluster_uuid: "${CLUSTER_UUID}"
+  elasticsearch:
+    hosts: ["${ELASTIC_HOST}"]
+    ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
+    username: "${ELASTIC_USERNAME}"
+    password: "${ELASTIC_PASSWORD}"
 
 api.ssl.enabled: false
 # https://www.elastic.co/guide/en/logstash/current/ls-security.html

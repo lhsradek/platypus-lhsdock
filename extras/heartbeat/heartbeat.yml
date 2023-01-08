@@ -5,8 +5,17 @@ http.port: ${MONITOR_PORT}
 http.host: "0.0.0.0"
 
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
+
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: ["${ELASTIC_HOST}"]
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "${VERIFICATION_MODE}"
 
 heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
@@ -80,21 +89,21 @@ heartbeat.monitors:
     # - https://es03.${APP_HOST}.${APP_NET}:${ES3_PORT}
     - https://${APP_HOST}.${APP_NET}/downloads/
     - https://wiki.${APP_HOST}.${APP_NET}/doku.php?id=wiki:welcome
-    - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
-    - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
-    - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
+    # - http://heartbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
+    # - http://filebeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
+    # - http://metricbeat.${APP_HOST}.${APP_NET}:${MONITOR_PORT}
     # - http://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_MONITOR_PORT}
     - https://cerebro.www.${APP_NET}
     - https://www.${APP_NET}/downloads/
     - https://wiki.www.${APP_NET}/doku.php?id=wiki:welcome
-    - http://filebeat.www.${APP_NET}:${MONITOR_PORT}
-    - http://metricbeat.www.${APP_NET}:${MONITOR_PORT}
+    # - http://filebeat.www.${APP_NET}:${MONITOR_PORT}
+    # - http://metricbeat.www.${APP_NET}:${MONITOR_PORT}
     # traefik
-    - http://filebeat.web.traefik.local:${MONITOR_PORT}
-    - http://metricbeat.web.traefik.local:${MONITOR_PORT}
+    # - http://filebeat.web.traefik.local:${MONITOR_PORT}
+    # - http://metricbeat.web.traefik.local:${MONITOR_PORT}
     - http://logstash.web.traefik.local:${LOGSTASH_MONITOR_PORT}
-    - http://filebeat.www.traefik.local:${MONITOR_PORT}
-    - http://metricbeat.www.traefik.local:${MONITOR_PORT}
+    # - http://filebeat.www.traefik.local:${MONITOR_PORT}
+    # - http://metricbeat.www.traefik.local:${MONITOR_PORT}
     - http://logstash.www.traefik.local:${LOGSTASH_MONITOR_PORT}
     # logstash for finger print:
     # - https://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_PORT_5044}
@@ -102,24 +111,24 @@ heartbeat.monitors:
     - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     - https://${APP_HOST}.tomcat.local/tomcat.jsp
     - https://ad.${APP_HOST}.tomcat.local
-    - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
+    # - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
+    # - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
     - https://www.tomcat.local/tombola-javadoc/
     - https://www.tomcat.local/tomcat.jsp
     - https://ad.www.tomcat.local
-    - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - http://filebeat.www.tomcat.local:${MONITOR_PORT}
-    - http://metricbeat.www.tomcat.local:${MONITOR_PORT}
+    # - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
+    # - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
+    # - http://filebeat.www.tomcat.local:${MONITOR_PORT}
+    # - http://metricbeat.www.tomcat.local:${MONITOR_PORT}
     # wordpress
     - https://${APP_HOST}.wordpress.local:443
     - https://pma.${APP_HOST}.wordpress.local:443
-    - http://filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
-    - http://metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
+    # - http://filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
+    # - http://metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     - https://www.wordpress.local
     - https://pma.www.wordpress.local
-    - http://filebeat.www.wordpress.local:${MONITOR_PORT}
-    - http://metricbeat.www.wordpress.local:${MONITOR_PORT}
+    # - http://filebeat.www.wordpress.local:${MONITOR_PORT}
+    # - http://metricbeat.www.wordpress.local:${MONITOR_PORT}
     # intranet
     # - https://lhs.intranet.local/downloads/
     # - https://www.intranet.local/downloads/

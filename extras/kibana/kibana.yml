@@ -24,9 +24,7 @@ monitoring:
       elasticsearch.enabled: true
       logstash.enabled: true
     elasticsearch:
-      hosts: 
-        - "${ELASTICSEARCH_HOSTS}"
-        - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
+      hosts: [ "${ELASTICSEARCH_HOSTS}" ]
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
       ssl:
