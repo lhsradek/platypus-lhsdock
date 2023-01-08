@@ -96,6 +96,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.2\n"\
           "      - ${MY_IP}\n"\
+          "  - name: es01.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es01\n"\
+          "      - es01.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.42\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -105,6 +114,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.3\n"\
           "      - ${MY_IP}\n"\
+          "  - name: es02.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es02\n"\
+          "      - es02.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.43\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -114,6 +132,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.4\n"\
           "      - ${MY_IP}\n"\
+          "  - name: es03.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es03\n"\
+          "      - es03.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES_NET}.44\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: eps.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\

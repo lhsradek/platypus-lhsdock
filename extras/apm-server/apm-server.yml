@@ -14,9 +14,7 @@ apm-server:
     enabled: true
     output:
       elasticsearch:
-        hosts: 
-          - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
-          # - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
+        hosts: ["${ELASTIC_HOST}"]
         protocol: "https"
         api_key: "${ELASTIC_APM_API_KEY}"
         # username: "apm_system"
@@ -46,9 +44,7 @@ apm-server:
 #-------------------------- Elasticsearch output --------------------------
 output.elasticsearch:
   enabled: true
-  hosts:
-    - "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
-    # - "https://es02.${HOST_NICK}.${APP_NET}:${ES2_PORT}"
+  hosts: ["${ELASTIC_HOST}"]
   protocol: "https"
   # username: "apm_system"
   username: "${ELASTICSEARCH_USERNAME}"

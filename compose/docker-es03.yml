@@ -37,7 +37,7 @@
       - node.name=es03
       - http.port=${ES3_PORT}
       - transport.port=9302
-      - discovery.seed_hosts=es01:9300,es02:9301
+      - discovery.seed_hosts=es01.${HOST_NICK}.${INT_NETWORK}:9300,es03.${HOST_NICK}.${INT_NETWORK}:9302
       - xpack.security.http.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.crt
       - xpack.security.transport.ssl.key=certs/es03.${APP_HOST}.${INT_NETWORK}/es03.${APP_HOST}.${INT_NETWORK}.key

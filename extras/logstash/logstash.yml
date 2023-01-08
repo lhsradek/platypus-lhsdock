@@ -4,7 +4,7 @@ monitoring:
   enabled: false
   # cluster_uuid: "${CLUSTER_UUID}"
   # elasticsearch:
-  #   hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"]
+  #   hosts: ["${ELASTIC_HOST}"]
   #   ssl.certificate_authority: "${ELASTIC_SSL_CERTIFICATEAUTHORITY}"
   #   username: "elastic"
   #   password: "${LOGSTASH_PASSWORD}"

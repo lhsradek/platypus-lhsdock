@@ -33,7 +33,7 @@
       - http.port=${ES2_PORT}
       - transport.port=9301
       - discovery.seed_hosts=es01:9300
-      # - discovery.seed_hosts=es01:9300,es03:9302
+      # - discovery.seed_hosts=es01.${APP_HOST}.${INT_NETWORK}:9300,es03.www.${INT_NETWORK}:9302
       - xpack.security.http.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key
       - xpack.security.http.ssl.certificate=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.crt
       - xpack.security.transport.ssl.key=certs/es02.${APP_HOST}.${INT_NETWORK}/es02.${APP_HOST}.${INT_NETWORK}.key

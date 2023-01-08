@@ -10,7 +10,7 @@ ent_search:
   external_url: "http://eps.${HOST_NICK}.${APP_NET}:${ENTERPRISE_SEARCH_PORT}"
 
 elasticsearch:
-  host: "https://es01.${HOST_NICK}.${APP_NET}:${ES1_PORT}"
+  host: "${ELASTICSEARCH_HOST}"
   username: '${ELASTIC_USERNAME}'
   password: '${ELASTIC_PASSWORD}'
   ssl:

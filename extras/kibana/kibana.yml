@@ -25,7 +25,7 @@ monitoring:
       logstash.enabled: true
     elasticsearch:
       hosts: 
-        - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
+        - "${ELASTICSEARCH_HOSTS}"
         - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
       username: "${ELASTICSEARCH_USERNAME}"
       password: "${ELASTICSEARCH_PASSWORD}"
@@ -37,9 +37,7 @@ monitoring:
 
 # https://www.elastic.co/guide/en/kibana/current/settings.html#elasticsearch-ssl-cert-key
 elasticsearch:
-  hosts: 
-    - "https://es01.${APP_HOST}.${APP_NET}:${ES1_PORT}"
-    - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
+  hosts: [ "${ELASTICSEARCH_HOSTS}" ]
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
   ssl:
