@@ -11,7 +11,7 @@ rm -f /usr/share/metricbeat/modules.d/beat-xpack.yml.disabled
 cp /root/bin/beat-xpack.yml /usr/share/metricbeat/modules.d/beat-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/beat.yml
 rm -f /usr/share/metricbeat/modules.d/beat.yml.disabled
-cp /root/bin/beat.yml /usr/share/metricbeat/modules.d/beat.yml
+cp /root/bin/beat.yml /usr/share/metricbeat/modules.d/beat.yml.disabled
 rm -f /usr/share/metricbeat/modules.d/elasticsearch-xpack.yml
 rm -f /usr/share/metricbeat/modules.d/elasticsearch-xpack.yml.disabled
 cp /root/bin/elasticsearch-xpack.yml /usr/share/metricbeat/modules.d/elasticsearch-xpack.yml
