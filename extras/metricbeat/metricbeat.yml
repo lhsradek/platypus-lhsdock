@@ -107,7 +107,6 @@ setup:
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
-      enabled: false
-      # enabled: true
-      # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      # verification_mode: "${VERIFICATION_MODE}"
+      enabled: true
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      verification_mode: "${VERIFICATION_MODE}"

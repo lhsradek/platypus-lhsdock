@@ -213,7 +213,7 @@ if ($printEnv) {
 	}
 	if($isKibana || $isWiki) { ?><li><?php
 		if($isKibana) { ?>
-<a href="https://kibana.<?php print($host.".".$net.$port); ?>/app/home" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
+<a href="https://kibana.<?php print($host.".".$net.$port); ?>" target="_blank">kibana.<?php print($host.".".$net); ?></a> <?php
 		} if($isWiki) {
 			$index->printWiki("kibana");
 		} ?></li><?php
