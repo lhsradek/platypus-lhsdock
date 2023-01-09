@@ -61,7 +61,6 @@ output:
     hosts: 
       -  "${LOGSTASH_HOST}"
     index: "logs-*"
-    timeout: 20s
     ssl:
       enabled: false
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -76,7 +75,6 @@ output:
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
-  #   timeout: 20s
   #   ssl:
   #     enabled: true
   #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
