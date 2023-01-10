@@ -9,7 +9,7 @@
     - memory
     - network
     - process
-    - process_summary
+    #- process_summary
     #- socket_summary
     #- entropy
     #- core
