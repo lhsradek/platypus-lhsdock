@@ -1,5 +1,26 @@
 ######################### APM Server Configuration #########################
 
+#=============================== HTTP Endpoint ===============================
+
+http.enabled: true
+http.host: "0.0.0.0"
+http.port: ${MONITOR_PORT}
+
+#============================= Monitoring =============================
+
+monitoring:
+  enabled: true
+  cluster_uuid: "${CLUSTER_UUID}"
+
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: ["${ELASTIC_HOST}"]
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "${VERIFICATION_MODE}"
+
 ################################ APM Server ################################
 
 apm-server:
@@ -51,24 +72,3 @@ output.elasticsearch:
   ssl.enabled: true
   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
   ssl.verification_mode: "${VERIFICATION_MODE}"
-
-#=============================== HTTP Endpoint ===============================
-
-http.enabled: true
-http.host: "0.0.0.0"
-http.port: ${MONITOR_PORT}
-
-#============================= Monitoring =============================
-
-monitoring:
-  enabled: true
-  cluster_uuid: "${CLUSTER_UUID}"
-
-  elasticsearch:
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
-    hosts: ["${ELASTIC_HOST}"]
-    protocol: "https"
-    ssl.enabled: true
-    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "${VERIFICATION_MODE}"

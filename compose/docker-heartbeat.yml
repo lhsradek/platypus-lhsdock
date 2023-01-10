@@ -16,16 +16,14 @@
     container_name: "${APP_HOST}-${APP_ID}-heartbeat"
     hostname: "heartbeat.${APP_HOST}.${INT_NETWORK}"
     networks:
-      # for traefik:
       default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.7
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs:/usr/share/heartbeat/certs
-      # - ./extras/hosts/hosts:/etc/hosts
-      - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml
+      - ./certs:/usr/share/heartbeat/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
       - ./logs/heartbeat:/usr/share/heartbeat/logs
       - heartbeat:/usr/share/heartbeat
     environment:

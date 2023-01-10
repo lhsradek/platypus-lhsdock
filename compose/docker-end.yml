@@ -75,4 +75,3 @@ volumes:
   traefiklogstash:
     external: true
     name: "traefik-logstash"
-      

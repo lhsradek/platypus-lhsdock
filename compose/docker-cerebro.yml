@@ -22,10 +22,10 @@
     #  - 9000:9000
     volumes:
       - ./certs:/opt/cerebro/conf/certs:ro
-      # - ./extras/hosts/hosts:/etc/hosts
-      - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf
-      - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml
-      - ./logs/cerebro:/opt/cerebro/logs:rw
+      - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/cerebro/application.conf:/opt/cerebro/conf/application.conf:ro
+      - ./extras/cerebro/logback.xml:/opt/cerebro/conf/logback.xml:ro
+      - ./logs/cerebro:/opt/cerebro/logs
     environment:
       - BASIC_AUTH_USER=${ELASTIC_USERNAME}
       - BASIC_AUTH_PWD=${ELASTIC_PASSWORD}
@@ -44,4 +44,3 @@
       - "traefik.http.routers.cerebro-public.tls=true"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.port=9000"
       - "traefik.http.services.cerebro-${APP_ID}.loadbalancer.server.scheme=http"
-

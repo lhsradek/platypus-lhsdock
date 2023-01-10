@@ -19,7 +19,7 @@
     hostname: "es03.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      # default:
+      default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.4
@@ -27,10 +27,9 @@
       - ${ES3_PORT}:9202
       # - 9302:9302
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      # - ./extras/hosts/hosts:/etc/hosts
+      - ./certs:/usr/share/elasticsearch/config/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ./certs:/usr/share/elasticsearch/config/certs
       - ./logs/es03:/usr/share/elasticsearch/logs
       - esdata03:/usr/share/elasticsearch
     environment:
@@ -48,16 +47,14 @@
       - ES_NODES=${ES_NODES}
       - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.docker.network=${DOCKER_NETWORK}"
-    #   - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
-    #   - "traefik.http.routers.es03-public.entrypoints=https-${ES3_PORT}"
-    #   - "traefik.http.routers.es03-public.tls=true"
-    #   # - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.scheme=https"
-    #   # - "traefik.http.middlewares.es03-${APP_ID}.redirectscheme.port=${ES3_PORT}"
-    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES3_PORT}"
-    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.es03-public.rule=Host(`es03.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.http.routers.es03-public.entrypoints=https-${ES3_PORT}"
+      - "traefik.http.routers.es03-public.tls=true"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES3_PORT}"
+      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
         soft: -1

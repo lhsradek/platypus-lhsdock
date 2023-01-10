@@ -16,20 +16,17 @@
     container_name: "${APP_HOST}-${APP_ID}-filebeat"
     hostname: "filebeat.${APP_HOST}.${INT_NETWORK}"
     networks:
-      # for traefik and logstash in traefik docker-compose
+      # for logstash in traefik docker-compose
       default:
-      # for logstash:
-      # elastic:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.9
     user: root
     volumes:
-      - /var/log:/hostfs/var/log:ro
-      - ./certs:/usr/share/filebeat/certs
-      # - ./extras/hosts/hosts:/etc/hosts
+      - ./certs:/usr/share/filebeat/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./extras/filebeat/filebeat:/root/bin
+      - ./extras/filebeat/filebeat:/root/bin:ro
       - ./logs/filebeat:/usr/share/filebeat/logs
       # - ./logs/filebeat/registry:/usr/share/filebeat/data/registry
       - ./logs/apm:/usr/share/filebeat/elogs/apm-server
@@ -43,6 +40,7 @@
       - ./logs/nginx:/usr/share/filebeat/elogs/nginx/default
       - ./logs/metricbeat:/usr/share/filebeat/elogs/metricbeat
       # - /root/platypus-box/logs/traefik:/usr/share/filebeat/elogs/traefik
+      - /var/log:/hostfs/var/log:ro
       - filebeat:/usr/share/filebeat
     environment:
       - APP_ID=${APP_ID}

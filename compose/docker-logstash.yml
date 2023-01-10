@@ -2,6 +2,10 @@
 #
 # === L - Logstash ===
 #
+# I don't use this logstash because I installed one in the default network with traefik.
+# It is then easily accessible to other applications and filebeat in traefik also uses it.
+# That's why the line in bin/setup is commented out.
+#
   logstash:
     depends_on:
       es02:
@@ -23,31 +27,30 @@
         aliases:
           - logstash.{APP_HOST}.${INT_NETWORK}
         ipv4_address: ${ES_NET}.5
-    # ports:
+    ports:
       # syslog access pipeline
-      # - 5000:5000/udp
-      # - 5000:5000/tcp
+      - 5000:5000/udp
+      - 5000:5000/tcp
       # syslog error pipeline
-      # - 5001:5001/udp
-      # - 5001:5001/tcp
+      - 5001:5001/udp
+      - 5001:5001/tcp
       # elastic-agent pipeline
-      # - ${LOGSTASH_PORT_5044}:5044
+      - ${LOGSTASH_PORT_5044}:5044
       # beat pipeline
-      # - ${LOGSTASH_PORT_5045}:5045
+      - ${LOGSTASH_PORT_5045}:5045
       # metrics
       # - ${LOGSTASH_MONITOR_PORT}:9600
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt
-      - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt
-      - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key
-      # - ./extras/hosts/hosts:/etc/hosts
-      - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml
-      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./extras/logstash/syslog-access.conf:/usr/share/logstash/pipeline/syslog-access.conf
-      - ./extras/logstash/syslog-error.conf:/usr/share/logstash/pipeline/syslog-error.conf
-      - ./extras/logstash/beat.conf:/usr/share/logstash/pipeline/beat.conf
-      - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf
+      - ./certs/ca/ca.crt:/usr/share/logstash/config/certs/ca.crt:ro
+      - ./certs/logstash.docker.nginx.local/logstash.docker.nginx.local.crt:/usr/share/logstash/config/certs/logstash.crt:ro
+      - ./certs/logstash.docker.nginx.local/logstash.pkcs8.key:/usr/share/logstash/config/certs/logstash.key:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/logstash/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
+      - ./extras/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./extras/logstash/syslog-access.conf:/usr/share/logstash/pipeline/syslog-access.conf:ro
+      - ./extras/logstash/syslog-error.conf:/usr/share/logstash/pipeline/syslog-error.conf:ro
+      - ./extras/logstash/beat.conf:/usr/share/logstash/pipeline/beat.conf:ro
+      - ./extras/logstash/elastic-agent.conf:/usr/share/logstash/pipeline/elastic-agent.conf:ro
       - logstash:/usr/share/logstash
     environment:
       - APP_ID=${APP_ID}
@@ -57,18 +60,15 @@
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
       - ELASTIC_SSL_CERTIFICATEAUTHORITY=/usr/share/logstash/config/certs/ca.crt
-      - ES1_PORT=${ES1_PORT}
-      - ES2_PORT=${ES2_PORT}
-      - ES3_PORT=${ES3_PORT}
       - ELASTIC_HOST=${ELASTIC_HOST}
+      - ELASTIC_USERNAME=${ELASTIC_USERNAME}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - LOGSTASH_USERNAME=${LOGSTASH_USERNAME}
       - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
       - LOGSTASH_KEYSTORE_PASS=${ENCRYPTION_KEYS}
       - LS_JAVA_OPTS=${LS_JAVA_OPTS}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
       - STACK_VERSION=${STACK_VERSION}
-      - ELASTIC_USERNAME=${ELASTIC_USERNAME}
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - TRAEFIK_ACCESS=/usr/share/filebeat/elogs/traefik/${TRAEFIK_ACCESS}
       - TRAEFIK_LOG=/usr/share/filebeat/elogs/traefik/${TRAEFIK_LOG}
     labels:
@@ -80,40 +80,40 @@
       - "traefik.http.routers.logstash-public.service=logstash-${APP_ID}"
       - "traefik.http.services.logstash-${APP_ID}.loadbalancer.server.port=${LOGSTASH_MONITOR_PORT}"
       - "traefik.http.services.logstash-${APP_ID}.loadbalancer.server.scheme=http"
-    #   
-    #   - "traefik.tcp.routers.logstash-access.rule=hostsni(`*`)"
-    #   - "traefik.tcp.routers.logstash-access.entrypoints=tcp-access"
-    #   - "traefik.tcp.routers.logstash-access.tls=false"
-    #   - "traefik.tcp.routers.logstash-access.tls.passthrough=true"
-    #   - "traefik.tcp.routers.logstash-access.service=logstash-${app_id}-tcp-access"
-    #   - "traefik.tcp.services.logstash-${app_id}-tcp-access.loadbalancer.server.port=5000"
-    #   - "traefik.udp.routers.logstash-access.entrypoints=udp-access"
-    #   - "traefik.udp.routers.logstash-access.service=logstash-${app_id}-udp-access"
-    #   - "traefik.udp.services.logstash-${app_id}-udp-access.loadbalancer.server.port=5000"
-    #   
-    #   - "traefik.tcp.routers.logstash-error.rule=hostsni(`*`)"
-    #   - "traefik.tcp.routers.logstash-error.entrypoints=tcp-error"
-    #   - "traefik.tcp.routers.logstash-error.tls=false"
-    #   - "traefik.tcp.routers.logstash-error.tls.passthrough=true"
-    #   - "traefik.tcp.routers.logstash-error.service=logstash-${app_id}-tcp-error"
-    #   - "traefik.tcp.services.logstash-${app_id}-tcp-error.loadbalancer.server.port=5001"
-    #   - "traefik.udp.routers.logstash-error.entrypoints=udp-error"
-    #   - "traefik.udp.routers.logstash-error.service=logstash-${app_id}-udp-error"
-    #   - "traefik.udp.services.logstash-${app_id}-udp-error.loadbalancer.server.port=5001"
-    #   
-    #   - "traefik.tcp.routers.logstash-elastic.rule=hostsni(`logstash.${app_host}.${int_network}`)"
-    #   - "traefik.tcp.routers.logstash-elastic.entrypoints=tcp-elastic"
-    #   - "traefik.tcp.routers.logstash-elastic.tls=true"
-    #   - "traefik.tcp.routers.logstash-elastic.tls.passthrough=true"
-    #   - "traefik.tcp.routers.logstash-elastic.service=logstash-${app_id}-tcp-elastic"
-    #   - "traefik.tcp.services.logstash-${app_id}-tcp-elastic.loadbalancer.server.port=${logstash_port_5044}"
-    #   
-    #   - "traefik.tcp.routers.logstash-beat.rule=hostsni(`logstash.${app_host}.${int_network}`)"
-    #   - "traefik.tcp.routers.logstash-beat.entrypoints=tcp-beat"
-    #   - "traefik.tcp.routers.logstash-beat.tls=true"
-    #   - "traefik.tcp.routers.logstash-beat.tls.passthrough=true"
-    #   - "traefik.tcp.routers.logstash-beat.service=logstash-${app_id}-tcp-beat"
-    #   - "traefik.tcp.services.logstash-${app_id}-tcp-beat.loadbalancer.server.port=${logstash_port_5045}"
+      
+      - "traefik.tcp.routers.logstash-access.rule=hostsni(`*`)"
+      - "traefik.tcp.routers.logstash-access.entrypoints=tcp-access"
+      - "traefik.tcp.routers.logstash-access.tls=false"
+      - "traefik.tcp.routers.logstash-access.tls.passthrough=true"
+      - "traefik.tcp.routers.logstash-access.service=logstash-${APP_ID}-tcp-access"
+      - "traefik.tcp.services.logstash-${APP_ID}-tcp-access.loadbalancer.server.port=5000"
+      - "traefik.udp.routers.logstash-access.entrypoints=udp-access"
+      - "traefik.udp.routers.logstash-access.service=logstash-${APP_ID}-udp-access"
+      - "traefik.udp.services.logstash-${APP_ID}-udp-access.loadbalancer.server.port=5000"
+      
+      - "traefik.tcp.routers.logstash-error.rule=hostsni(`*`)"
+      - "traefik.tcp.routers.logstash-error.entrypoints=tcp-error"
+      - "traefik.tcp.routers.logstash-error.tls=false"
+      - "traefik.tcp.routers.logstash-error.tls.passthrough=true"
+      - "traefik.tcp.routers.logstash-error.service=logstash-${APP_ID}-tcp-error"
+      - "traefik.tcp.services.logstash-${APP_ID}-tcp-error.loadbalancer.server.port=5001"
+      - "traefik.udp.routers.logstash-error.entrypoints=udp-error"
+      - "traefik.udp.routers.logstash-error.service=logstash-${APP_ID}-udp-error"
+      - "traefik.udp.services.logstash-${APP_ID}-udp-error.loadbalancer.server.port=5001"
+      
+      - "traefik.tcp.routers.logstash-elastic.rule=hostsni(`logstash.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.tcp.routers.logstash-elastic.entrypoints=tcp-elastic"
+      - "traefik.tcp.routers.logstash-elastic.tls=true"
+      - "traefik.tcp.routers.logstash-elastic.tls.passthrough=true"
+      - "traefik.tcp.routers.logstash-elastic.service=logstash-${APP_ID}-tcp-elastic"
+      - "traefik.tcp.services.logstash-${APP_ID}-tcp-elastic.loadbalancer.server.port=${LOGSTASH_PORT_5044}"
+      
+      - "traefik.tcp.routers.logstash-beat.rule=hostsni(`logstash.${APP_HOST}.${INT_NETWORK}`)"
+      - "traefik.tcp.routers.logstash-beat.entrypoints=tcp-beat"
+      - "traefik.tcp.routers.logstash-beat.tls=true"
+      - "traefik.tcp.routers.logstash-beat.tls.passthrough=true"
+      - "traefik.tcp.routers.logstash-beat.service=logstash-${APP_ID}-tcp-beat"
+      - "traefik.tcp.services.logstash-${APP_ID}-tcp-beat.loadbalancer.server.port=${LOGSTASH_PORT_5045}"
     healthcheck:
       test: ["CMD-SHELL", "curl -s -I http://localhost:${LOGSTASH_MONITOR_PORT} | grep -q 'HTTP/1.1 200 OK'"]
       # test: ["CMD-SHELL", "bin/logstash -t | grep -q 'Config Validation Result: OK'"]

@@ -16,21 +16,22 @@
     container_name: "${APP_HOST}-${APP_ID}-metricbeat"
     hostname: "metricbeat.${APP_HOST}.${INT_NETWORK}"
     networks:
-      # for traefik:
       default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.8
     user: root
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      # docker.sock is for docker module
+      # - /var/run/docker.sock:/var/run/docker.sock
+      # for system module:
       # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       # - /proc:/hostfs/proc:ro
       # - /:/hostfs:ro
-      - ./certs:/usr/share/metricbeat/certs
-      # - ./extras/hosts/hosts:/etc/hosts
-      - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
-      - ./extras/metricbeat/metricbeat:/root/bin
+      - ./certs:/usr/share/metricbeat/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - ./extras/metricbeat/metricbeat:/root/bin:ro
       - ./logs/metricbeat:/usr/share/metricbeat/logs
       - metricbeat:/usr/share/metricbeat
     environment:
