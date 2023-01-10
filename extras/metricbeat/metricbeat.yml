@@ -87,11 +87,13 @@ output:
 # ------------------------------ Setup -------------------------------
 
 setup:
-  ilm.overwrite: true 
-  template.settings:
-    index.number_of_shards: 4
-    index.codec: "best_compression"
-    # _source.enabled: false
+  ilm.overwrite: false
+  template:
+    settings:
+      index.number_of_shards: 2
+      index.number_of_replicas: 1
+      index.codec: best_compression
+      _source.enabled: false
 
   elasticsearch:
     hosts: ["${ELASTIC_HOST}"]
