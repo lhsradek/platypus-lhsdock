@@ -17,7 +17,7 @@
     hostname: "apm-server.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik
-      default:
+      # default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.10
@@ -42,11 +42,6 @@
       - ELASTICSEARCH_PASSWORD=${APM_PASSWORD}
       - ELASTIC_HOST=${ELASTIC_HOST}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/apm-server/certs/ca/ca.crt
-      - ELASTIC_APM_ENVIRONMENT=${STAGE}
-      - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
-      - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL}
-      - ELASTIC_APM_SERVICE_NAME=${APP_HOST}-${APP_ID}
-      - ELASTIC_APM_SERVICE_NODE_NAME=apm-server.${APP_HOST}.${INT_NETWORK}
       - ES1_PORT=${ES1_PORT}
       - ES2_PORT=${ES2_PORT}
       - ES3_PORT=${ES3_PORT}

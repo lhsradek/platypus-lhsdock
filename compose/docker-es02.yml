@@ -14,7 +14,7 @@
     hostname: "es02.${APP_HOST}.${INT_NETWORK}"
     networks:
       # for traefik:
-      default:
+      # default:
       # local network:
       intnet:
         ipv4_address: ${ES_NET}.3

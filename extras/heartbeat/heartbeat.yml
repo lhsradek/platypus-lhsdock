@@ -121,8 +121,8 @@ heartbeat.monitors:
     # - http://filebeat.www.tomcat.local:${MONITOR_PORT}
     # - http://metricbeat.www.tomcat.local:${MONITOR_PORT}
     # wordpress
-    - https://${APP_HOST}.wordpress.local:443
-    - https://pma.${APP_HOST}.wordpress.local:443
+    - https://${APP_HOST}.wordpress.local
+    - https://pma.${APP_HOST}.wordpress.local
     # - http://filebeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     # - http://metricbeat.${APP_HOST}.wordpress.local:${MONITOR_PORT}
     - https://www.wordpress.local
