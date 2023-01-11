@@ -27,17 +27,17 @@
         aliases:
           - logstash.{APP_HOST}.${INT_NETWORK}
         ipv4_address: ${ES_NET}.5
-    ports:
+    # ports:
       # syslog access pipeline
-      - 5000:5000/udp
-      - 5000:5000/tcp
+      # - 5000:5000/udp
+      # - 5000:5000/tcp
       # syslog error pipeline
-      - 5001:5001/udp
-      - 5001:5001/tcp
+      # - 5001:5001/udp
+      # - 5001:5001/tcp
       # elastic-agent pipeline
-      - ${LOGSTASH_PORT_5044}:5044
+      # - ${LOGSTASH_PORT_5044}:5044
       # beat pipeline
-      - ${LOGSTASH_PORT_5045}:5045
+      # - ${LOGSTASH_PORT_5045}:5045
       # metrics
       # - ${LOGSTASH_MONITOR_PORT}:9600
     volumes:
