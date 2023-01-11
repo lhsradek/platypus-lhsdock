@@ -82,6 +82,7 @@ xpack:
     roles.enabled: false
     encryptionKey: 8de551ca1432f0dcf3ad2908472562b1
   security:
+    audit.enabled: true
     encryptionKey: 363792db7b8cf9581c6cbdddbb8ff95f
     session.idleTimeout: 24h
   encryptedSavedObjects:
