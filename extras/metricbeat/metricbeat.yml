@@ -87,13 +87,13 @@ output:
 # ------------------------------ Setup -------------------------------
 
 setup:
-  ilm.overwrite: false
+  ilm.overwrite: true
   template:
     settings:
       index.number_of_shards: 2
       index.number_of_replicas: 1
       index.codec: best_compression
-      _source.enabled: false
+      # _source.enabled: false
 
   elasticsearch:
     hosts: ["${ELASTIC_HOST}"]
@@ -103,8 +103,7 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      # verification_mode: "${VERIFICATION_MODE}"
-      verification_mode: "none"
+      verification_mode: "${VERIFICATION_MODE}"
 
   kibana:
     host: "${KIBANA_HOST}"
