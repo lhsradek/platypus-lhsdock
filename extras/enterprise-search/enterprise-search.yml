@@ -10,7 +10,7 @@ ent_search:
   external_url: "http://eps.${HOST_NICK}.${APP_NET}:${ENTERPRISE_SEARCH_PORT}"
 
 elasticsearch:
-  host: "${ELASTICSEARCH_HOST}"
+  host: "${ELASTICSEARCH_HOSTS}"
   username: '${ELASTIC_USERNAME}'
   password: '${ELASTIC_PASSWORD}'
   ssl:
@@ -18,8 +18,8 @@ elasticsearch:
     certificate_authority: '${ELASTIC_SSL_CERTIFICATEAUTHORITIES}'
 
 kibana:
-  host: "${KIBANA_HOST}"
-  external_url: "https://kibana.${APP_HOST}.${APP_NET}:443"
+  host: "http://kibana.${HOST_NICK}.${APP_NET}:${KIBANA_PORT}"
+  external_url: "https://kibana.${HOST_NICK}.${APP_NET}"
 
 # https://www.elastic.co/guide/en/enterprise-search/current/configuration.html#configuration-settings-apm-instrumentation   
 apm:

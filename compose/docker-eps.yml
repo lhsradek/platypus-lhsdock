@@ -22,23 +22,26 @@
     # ports:
     #  - ${ENTERPRISE_SEARCH_PORT}:3002
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./certs:/usr/share/enterprise-search/config/certs:ro
       - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/enterprise-search/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml:ro
       - ./logs/eps:/var/log/enterprise-search
       - epsdata:/usr/share/enterprise-search
+    # see https://www.elastic.co/guide/en/enterprise-search/current/docker.html
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
       - HOST_NICK=${HOST_NICK}
       - APP_NET=${INT_NETWORK}
       - APP_SERVER_JAVA_OPTS=${EPS_APP_JAVA_OPTS}
+      - CLUSTER_NAME=${CLUSTER_NAME}
       - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTICSEARCH_HOST=${ELASTIC_HOST}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTICSEARCH_HOSTS=${ELASTIC_HOST}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - ES1_PORT=${ES1_PORT}
+      - ES_PORT=${ES1_PORT}
       - KIBANA_HOST=${KIBANA_HOST}
       - KIBANA_PORT=${KIBANA_PORT}
       - APM_PORT=${APM_PORT}
