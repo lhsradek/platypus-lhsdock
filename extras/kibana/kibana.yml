@@ -122,12 +122,12 @@ xpack:
         version: latest
       - name: log
         version: latest
-      - name: spring_boot
-        version: latest
-      - name: logstash
-        version: latest
-      - name: synthetics
-        version: latest
+      # - name: spring_boot # missed in 8.6.0
+      #   version: latest
+      # - name: logstash    # missed in 8.6.0
+      #   version: latest
+      # - name: synthetics
+      #   version: latest
       # - name: osquery
       #   version: latest
       # - name: osquery_manager
