@@ -24,7 +24,7 @@ kibana:
 # https://www.elastic.co/guide/en/enterprise-search/current/configuration.html#configuration-settings-apm-instrumentation   
 apm:
   enabled: true
-  environment: 'test'
+  environment: "${STAGE}"
   service_name: "enterprise-search"
   server_url: "http://apm-server.${HOST_NICK}.${APP_NET}:${APM_PORT}"
 

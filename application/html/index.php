@@ -184,7 +184,7 @@ if ($printEnv) {
   <div class="content">
     <div class="content-middle">
       <p>
-<small><?php print($clusterName." ".$apmName." ".$apmNode." ".$apmUrl." ".$apmEnv." ".$clusterUuid); ?></small>
+<small><?php print("cluster name: <b>".$clusterName."</b> uuid: ".$clusterUuid); ?></small>
       </p><?php if ($printEnv) { ?>
       <h2>Environment</h2>
 <code><?php print($env); ?></code>
@@ -266,7 +266,6 @@ if ($printEnv) {
           <ul>
             <li><a href="https://<?php print($parent); ?>.nginx.local<?php print($port); ?>/phpinfo.php" target="_blank"><?php print($parent); ?>.nginx.local - phpinfo</a></li>
             <li><a href="https://<?php print($parent); ?>.nginx.local<?php print($port); ?>/downloads/" target="_blank"><?php print($parent); ?>.nginx.local - downloads</a></li>
-            <li><a href="https://nginx.com" target="_blank">nginx.com</a></li>
           </ul>
         </p>
 
@@ -275,6 +274,7 @@ if ($printEnv) {
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
               <?php if ($isTomcat) { ?><li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li><?php } ?>
           </ul>
         </p>
@@ -288,8 +288,7 @@ if ($printEnv) {
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org</a></li>
               <li><a href="https://docs.docker.com/compose/" target="_blank">docker.com</a></li>
               <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html" target="_blank">elastic.co</a></li>
-              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org</a></li>
-              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - docs</a></li>
 	  </ul>
         </p>
         <h2>Docker Hub</h2>

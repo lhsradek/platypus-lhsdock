@@ -4,7 +4,7 @@
 #
   eps:
     depends_on:
-      es02:
+      apm-server:
         condition: service_healthy
     # Ubuntu - enterprisesearch
     image: docker.elastic.co/enterprise-search/enterprise-search:${STACK_VERSION}
@@ -36,19 +36,20 @@
       - APP_NET=${INT_NETWORK}
       - APP_SERVER_JAVA_OPTS=${EPS_APP_JAVA_OPTS}
       - CLUSTER_NAME=${CLUSTER_NAME}
+      - APM_PORT=${APM_PORT}
       - ELASTIC_USERNAME=${ELASTIC_USERNAME}
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_HOSTS=${ELASTIC_HOST}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
       - ES_PORT=${ES1_PORT}
-      - KIBANA_HOST=${KIBANA_HOST}
-      - KIBANA_PORT=${KIBANA_PORT}
-      - APM_PORT=${APM_PORT}
-      - ENTERPRISE_SEARCH_PORT=${ENTERPRISE_SEARCH_PORT}
       - JAVA_OPTS=${EPS_JAVA_OPTS}
       - JAVA_GC_LOGGING=false
+      - KIBANA_HOST=${KIBANA_HOST}
+      - KIBANA_PORT=${KIBANA_PORT}
+      - ENTERPRISE_SEARCH_PORT=${ENTERPRISE_SEARCH_PORT}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
+      - STAGE=${STAGE}
       - secret_management.encryption_keys=[${ENCRYPTION_KEYS}]
     ulimits:
       memlock:

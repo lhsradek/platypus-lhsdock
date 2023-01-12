@@ -60,8 +60,8 @@
     #   - "traefik.http.routers.apm-server-public-monitor.tls=false"
     #   - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
     #   - "traefik.http.services.apm-server-monitor-${APP_ID}.loadbalancer.server.scheme=http"
-    # healthcheck:
-    #   test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
-    #   interval: 10s
-    #   timeout: 30s
-    #   retries: 500
+    healthcheck:
+      test: ["CMD-SHELL", "apm-server test output | grep 'talk to server... OK'"]
+      interval: 10s
+      timeout: 30s
+      retries: 500
