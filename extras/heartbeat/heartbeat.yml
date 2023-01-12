@@ -179,7 +179,7 @@ heartbeat.monitors:
   tags: [icmp]
   hosts:
     - ${APP_HOST}.${APP_NET}
-    - weblhs-php.${APP_NET}
+    - weblhs-php.${APP_HOST}.${APP_NET}
     # - www.intranet.local
     # - apm.${APP_HOST}.${APP_NET}
     # - cerebro.${APP_HOST}.${APP_NET}
