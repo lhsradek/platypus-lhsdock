@@ -274,8 +274,8 @@ if ($printEnv) {
         <h5>Webs servlet/JSP container</h5>
         <p>
           <ul>
-              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
               <?php if ($isTomcat) { ?><li><?php print("<a href=\"https://".$parent.".tomcat.local".$port."\" target=\"_blank\">".$parent.".tomcat.local")?></a></li><?php } ?>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
 	<p><img src="tomcat.png" width="63" height="40"/></p>
