@@ -12,15 +12,16 @@
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_HOST}-${APP_ID}-es02"
     hostname: "es02.${APP_HOST}.${INT_NETWORK}"
-    networks:
-      # for traefik:
-      default:
-      # local network:
-      intnet:
-        ipv4_address: ${ES_NET}.3
-    ports:
-      - ${ES2_PORT}:9201
-      # - 9301:9301
+    network_mode: "host"
+    # networks:
+    #   # for traefik:
+    #   default:
+    #   # local network:
+    #   intnet:
+    #     ipv4_address: ${ES_NET}.3
+    # ports:
+    #   - ${ES2_PORT}:9201
+    #   - 9301:9301
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs:ro
       # - ./extras/hosts/hosts:/etc/hosts:ro
@@ -28,7 +29,7 @@
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
     environment:
-      - node.name=es02
+      - node.name=es02.${APP_HOST}.${INT_NETWORK}
       - http.port=${ES2_PORT}
       - transport.port=9301
       # - discovery.seed_hosts=es01:9300
@@ -43,14 +44,14 @@
       - ES_NODES=${ES_NODES}
       - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.es02-public.rule=Host(`es02.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.es02-public.entrypoints=https-${ES2_PORT}"
-      - "traefik.http.routers.es02-public.tls=true"
-      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES2_PORT}"
-      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=${DOCKER_NETWORK}"
+    #   - "traefik.http.routers.es02-public.rule=Host(`es02.${APP_HOST}.${INT_NETWORK}`)"
+    #   - "traefik.http.routers.es02-public.entrypoints=https-${ES2_PORT}"
+    #   - "traefik.http.routers.es02-public.tls=true"
+    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES2_PORT}"
+    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
         soft: -1

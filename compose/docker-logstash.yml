@@ -7,9 +7,9 @@
 # That's why the line in bin/setup is commented out.
 #
   logstash:
-    depends_on:
-      es02:
-        condition: service_healthy
+    # depends_on:
+    #   es02:
+    #     condition: service_healthy
     # Ubuntu - logstash 
     image: logstash:${STACK_VERSION}
     deploy:

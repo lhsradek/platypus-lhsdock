@@ -3,9 +3,9 @@
 # === Heartbeat ===
 #     
   heartbeat:
-    depends_on:
-      es02:
-        condition: service_healthy
+    # depends_on:
+    #   es02:
+    #     condition: service_healthy
     # Ubuntu - heartbeat
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     deploy:

@@ -1,0 +1,11 @@
+
+volumes:
+  esdata01:
+    external: true
+    name: "${APP_ID}-es01"
+  esdata02:
+    external: true
+    name: "${APP_ID}-es02"
+  esdata03:
+    external: true
+    name: "${APP_ID}-es03"

@@ -15,16 +15,25 @@ if [ -f "$rootPath/docker-compose.$RUNENV.yml" ]; then
   echo "================= STOP ================="
   ${scriptPath}/stop
   echo
-  echo "Nothing to do, docker-compose.$RUNENV.yml exist. Use 'rm docker-compose.$RUNENV.yml' first!"
+  echo "Nothing to do, docker-compose.$RUNENV.yml exist. Use rm docker-compose.$RUNENV.yml first!"
   echo
   exit 1;
 else
-  echo "================= REMOVE ALL VOLUME ================="
-  for NAME in apm eps es01 es02 es03 fleet filebeat heartbeat kibana logstash metricbeat; do
-    echo ${NAME}
-    if (docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
-      echo "remove:"
-      docker volume rm lhsdock-${NAME}
-    fi
-  done;
+  if [ -f "$rootPath/docker-compose-es.yml" ]; then
+    echo "================= STOP ================="
+    ${scriptPath}/stop
+    echo
+    echo "Nothing to do, docker-compose-es.yml exist. Use rm docker-compose-es.yml first!"
+    echo
+    exit 1;
+  else 
+    echo "================= REMOVE ALL VOLUME ================="
+    for NAME in apm eps es01 es02 es03 fleet filebeat heartbeat kibana logstash metricbeat; do
+      echo ${NAME}
+      if (docker volume inspect "lhsdock-${NAME}" >/dev/null 2>&1); then
+        echo "remove:"
+        docker volume rm lhsdock-${NAME}
+      fi
+    done;
+  fi
 fi

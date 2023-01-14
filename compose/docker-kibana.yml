@@ -3,9 +3,9 @@
 # === K - kibana ===
 #
   kibana:
-    depends_on:
-      es02:
-        condition: service_healthy
+    # depends_on:
+    #   es02:
+    #     condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     deploy:

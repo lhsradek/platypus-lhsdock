@@ -6,15 +6,16 @@
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_HOST}-${APP_ID}-es01"
     hostname: "es01.${APP_HOST}.${INT_NETWORK}"
-    networks:
-      # for traefik:
-      default:
-      # local network:
-      intnet:
-        ipv4_address: ${ES_NET}.2
-    ports:
-      - ${ES1_PORT}:9200
-      # - 9300:9300
+    network_mode: "host"
+    # networks:
+    #   # for traefik:
+    #   default:
+    #   # local network:
+    #   intnet:
+    #     ipv4_address: ${ES_NET}.2
+    #  ports:
+    #   - ${ES1_PORT}:9200
+    #   - 9300:9300
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs:ro
       # - ./extras/hosts/hosts:/etc/hosts:ro
@@ -22,7 +23,7 @@
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch
     environment:
-      - node.name=es01
+      - node.name=es01.${APP_HOST}.${INT_NETWORK}
       - http.port=${ES1_PORT}
       - transport.port=9300
       # - discovery.seed_hosts=es02:9301
@@ -37,17 +38,17 @@
       - ES_NODES=${ES_NODES}
       - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.es01-public.rule=Host(`es01.${APP_HOST}.${INT_NETWORK}`)"
-      - "traefik.http.routers.es01-public.entrypoints=https-${ES1_PORT}"
-      - "traefik.http.routers.es01-public.tls=true"
-      # - "traefik.http.routers.es01-public.middlewares=es01-${APP_ID}@docker"
-      # - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.scheme=https"
-      # - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.port=${ES1_PORT}"
-      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES1_PORT}"
-      - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=${DOCKER_NETWORK}"
+    #   - "traefik.http.routers.es01-public.rule=Host(`es01.${APP_HOST}.${INT_NETWORK}`)"
+    #   - "traefik.http.routers.es01-public.entrypoints=https-${ES1_PORT}"
+    #   - "traefik.http.routers.es01-public.tls=true"
+    #   # - "traefik.http.routers.es01-public.middlewares=es01-${APP_ID}@docker"
+    #   # - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.scheme=https"
+    #   # - "traefik.http.middlewares.es01-${APP_ID}.redirectscheme.port=${ES1_PORT}"
+    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.port=${ES1_PORT}"
+    #   - "traefik.http.services.elasticsearch-${APP_ID}.loadbalancer.server.scheme=https"
     ulimits:
       memlock:
         soft: -1

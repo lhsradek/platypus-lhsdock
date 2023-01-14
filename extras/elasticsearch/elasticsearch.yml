@@ -2,6 +2,7 @@ cluster.initial_master_nodes: "${ES_NODES}"
 
 cluster.name: "${CLUSTER_NAME}"
 network.host: 0.0.0.0
+transport.host: 0.0.0.0
 node.roles: [master, data, ingest, ml, remote_cluster_client]
 bootstrap.memory_lock: true
 

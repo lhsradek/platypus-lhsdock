@@ -8,10 +8,11 @@
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     container_name: "${APP_HOST}-${APP_ID}-setup"
     hostname: "setup.${INT_NETWORK}"
-    networks:
-      # local network:
-      intnet:
-        ipv4_address: ${ES_NET}.30
+    network_mode: "host"
+    # networks:
+    #   # local network:
+    #   intnet:
+    #     ipv4_address: ${ES_NET}.30
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
     user: "0"
@@ -49,7 +50,7 @@
           "      - www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.61\n"\
+          "      - ${ES2_NET}.21\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -67,7 +68,7 @@
           "      - apm-server.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.50\n"\
+          "      - ${ES2_NET}.10\n"\
           "      - ${WWW_IP}\n"\
           "  - name: cerebro.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -85,7 +86,7 @@
           "      - cerebro.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.60\n"\
+          "      - ${ES2_NET}.20\n"\
           "      - ${WWW_IP}\n"\
           "  - name: es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -94,7 +95,6 @@
           "      - es01.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.2\n"\
           "      - ${MY_IP}\n"\
           "  - name: es01.www.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -103,7 +103,6 @@
           "      - es01.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.42\n"\
           "      - ${WWW_IP}\n"\
           "  - name: es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -112,7 +111,6 @@
           "      - es02.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.3\n"\
           "      - ${MY_IP}\n"\
           "  - name: es02.www.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -121,7 +119,6 @@
           "      - es02.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.43\n"\
           "      - ${WWW_IP}\n"\
           "  - name: es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -130,7 +127,6 @@
           "      - es03.${APP_HOST}.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.4\n"\
           "      - ${MY_IP}\n"\
           "  - name: es03.www.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -139,16 +135,7 @@
           "      - es03.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.44\n"\
           "      - ${WWW_IP}\n"\
-          "  - name: eps.${APP_HOST}.${INT_NETWORK}\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - eps\n"\
-          "      - eps.${APP_HOST}.${INT_NETWORK}\n"\
-          "    ip:\n"\
-          "      - ${ES_NET}.11\n"\
-          "      - 127.0.0.1\n"\
           "  - name: filebeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -158,6 +145,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.9\n"\
           "      - ${MY_IP}\n"\
+          "  - name: filebeat.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - filebeat\n"\
+          "      - filebeat.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES2_NET}.9\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: fleet.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -174,7 +170,7 @@
           "      - fleet.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.50\n"\
+          "      - ${ES2_NET}.12\n"\
           "      - ${WWW_IP}\n"\
           "  - name: heartbeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -192,7 +188,7 @@
           "      - heartbeat.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.7\n"\
+          "      - ${ES2_NET}.7\n"\
           "      - ${WWW_IP}\n"\
           "  - name: kibana.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
@@ -203,6 +199,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.6\n"\
           "      - ${MY_IP}\n"\
+          "  - name: kibana.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - kibana\n"\
+          "      - kibana.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES2_NET}.6\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: logstash.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -212,6 +217,15 @@
           "      - 127.0.0.1\n"\
           "      - ${ES_NET}.5\n"\
           "      - ${MY_IP}\n"\
+          "  - name: logstash.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - logstash\n"\
+          "      - logstash.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${ES2_NET}.5\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: wiki.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -228,7 +242,7 @@
           "      - wiki.www.${INT_NETWORK}\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.63\n"\
+          "      - ${ES2_NET}.23\n"\
           "      - ${WWW_IP}\n"\
           "  - name: web.traefik.local\n"\
           "    dns:\n"\
@@ -238,6 +252,16 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${MY_IP}\n"\
+          "      - 172.18.255.254\n"\
+          "  - name: www.traefik.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www\n"\
+          "      - www.traefik.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "      - 172.19.255.254\n"\
           "  - name: logstash.web.traefik.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -246,13 +270,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${MY_IP}\n"\
-          "  - name: www.traefik.local\n"\
-          "    dns:\n"\
-          "      - localhost\n"\
-          "      - www.traefik.local\n"\
-          "    ip:\n"\
-          "      - 127.0.0.1\n"\
-          "      - ${WWW_IP}\n"\
+          "      - 172.18.255.253\n"\
           "  - name: logstash.www.traefik.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -261,6 +279,7 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
+          "      - 172.19.255.253\n"\
           "  - name: ${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -321,7 +340,6 @@
           "      - fleet.${APP_HOST}.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.14\n"\
           "      - ${MY_IP}\n"\
           "  - name: apm-server.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
@@ -338,7 +356,6 @@
           "      - fleet.www.tomcat.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.52\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.www.tomcat.local\n"\
           "    dns:\n"\
@@ -419,7 +436,6 @@
           "      - fleet.${APP_HOST}.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.13\n"\
           "      - ${MY_IP}\n"\
           "  - name: apm-server.${APP_HOST}.wordpress.local\n"\
           "    dns:\n"\
@@ -436,7 +452,6 @@
           "      - fleet.www.wordpress.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
-          "      - ${ES_NET}.51\n"\
           "      - ${WWW_IP}\n"\
           "  - name: apm-server.www.wordpress.local\n"\
           "    dns:\n"\
