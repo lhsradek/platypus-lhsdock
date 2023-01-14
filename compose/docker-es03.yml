@@ -28,7 +28,7 @@
       # - 9302:9302
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./logs/es03:/usr/share/elasticsearch/logs
       - esdata03:/usr/share/elasticsearch

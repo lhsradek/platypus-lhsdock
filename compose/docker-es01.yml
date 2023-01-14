@@ -16,9 +16,9 @@
       - ${ES1_PORT}:9200
       # - 9300:9300
     volumes:
-      - ./extras/hosts/hosts:/etc/hosts:ro
-      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./certs:/usr/share/elasticsearch/config/certs:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./logs/es01:/usr/share/elasticsearch/logs
       - esdata01:/usr/share/elasticsearch
     environment:

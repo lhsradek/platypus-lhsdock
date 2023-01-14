@@ -23,7 +23,7 @@
       # - 9301:9301
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./logs/es02:/usr/share/elasticsearch/logs
       - esdata02:/usr/share/elasticsearch
