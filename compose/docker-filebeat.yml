@@ -24,7 +24,7 @@
     user: root
     volumes:
       - ./certs:/usr/share/filebeat/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./extras/filebeat/filebeat:/root/bin:ro
       - ./logs/filebeat:/usr/share/filebeat/logs

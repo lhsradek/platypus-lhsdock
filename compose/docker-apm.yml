@@ -27,7 +27,7 @@
       # - ${MONITOR_PORT}:5066
     volumes:
       - ./certs:/usr/share/apm-server/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/apm-server/apm-server.yml:/usr/share/apm-server/apm-server.yml:ro
       - ./logs/apm:/usr/share/apm-server/logs
       - apm:/usr/share/apm-server

@@ -29,7 +29,7 @@
       # - /proc:/hostfs/proc:ro
       # - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs:ro
-      - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - ./extras/metricbeat/metricbeat:/root/bin:ro
       - ./logs/metricbeat:/usr/share/metricbeat/logs
