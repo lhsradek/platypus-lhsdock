@@ -31,10 +31,6 @@ fi
 
 ARGS="-f $rootPath/docker-compose.$RUNENV.yml"
 
-if [[ -f "$rootPath/docker-compose.extras.yml" ]]; then
-    ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
-fi
-
 if (docker network inspect "${DOCKER_NETWORK}" >/dev/null 2>&1); then
-    docker-compose ${ARGS} down --remove-orphans
+    docker-compose ${ARGS} down
 fi
