@@ -15,7 +15,7 @@ This part will produce volumes. After this part elastic itself will run without 
 
 ```# bin/setup```
 
-This section will add additional services to docker-compose. If you don't want one, just comment out the file in ```bin/setup```. It is important that, for example, kibana does not start before the kibana user has a password set. That's why the install part is separate.
+This section will add additional services to docker-compose. If you don't want one, just comment out the file in ```bin/setup```. It is important that, for example, kibana does not start before the kibana user has a password set. That's why the install part is separate and not all together in one docker-compose.
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
