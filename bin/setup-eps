@@ -23,7 +23,7 @@ fi
 
 APP_ID=$(read_var APP_ID .env)
 
-for NAME in apm es01 es02 es03 filebeat heartbeat logstash kibana metricbeat; do
+for NAME in apm es01 es02 es03 eps filebeat heartbeat logstash kibana metricbeat; do
   if !(docker volume inspect "${APP_ID}-${NAME}" >/dev/null 2>&1); then
     echo "Volume don't exists. First start 'bin/install' or create ${APP_ID}-${NAME}!"
     exit 1
@@ -32,8 +32,8 @@ done;
 
 if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
   echo "================= STOP ================="
-  echo
   ${scriptPath}/stop
+  echo
   echo "Nothing to do, docker-compose.$RUNENV.yml exists. Remove it first!"
   exit 1;
 else
@@ -52,15 +52,14 @@ else
   cat $rootPath/compose/docker-heartbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-metricbeat.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-filebeat.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-eps.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-cerebro.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-weblhs.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-wiki.yml >> $rootPath/docker-compose.$RUNENV.yml
   cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
   echo
-  echo "================= START SETUP ================"
+  echo "================= START SETUP WITH ENTERPRISE SEARCH ================"
   ${scriptPath}/start
 
-  echo "Start 'bin/setup-eps' for Enterprise Search"
-  echo
   echo "Use 'bin/stop for Stop, 'bin/start' for Start or 'bin/restart' for Restart"
 fi

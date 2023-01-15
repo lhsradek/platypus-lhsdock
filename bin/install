@@ -32,80 +32,71 @@ echo
 echo "================= MAKE docker-compose.$RUNENV.yml ================="
 
 if [[ -f "$rootPath/docker-compose.$RUNENV.yml" ]]; then
-  ${scriptPath}/stop-es
+  ${scriptPath}/stop
   echo "Nothing to do, docker-compose.$RUNENV.yml exist. Remove it first!"
   exit 1;
 else
-  if [ -f "$rootPath/docker-compose-es.yml" ]; then
-    echo "================= STOP ================="
-    ${scriptPath}/stop
-    echo
-    echo "Nothing to do, docker-compose-es.yml exist. Use rm docker-compose-es.yml first!"
-    echo
-    exit 1;
-  else
-    INT_NETWORK=$(read_var INT_NETWORK .env)
-    APP_HOST=$(read_var APP_HOST .env)
-    ES3=$(read_var ES3 .env)
-    ES_NET=$(read_var ES_NET .env)
-    ES2_NET=$(read_var ES2_NET .env)
-    MY_IP=$(read_var MY_IP .env)
-    WWW_IP=$(read_var WWW_IP .env)
-    mkdir -p $rootPath/extras/hosts
-    echo "::1               localhost ip6-localhost ip6-loopback" > $rootPath/extras/hosts/hosts
-    echo "127.0.0.1         localhost" >> $rootPath/extras/hosts/hosts
-    echo "172.17.0.1        host.docker.internal" >> $rootPath/extras/hosts/hosts
-    echo "${MY_IP}       es01.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${MY_IP}       es02.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${MY_IP}       es03.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.5       logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.6       kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.7       heartbeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.8       metricbeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.9       filebeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.10      apm-server.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.11      eps.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.12      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.13      fleet.${APP_HOST}.wordpress.local" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.14      fleet.${APP_HOST}.tomcat.local" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.20      cerebro.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.21      ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.22      weblhs-php.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES_NET}.23      wiki.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${WWW_IP}      es01.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${WWW_IP}      es02.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${WWW_IP}      es03.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.5       logstash.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.6       kibana.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.7       heartbeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.8       metricbeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.9       filebeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.10      apm-server.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.11      eps.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.12      fleet.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.13      fleet.www.wordpress.local" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.14      fleet.www.tomcat.local" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.20      cerebro.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.21      www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.22      weblhs-php.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    echo "${ES2_NET}.23      wiki.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
-    cat $rootPath/compose/docker-head-es.yml > $rootPath/docker-compose-es.yml
-    cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose-es.yml
-    cat $rootPath/compose/docker-es02.yml >> $rootPath/docker-compose-es.yml
-    if [ ${ES3} -eq 1 ]; then
-      cat $rootPath/compose/docker-es03.yml >> $rootPath/docker-compose-es.yml
-    fi
-    cat $rootPath/compose/docker-setup.yml >> $rootPath/docker-compose-es.yml
-    cat $rootPath/compose/docker-end-es.yml >> $rootPath/docker-compose-es.yml
-    echo
-    echo "================= START INSTALL ================"
-    ${scriptPath}/start-es
-    echo
-    ELASTIC_PASSWORD=$(read_var ELASTIC_PASSWORD .env)
-    echo "Use 'curl -s -X GET --cacert certs/ca/ca.crt -u elastic:[KIBANA_PASSWORD] https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep cluster_uuid' after setup set kibana password and exit."
-    echo
-    echo "Set CLUSTER-UUID to '.env' and start 'bin/setup'"
-    echo
-    echo "Start 'bin/setup'"
+  INT_NETWORK=$(read_var INT_NETWORK .env)
+  APP_HOST=$(read_var APP_HOST .env)
+  ES3=$(read_var ES3 .env)
+  ES_NET=$(read_var ES_NET .env)
+  ES2_NET=$(read_var ES2_NET .env)
+  MY_IP=$(read_var MY_IP .env)
+  WWW_IP=$(read_var WWW_IP .env)
+  mkdir -p $rootPath/extras/hosts
+  echo "::1               localhost ip6-localhost ip6-loopback" > $rootPath/extras/hosts/hosts
+  echo "127.0.0.1         localhost" >> $rootPath/extras/hosts/hosts
+  echo "172.17.0.1        host.docker.internal" >> $rootPath/extras/hosts/hosts
+  echo "${MY_IP}       es01.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${MY_IP}       es02.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${MY_IP}       es03.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.5       logstash.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.6       kibana.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.7       heartbeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.8       metricbeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.9       filebeat.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.10      apm-server.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.11      eps.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.12      fleet.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.13      fleet.${APP_HOST}.wordpress.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.14      fleet.${APP_HOST}.tomcat.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.20      cerebro.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.21      ${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.22      weblhs-php.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES_NET}.23      wiki.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${WWW_IP}       es01.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${WWW_IP}       es02.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${WWW_IP}       es03.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.5       logstash.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.6       kibana.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.7       heartbeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.8       metricbeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.9       filebeat.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.10      apm-server.${APP_HOST}.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.11      eps.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.12      fleet.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.13      fleet.www.wordpress.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.14      fleet.www.tomcat.local" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.20      cerebro.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.21      www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.22      weblhs-php.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  echo "${ES2_NET}.23      wiki.www.${INT_NETWORK}" >> $rootPath/extras/hosts/hosts
+  cat $rootPath/compose/docker-head-es.yml > $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-es01.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-es02.yml >> $rootPath/docker-compose.$RUNENV.yml
+  if [ ${ES3} -eq 1 ]; then
+    cat $rootPath/compose/docker-es03.yml >> $rootPath/docker-compose.$RUNENV.yml
   fi
+  cat $rootPath/compose/docker-setup.yml >> $rootPath/docker-compose.$RUNENV.yml
+  cat $rootPath/compose/docker-end.yml >> $rootPath/docker-compose.$RUNENV.yml
+  echo
+  echo "================= START INSTALL ================"
+  ${scriptPath}/start
+  echo
+  ELASTIC_PASSWORD=$(read_var ELASTIC_PASSWORD .env)
+  echo "Use 'curl -s -X GET --cacert certs/ca/ca.crt -u elastic:[KIBANA_PASSWORD] https://es01.${APP_HOST}.${INT_NETWORK}:9200/?pretty | grep cluster_uuid' after setup set kibana password and exit."
+  echo
+  echo "Set CLUSTER-UUID to '.env' and start 'bin/setup'"
+  echo
+  echo "Start 'bin/setup'"
 fi

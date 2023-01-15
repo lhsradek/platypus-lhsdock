@@ -13,9 +13,6 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
-  # elastic:
-  #   external: true
-  #   name: ${ELASTIC_NETWORK}
   intnet:
     external: false
     name: ${INT_NETWORK}
@@ -26,3 +23,10 @@ networks:
 
 services:
 
+#
+# === E - Elasticsearch ===
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html
+# https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch
+#
+  es01:

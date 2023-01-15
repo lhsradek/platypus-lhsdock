@@ -38,6 +38,7 @@
       - ES_NODES=${ES_NODES}
       - LICENSE=${LICENSE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
+      - TIP=${TIP}
     # labels:
     #   - "traefik.enable=true"
     #   - "traefik.docker.network=${DOCKER_NETWORK}"
