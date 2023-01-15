@@ -3,9 +3,9 @@
 # === Heartbeat ===
 #     
   heartbeat:
-    # depends_on:
-    #   es02:
-    #     condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
     # Ubuntu - heartbeat
     image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
     deploy:
@@ -22,7 +22,6 @@
         ipv4_address: ${ES_NET}.7
     volumes:
       - ./certs:/usr/share/heartbeat/certs:ro
-      # - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
       - ./logs/heartbeat:/usr/share/heartbeat/logs
       - heartbeat:/usr/share/heartbeat

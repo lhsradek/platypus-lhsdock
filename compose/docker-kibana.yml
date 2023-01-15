@@ -3,9 +3,9 @@
 # === K - kibana ===
 #
   kibana:
-    # depends_on:
-    #   es02:
-    #     condition: service_healthy
+    depends_on:
+      es02:
+        condition: service_healthy
     # Ubuntu - kibana 
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
     deploy:
@@ -24,9 +24,9 @@
     # ports:
     #  - ${KIBANA_PORT}:5601
     volumes:
-      - ./extras/hosts/hosts:/etc/hosts:ro
       - ./certs:/usr/share/kibana/config/certs:ro
-      # - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+      # - ./extras/hosts/hosts:/etc/hosts:ro
+      - ./extras/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       - ./logs/kibana:/usr/share/kibana/logs
       - kibana:/usr/share/kibana
     environment:

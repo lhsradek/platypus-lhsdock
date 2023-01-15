@@ -32,8 +32,8 @@
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup
       - /proc:/hostfs/proc
       - /:/hostfs
-      - ./certs:/usr/share/elastic-agent/certs:ro
-      # - ./extras/hosts/hosts:/etc/hosts:ro
+      # - ./certs:/usr/share/elastic-agent/certs:ro
+      - ./extras/hosts/hosts:/etc/hosts:ro
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml:ro
       - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml:ro
       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml:ro
