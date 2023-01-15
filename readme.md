@@ -19,6 +19,8 @@ This section will add additional services to docker-compose. If you don't want o
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
+It adds Enterprise search, which I usually don't use and which helped me configure other services. I wondered for a long time why e.g. kibana tells me to turn on APM when I already had it set up. This was because no one was sending data to the APM server.
+
 See:
 * https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
 * [Lightweight version](https://github.com/lhsradek/platypus-platel)
