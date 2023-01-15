@@ -42,7 +42,6 @@
       - KIBANA_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_HOSTS=${ELASTIC_HOST}
       - ELASTIC_SSL_CERTIFICATEAUTHORITIES=/usr/share/enterprise-search/config/certs/ca/ca.crt
-      - ES_PORT=${ES1_PORT}
       - JAVA_OPTS=${EPS_JAVA_OPTS}
       - JAVA_GC_LOGGING=false
       - KIBANA_HOST=${KIBANA_HOST}
