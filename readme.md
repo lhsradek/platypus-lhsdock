@@ -16,7 +16,7 @@ This part will produce volumes. After this part elastic itself will run without 
 ```# bin/setup```
 
 This section will add additional services to docker-compose. If you don't want one, just comment out the file in ```bin/setup```. It is important that, for example, kibana does not start before the kibana user has a password set. That's why the install part is separate and not all together in one docker-compose. At the moment, e.g. logstash is turned off like this because I have one right in the traefik project and I don't need another one. You may find it useful to uncomment the line to add logstash to docker-compose. If you don't need wiki or cerebro, you can comment these lines. I find it easier to comment out just lines in ```bin/setup``` than entire long sections in docker-compose.
-For example, when I debug only logstash I don't need to run kibana and other services. Then I comment out the lines and re-build docker-compose.
+For example, when I debug only logstash I don't need to run kibana and other services. Then I comment out the lines and re-build docker-compose by ```bin/setup```.
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
