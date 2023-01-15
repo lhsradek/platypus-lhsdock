@@ -22,7 +22,7 @@ For example, when I debug only logstash I don't need to run kibana and other ser
 
 It adds Fleet server or Enterprise search, which I usually don't use and which helped me configure other services. I wondered for a long time why e.g. kibana tells me to turn on APM when I already had it set up. This was because no one was sending data to the APM server.
 
-The ```install```, ```setup```, ```all-remove``` parts first shut down the project and then prompt to delete docker-compose. They don't delete it straight away, because you can have important changes in it, and docker-compose also works as a lock against unwanted ```all-remove```, for example. Make changes in the files that are in the compose directory.
+The ```install```, ```setup```, ```all-remove``` parts first shut down the project and then prompt to delete docker-compose. They don't delete it straight away, because you can have important changes in it, and docker-compose also works as a lock against unwanted ```all-remove```, for example. Make changes in the files that are in the compose directory and from which docker-compose is compiled.
 
 See:
 * https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
