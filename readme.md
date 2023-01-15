@@ -11,7 +11,7 @@ create .env file
 
 ```# bin/install```
 
-This part will produce volumes. After this part elastic itself will run without other services. You can set the user, rights, find out the UUID... I still use lhsdock on another computer, where it is not necessary to run e.g. Kibana. It is possible that this part is enough.
+This part will produce volumes. After this part elastic itself will run without other services. You can set the user, rights, find out the UUID... I still use ```lhsdock``` on another computer, where it is not necessary to run e.g. Kibana. It is possible that this part is enough.
 
 ```# bin/setup```
 
