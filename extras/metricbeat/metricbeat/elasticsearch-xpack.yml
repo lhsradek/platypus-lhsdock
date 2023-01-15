@@ -7,7 +7,7 @@
   hosts: 
     - "${ELASTIC_HOST}"
     - "https://es02.${APP_HOST}.${APP_NET}:${ES2_PORT}"
-    - "https://es03.www.${APP_NET}:${ES3_PORT}"
+    # - "https://es03.${APP_HOST}.${APP_NET}:${ES3_PORT}"
   protocol: "https"
   username: "${ELASTICSEARCH_USERNAME}"
   password: "${ELASTICSEARCH_PASSWORD}"
