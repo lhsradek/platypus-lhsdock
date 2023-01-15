@@ -11,7 +11,11 @@ create .env file
 
 ```# bin/install```
 
+This part will produce volumes. After this part elastic itself will run without other services. You can set the user, rights, find out the UUID... I still use lhsdock on another computer, where it is not necessary to run e.g. kibana. It is possible that this part is enough.
+
 ```# bin/setup```
+
+This section will add additional services to docker-compose. If you don't want one, just comment out the file in ```bin/setup```
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
@@ -89,6 +93,8 @@ Creating lhsdock-eps       ... done
 
 #### remove lhsdock
 ```# bin/all-remove```
+
+This section deletes the created volumes.
 
 #### Reposirories
 
