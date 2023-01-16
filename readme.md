@@ -16,13 +16,13 @@ This part will produce volumes. After this part elastic itself will run without 
 ```# bin/setup```
 
 This section will add additional services to docker-compose. If you don't want one, just comment out the file in ```bin/setup```. It is important that, for example, Kibana does not start before the Kibana user has a password set. That's why the install part is separate and not all together in one docker-compose. At the moment, e.g. logstash is turned off like this because I have one right in the traefik project and I don't need another one. You may find it useful to uncomment the line to add logstash to docker-compose. If you don't need wiki or cerebro, you can comment these lines. I find it easier to comment out just lines in ```bin/setup``` than entire long sections in docker-compose.
-For example, when I debug only logstash I don't need to run Kibana and other services. Then I comment out the lines and re-build docker-compose by ```bin/setup```. A project divided into several parts allows me better scalability.
+For example, when I debug only logstash I don't need to run Kibana and other services. Then I comment out the lines and re-build docker-compose by ```bin/setup```.
 
 ```# bin/setup-fleet``` or ```# bin/setup-eps```
 
 It adds Fleet server or Enterprise search, which I usually don't use and which helped me configure other services. I wondered for a long time why e.g. Kibana tells me to turn on APM when I already had it set up. This was because no one was sending data to the APM server.
 
-The ```install```, ```setup```, ```all-remove``` parts first shut down the project and then prompt to delete docker-compose. They don't delete it straight away, because you can have important changes in it, and docker-compose also works as a lock against unwanted ```all-remove```, for example. Make changes in the files that are in the [compose directory](https://github.com/lhsradek/platypus-lhsdock/tree/main/compose) and from which docker-compose is compiled.
+The ```install```, ```setup```, ```all-remove``` parts first shut down the project and then prompt to delete docker-compose. They don't delete it straight away, because you can have important changes in it, and docker-compose also works as a lock against unwanted ```all-remove```, for example. Make changes in the files that are in the [compose directory](https://github.com/lhsradek/platypus-lhsdock/tree/main/compose) and from which docker-compose is compiled. A project divided into several parts allows me better scalability.
 
 See:
 * https://github.com/lhsradek/platypus-lhsdock/tree/main/extras/dokuwiki/config/dokuwiki/data/pages
