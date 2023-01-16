@@ -156,8 +156,6 @@ For example:
 FLEET_SERVER_SERVICE_TOKEN=AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2Njg0NjgzNzY4Mjc6bjRueHFvSlFSZE9XbXFnWGgyY05rZw
 </code>
 
-{{fleet06.png?600x298}}
-
 Ignore other advice about enrollment (as curl and sudo elastic-agent enroll...) if the volume for the Fleet Server is empty,
 everything will be created by itself thanks to how the environment variables of the Fleet Service are set in docker-compose file.
 
@@ -170,7 +168,7 @@ FLEET_SERVER_POLICY_ID=agent-nginx-policy-2
 
 For Tomcat:
 
-{{fleet07.png?600x434}}
+{{fleet06.png?600x434}}
 
 -----
 

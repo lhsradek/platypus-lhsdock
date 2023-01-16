@@ -38,7 +38,6 @@
       - ./png/fleet04.png:/config/dokuwiki/data/media/fleet04.png
       - ./png/fleet05.png:/config/dokuwiki/data/media/fleet05.png
       - ./png/fleet06.png:/config/dokuwiki/data/media/fleet06.png
-      - ./png/fleet07.png:/config/dokuwiki/data/media/fleet07.png
       - ./png/kibana01.png:/config/dokuwiki/data/media/kibana01.png
       - ./png/kibana02.png:/config/dokuwiki/data/media/kibana02.png
       - ./png/kibana03.png:/config/dokuwiki/data/media/kibana03.png
