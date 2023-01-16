@@ -129,22 +129,22 @@ which I don't use much anymore, the Elastic Certificate Tool is used by webservi
 
 | IMAGES               | PORTS                  | NAMES              | HOSTNAMES                            | OPTIONAL  
 | -------------------- | ---------------------- | ------------------ | ------------------------------------ | --------
-| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock            | ```www.nginx.local```                |
-| php:fpm-alpine       | 9000/tcp               | lhsdock-php        | ```weblhs-php.nginx.local```         | 
-| elasticsearch        |                        | lhsdock-setup      | ```setup.www.nginx.local```          | *
-| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01       | ```es01.www.nginx.local```           |
-| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | ```es02.www.nginx.local```           | 
-| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | ```es03.www.nginx.local```           |
-| kibana               | 5601/tcp               | lhsdock-kibana     | ```kibana.www.nginx.local```         |
-| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm-server | ```apm-server.nginx.local```         | *
-| metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.nginx.local```         | * 
-| filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.nginx.local```           | *
-| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.nginx.local```          | *
-| enterprise-search    | 3002/tcp               | lhsdock-eps        | ```eps.nginx.local```                | *
-| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | ```fleet.nginx.local```              | *
-| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash   | ```logstash.nginx.local```           | *
-| cerebro              | 9000/tcp               | lhsdock-cerebro    | ```cerebro.www.nginx.local```        | *
-| dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki       | ```wiki.www.nginx.local```           | *
+| lhsradek/lhsdock:v3  | 80/tcp, 443/tcp        | lhsdock            | ```docker.nginx.local```             |
+| php:fpm-alpine       | 9000/tcp               | lhsdock-php        | ```weblhs-php.docker.nginx.local```  | 
+| elasticsearch        |                        | lhsdock-setup      | ```setup.docker.nginx.local```       | *
+| elasticsearch        | 9200/tcp, 9300/tcp     | lhsdock-es01       | ```es01.docker.nginx.local```        |
+| elasticsearch        | 9201/tcp, 9301/tcp     | lhsdock-es02       | ```es02.docker.nginx.local```        | 
+| elasticsearch        | 9202/tcp, 9302/tcp     | lhsdock-es03       | ```es03.docker.nginx.local```        |
+| kibana               | 5601/tcp               | lhsdock-kibana     | ```kibana.docker.nginx.local```      |
+| apm-server           | 5066/tcp, 8200/tcp     | lhsdock-apm-server | ```apm-server.docker.nginx.local```  | *
+| metricbeat           | 5066/tcp               | lhsdock-metricbeat | ```metricbeat.docker.nginx.local```  | * 
+| filebeat             | 5066/tcp               | lhsdock-filebeat   | ```filebeat.docker.nginx.local```    | *
+| heartbeat            | 5066/tcp               | lhsdock-heartbeat  | ```heartbeat.docker.nginx.local```   | *
+| enterprise-search    | 3002/tcp               | lhsdock-eps        | ```eps.docker.nginx.local```         | *
+| elastic-agent        | 8200/tcp, 8220/tcp ..  | lhsdock-fleet      | ```fleet.docker.nginx.local```       | *
+| logstash             | 5044/tcp, 9600/tcp     | lhsdock-logstash   | ```logstash.docker.nginx.local```    | *
+| cerebro              | 9000/tcp               | lhsdock-cerebro    | ```cerebro.docker.nginx.local```     | *
+| dokuwiki:latest      | 80/tcp, 443/tcp        | lhsdock-wiki       | ```wiki.docker.nginx.local```        | *
 
 -----
 
