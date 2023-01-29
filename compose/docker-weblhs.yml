@@ -56,6 +56,10 @@
       # - tombolafleet:/root/bin/volume/tombola-fleet:ro
       - tombolafilebeat:/root/bin/volume/tombola-filebeat:ro
       - tombolametricbeat:/root/bin/volume/tombola-metricbeat:ro
+      - bttfdb:/root/bin/volume/bttf-db:ro
+      # - bttffleet:/root/bin/volume/bttf-fleet:ro
+      - bttffilebeat:/root/bin/volume/bttf-filebeat:ro
+      - bttfmetricbeat:/root/bin/volume/bttf-metricbeat:ro
       - traefikfilebeat:/root/bin/volume/traefik-filebeat:ro
       - traefikmetricbeat:/root/bin/volume/traefik-metricbeat:ro
       - traefiklogstash:/root/bin/volume/traefik-logstash:ro

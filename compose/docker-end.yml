@@ -66,6 +66,18 @@ volumes:
   tombolametricbeat:
     external: true
     name: tombola-metricbeat
+  bttfdb:
+    external: true
+    name: bttf-db
+  # bttffleet:
+  #   external: true
+  #   name: bttf-fleet
+  bttffilebeat:
+    external: true
+    name: bttf-filebeat
+  bttfmetricbeat:
+    external: true
+    name: bttf-metricbeat
   traefikfilebeat:
     external: true
     name: "traefik-filebeat"
