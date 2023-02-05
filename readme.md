@@ -107,18 +107,18 @@ This section deletes the created volumes.
 | ----------------------------------------------------- | ---------- | ----------- | ----------------
 | nginx:alpine                                          | latest     | 23.5MB      | [platypus-lhsdock](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile)
 | [lhsradek/platypus-fpm](https://github.com/lhsradek/platypus-lhsfpm) [![Docker Pulls](https://img.shields.io/docker/pulls/lhsradek/fpm)](https://hub.docker.com/repository/docker/lhsradek/fpm)  | v1         | 488MB       | php:fpm-alpine
-| [docker.elastic.co/elasticsearch/elasticsearch](https://hub.docker.com/_/elasticsearch) | 8.6.0      | 1.29GB      |
-| [docker.elastic.co/kibana/kibana](https://hub.docker.com/_/kibana) | 8.6.0      | 718MB       |
-| docker.elastic.co/enterprise-search/enterprise-search | 8.6.0      | 1.45GB      |
-| [logstash](https://hub.docker.com/_/logstash)         | 8.6.0      | 747MB       |
-| docker.elastic.co/beats/elastic-agent                 | 8.6.0      | 1.51GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.6.0      | 3.04GB      |
-| docker.elastic.co/apm/apm-server                      | 8.6.0      | 122MB       |
-| docker.elastic.co/beats/metricbeat                    | 8.6.0      | 318MB       |
-| docker.elastic.co/beats/heartbeat                     | 8.6.0      | 2.04GB      |
-| docker.elastic.co/beats/filebeat                      | 8.6.0      | 287MB       |
+| [docker.elastic.co/elasticsearch/elasticsearch](https://hub.docker.com/_/elasticsearch) | 8.6.1      | 1.29GB      |
+| [docker.elastic.co/kibana/kibana](https://hub.docker.com/_/kibana) | 8.6.1      | 717MB       |
+| docker.elastic.co/enterprise-search/enterprise-search | 8.6.1      | 1.45GB      |
+| [logstash](https://hub.docker.com/_/logstash)         | 8.6.1      | 748MB       |
+| docker.elastic.co/beats/elastic-agent                 | 8.6.1      | 1.54GB      | 
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.6.1      | 3.08GB      |
+| docker.elastic.co/apm/apm-server                      | 8.6.1      | 122MB       |
+| docker.elastic.co/beats/metricbeat                    | 8.6.1      | 320MB       |
+| docker.elastic.co/beats/heartbeat                     | 8.6.1      | 2.04GB      |
+| docker.elastic.co/beats/filebeat                      | 8.6.1      | 288MB       |
 | lmenezes/cerebro                                      | 0.9.4      | 284MB       |
-| [lscr.io/linuxserver/dokuwiki](https://hub.docker.com/r/linuxserver/dokuwiki) | latest     | 209MB       |
+| [lscr.io/linuxserver/dokuwiki](https://hub.docker.com/r/linuxserver/dokuwiki) | latest     | 235MB       |
 
 With [lhsradek/lhsdock](https://hub.docker.com/repository/docker/lhsradek/lhsdock/) You can use the program [platypus.pl](https://github.com/lhsradek/platypus-lhsdock/blob/main/context/root/bin/platypus.pl) for certificates,
 which I don't use much anymore, the Elastic Certificate Tool is used by webservice [setup](https://github.com/lhsradek/platypus-lhsdock/blob/main/compose/docker-setup.yml).
