@@ -136,6 +136,22 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
+          "  - name: es04.${APP_HOST}.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es04\n"\
+          "      - es04.${APP_HOST}.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: es04.www.${INT_NETWORK}\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - es04\n"\
+          "      - es04.www.${INT_NETWORK}\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: filebeat.${APP_HOST}.${INT_NETWORK}\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -308,6 +324,20 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
+          "  - name: bttf.${APP_HOST}.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - bttf.${APP_HOST}.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: bttf.www.tomcat.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - bttf.www.tomcat.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
           "  - name: ad.${APP_HOST}.tomcat.local\n"\
           "    dns:\n"\
           "      - localhost\n"\
@@ -362,6 +392,102 @@
           "      - localhost\n"\
           "      - apm-server\n"\
           "      - apm-server.www.tomcat.local\n"\
+          "  - name: ${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - www.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: tombola.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - tombola.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: tombola.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - tombola.www.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: bttf.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - bttf.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: bttf.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - bttf.www.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: ad.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ad.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: ad.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - ad.www.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: db.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: db.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - db.www.wildfly.local\n"\
+          "  - name: fleet.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet\n"\
+          "      - fleet.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: apm-server.${APP_HOST}.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - apm-server.${APP_HOST}.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${MY_IP}\n"\
+          "  - name: fleet.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - fleet\n"\
+          "      - fleet.www.wildfly.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "      - ${WWW_IP}\n"\
+          "  - name: apm-server.www.wildfly.local\n"\
+          "    dns:\n"\
+          "      - localhost\n"\
+          "      - apm-server\n"\
+          "      - apm-server.www.wildfly.local\n"\
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${WWW_IP}\n"\
