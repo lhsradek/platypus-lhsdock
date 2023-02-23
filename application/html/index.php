@@ -270,6 +270,15 @@ if ($printEnv) {
         </p>
 
         <p>
+        <h2>WildFly</h2>
+        <h5>Application server (JBoss)</h5>
+        <p>
+          <ul>
+              <li><a href="https://www.wildfly.org/" target="_blank">wildfly.org</a></li>
+          </ul>
+        </p>
+
+        <p>
         <h2>Apache Tomcat</h2>
         <h5>Webs servlet/JSP container</h5>
         <p>
@@ -300,6 +309,7 @@ if ($printEnv) {
               <li><a href="https://hub.docker.com/r/linuxserver/dokuwiki" target="_blank">hub.docker.com - Dokuwiki</a></li>
               <li><a href="https://hub.docker.com/_/elasticsearch" target="_blank">hub.docker.com - Elasticsearch</a></li>
               <li><a href="https://hub.docker.com/_/debian" target="_blank">hub.docker.com - Debian</a></li>
+              <li><a href="https://hub.docker.com/r/grafana/grafana" target="_blank">hub.docker.com - Grafana</a></li>
               <li><a href="https://hub.docker.com/_/kibana" target="_blank">hub.docker.com - Kibana</a></li>
               <li><a href="https://hub.docker.com/_/logstash" target="_blank">hub.docker.com - Logstash</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - MariaDB</a></li>
@@ -308,10 +318,12 @@ if ($printEnv) {
               <li><a href="https://hub.docker.com/_/php" target="_blank">hub.docker.com - PHP</a></li>
               <li><a href="https://hub.docker.com/_/phpmyadmin" target="_blank">hub.docker.com - phpMyAdmin</a></li>
               <li><a href="https://hub.docker.com/_/postgres" target="_blank">hub.docker.com - Postgres</a></li>
+              <li><a href="https://hub.docker.com/r/bitnami/prometheus" target="_blank">hub.docker.com - Prometheus</a></li>
               <li><a href="https://hub.docker.com/_/redis" target="_blank">hub.docker.com - Redis</a></li>
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Tomcat</a></li>
               <li><a href="https://hub.docker.com/_/traefik" target="_blank">hub.docker.com - Traefik</a></li>
               <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Ubuntu</a></li>
+              <li><a href="https://hub.docker.com/r/bitnami/wildfly" target="_blank">hub.docker.com - WildFly</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Wordpress</a></li>
 	  </ul>
         </p>
