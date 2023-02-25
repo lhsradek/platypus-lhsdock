@@ -277,6 +277,7 @@ if ($printEnv) {
               <li><a href="https://www.wildfly.org/" target="_blank">wildfly.org</a></li>
           </ul>
         </p>
+	<p><img src="wildfly.png" width="64" height="41"/></p>
 
         <p>
         <h2>Apache Tomcat</h2>
