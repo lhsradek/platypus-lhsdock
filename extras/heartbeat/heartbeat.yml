@@ -108,12 +108,12 @@ heartbeat.monitors:
     # logstash for finger print:
     # - https://logstash.${APP_HOST}.${APP_NET}:${LOGSTASH_PORT_5044}
     # tomcat
-    - https://${APP_HOST}.tomcat.local/tombola-javadoc/
+    # - https://${APP_HOST}.tomcat.local/tombola-javadoc/
     - https://${APP_HOST}.tomcat.local/tomcat.jsp
     - https://ad.${APP_HOST}.tomcat.local
     # - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
     # - http://metricbeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
-    - https://www.tomcat.local/tombola-javadoc/
+    # - https://www.tomcat.local/tombola-javadoc/
     - https://www.tomcat.local/tomcat.jsp
     - https://ad.www.tomcat.local
     # - http://filebeat.${APP_HOST}.tomcat.local:${MONITOR_PORT}
