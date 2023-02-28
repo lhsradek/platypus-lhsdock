@@ -636,6 +636,20 @@
           "    ip:\n"\
           "      - 127.0.0.1\n"\
           "      - ${MY_IP}\n"\
+          "  - name: not.intranet.local\n"\
+          "    dns:\n"\
+          "      - not\n"\
+          "      - localhost\n"\
+          "      - not.intranet.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: notw.intranet.local\n"\
+          "    dns:\n"\
+          "      - notw\n"\
+          "      - localhost\n"\
+          "      - notw.intranet.local\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
           > config/certs/instances.yml;
           if [ ! -f config/certs/certs.zip ]; then
             bin/elasticsearch-certutil cert --silent --days 365 --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
