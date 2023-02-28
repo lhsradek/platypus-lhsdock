@@ -112,7 +112,7 @@ This section deletes the created volumes.
 | docker.elastic.co/enterprise-search/enterprise-search | 8.6.2      | 1.45GB      |
 | [logstash](https://hub.docker.com/_/logstash)         | 8.6.2      | 732MB       |
 | docker.elastic.co/beats/elastic-agent                 | 8.6.2      | 1.54GB      | 
-| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.6.2      | 3.08GB      |
+| docker.elastic.co/beats/elastic-agent-complete for [Elastic Synthetics](https://www.elastic.co/guide/en/observability/current/monitor-uptime-synthetics.html#monitoring-synthetics)              | 8.6.2      | 3.22GB      |
 | docker.elastic.co/apm/apm-server                      | 8.6.2      | 122MB       |
 | docker.elastic.co/beats/metricbeat                    | 8.6.2      | 320MB       |
 | docker.elastic.co/beats/heartbeat                     | 8.6.2      | 2.03GB      |
