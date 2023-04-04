@@ -256,7 +256,7 @@ if ($printEnv) {
 	if($isRc) { ?>
 <li><a href="https://rc.<?php print($parent); ?>.wordpress.local" target="_blank">rc.<?php print($parent); ?>.wordpress.local</a></li><?php
 	} ?>
-<li><a href="https://kibana.eliasondrej.com" target="_blank">kibana.eliasondrej.com</a></li>
+<!-- <li><a href="https://kibana.eliasondrej.com" target="_blank">kibana.eliasondrej.com</a></li> -->
           </ul>
         </p>
 
