@@ -20,10 +20,10 @@
       intnet:
         ipv4_address: ${ES_NET}.23
     volumes:
-      - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh:ro
-      - ./certs/ca/ca.crt:/config/keys/ca.pem:ro
-      - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt:ro
-      - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key:ro
+      - ./context/root/bin/alpine/add.sh:/etc/cont-init.d/05-add-packages.sh
+      - ./certs/ca/ca.crt:/config/keys/ca.pem
+      - ./certs/${WIKI_CERTNAME}.crt:/config/keys/cert.crt
+      - ./certs/${WIKI_CERTNAME}.key:/config/keys/cert.key
       - ./extras/dokuwiki/config:/config
       - ./png/cerebro01.png:/config/dokuwiki/data/media/cerebro01.png
       - ./png/cerebro02.png:/config/dokuwiki/data/media/cerebro02.png
